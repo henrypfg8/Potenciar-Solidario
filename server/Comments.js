@@ -5,9 +5,11 @@ module.exports = (sequelize) => {
     "comments",
     {
       user: {
+        id: DataTypes.STRING,
         type: DataTypes.STRING,
       },
       thread: {
+        id: DataTypes.STRING,
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
@@ -25,7 +27,6 @@ module.exports = (sequelize) => {
       timestamps: true,
     }
   );
-
   return Comments;
 };
 

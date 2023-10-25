@@ -1,14 +1,16 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  const Review = sequelize.define(
+  const Reviews = sequelize.define(
     "review",
     {
       rating: {
+        id: DataTypes.STRING,
         type: DataTypes.INTEGER,
         allowNull: true,
       },
       ratingText: {
+        id: DataTypes.STRING,
         type: DataTypes.TEXT,
         allowNull: true,
       },
@@ -17,15 +19,7 @@ module.exports = (sequelize) => {
       timestamps: true,
     }
   );
-
-  Review.belongsTo(sequelize.models.Post, {
-    foreignKey: {
-      name: "PostID",
-      allowNull: false,
-    },
-  });
-
-  return Review;
+  return Reviews;
 };
 
 //Hacer funcion Math para calcular average

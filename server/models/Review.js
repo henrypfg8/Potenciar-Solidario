@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  const Reviews = sequelize.define(
-    "review",
+  sequelize.define(
+    "Review",
     {
       rating: {
         id: DataTypes.STRING,
@@ -15,11 +15,8 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
     },
-    {
-      timestamps: true,
-    }
+    { timestamps: true }
   );
-  return Reviews;
 };
 
 //Hacer funcion Math para calcular average

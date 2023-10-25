@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  const Comments = sequelize.define(
-    "comments",
+  sequelize.define(
+    "Comment",
     {
       user: {
         id: DataTypes.STRING,
@@ -23,11 +23,9 @@ module.exports = (sequelize) => {
         },
       },
     },
-    {
-      timestamps: true,
-    }
+    { timestamps: true }
   );
-  return Comments;
+  
 };
 
 //Los comentarios tienen una pequeña validacion de length y tienen que tener contenido

@@ -44,6 +44,7 @@ function App() {
       <Routes>
 
         <Route path='/' element={<Home/>} />
+        
 
         <Route path='/foro/crear' element={<QuestionCreate/>}/>
         <Route path='/foro' element={<Forum/>}/> 

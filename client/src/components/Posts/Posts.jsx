@@ -1,6 +1,6 @@
-import Styles from './cards.module.css';
+import Styles from './posts.module.css';
 //
-import Card from '../Card/Post';
+import Post from '../Post/Post';
 import SearchBar from '../SearchBar/SearchBar';
 
 
@@ -18,7 +18,7 @@ export default function Cards () {
       <div className={Styles.Cards}>
         {
           cards?.map(e => (
-            <Card key={e}/>
+            <Post key={e}/>
           ))
         }
       </div>

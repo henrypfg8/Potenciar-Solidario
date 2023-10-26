@@ -1,6 +1,6 @@
 import Styles from './home.module.css';
 //
-import Cards from '../../components/Cards/Cards';
+import Cards from '../../components/Posts/Posts';
 import LeftBar from '../../components/LeftBar/LeftBar';
 
 

@@ -9,7 +9,7 @@ CLEAR_SEARCH,
 CLEAR_DETAIL,
 CREATE_QUESTION,
 DELETE_QUESTION,
-GET_QUESTION,
+GET_QUESTIONS,
 } from "./action-types"
 
 import axios from "axios";

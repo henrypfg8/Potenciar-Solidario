@@ -1,28 +1,22 @@
-import { useEffect, useState } from "react";
-import data from "../../assets/data";
+/* eslint-disable react/prop-types */
 import style from './Foro.module.css';
 import { NavLink } from "react-router-dom";
 
-function Forum(){
-    const { usuarios } = data;
-    const [datos, setDatos] = useState([]);
-
-    useEffect(() => {
-        setDatos(usuarios)
-    }, [usuarios])
+// eslint-disable-next-line react/prop-types
+function ForumView({ datos }) {
 
 
     return(
         <div className={style.container}>
             <div className={style.header}>
                 <h3 className={style.titulo}>Foro general</h3>
-            <NavLink to='/foro/create'>
+            {/* <NavLink to='/foro/create'>
             <button className={style.button}>Pregunta</button>
-            </NavLink>
+        </NavLink> */}
             </div>
             <div className={style.div}>
 
-            {datos?.map(dato => {
+            {datos && datos?.map(dato => {
                 return(
                     <div key={dato.id} className={style.contain}>
                 
@@ -47,4 +41,5 @@ function Forum(){
         </div>
     )
 }
-export default Forum;
+
+export default ForumView;

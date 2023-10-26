@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 import './App.css'
 //
 import Forum from './views/Forum/Forum';
-import ForumDetail from './components/ForumDetail/ForumDetail';
 import QuestionCreate from './components/question/QuestionCreate';
 import Header from './components/Header/Header';
 import Home from './views/HomeView/Home';
 import PageHeader from './components/PageHeader/PageHeader';
 import ContainerForm from './views/FormContainer/ContainerForm'
+
+import QuestionDetail from './components/QuestionsDetail/QuestionDetail'
+
 function App() {
   const location = useLocation()
 
@@ -44,9 +46,11 @@ function App() {
         <Route path='/' element={<Home/>} />
 
         <Route path='/foro/create' element={<QuestionCreate/>}/>
-        <Route path='/foro' element={<Forum/>}/>
-        <Route path='/foro/:id' element={<ForumDetail/>}/>  
+        <Route path='/foro' element={<Forum/>}/> 
         <Route path='/form' element={<ContainerForm/>}/>
+        {/* <Route path='/foro/create' element={<Que/>}/> */}
+        <Route path='/foro' element={<Forum/>}/>
+        <Route path='/foro/:id' element={<QuestionDetail/>}/>  
       </Routes>
     </div>
   )

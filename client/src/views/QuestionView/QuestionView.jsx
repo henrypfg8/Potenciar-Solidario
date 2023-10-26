@@ -1,23 +1,11 @@
-import { useParams } from "react-router-dom";
-import data from '../../assets/data';
-import style from './ForumDetail.module.css';
+/* eslint-disable react/prop-types */
+import style from './QuestionDetail.module.css'
 
-function ForumDetail(){
-
-    const { id } = useParams();
-    const { usuarios, respuestas } = data;
-    
-
-    const preguntaUsuario = usuarios.find(usuario => usuario.id === Number(id))
-console.log(preguntaUsuario);
-    const arrayRespuestas = preguntaUsuario?.preguntas.respuestas
-    
-    const respuestasUsuario = respuestas.filter(respuesta => arrayRespuestas.includes(respuesta.id))
-
-
+function QuestionView({ preguntaUsuario, respuestasUsuario }) {
     return(
         <div>
             <div>
+                <h1>{preguntaUsuario.username}</h1>
                <h3>{preguntaUsuario?.preguntas.titulo}</h3>
                <strong><p>{preguntaUsuario.username}</p></strong>
                <p>{preguntaUsuario?.preguntas.descripcion}</p>
@@ -36,4 +24,4 @@ console.log(preguntaUsuario);
     )
 }
 
-export default ForumDetail;
+export default QuestionView;

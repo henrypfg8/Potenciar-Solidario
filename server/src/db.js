@@ -50,22 +50,23 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
+
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Answer, Publication, Comments, Reviews, Question, Category } =
+const { User, Answer, Publication, Comments, Review, Question, Category } =
     sequelize.models;
 
 //Relacion de modelos
 
 //---------------User-----------------
-User.hasMany(Reviews, {
+User.hasMany(Review, {
     foreignKey: {
         name: "userID",
         allowNull: false,
     },
 });
 
-Reviews.belongsTo(User, {
+Review.belongsTo(User, {
     foreignKey: {
         name: "userID",
         allowNull: false,
@@ -104,14 +105,14 @@ Answer.belongsTo(User, {
 });
 
 //-----------Publication----------------
-Reviews.belongsTo(Publication, {
+Review.belongsTo(Publication, {
     foreignKey: {
         name: "PostID",
         allowNull: false,
     },
 });
 
-Publication.hasMany(Reviews, {
+Publication.hasMany(Review, {
     foreignKey: {
         name: "PostID",
         allowNull: false,

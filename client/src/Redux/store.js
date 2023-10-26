@@ -2,7 +2,7 @@ import { applyMiddleware, createStore, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import questionReducer from "./reducers/questionReducer";
 import postReducer from "./reducers/postReducer";
-import searchAndFilterReducer from "./reducers/search&FilterReducer";
+import searchAndFilterReducer from "./reducers/searchAndFilterReducer";
 import thunk from "redux-thunk";
 
 // Combina los reducers

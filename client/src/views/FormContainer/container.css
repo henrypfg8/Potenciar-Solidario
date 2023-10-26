@@ -136,6 +136,18 @@
     width: 100%;
     
   }
+  .publication__btn--delete{
+    color: #d80505;
+    border: 1px solid #d80505;
+    border-radius: 2px;
+    padding: 0.5rem;
+    margin-top: 1rem;	
+    cursor: pointer;
+  }
+  .publication__btn--delete:hover{
+    background: #d80505;
+    color: #fff;
+  }
   @media(min-width: 768px){
     .publication__image--none {
       height: 500px;

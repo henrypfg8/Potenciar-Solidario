@@ -45,14 +45,10 @@ function App() {
 
         <Route path='/' element={<Home/>} />
 
-<<<<<<< HEAD
         <Route path='/foro/crear' element={<QuestionCreate/>}/>
-=======
->>>>>>> rama-angel
         <Route path='/foro' element={<Forum/>}/> 
-        <Route path='/form' element={<ContainerForm/>}/>
+        <Route path='/formulario' element={<ContainerForm/>}/>
         <Route path='/foro/:id' element={<QuestionDetail/>}/>  
-        <Route path='/foro/create' element={<QuestionCreate/>}/>
       </Routes>
     </div>
   )

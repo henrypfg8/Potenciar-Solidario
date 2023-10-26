@@ -10,7 +10,6 @@ function QuestionDetail(){
     const arrayRespuestas = preguntaUsuario?.preguntas.respuestas
     
     const respuestasUsuario = respuestas.filter(respuesta => arrayRespuestas.includes(respuesta.id))
-    console.log(respuestasUsuario);
 
     return <QuestionView preguntaUsuario={preguntaUsuario} respuestasUsuario={respuestasUsuario} />
 }

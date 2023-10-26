@@ -4,6 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
 
+
 // conexion con a tu base de datos
 const sequelize = new Sequelize({
     host: DB_HOST,
@@ -13,7 +14,6 @@ const sequelize = new Sequelize({
     database: DB_NAME,
     dialect: "mysql",
 });
-
 
 const basename = path.basename(__filename);
 

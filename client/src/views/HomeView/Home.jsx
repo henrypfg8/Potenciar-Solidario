@@ -1,6 +1,6 @@
 import Styles from './home.module.css';
 //
-import Cards from '../../components/Posts/Posts';
+import Posts from '../../components/Posts/Posts';
 import LeftBar from '../../components/LeftBar/LeftBar';
 
 
@@ -13,7 +13,7 @@ export default function Home () {
           
             <LeftBar />
 
-            <Cards />
+            <Posts />
 
 
         </div>

@@ -1,6 +1,6 @@
 import Styles from './cards.module.css';
 //
-import Card from '../Card/Card';
+import Card from '../Card/Post';
 import SearchBar from '../SearchBar/SearchBar';
 
 

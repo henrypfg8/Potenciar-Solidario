@@ -1,7 +1,7 @@
 import Styles from './home.module.css';
 //
-import Cards from '../../Cards/Cards';
-import LeftBar from '../LeftBar/LeftBar';
+import Cards from '../../components/Cards/Cards';
+import LeftBar from '../../components/LeftBar/LeftBar';
 
 
 export default function Home () {

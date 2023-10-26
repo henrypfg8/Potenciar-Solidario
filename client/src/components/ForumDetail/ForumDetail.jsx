@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import data from '../assets/data'
-import style from './ForumDetail.module.css'
+import data from '../../assets/data';
+import style from './ForumDetail.module.css';
 
 function ForumDetail(){
 

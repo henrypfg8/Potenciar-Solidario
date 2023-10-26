@@ -1,0 +1,40 @@
+.HeaderMain {
+    min-height: 100px;
+    max-height: 100px;
+    width: 100%;
+}
+
+    .header {
+        border-bottom: solid #F5F5F5 1px;
+        height: 100px;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        gap: 280px;
+        align-items: center;
+        position: fixed;
+        background-color: white;
+        transition: height 0.3s;
+    }
+    #headerScrolled {
+        height: 70px;
+    }
+
+        .title {
+            font-size: 24px;
+            margin-bottom: 6.4px;
+        }
+
+        .backButton {
+            border: solid #095084 2px;
+            color: #095084;
+            border-radius: 50px;
+            height: 31.84px;
+            width: 165.53px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+

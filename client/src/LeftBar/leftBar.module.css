@@ -1,0 +1,15 @@
+.LeftBar {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .LeftBar__button {
+        margin: 10px 0;
+        height: 100px;
+        width: 90%;
+        border: solid green 1px;
+        border-radius: 5px;
+    }

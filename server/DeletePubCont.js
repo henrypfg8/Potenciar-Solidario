@@ -1,26 +1,16 @@
-const DeletePubHandler = require("./DeletePubHandler.js");
+const { Publication } = require("../src/db.js");
+const { User } = require("../src/db.js");
 
-const deletePublication = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const deletedRows = await DeletePubHandler(id, userId);
-    if (deletedRows !== 0) {
-      res.status(200).json({
-        message: "La publicación fue borrada exitosamente",
-      });
-    } else {
-      res.status(404).json({
-        message: "Publicacion no encontrada",
-      });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      message: "Ocurrió un error al intentar borrar la publicación",
-    });
+const DeletePubCont = async (id, userId) => {
+  const user = await User.findOne({ where: { id: userId } });
+
+  if (!user) {
+    return { deletedRows: 0, message: "User not found" };
   }
+  const deletedRows = await Publication.destroy({
+    where: { id: id, UserId: userId },
+  });
+  return deletedRows;
 };
 
-module.exports = {
-  deletePublication,
-};
+module.exports = DeletePubCont;

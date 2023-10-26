@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import data from "../assets/data";
+import data from "../../assets/data";
 import style from './Foro.module.css';
 import { NavLink } from "react-router-dom";
 

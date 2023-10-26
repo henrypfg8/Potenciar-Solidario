@@ -25,7 +25,7 @@ server.use((_req, res, next) => {
   next();
 });
 
-server.use("/" /* routes */);
+// server.use("/" routes );
 
 server.use((err, _req, res, _next) => {
   // eslint-disable-line no-unused-vars

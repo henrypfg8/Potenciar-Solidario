@@ -4,23 +4,16 @@ const path = require("path");
 const fs = require("fs");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
 
-// const pool = createPool({
-//     host: DB_HOST,
-//     user: DB_USER,
-//     password: DB_PASSWORD,
-//     port: DB_PORT,
-//     database: DB_NAME,
-// });
-
 // conexion con a tu base de datos
 const sequelize = new Sequelize({
     host: DB_HOST,
     user: DB_USER,
     password: DB_PASSWORD,
-    port: DB_PORT,
+    port: 3306,
     database: DB_NAME,
     dialect: "mysql",
 });
+
 
 const basename = path.basename(__filename);
 
@@ -53,7 +46,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Answer, Publication, Comments, Review, Question, Category } =
+const { User, Answer, Publication, Comment, Review, Question, Category } =
     sequelize.models;
 
 //Relacion de modelos
@@ -151,14 +144,14 @@ Answer.belongsTo(Question, {
     },
 });
 
-Answer.hasMany(Comments, {
+Answer.hasMany(Comment, {
     foreignKey: {
         name: "answerId",
         allowNull: false,
     },
 });
 
-Comments.belongsTo(Answer, {
+Comment.belongsTo(Answer, {
     foreignKey: {
         name: "answerId",
         allowNull: false,

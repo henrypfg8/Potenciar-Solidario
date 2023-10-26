@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { createPost } from "../../Redux/actions";
-import {useDispatch} from 'react-redux'
+// import {createPost} from '../../Redux/actions'
+//import {useDispatch} from 'react-redux'
 
 const Form = ({ setPublication, pulication }) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -26,7 +26,7 @@ const Form = ({ setPublication, pulication }) => {
        }) // Limpiar el formulario
        //enviar los datos al servidor
     };
-    dispatch(createPost(pulication))
+    //dispatch(createPost(pulication))
     // Actualizar el estado con los datos del formulario
     const handleChange = (e) => {
         const { name, value } = e.target;

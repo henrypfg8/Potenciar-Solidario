@@ -21,14 +21,14 @@ const ContainerForm = () => {
         linkInscription: '',
         url: '',
     });
-    const handleClose = () => {
-        //Navigate('/') // Navegar a la ruta especificada
-    }
+    // const handleClose = () => {
+    //     //Navigate('/') // Navegar a la ruta especificada
+    // }
     return (
         <>   
-        <div>
+        {/* <div>
             <button className='btnClose' onClick={handleClose}>X</button>
-        </div>
+        </div> */}
             <div className='container'>
 
             <Form

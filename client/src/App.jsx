@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 //
 import './App.css'
 //
-import Forum from './views/Forum/Forum';
+import Forum from "./components/Forum/Forum"
 import QuestionCreate from './components/question/QuestionCreate';
 import Header from './components/Header/Header';
 import Home from './views/HomeView/Home';

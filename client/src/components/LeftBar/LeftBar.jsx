@@ -21,12 +21,12 @@ export default function LeftBar () {
 
             {
                 pathname === '/foro' ?
-                <Link to='/formulario' className={Styles.LeftBar__button}>
-                    REALIZAR COMENTARIO O PREGUNTA
+                <Link to='/foro/crear' className={Styles.LeftBar__button}>
+                    CREAR COMENTARIO O PREGUNTA
                 </Link>
                 :
-                <Link to='/foro/crear' className={Styles.LeftBar__button}>
-                    REALIZAR AVISO O PUBLICACIÓN
+                <Link to='/formulario' className={Styles.LeftBar__button}>
+                    CREAR AVISO O PUBLICACIÓN
                 </Link>
             }
             

@@ -5,7 +5,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: solid red 1px;
 }
 
     .NavigationButtons {
@@ -36,7 +35,7 @@
 
 #active {
     background-color: var(--darkblue);
-
+    color: white;
 }
 
     

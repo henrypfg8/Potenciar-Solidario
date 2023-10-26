@@ -54,7 +54,18 @@ export const getPostDetail = (id) => {
             const response = await axios.get(`/posts/${id}`);
             dispatch({type: GET_POST_DETAIL, payload: response.data});
         } catch (error) {
-            throw new Error(error.response + "please contact support for this error")
+            throw new Error(error.response + "por favor contactar a soporte por este error")
+        }
+    }
+}
+
+export const searchPost = (query) => {
+    return async function (dispatch) {
+        try {
+            const response = await axios.get(`/posts?name=${query}`);
+            dispatch({type: SEARCH_POST, payload: response.data});
+        } catch (error) {
+            throw new Error(error.response + "por favor contactar a soporte por este error")
         }
     }
 }

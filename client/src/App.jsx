@@ -45,7 +45,7 @@ function App() {
 
         <Route path='/' element={<Home/>} />
 
-        <Route path='/foro/create' element={<QuestionCreate/>}/>
+        <Route path='/foro/crear' element={<QuestionCreate/>}/>
         <Route path='/foro' element={<Forum/>}/> 
         <Route path='/form' element={<ContainerForm/>}/>
         <Route path='/foro/:id' element={<QuestionDetail/>}/>  

@@ -2,3 +2,17 @@
     border: 1px red solid;
     margin: 10px;
 }
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+
+}
+.title{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    font-size: 2.5em;
+}

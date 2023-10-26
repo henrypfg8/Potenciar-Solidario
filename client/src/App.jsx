@@ -4,15 +4,15 @@ import { useState, useEffect } from 'react';
 import './App.css'
 //
 import Forum from "./components/Forum/Forum"
-import QuestionCreate from './components/question/QuestionCreate';
 import Header from './components/Header/Header';
 import Home from './views/HomeView/Home';
 import PageHeader from './components/PageHeader/PageHeader';
-import ContainerForm from './views/FormContainer/ContainerForm'
-
-import QuestionDetail from './components/QuestionsDetail/QuestionDetail'
+import ContainerForm from './views/FormContainer/ContainerForm';
+import QuestionDetail from './components/QuestionsDetail/QuestionDetail';
+import QuestionCreate from './components/QuestionCreate/QuestionCreate';
 
 function App() {
+  // eslint-disable-next-line no-unused-vars
   const location = useLocation()
 
   //Manejo de Header segun el scroll:
@@ -45,12 +45,10 @@ function App() {
 
         <Route path='/' element={<Home/>} />
 
-        <Route path='/foro/create' element={<QuestionCreate/>}/>
         <Route path='/foro' element={<Forum/>}/> 
         <Route path='/form' element={<ContainerForm/>}/>
-        {/* <Route path='/foro/create' element={<Que/>}/> */}
-        <Route path='/foro' element={<Forum/>}/>
         <Route path='/foro/:id' element={<QuestionDetail/>}/>  
+        <Route path='/foro/create' element={<QuestionCreate/>}/>
       </Routes>
     </div>
   )

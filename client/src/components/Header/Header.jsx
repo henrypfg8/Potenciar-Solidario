@@ -32,7 +32,7 @@ export default function Header ({ isScrolled }) {
                     :
 
                     (
-                        pathname === '/form' ? 
+                        pathname === '/formulario' ? 
                         (<Link to={'/'} className={Styles.backButton}>
                             VOLVER A LA CARTELERA
                         </Link>)

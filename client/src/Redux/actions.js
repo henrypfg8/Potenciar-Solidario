@@ -1,15 +1,15 @@
 import {
-CREATE_POST,
-DELETE_POST,
-GET_POSTS,
-GET_POST_DETAIL,
-SEARCH_POST,
-FILTER,
-CLEAR_SEARCH,
-CLEAR_DETAIL,
-CREATE_QUESTION,
-DELETE_QUESTION,
-GET_QUESTIONS,
+    CREATE_POST,
+    DELETE_POST,
+    GET_POSTS,
+    GET_POST_DETAIL,
+    SEARCH_POST,
+    FILTER,
+    CLEAR_SEARCH,
+    CLEAR_DETAIL,
+    CREATE_QUESTION,
+    DELETE_QUESTION,
+    GET_QUESTIONS,
 } from "./action-types"
 
 import axios from "axios";
@@ -41,7 +41,7 @@ export const getPosts = () => {
     return async function (dispatch) {
         try {
             const response = await axios.get("/posts")
-                dispatch({type: GET_POSTS, payload: response.data})
+            dispatch({type: GET_POSTS, payload: response.data})
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error")
         }

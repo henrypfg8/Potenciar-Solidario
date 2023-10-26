@@ -10,7 +10,8 @@ import PageHeader from './components/PageHeader/PageHeader';
 import ContainerForm from './views/FormContainer/ContainerForm';
 import QuestionDetail from './components/QuestionsDetail/QuestionDetail';
 import QuestionCreate from './components/QuestionCreate/QuestionCreate';
-
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 function App() {
   // eslint-disable-next-line no-unused-vars
   const location = useLocation()
@@ -45,14 +46,13 @@ function App() {
 
         <Route path='/' element={<Home/>} />
 
-<<<<<<< HEAD
         <Route path='/foro/crear' element={<QuestionCreate/>}/>
-=======
->>>>>>> rama-angel
         <Route path='/foro' element={<Forum/>}/> 
-        <Route path='/form' element={<ContainerForm/>}/>
+        <Route path='/formulario' element={<ContainerForm/>}/>
         <Route path='/foro/:id' element={<QuestionDetail/>}/>  
-        <Route path='/foro/create' element={<QuestionCreate/>}/>
+        {/* auth */}
+        <Route path='/register' element={<Register/>}/>
+        <Route path='/login' element={<Login/>}/>
       </Routes>
     </div>
   )

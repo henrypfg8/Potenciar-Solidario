@@ -11,7 +11,7 @@ export default function Posts () {
   return (
     <div className={Styles.Posts}>
 
-      <h1 style={{marginTop: '10px'}}>Publicaciones del muro</h1>
+      <h1 style={{marginTop: '10px'}}>Publicaciones de la cartelera</h1>
 
       <SearchBar />
 

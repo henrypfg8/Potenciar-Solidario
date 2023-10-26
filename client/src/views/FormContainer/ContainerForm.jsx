@@ -35,7 +35,8 @@ const ContainerForm = () => {
                 setPublication={setPublication}
                 pulication={pulication} />
             <FormView
-                pulication={pulication} />
+                pulication={pulication}
+                setPublication={setPublication} />
         </div>
         </>
 

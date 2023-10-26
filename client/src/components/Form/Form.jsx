@@ -1,14 +1,32 @@
 /* eslint-disable react/prop-types */
+// import {createPost} from '../../Redux/actions'
+//import {useDispatch} from 'react-redux'
 
 const Form = ({ setPublication, pulication }) => {
+    // const dispatch = useDispatch();
 
-    // Enviar los datos del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
-       // console.log(pulication);
+ 
+       setPublication({
+        ...pulication,
+        title: '',
+        category: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        image: '',
+        creationDate: '',
+        imagePreview: null,
+        contact: '',
+        status: false,
+        organization: '',
+        linkInscription: '',
+        url: '',
+       }) // Limpiar el formulario
        //enviar los datos al servidor
     };
-
+    //dispatch(createPost(pulication))
     // Actualizar el estado con los datos del formulario
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -32,7 +50,7 @@ const Form = ({ setPublication, pulication }) => {
                 imagePreview: URL.createObjectURL(file)
             }));
         }
-    }
+    };
     return (
         <div>
             <form action="" className='form' onSubmit={handleSubmit}>

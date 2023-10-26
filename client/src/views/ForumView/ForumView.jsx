@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import LeftBar from '../../components/LeftBar/LeftBar';
 import style from './Foro.module.css';
 import { NavLink } from "react-router-dom";
 
@@ -7,14 +8,16 @@ function ForumView({ datos }) {
 
 
     return(
+            <div>
+
+        <div className={style.containerCenter}>
+                <LeftBar/>
         <div className={style.container}>
-            <div className={style.header}>
-                <h3 className={style.titulo}>Foro general</h3>
-            {/* <NavLink to='/foro/create'>
-            <button className={style.button}>Pregunta</button>
-        </NavLink> */}
-            </div>
+           <h1 style={{marginTop: '10px'}}>Foro general</h1>
+            
+           
             <div className={style.div}>
+
 
             {datos && datos?.map(dato => {
                 return(
@@ -39,6 +42,8 @@ function ForumView({ datos }) {
             })}
             </div>
         </div>
+            </div>
+            </div>
     )
 }
 

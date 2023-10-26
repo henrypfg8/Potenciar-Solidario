@@ -1,14 +1,34 @@
 /* eslint-disable react/prop-types */
+import {useSelector, useDispatch} from 'react-redux'
+import { createPost } from '../../Redux/actions';
 
 const Form = ({ setPublication, pulication }) => {
-
+    // const dispatch = useDispatch();
+    // const state = useSelector(state => state);
+    // console.log(state); 
     // Enviar los datos del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
-       // console.log(pulication);
+ 
+       setPublication({
+        ...pulication,
+        title: '',
+        category: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        image: '',
+        creationDate: '',
+        imagePreview: null,
+        contact: '',
+        status: false,
+        organization: '',
+        linkInscription: '',
+        url: '',
+       }) // Limpiar el formulario
        //enviar los datos al servidor
     };
-
+   // dispatch(createPost(pulication)); //agregar la publicacion al estado global
     // Actualizar el estado con los datos del formulario
     const handleChange = (e) => {
         const { name, value } = e.target;

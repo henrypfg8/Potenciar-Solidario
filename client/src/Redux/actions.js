@@ -8,10 +8,15 @@ FILTER,
 CLEAR_SEARCH,
 CLEAR_POST_DETAIL,
 CLEAR_QUESTION_DETAIL,
+CLEAR_USER_DETAIL,
 CREATE_QUESTION,
 DELETE_QUESTION,
 GET_QUESTIONS,
-GET_QUESTION_DETAIL
+GET_QUESTION_DETAIL,
+CREATE_USER,
+DELETE_USER,
+GET_USERS,
+GET_USER_DETAIL,
 } from "./action-types"
 
 import axios from "axios";
@@ -88,6 +93,10 @@ export const clearQuestionDetail = () => {
     return {type: CLEAR_QUESTION_DETAIL}
 }
 
+export const clearUserDetail = () => {
+    return {type: CLEAR_USER_DETAIL}
+}
+
 export const createQuestion = (question) => {
     return async function (dispatch) {
         try {
@@ -131,3 +140,26 @@ export const getQuestionDetail = (id) => {
         }
     }
 }
+
+export const createUser = (user) => {
+    return async function (dispatch) {
+        try {
+            const response = await axios.post("/users", user);
+            dispatch({type: CREATE_USER, payload: response.data});
+        } catch (error) {   
+            throw new Error(error.response + "por favor contactar a soporte por este error");
+        }
+    }
+}
+
+export const deleteUser = (id) => {
+    return async function (dispatch) {
+        try {
+            const response = await axios.delete(`/users/${id}`);
+            dispatch({type: DELETE_USER, payload: response.data});
+        } catch (error) {
+            throw new Error(error.response + "por favor contactar a soporte por este error")
+        }
+    }
+}
+

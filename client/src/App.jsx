@@ -1,8 +1,8 @@
 import { NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
-import Forum from './Forum/Forum'
-import ForumDetail from './ForumDetail/ForumDetail'
-import QuestionCreate from './question/QuestionCreate'
+
+import QuestionDetail from './components/QuestionsDetail/QuestionDetail'
+import Forum from './components/Forum/Forum'
 
 function App() {
   const location = useLocation()
@@ -17,9 +17,9 @@ function App() {
       }
       
       <Routes>
-        <Route path='/foro/create' element={<QuestionCreate/>}/>
+        {/* <Route path='/foro/create' element={<Que/>}/> */}
         <Route path='/foro' element={<Forum/>}/>
-        <Route path='/foro/:id' element={<ForumDetail/>}/>  
+        <Route path='/foro/:id' element={<QuestionDetail/>}/>  
       </Routes>
     </div>
   )

@@ -1,19 +1,39 @@
 import Styles from './leftBar.module.css';
+//
+import { useLocation, Link } from 'react-router-dom';
 
 export default function LeftBar () {
 
-    const arr = [1, 2, 3, 4, 5, 6, 7, 8]
+    const { pathname } = useLocation();
+
 
     return (
-        <div className={Styles['LeftBar']}>
+        <div className={Styles.LeftBar}>
             
+            <div className={Styles.NavigationButtons}>
+                <Link to='/' className={Styles.LeftBar__button} id={pathname === '/' ? Styles.active : ''}>
+                    PUBLICACIÓNES Y AVISOS
+                </Link>
+                <Link to='/foro' className={Styles.LeftBar__button} id={pathname === '/foro' ? Styles.active : ''}>
+                    FORO
+                </Link> 
+            </div>
+
             {
-                arr?.map(e => (
-                    <div className={Styles['LeftBar__button']} key={e}> 
-                     
-                    </div>
-                ))
+                pathname === '/foro' ?
+                <Link to='/foro/crear' className={Styles.LeftBar__button}>
+                    CREAR COMENTARIO O PREGUNTA
+                </Link>
+                :
+                <Link to='/formulario' className={Styles.LeftBar__button}>
+                    CREAR AVISO O PUBLICACIÓN
+                </Link>
             }
+            
+
+            
+
+      
 
         </div>
     )

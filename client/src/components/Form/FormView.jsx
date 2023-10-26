@@ -4,16 +4,28 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-const FormView = ({ pulication }) => {
+const FormView = ({ pulication,setPublication }) => {
 
 
     if (pulication === undefined) return null; // Si no hay datos retornar null
-
+    const handleDeleteImage = () => {
+        // Eliminar la imagen
+        setPublication({
+            ...pulication,
+            image: '',
+            imagePreview: null
+        
+        })
+    }
     return (
         <div className='publication__container'>
             <h1 className='publication__title'>{pulication.title}</h1>
             {pulication.imagePreview !== null ? ( // Si hay imagen mostrarla
-                <img src={`${pulication.imagePreview}`} className='publication__image' />
+               <div>
+                     <img src={`${pulication.imagePreview}`} className='publication__image' />
+                     <button className='publication__btn--delete'
+                        onClick={ handleDeleteImage}>Eliminar</button>
+               </div>
             ) : (<div className='publication__image--none'>La Imagen Aparecerá Aquí</div>)}  {/* si no se selecciona una imagen, se agregará un mensaje*/}
             <p></p>
             <div className='publication__date'>

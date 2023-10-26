@@ -24,8 +24,8 @@ export default function Header ({ isScrolled }) {
                             VOLVER A LA CARTELERA
                         </Link>)
                         :
-                        (<Link to='/foro' className={Styles.backButton}>
-                            VOLVER AL FORO
+                        (<Link className={Styles.backButton}>
+                            VOLVER AL INICIO
                         </Link>)
                     )
 
@@ -33,7 +33,7 @@ export default function Header ({ isScrolled }) {
 
                     (
                         pathname === '/formulario' ? 
-                        (<Link to={'/'} className={Styles.backButton}>
+                        (<Link to='/' className={Styles.backButton}>
                             VOLVER A LA CARTELERA
                         </Link>)
                         :

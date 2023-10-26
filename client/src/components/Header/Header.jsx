@@ -21,7 +21,7 @@ export default function Header ({ isScrolled }) {
                     (
                         pathname === '/foro' ?
                         (<Link to='/' className={Styles.backButton}>
-                            VOLVER A LA CARTELERA
+                            VOLVER AL INICIO
                         </Link>)
                         :
                         (<Link to='/foro' className={Styles.backButton}>

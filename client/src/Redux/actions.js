@@ -6,7 +6,7 @@ GET_POST_DETAIL,
 SEARCH_POST,
 FILTER,
 CLEAR_SEARCH,
-CLEAR_DETAIL,
+CLEAR_POST_DETAIL,
 CLEAR_QUESTION_DETAIL,
 CREATE_QUESTION,
 DELETE_QUESTION,
@@ -80,8 +80,8 @@ export const clearSearch = () => {
     return {type: CLEAR_SEARCH}
 }
 
-export const clearDetail = () => {
-    return {type: CLEAR_DETAIL}
+export const clearPostDetail = () => {
+    return {type: CLEAR_POST_DETAIL}
 }
 
 export const clearQuestionDetail = () => {

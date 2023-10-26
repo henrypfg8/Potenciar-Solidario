@@ -43,7 +43,7 @@ export const getPosts = () => {
     return async function (dispatch) {
         try {
             const response = await axios.get("/posts")
-                dispatch({type: GET_POSTS, payload: response.data})
+            dispatch({type: GET_POSTS, payload: response.data})
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error")
         }

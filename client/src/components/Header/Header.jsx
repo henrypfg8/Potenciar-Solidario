@@ -14,18 +14,19 @@ export default function Header ({ isScrolled }) {
                 <a className={Styles['title']}>
                     Portal <strong> Potenciar Solidario</strong>
                 </a>
+              
 
                 {
                     pathname.includes('/foro') ?  
 
                     (
                         pathname === '/foro' ?
-                        (<Link to='/' className={Styles.backButton}>
-                            VOLVER A LA CARTELERA
-                        </Link>)
-                        :
                         (<Link className={Styles.backButton}>
                             VOLVER AL INICIO
+                        </Link>)
+                        :
+                        (<Link to='/foro' className={Styles.backButton}>
+                            VOLVER AL FORO
                         </Link>)
                     )
 

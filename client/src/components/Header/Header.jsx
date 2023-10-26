@@ -1,6 +1,9 @@
 import Styles from './header.module.css';
+import { useLocation, Link } from 'react-router-dom';
 
 export default function Header ({ isScrolled }) {
+
+    const { pathname } = useLocation();
 
 
     return (
@@ -12,10 +15,36 @@ export default function Header ({ isScrolled }) {
                     Portal <strong> Potenciar Solidario</strong>
                 </a>
 
-                <a className={Styles['backButton']}>
-                    VOLVER AL INICIO
-                </a>
+                {
+                    pathname.includes('/foro') ?  
 
+                    (
+                        pathname === '/foro' ?
+                        (<Link to='/' className={Styles.backButton}>
+                            VOLVER A LA CARTELERA
+                        </Link>)
+                        :
+                        (<Link to='/foro' className={Styles.backButton}>
+                            VOLVER AL FORO
+                        </Link>)
+                    )
+
+                    :
+
+                    (
+                        pathname === '/form' ? 
+                        (<Link to={'/'} className={Styles.backButton}>
+                            VOLVER A LA CARTELERA
+                        </Link>)
+                        :
+                        (<Link className={Styles.backButton}>
+                            VOLVER AL INICIO
+                        </Link>)
+                    )       
+
+                }
+
+                
             </div>
 
         </div>  

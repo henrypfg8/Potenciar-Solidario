@@ -17,6 +17,7 @@ module.exports = (sequelize) => {
         // toma id del usuario que realiza la pregunta
         type: DataTypes.INTEGER,
         allowNull: false,
+        field: 'UserId'
       },
       categoryId: {
         // toma el id de la categoria

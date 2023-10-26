@@ -9,7 +9,7 @@ import QuestionCreate from './components/question/QuestionCreate';
 import Header from './components/Header/Header';
 import Home from './views/HomeView/Home';
 import PageHeader from './components/PageHeader/PageHeader';
-
+import ContainerForm from './views/FormContainer/ContainerForm'
 function App() {
   const location = useLocation()
 
@@ -46,6 +46,7 @@ function App() {
         <Route path='/foro/create' element={<QuestionCreate/>}/>
         <Route path='/foro' element={<Forum/>}/>
         <Route path='/foro/:id' element={<ForumDetail/>}/>  
+        <Route path='/form' element={<ContainerForm/>}/>
       </Routes>
     </div>
   )

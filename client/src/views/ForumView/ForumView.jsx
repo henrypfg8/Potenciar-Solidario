@@ -1,15 +1,18 @@
+/* eslint-disable react/prop-types */
 import style from './Foro.module.css';
 import { NavLink } from "react-router-dom";
 
+// eslint-disable-next-line react/prop-types
 function ForumView({ datos }) {
-    console.log(datos);
+
+
     return(
         <div className={style.container}>
             <div className={style.header}>
                 <h3 className={style.titulo}>Foro general</h3>
             {/* <NavLink to='/foro/create'>
             <button className={style.button}>Pregunta</button>
-            </NavLink> */}
+        </NavLink> */}
             </div>
             <div className={style.div}>
 

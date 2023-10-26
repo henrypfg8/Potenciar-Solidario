@@ -1,7 +1,6 @@
 import style from './QuestionDetail.module.css'
 
 function QuestionView({ preguntaUsuario, respuestasUsuario }) {
-
     return(
         <div>
             <div>

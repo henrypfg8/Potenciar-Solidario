@@ -1,13 +1,27 @@
 .text{
-    border: 1px red solid;
-    margin: 10px;
+    padding: 2rem;
+    margin: 50px;
+    box-shadow: -2px -1px 6px 6px #fff;
+    border: 1px solid #cbd5e1;
 }
 .container{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 10px;
     min-height: 100vh;
 
+}
+.container h3{
+    font-size: 2em;
+    font-style: bold;
+}
+.container p{
+    font-size: 1.06em;
+    margin: 5px;
+}
+.container button{
+    padding: 0.4rem;
 }
 .title{
     margin: 10px;
@@ -15,4 +29,7 @@
     flex-direction: column;
     align-items: start;
     font-size: 2.5em;
+}
+.div{
+    /* padding: 10px; */
 }

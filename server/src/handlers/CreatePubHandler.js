@@ -2,6 +2,7 @@ const { Publication } = require("../db.js");
 
 const createPublicationHandler = async (req, res) => {
   const {
+    id,
     title,
     description,
     category,
@@ -26,7 +27,6 @@ const createPublicationHandler = async (req, res) => {
 
     const publication = await Publication.create({
       id,
-
       title,
       description,
       category,

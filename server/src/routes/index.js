@@ -9,11 +9,13 @@ const { updateUserHan } = require("../handlers/UpdateUser.js");
 const { DeleteUserHandler } = require("../handlers/DeleteUserH.js");
 const { authRegisterHandler } = require("../handlers/AuthRegisterHandler.js");
 const { handlerGetUsers } = require("../handlers/HandlerGetUsers.js");
+const { authLoginHandler } = require("../handlers/AuthLogin.js");
 
 const router = Router();
 
 // rutas
 router.post("/register", authRegisterHandler);
+router.post("/login", authLoginHandler);
 router.post("/users", userPostHandlers);
 router.put("/users/:id", updateUserHan);
 router.delete("/users/:id", DeleteUserHandler);

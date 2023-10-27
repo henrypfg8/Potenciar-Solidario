@@ -7,6 +7,7 @@ const { login } = require("../handlers/authHandler.js");
 const {
   HandlerGetPublications,
 } = require("../handlers/HandlersPublication.js");
+const { userPost } = require("../handlers/userPost.js");
 
 
 const router = Router();
@@ -16,6 +17,7 @@ router.get("/posts", HandlerGetPublications);
 router.get("/posts/:id", HandlerGetPublications);
 router.post("/register", login);
 router.post("/posts", createPublicationHandler);
+router.post("/post", userPost);
 router.delete("/post/:id", deletePublication);
 
 module.exports = router;

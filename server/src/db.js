@@ -55,28 +55,32 @@ const { User, Answer, Publication, Comment, Review, Question, Category } =
 User.hasMany(Review, {
     foreignKey: {
         name: "userID",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
 Review.belongsTo(User, {
     foreignKey: {
         name: "userID",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
 User.hasMany(Publication, {
     foreignKey: {
         name: "userID",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
 Publication.belongsTo(User, {
     foreignKey: {
         name: "userID",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
@@ -86,14 +90,16 @@ Question.belongsTo(User, { foreingKey: "userId" });
 User.hasMany(Answer, {
     foreignKey: {
         name: "userId",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
 Answer.belongsTo(User, {
     foreignKey: {
         name: "userId",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
@@ -101,28 +107,32 @@ Answer.belongsTo(User, {
 Review.belongsTo(Publication, {
     foreignKey: {
         name: "PostID",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
 Publication.hasMany(Review, {
     foreignKey: {
         name: "PostID",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
 Publication.belongsTo(Category, {
     foreignKey: {
         name: "categoryId",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
 Category.hasMany(Publication, {
     foreignKey: {
         name: "categoryId",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
@@ -133,28 +143,32 @@ Question.belongsTo(Category, { foreignKey: "categoryId" });
 Question.hasMany(Answer, {
     foreignKey: {
         name: "questionId",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
 Answer.belongsTo(Question, {
     foreignKey: {
         name: "questionId",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
 Answer.hasMany(Comment, {
     foreignKey: {
         name: "answerId",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 
 Comment.belongsTo(Answer, {
     foreignKey: {
         name: "answerId",
-        allowNull: false,
+        allowNull: true,
+        defaultValue: 'titulo'
     },
 });
 

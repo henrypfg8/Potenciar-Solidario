@@ -22,7 +22,7 @@ const createPublicationHandler = async (req, res) => {
       throw new Error("Vayanse a la mierda");
     }
 
-    const posts = await Publication.findOrCreate(
+    const posts = await Publication.create(
       id,
       title,
       description,

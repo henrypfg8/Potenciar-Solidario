@@ -15,7 +15,7 @@ function ForumView({ datos }) {
             <div className={style.containerCenter}>
                 <LeftBar />
                 <div className={style.container}>
-                    <h1 style={{ marginTop: '10px' }}>Foro general</h1>
+                    <h1>Foro general</h1>
                     <SearchBar />
 
                     <div className={style.div}>
@@ -26,9 +26,9 @@ function ForumView({ datos }) {
 
                                     <div className={style.center}>
                                         <NavLink to={`/foro/${dato.preguntas.id}`}>
-                                            <h2>{dato.preguntas.titulo}</h2>
+                                            <h1>{dato.preguntas.titulo}</h1>
                                         </NavLink>
-                                        <p>@{dato.username}</p>
+                                        <h4>@{dato.username}</h4>
                                         <p>{dato.preguntas.descripcion}</p>
                                         <div
                                             className={style.anwers}>
@@ -37,7 +37,10 @@ function ForumView({ datos }) {
                                             {dato.preguntas.respuestas.length > 1 && <p><strong>{dato.preguntas.respuestas.length}</strong> respuestas</p>}
                                         </div>
                                     </div>
+                                    <NavLink to={`/foro/${dato.preguntas.id}`}>
+
                                     <button>Ver más<Open /></button>
+                                    </NavLink>
                                 </div>
                             )
                         })}

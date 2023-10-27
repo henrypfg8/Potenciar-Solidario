@@ -4,4 +4,8 @@
     margin-top: 25px;
     border-radius: 5px;
     background-color: var(--lightblue);
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

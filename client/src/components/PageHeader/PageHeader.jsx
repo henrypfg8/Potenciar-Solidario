@@ -1,6 +1,8 @@
 import Styles from './pageHeader.module.css';
 //
 import { useEffect, useRef } from 'react';
+//
+import CarteleraIcon from '../../utils/icons/CarteleraIcon';
 
 
 export default function PageHeader () {
@@ -10,12 +12,13 @@ export default function PageHeader () {
     return (
         <div className={Styles['PageHeader']} ref={PageHeader}>
             <div className={Styles.PageHeader__Title}>
+                <CarteleraIcon className={Styles.PageHeader__icon} />
                 <p className={Styles.title}>CARTELERA</p>
             </div>
 
             <div className={Styles.PageHeader__Description}>
                 <p>
-                    Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina.
+                    Visualiza y publica anuncios esenciales para tu ONG, manteniendo a tu comunidad informada y participando en el foro para obtener respuestas y colaborar con otros miembros, fomentando la comunicación y la colaboración.
                 </p>
             </div>
             

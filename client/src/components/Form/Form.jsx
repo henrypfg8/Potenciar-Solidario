@@ -1,12 +1,10 @@
 /* eslint-disable react/prop-types */
-import {useSelector, useDispatch} from 'react-redux'
-import { createPost } from '../../Redux/actions';
+// import {createPost} from '../../Redux/actions'
+//import {useDispatch} from 'react-redux'
 
 const Form = ({ setPublication, pulication }) => {
     // const dispatch = useDispatch();
-    // const state = useSelector(state => state);
-    // console.log(state); 
-    // Enviar los datos del formulario
+
     const handleSubmit = (e) => {
         e.preventDefault();
  
@@ -28,7 +26,7 @@ const Form = ({ setPublication, pulication }) => {
        }) // Limpiar el formulario
        //enviar los datos al servidor
     };
-   // dispatch(createPost(pulication)); //agregar la publicacion al estado global
+    //dispatch(createPost(pulication))
     // Actualizar el estado con los datos del formulario
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -52,7 +50,7 @@ const Form = ({ setPublication, pulication }) => {
                 imagePreview: URL.createObjectURL(file)
             }));
         }
-    }
+    };
     return (
         <div>
             <form action="" className='form' onSubmit={handleSubmit}>

@@ -12,17 +12,44 @@ const initialState = {
     questionDetail: [],
 };
 
-// const questionReducer = (state = initialState, action) => {
+const questionReducer = (state = initialState, action) => {
 
-//     switch(action.type) {
-//         case CREATE_QUESTION:
-//             return {
-//                 ...state,
-//                 questions:
-//             }
+    switch(action.type) {
+        case CREATE_QUESTION:
+            return {
+                ...state,
+                questions: [...state.questions, action.payload],
+            };
+        
+        case DELETE_QUESTION:
+            return {
+                ...state,
+                questions: state.questions.filter(
+                    (question) => question.id !== action.payload
+                ),
+            };   
+        
+        case GET_QUESTIONS:
+            return {
+                ...state,
+                questions: action.payload,
+            };    
+        
+        case GET_QUESTION_DETAIL:
+            return {
+                ...state, questionDetail: action.payload,
+            };
+            
+        case CLEAR_QUESTION_DETAIL:
+            return {
+                ...state,
+                questionDetail: [],
+            };
+            
+            default:
+                return {...state};
 
+    }
+};
 
-
-
-//     }
-// }
+export default questionReducer;

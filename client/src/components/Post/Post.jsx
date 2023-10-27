@@ -9,9 +9,9 @@ const Post = (props) => {
         
         <Link to='/detalle' className={Styles.Post}>
             <h1>{props.title}</h1>
-            <h2>{props.ong}</h2>
+            <h2>{props.organization}</h2>
             <p>{props.category}</p>
-            <img/>
+            <img className={Styles.img} src={props.image} alt='imagen'/>
             <p>{props.description}</p>
         </Link>
     )

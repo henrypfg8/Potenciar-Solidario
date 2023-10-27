@@ -23,7 +23,11 @@ const Form = ({ setPost, post }) => {
             alert("Falta información");
         }
 
-        else dispatch(createPost(post))
+        else {
+            post.creationDate = '1111-11-11';
+            dispatch(createPost(post));
+            
+        }
 
        setPost({
         ...post,

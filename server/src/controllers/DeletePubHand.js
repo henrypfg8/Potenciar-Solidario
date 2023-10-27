@@ -4,7 +4,7 @@ const {DeletePubCont }= require("./DeletePubCont.js");
 const deletePublication = async (req, res) => {
   const { id } = req.params;
   try {
-    const deletedRows = await DeletePubCont(id, userId);
+    const deletedRows = await DeletePubCont(id);
     if (deletedRows !== 0) {
       res.status(200).json({
         message: "La publicación fue borrada exitosamente",

@@ -6,6 +6,8 @@ import LeftBar from '../../components/LeftBar/LeftBar';
 
 export default function Home () {
 
+
+    
     
 
     return (

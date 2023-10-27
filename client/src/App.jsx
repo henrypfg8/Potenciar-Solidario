@@ -31,12 +31,12 @@ function App() {
   }
   
   useEffect(() => {
-    root.addEventListener('scroll', scrollHandler)
+    root.addEventListener('scroll', scrollHandler);
 
     return () => {
       root.removeEventListener('scroll', scrollHandler)
     }
-  })
+  }, [])
 
  
   return (
@@ -53,6 +53,7 @@ function App() {
 
 
         <Route path='/foro' element={<Forum/>}/> 
+        
         <Route path='/foro/crear' element={<QuestionCreate/>}/>
         <Route path='/foro/:id' element={<QuestionDetail/>}/>  
 

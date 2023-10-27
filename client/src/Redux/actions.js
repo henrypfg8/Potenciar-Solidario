@@ -16,7 +16,7 @@ GET_QUESTION_DETAIL,
 CREATE_USER,
 DELETE_USER,
 GET_USERS,
-GET_USER_DETAIL,
+GET_USER_DETAIL
 } from "./action-types"
 
 import axios from "axios";
@@ -24,9 +24,11 @@ import axios from "axios";
 export const createPost = (post) => {
     return async function (dispatch) {
         try {
+            console.log(post)
             const response = await axios.post("http://localhost:19789/posts", post);
             dispatch({type: CREATE_POST, payload: response.data})
         } catch (error) {
+            console.log(error)
             throw new Error(error.response + "por favor contactar a soporte por este error");
         }
     }

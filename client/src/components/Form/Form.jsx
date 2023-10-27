@@ -1,40 +1,48 @@
 /* eslint-disable react/prop-types */
 // import {createPost} from '../../Redux/actions'
-//import {useDispatch} from 'react-redux'
+import {useDispatch} from 'react-redux'
+import { createPost, getPosts } from '../../Redux/actions'
 import useFormPostValidate from "../../hooks/useFormPostValidate";
 
+import axios from 'axios';
+
 const Form = ({ setPost, post }) => {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const {handleValidate, error} = useFormPostValidate(post);
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // handleValidate();
-        // if(Object.values(error).length <= 0){
-        //     console.log('el objeto esta vacio');
-        //     return
-        // }
         console.log(post)
-      // Validar los datos del formulario
-    //    setPost({
-    //     ...post,
-    //     title: '',
-    //     category: '',
-    //     description: '',
-    //     startDate: '',
-    //     endDate: '',
-    //     image: '',
-    //     creationDate: '',
-    //     imagePreview: null,
-    //     contact: '',
-    //     status: false,
-    //     organization: '',
-    //     linkInscription: '',
-    //     url: '',
-    //    }) // Limpiar el formulario
+
+        //los datos obligatorios:
+        const { title, description, organization, startDate, contact, linkInscription } = post;
+
+        if (!title || !description || !organization && !startDate || !contact || !linkInscription) {
+            alert("Falta información");
+        }
+
+        else dispatch(createPost(post))
+
+       setPost({
+        ...post,
+        title: '',
+        category: '',
+        description: '',
+        startDate: '',
+        endDate: '',
+        image: '',
+        creationDate: '',
+        imagePreview: null,
+        contact: '',
+        status: false,
+        organization: '',
+        linkInscription: '',
+        url: '',
+       }) // Limpiar el formulario
     };
 
-    //dispatch(createPost(post))
 
     // Actualizar el estado con los datos del formulario
     const handleChange = (e) => {
@@ -58,7 +66,7 @@ const Form = ({ setPost, post }) => {
 
             setPost(prevState => ({
                 ...prevState,
-                [name]: file,
+                [name]: file.name,
                 imagePreview: URL.createObjectURL(file)
             }));
         }

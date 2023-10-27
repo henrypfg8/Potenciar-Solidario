@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
+import { Open } from '../../assets/iconsForoHome';
 import LeftBar from '../../components/LeftBar/LeftBar';
+import SearchBar from '../../components/SearchBar/SearchBar';
 import style from './Foro.module.css';
 import { NavLink } from "react-router-dom";
 
@@ -14,6 +16,7 @@ function ForumView({ datos }) {
                 <LeftBar />
                 <div className={style.container}>
                     <h1 style={{ marginTop: '10px' }}>Foro general</h1>
+                    <SearchBar />
 
                     <div className={style.div}>
 
@@ -33,8 +36,8 @@ function ForumView({ datos }) {
                                             {dato.preguntas.respuestas.length === 1 && <p><strong>{dato.preguntas.respuestas.length}</strong> respuesta</p>}
                                             {dato.preguntas.respuestas.length > 1 && <p><strong>{dato.preguntas.respuestas.length}</strong> respuestas</p>}
                                         </div>
-
                                     </div>
+                                    <button>Ver más<Open /></button>
                                 </div>
                             )
                         })}

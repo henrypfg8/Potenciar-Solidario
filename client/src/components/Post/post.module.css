@@ -9,3 +9,10 @@
     flex-direction: column;
     align-items: center;
 }
+
+.img {
+    border: solid black 2px;
+    max-width: 100%;
+    width: 100%;
+    height: 60%;
+}

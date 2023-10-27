@@ -6,7 +6,7 @@ import './container.css'
 //import { Navigate } from 'react-router-dom';
 
 const ContainerForm = () => {
-    const [pulication, setPublication] = useState({
+    const [post, setPost] = useState({
         title: '',
         category: '',
         description: '',
@@ -32,11 +32,11 @@ const ContainerForm = () => {
             <div className='container'>
 
             <Form
-                setPublication={setPublication}
-                pulication={pulication} />
+                setPost={setPost}
+                post={post} />
             <FormView
-                pulication={pulication}
-                setPublication={setPublication} />
+                post={post}
+                setPost={setPost} />
         </div>
         </>
 

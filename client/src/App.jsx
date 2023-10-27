@@ -1,5 +1,7 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getPosts } from './Redux/actions';
 //
 import './App.css'
 //
@@ -13,11 +15,15 @@ import QuestionCreate from './components/QuestionCreate/QuestionCreate';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import PostDetail from './components/PostDetail/PostDetail';
+//
+
 
 
 function App() {
   // eslint-disable-next-line no-unused-vars
-  const location = useLocation()
+  const location = useLocation();
+  const posts = useSelector(state => state.posts.posts);
+  const dispatch = useDispatch();
 
   //Manejo de Header segun el scroll:
   const [ isScrolled, setIsScrolled ] = useState(false);
@@ -31,12 +37,15 @@ function App() {
   }
   
   useEffect(() => {
-    root.addEventListener('scroll', scrollHandler)
+    root.addEventListener('scroll', scrollHandler);
+
+    dispatch(getPosts());
+    console.log("se hizo el get");
 
     return () => {
       root.removeEventListener('scroll', scrollHandler)
     }
-  })
+  }, [])
 
  
   return (
@@ -53,6 +62,7 @@ function App() {
 
 
         <Route path='/foro' element={<Forum/>}/> 
+        
         <Route path='/foro/crear' element={<QuestionCreate/>}/>
         <Route path='/foro/:id' element={<QuestionDetail/>}/>  
 

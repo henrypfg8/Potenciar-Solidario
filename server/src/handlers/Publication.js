@@ -1,4 +1,4 @@
-const {getPublications} = require("../controllers/ControllerGetPublication");
+const {getPublications} = require("../controllers/GetPublication");
 
 const HandlerGetPublications = async (req, res) => {
   try {

@@ -22,4 +22,4 @@ const getPublications = async (id) => {
   //   return AllPublication;
 };
 
-module.exports = getPublications;
+module.exports = {getPublications};

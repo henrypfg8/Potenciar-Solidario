@@ -1,5 +1,5 @@
-const { Publication } = require("../src/db.js");
-const { User } = require("../src/db.js");
+const { Publication } = require("../db");
+const { User } = require("../db");
 
 const DeletePubCont = async (id, userId) => {
   const user = await User.findOne({ where: { id: userId } });
@@ -13,4 +13,4 @@ const DeletePubCont = async (id, userId) => {
   return deletedRows;
 };
 
-module.exports = DeletePubCont;
+module.exports = {DeletePubCont};

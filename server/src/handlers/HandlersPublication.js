@@ -21,4 +21,4 @@ const HandlerGetPublications = async (req, res) => {
   }
 };
 
-module.exports = HandlerGetPublications;
+module.exports = {HandlerGetPublications};

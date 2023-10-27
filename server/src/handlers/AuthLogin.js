@@ -1,5 +1,5 @@
 const { User } = require("../db.js");
-
+const bcrypt = require("bcryptjs");
 //autenticar usuario
 const authLoginHandler = async (req, res) => {
     const { email, password } = req.body;
@@ -9,17 +9,26 @@ const authLoginHandler = async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({
-            where: { email: email, password: password },
-        });
-
-        if (!user) {
+        const userExist = await User.findOne({ where: { email: email } });
+        if (!userExist) {
             return res
-                .status(401)
+                .status(400)
                 .json({ message: "error en la utenticacion" });
         }
 
-        res.status(200).json({ message: "Autenticación exitosa" });
+        const user = await User.findOne({
+            where: { email: email, password: hashPassword },
+        });
+
+        const passwordValid = await bcryptjs.compare(password, user.password);
+
+        if (passwordValid) {
+            res.status(200).json({ message: "Autenticación exitosa" });
+        } else {
+            return res
+                .status(400)
+                .json({ message: "error en la utenticacion" });
+        }
     } catch (error) {
         res.status(500).json({ message: "Error de servidor" });
     }

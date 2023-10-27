@@ -7,11 +7,12 @@ const { HandlerGetPublications } = require("../handlers/Publication.js");
 const { userPostHandlers } = require("../handlers/PostUser.js");
 const { updateUserHan } = require("../handlers/UpdateUser.js");
 const { DeleteUserHandler } = require("../handlers/DeleteUserH.js");
+const { authRegisterHandler } = require("../handlers/AuthRegisterHandler.js");
 
 const router = Router();
 
 // rutas
-router.post("/register", login);
+router.post("/register", authRegisterHandler);
 router.post("/users", userPostHandlers);
 router.put("/users/:id", updateUserHan);
 router.delete("/users/:id", DeleteUserHandler);

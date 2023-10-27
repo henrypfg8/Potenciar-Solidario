@@ -1,4 +1,5 @@
 const { User } = require("../db.js");
+const bcrypt = require("bcryptjs");
 
 const authRegisterHandler = async (req, res) => {
     const {
@@ -16,13 +17,13 @@ const authRegisterHandler = async (req, res) => {
     } = req.body;
 
     try {
-        
         const userExist = await User.findOne({ where: { name: name } });
 
         if (userExist) {
             return res.status(400).json({ message: "El usuario ya existe" });
         }
 
+        const hashPassword = await bcrypt.hash(password, 10);
         const user = await User.create({
             name,
             lastname,
@@ -34,17 +35,16 @@ const authRegisterHandler = async (req, res) => {
             habitual_location_of_residence,
             geographical_area_residence,
             admin,
-            password,
+            password: hashPassword,
         });
 
-        res.status(200).json({ message: `Usuario ${user.name} creado con éxito` });
+        res.status(200).json({
+            message: `Usuario ${user.name} creado con éxito`,
+        });
     } catch (error) {
-        console.error(error); 
+        console.error(error);
         res.status(500).json({ message: "Error de servidor" });
     }
 };
 
-
-
-
-module.exports = {authRegisterHandler}
+module.exports = { authRegisterHandler };

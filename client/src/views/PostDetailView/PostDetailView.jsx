@@ -1,4 +1,4 @@
-import DetailComponent from "../../components/DetailComponent/DetailComponent";
+import DetailComponent from "../../components/PostDetail/DetailComponent";
 
 const Detail = () => {
 

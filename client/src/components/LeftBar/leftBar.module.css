@@ -7,35 +7,48 @@
     align-items: center;
 }
 
-    .NavigationButtons {
+    .LeftBar__Buttons {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        padding: 13px 0;
+        gap: 10px;
     }
 
-        .LeftBar__button {
+        .button {
             color: inherit;
-            margin: 10px 0;
-            height: 100px;
+            height: 70px;
             max-height: 100px;
             width: 90%;
+            max-width: 90%;
             border-radius: 5px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 1.5em;
             background: var(--lightblue);
-            transition: 0.2s;
+            transition: background-color 0.2s;
         }
-        .LeftBar__button:hover {
+        
+        
+        .button:hover {
             background-color: var(--darkblue);
+            color: white;
         }
+
+        
+        .select {
+            width: 90%;
+        }
+
+   
 
 #active {
     background-color: var(--darkblue);
     color: white;
+    cursor: inherit;
 }
 
     

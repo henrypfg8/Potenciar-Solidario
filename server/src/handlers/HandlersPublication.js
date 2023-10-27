@@ -1,4 +1,4 @@
-const getPublications = require("./ControllerGetPublication");
+const getPublications = require("../controllers/ControllerGetPublication");
 
 const HandlerGetPublications = async (req, res) => {
   try {
@@ -21,4 +21,4 @@ const HandlerGetPublications = async (req, res) => {
   }
 };
 
-module.exports = HandlerGetPublications;
+module.exports = {HandlerGetPublications};

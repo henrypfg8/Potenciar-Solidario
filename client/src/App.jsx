@@ -12,6 +12,9 @@ import QuestionDetail from './components/QuestionsDetail/QuestionDetail';
 import QuestionCreate from './components/QuestionCreate/QuestionCreate';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import PostDetail from './components/PostDetail/PostDetail';
+
+
 function App() {
   // eslint-disable-next-line no-unused-vars
   const location = useLocation()
@@ -45,11 +48,16 @@ function App() {
       <Routes>
 
         <Route path='/' element={<Home/>} />
+        <Route path='/formulario' element={<ContainerForm/>}/>
+        <Route path='/detalle:id' element={<PostDetail/>} />
+
+
+        <Route path='/foro' element={<Forum/>}/> 
         
         <Route path='/foro/crear' element={<QuestionCreate/>}/>
-        <Route path='/foro' element={<Forum/>}/> 
-        <Route path='/formulario' element={<ContainerForm/>}/>
         <Route path='/foro/:id' element={<QuestionDetail/>}/>  
+
+        
         {/* auth */}
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>

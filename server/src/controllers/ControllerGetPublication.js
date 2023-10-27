@@ -1,5 +1,5 @@
 // const { User } = require("./db");
-const { Publication } = require("./db");
+const { Publication } = require("../db");
 
 const getPublications = async (id) => {
   if (id) {
@@ -22,4 +22,4 @@ const getPublications = async (id) => {
   //   return AllPublication;
 };
 
-module.exports = getPublications;
+module.exports = {getPublications};

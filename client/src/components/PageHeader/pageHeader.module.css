@@ -17,9 +17,16 @@
             color: white;
             font-weight: bolder;
             font-size: 2em;
-            margin-bottom: 35px;
-            margin-left: 45px;
+            transform: translate(20px, -10px);
         }
+
+    .PageHeader__icon {
+        color: white;
+        transform: translate(20px, -10px);
+        width: 3.5em;
+        height: 3.5em;
+        margin-right: 30px;
+    }
 
     .PageHeader__Description {
         max-width: 60%;
@@ -27,6 +34,7 @@
         padding: 0 30px;
         display: flex;
         align-items: center;
-        font-size: 1.25em;
+        font-size: 1.35em;
         color: white;
+        font-weight: lighter;
     }

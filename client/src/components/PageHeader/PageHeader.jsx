@@ -1,6 +1,8 @@
 import Styles from './pageHeader.module.css';
 //
 import { useEffect, useRef } from 'react';
+//
+import CarteleraIcon from '../../utils/icons/CarteleraIcon';
 
 
 export default function PageHeader () {
@@ -10,6 +12,7 @@ export default function PageHeader () {
     return (
         <div className={Styles['PageHeader']} ref={PageHeader}>
             <div className={Styles.PageHeader__Title}>
+                <CarteleraIcon className={Styles.PageHeader__icon} />
                 <p className={Styles.title}>CARTELERA</p>
             </div>
 

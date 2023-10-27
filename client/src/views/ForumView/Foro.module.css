@@ -10,6 +10,7 @@ body html {
     font-family: 'MiFuente';
     src: url('../../fonts//VisbyRoundCF-ExtraBold.otf');
     font-weight: bold;
+    
 }
 :root {
     --color-primario:#0f3054;
@@ -55,7 +56,7 @@ body html {
     font-size: 1em;
 }
 .contain:hover{
-    background-color: #0055921c;
+    background-color: #00559211;
     /* border: none; */
     transition: 0.3s;
 }

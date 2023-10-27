@@ -1,0 +1,50 @@
+const { User } = require("../db.js");
+
+const authRegisterHandler = async (req, res) => {
+    const {
+        name,
+        lastname,
+        description,
+        DNI,
+        birth_date,
+        phone,
+        profile_picture,
+        habitual_location_of_residence,
+        geographical_area_residence,
+        admin,
+        password,
+    } = req.body;
+
+    try {
+        
+        const userExist = await User.findOne({ where: { name: name } });
+
+        if (userExist) {
+            return res.status(400).json({ message: "El usuario ya existe" });
+        }
+
+        const user = await User.create({
+            name,
+            lastname,
+            description,
+            DNI,
+            birth_date,
+            phone,
+            profile_picture,
+            habitual_location_of_residence,
+            geographical_area_residence,
+            admin,
+            password,
+        });
+
+        res.status(200).json({ message: `Usuario ${user.name} creado con éxito` });
+    } catch (error) {
+        console.error(error); 
+        res.status(500).json({ message: "Error de servidor" });
+    }
+};
+
+
+
+
+module.exports = {authRegisterHandler}

@@ -9,7 +9,6 @@ const {
 } = require("../handlers/HandlersPublication.js");
 const { userPost } = require("../handlers/userPost.js");
 
-
 const router = Router();
 
 // rutas
@@ -17,7 +16,7 @@ router.get("/posts", HandlerGetPublications);
 router.get("/posts/:id", HandlerGetPublications);
 router.post("/register", login);
 router.post("/posts", createPublicationHandler);
-router.post("/post", userPost);
-router.delete("/post/:id", deletePublication);
+router.post("/users", userPost);
+router.delete("/posts/:id", deletePublication);
 
 module.exports = router;

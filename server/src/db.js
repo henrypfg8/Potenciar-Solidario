@@ -50,127 +50,24 @@ const { User, Answer, Publication, Comment, Review, Question, Category } =
     sequelize.models;
 
 //Relacion de modelos
-
-//---------------User-----------------
-User.hasMany(Review, {
-    foreignKey: {
-        name: "userID",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-Review.belongsTo(User, {
-    foreignKey: {
-        name: "userID",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-User.hasMany(Publication, {
-    foreignKey: {
-        name: "userID",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-Publication.belongsTo(User, {
-    foreignKey: {
-        name: "userID",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-User.hasMany(Question, { foreignKey: "userId" });
-Question.belongsTo(User, { foreingKey: "userId" });
-
-User.hasMany(Answer, {
-    foreignKey: {
-        name: "userId",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-Answer.belongsTo(User, {
-    foreignKey: {
-        name: "userId",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-//-----------Publication----------------
-Review.belongsTo(Publication, {
-    foreignKey: {
-        name: "PostID",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-Publication.hasMany(Review, {
-    foreignKey: {
-        name: "PostID",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-Publication.belongsTo(Category, {
-    foreignKey: {
-        name: "categoryId",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-Category.hasMany(Publication, {
-    foreignKey: {
-        name: "categoryId",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-//-----------Ansqwer-Question----------------
-Category.hasMany(Question, { foreignKey: "categoryId" });
-Question.belongsTo(Category, { foreignKey: "categoryId" });
-
-Question.hasMany(Answer, {
-    foreignKey: {
-        name: "questionId",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-Answer.belongsTo(Question, {
-    foreignKey: {
-        name: "questionId",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-Answer.hasMany(Comment, {
-    foreignKey: {
-        name: "answerId",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
-
-Comment.belongsTo(Answer, {
-    foreignKey: {
-        name: "answerId",
-        allowNull: true,
-        defaultValue: 'titulo'
-    },
-});
+User.hasMany(Review, { foreignKey: 'userID' });
+User.hasMany(Publication, { foreignKey: 'userID' });
+User.hasMany(Question, { foreignKey: 'userId' });
+User.hasMany(Answer, { foreignKey: 'userId' });
+Review.belongsTo(User, { foreignKey: 'userID' });
+Review.belongsTo(Publication, { foreignKey: 'PostID' });
+Publication.belongsTo(User, { foreignKey: 'userID' });
+Publication.belongsTo(Category, { foreignKey: 'categoryId' });
+Publication.hasMany(Review, { foreignKey: 'PostID' });
+Category.hasMany(Publication, { foreignKey: 'categoryId' });
+Category.hasMany(Question, { foreignKey: 'categoryId' });
+Question.belongsTo(Category, { foreignKey: 'categoryId' });
+Question.belongsTo(User, { foreignKey: 'userId' });
+Question.hasMany(Answer, { foreignKey: 'questionId' });
+Answer.belongsTo(User, { foreignKey: 'userId' });
+Answer.belongsTo(Question, { foreignKey: 'questionId' });
+Answer.hasMany(Comment, { foreignKey: 'answerId' });
+Comment.belongsTo(Answer, { foreignKey: 'answerId' });
 
 module.exports = {
     ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

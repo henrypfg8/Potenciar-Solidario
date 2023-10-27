@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 // import {createPost} from '../../Redux/actions'
 import {useDispatch} from 'react-redux'
-import { createPost, getPosts } from '../../Redux/actions'
+import { createPost,} from '../../Redux/actions'
 import useFormPostValidate from "../../hooks/useFormPostValidate";
-
-import axios from 'axios';
+import Success from './Success';
+import { useState } from 'react';
 
 const Form = ({ setPost, post }) => {
+    const [success, setSuccess] = useState(false);
     const dispatch = useDispatch();
     const {handleValidate, error} = useFormPostValidate(post);
 
@@ -14,16 +15,21 @@ const Form = ({ setPost, post }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log(post)
+ 
 
         //los datos obligatorios:
         const { title, description, organization, startDate, contact, linkInscription } = post;
-
+   
         if (!title || !description || !organization && !startDate || !contact || !linkInscription) {
             alert("Falta información");
+            return
         }
-
+     
         else dispatch(createPost(post))
+        setSuccess(true);
+        setTimeout(() => {
+            setSuccess(false);
+        }, [1500])
 
        setPost({
         ...post,
@@ -73,7 +79,9 @@ const Form = ({ setPost, post }) => {
     };
     return (
         <div>
+            {success && <Success />}
             <form action="" className='form' onSubmit={handleSubmit}>
+                
                 <div className='form__field'>
                     <label htmlFor="title">Titulo</label>
                     {error.title && <p className='form__error'>{error.title}</p>}

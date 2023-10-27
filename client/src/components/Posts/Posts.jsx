@@ -4,11 +4,19 @@ import Post from '../Post/Post';
 import SearchBar from '../SearchBar/SearchBar';
 //
 import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 
 
 export default function Posts () {
 
- 
+  const posts = useSelector(state => state.posts.posts);
+  const [ postsLocal, setPostsLocal ] = useState(posts);
+
+  useEffect(() => {
+    setPostsLocal(posts, console.log(posts));
+    
+  }, [posts])
+
   return (
     <div className={Styles.Posts}>
 
@@ -17,7 +25,17 @@ export default function Posts () {
       <SearchBar />
 
       <div className={Styles.Cards}>
-        
+        {
+          postsLocal?.map(({ id, title, organization, category, description }) => (
+            <Post 
+              key={id}
+              title={title}
+              organization={organization}
+              category={category}
+              description={description}
+              />
+          ))
+        }
       </div>
       
     </div>

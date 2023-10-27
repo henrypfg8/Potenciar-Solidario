@@ -1,5 +1,4 @@
 const { Publication } = require("../db");
-const { User } = require("../db");
 
 const DeletePubCont = async (id) => {
   const user = await Publication.destroy({ where: { id: id } });
@@ -13,4 +12,4 @@ const DeletePubCont = async (id) => {
   return user;
 };
 
-module.exports = {DeletePubCont};
+module.exports = { DeletePubCont };

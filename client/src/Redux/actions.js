@@ -16,7 +16,7 @@ GET_QUESTION_DETAIL,
 CREATE_USER,
 DELETE_USER,
 GET_USERS,
-GET_USER_DETAILS
+GET_USER_DETAIL
 } from "./action-types"
 
 import axios from "axios";

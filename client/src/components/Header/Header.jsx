@@ -12,13 +12,12 @@ export default function Header ({ isScrolled }) {
             <div className={Styles['header']} id={isScrolled ? Styles.headerScrolled : ''}>
 
                 <a className={Styles['title']}>
-                    Portal <strong> Potenciar Solidario</strong>
+                    Portal <strong>Potenciar Solidario</strong>
                 </a>
               
 
                 {
                     pathname.includes('/foro') ?  
-
                     (
                         pathname === '/foro' ?
                         (<Link className={Styles.backButton}>
@@ -29,16 +28,12 @@ export default function Header ({ isScrolled }) {
                             VOLVER AL FORO
                         </Link>)
                     )
-
                     :
-
                     pathname === '/detalle' ? 
                     (<Link to='/' className={Styles.backButton}>
                         VOLVER A LA CARTELERA
                     </Link>)
-
                     :
-
                     (
                         pathname === '/formulario' ? 
                         (<Link to='/' className={Styles.backButton}>
@@ -49,7 +44,6 @@ export default function Header ({ isScrolled }) {
                             VOLVER AL INICIO
                         </Link>)
                     )       
-
                 }
 
                 

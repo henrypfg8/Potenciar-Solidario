@@ -12,20 +12,18 @@ const authLoginHandler = async (req, res) => {
 
     try {
         const userExist = await User.findOne({ where: { email: email } });
+
         if (!userExist) {
             return res
                 .status(400)
                 .json({ message: "error en la utenticacion" });
         }
 
-        const user = await User.findOne({
-            where: { email: email, password: hashPassword },
-        });
-
         const passwordValid = await bcrypt.compare(
             password,
             userExist.password
         );
+        console.log(passwordValid);
 
         if (passwordValid) {
             const id = userExist.id;
@@ -33,11 +31,11 @@ const authLoginHandler = async (req, res) => {
             const cookieOptions = {
                 expires: new Date(
                     Date.now() +
-                        process.env.JTW_TIEMPO_EXPIRA * 24 * 60 * 60 * 1000
+                        process.env.JWT_TIEMPO_EXPIRA * 24 * 60 * 60 * 1000
                 ),
                 httpOnly: true,
             };
-            res.cookie("jwt", token, cookieOptions);
+            //res.cookie("jwt", token, cookieOptions); Esta linea rompe el codigo
             res.status(200).json({ message: "Autenticación exitosa" });
         } else {
             return res

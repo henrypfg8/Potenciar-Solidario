@@ -1,9 +1,9 @@
 const { User } = require("../db.js");
 const bcrypt = require("bcryptjs");
 
-
 const authRegisterHandler = async (req, res) => {
     const {
+        email,
         name,
         lastname,
         description,
@@ -27,6 +27,7 @@ const authRegisterHandler = async (req, res) => {
         const hashPassword = await bcrypt.hash(password, 10);
         const user = await User.create({
             name,
+            email,
             lastname,
             description,
             DNI,

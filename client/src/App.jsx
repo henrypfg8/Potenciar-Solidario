@@ -50,14 +50,10 @@ function App() {
         <Route path='/foro' element={<Forum/>}/> 
         <Route path='/formulario' element={<ContainerForm/>}/>
         <Route path='/foro/:id' element={<QuestionDetail/>}/>  
-<<<<<<< Updated upstream
         {/* auth */}
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
       </Routes>
-=======
-     </Routes>
->>>>>>> Stashed changes
     </div>
   )
 }

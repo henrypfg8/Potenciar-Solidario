@@ -1,4 +1,4 @@
-const { userPostHandlers } = require("./userPostHandlers");
+const { userPostHandlers } = require("../handlers/PostUser");
 
 const userPost = async (req, res) => {
   userPostHandlers(req, res);

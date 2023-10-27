@@ -1,4 +1,4 @@
-const {DeletePubCont }= require("./DeletePubCont.js");
+const {DeletePubCont }= require("../controllers/DeletePublication.js");
 
 //DOMpurify for DOM sanitization
 const deletePublication = async (req, res) => {

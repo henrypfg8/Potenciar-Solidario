@@ -64,6 +64,7 @@ body html {
     margin: 10px;
     box-shadow: -2px -1px 6px 6px #fff;
     border: 1px solid #cbd5e1;
+    padding: 10px;
 }
 .contain p{
     font-size: 1.1em;

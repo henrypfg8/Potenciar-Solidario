@@ -17,7 +17,7 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
             <div className={style.contain}>
                 {respuestasUsuario.map((respuesta, index) => {
                     return (
-                        <div key={index} className={style.text}>
+                        <div key={index} className={style.div}>
                             <strong>
                                 <p>
                                     {usuariosRespuestas.map(usuario => {

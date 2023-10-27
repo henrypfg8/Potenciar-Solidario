@@ -1,6 +1,6 @@
 const { Router } = require("express.js");
-const userPostHandlers = require("../userPostHandlers.js");
-const deletePublication = require("../../DeletePubHand.js");
+const userPostHandlers = require("../handlers/userPostHandlers.js");
+const deletePublication = require("../controllers/DeletePubHand.js");
 const HandlerGetPublications = require("");
 const login = require("");
 

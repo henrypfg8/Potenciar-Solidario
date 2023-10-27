@@ -1,5 +1,5 @@
 // const { User } = require("./db");
-const { Publication } = require("./db");
+const { Publication } = require("../db");
 
 const getPublications = async (id) => {
   if (id) {

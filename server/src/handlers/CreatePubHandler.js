@@ -1,4 +1,4 @@
-const { Publication } = require("./src/db.js");
+const { Publication } = require("../db.js");
 const createPublicationHandler = async (req, res) => {
   const {
     id,

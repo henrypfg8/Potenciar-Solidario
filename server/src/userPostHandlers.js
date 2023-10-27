@@ -16,6 +16,4 @@ const userPostHandlers = async (req, res) => {
   }
 };
 
-module.exports = {
-  userPostHandlers,
-};
+module.exports = userPostHandlers;

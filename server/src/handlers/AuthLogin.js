@@ -7,7 +7,7 @@ const authLoginHandler = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-        return res.status(400).json({ message: "Ignrese email y contraseña" });
+        return res.status(400).json({ message: "Ingrese email y contraseña" });
     }
 
     try {

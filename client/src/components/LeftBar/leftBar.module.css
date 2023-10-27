@@ -23,19 +23,21 @@
             max-height: 100px;
             width: 90%;
             max-width: 90%;
-            border-radius: 5px;
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 1.5em;
             background: var(--lightblue);
-            transition: background-color 0.2s;
+            transition: background-color, border, color 0.4s;
         }
         
         
         .button:hover {
             background-color: var(--darkblue);
             color: white;
+            border: solid var(--lightblue) 5px
+
         }
 
         
@@ -49,6 +51,7 @@
     background-color: var(--darkblue);
     color: white;
     cursor: inherit;
+    border: solid var(--lightblue) 5px
 }
 
     

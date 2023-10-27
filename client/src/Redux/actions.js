@@ -24,7 +24,7 @@ import axios from "axios";
 export const createPost = (post) => {
     return async function (dispatch) {
         try {
-            const response = await axios.post("/posts", post);
+            const response = await axios.post("http://localhost:19789/posts", post);
             dispatch({type: CREATE_POST, payload: response.data})
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error");
@@ -35,7 +35,7 @@ export const createPost = (post) => {
 export const deletePost = (id) => {
     return async function (dispatch) {
         try {
-            const response = await axios.delete(`/posts/${id}`);
+            const response = await axios.delete(`http://localhost:19789/posts/${id}`);
             dispatch({type:DELETE_POST, payload: response.data});
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error");
@@ -47,7 +47,7 @@ export const deletePost = (id) => {
 export const getPosts = () => {
     return async function (dispatch) {
         try {
-            const response = await axios.get("/posts")
+            const response = await axios.get("http://localhost:19789/posts")
             dispatch({type: GET_POSTS, payload: response.data})
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error")
@@ -58,7 +58,7 @@ export const getPosts = () => {
 export const getPostDetail = (id) => {
     return async function (dispatch) {
         try {
-            const response = await axios.get(`/posts/${id}`);
+            const response = await axios.get(`http://localhost:19789/posts/${id}`);
             dispatch({type: GET_POST_DETAIL, payload: response.data});
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error")
@@ -69,7 +69,7 @@ export const getPostDetail = (id) => {
 export const searchPost = (query) => {
     return async function (dispatch) {
         try {
-            const response = await axios.get(`/posts?name=${query}`);
+            const response = await axios.get(`http://localhost:19789/posts?name=${query}`);
             dispatch({type: SEARCH_POST, payload: response.data});
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error")
@@ -100,7 +100,7 @@ export const clearUserDetail = () => {
 export const createQuestion = (question) => {
     return async function (dispatch) {
         try {
-            const response = await axios.post("/questions", question);
+            const response = await axios.post("http://localhost:19789/questions", question);
             dispatch({type: CREATE_QUESTION, payload: response.data});
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error");
@@ -111,7 +111,7 @@ export const createQuestion = (question) => {
 export const deleteQuestion = (id) => {
     return async function (dispatch) {
         try {
-            const response = await axios.delete(`/questions/${id}`);
+            const response = await axios.delete(`http://localhost:19789/questions/${id}`);
             dispatch({type: DELETE_QUESTION, payload: response.data});
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error");
@@ -122,7 +122,7 @@ export const deleteQuestion = (id) => {
 export const getQuestions = () => {
     return async function (dispatch) {
         try {
-            const response = await axios.get("/questions");
+            const response = await axios.get("http://localhost:19789/questions");
             dispatch({type: GET_QUESTIONS, payload: response.data})
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error");
@@ -133,7 +133,7 @@ export const getQuestions = () => {
 export const getQuestionDetail = (id) => {
     return async function (dispatch) {
         try {
-            const response = await axios.get(`/questions/${id}`);
+            const response = await axios.get(`http://localhost:19789/questions/${id}`);
             dispatch({type: GET_QUESTION_DETAIL, payload: response.data})
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error");
@@ -144,7 +144,7 @@ export const getQuestionDetail = (id) => {
 export const createUser = (user) => {
     return async function (dispatch) {
         try {
-            const response = await axios.post("/users", user);
+            const response = await axios.post("http://localhost:19789/users", user);
             dispatch({type: CREATE_USER, payload: response.data});
         } catch (error) {   
             throw new Error(error.response + "por favor contactar a soporte por este error");
@@ -155,7 +155,7 @@ export const createUser = (user) => {
 export const deleteUser = (id) => {
     return async function (dispatch) {
         try {
-            const response = await axios.delete(`/users/${id}`);
+            const response = await axios.delete(`http://localhost:19789/users/${id}`);
             dispatch({type: DELETE_USER, payload: response.data});
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error");
@@ -166,7 +166,7 @@ export const deleteUser = (id) => {
 export const getUsers = () => {
     return async function (dispatch) {
         try {
-            const response = await axios.get("/users");
+            const response = await axios.get("http://localhost:19789/users");
             dispatch({type: GET_USERS, payload: response.data});
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error");
@@ -177,7 +177,7 @@ export const getUsers = () => {
 export const getUserDetail = (id) => {
     return async function (dispatch) {
         try {
-            const response = await axios.get(`/users/${id}`);
+            const response = await axios.get(`http://localhost:19789/users/${id}`);
             dispatch({type: GET_USER_DETAIL, payload: response.data});
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error");

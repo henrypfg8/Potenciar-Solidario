@@ -8,7 +8,7 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
     return (
         <div className={style.container}>
             <div className={style.div1}>
-                <h3 className={style.title}>{preguntaUsuario?.preguntas.titulo}</h3>
+                <h3>{preguntaUsuario?.preguntas.titulo}</h3>
                 <strong><p>{preguntaUsuario.username}</p></strong>
                 <p>{preguntaUsuario?.preguntas.descripcion}</p>
                 <button>Responder</button>

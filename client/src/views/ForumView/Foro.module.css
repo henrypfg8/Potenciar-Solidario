@@ -62,8 +62,11 @@ body html {
     align-items: start;
     justify-content: center;
     margin: 10px;
-    border: 1px red solid;
-    width: 60vw;
+    box-shadow: -2px -1px 6px 6px #fff;
+    border: 1px solid #cbd5e1;
+}
+.contain p{
+    font-size: 1.1em;
 }
 
 .anwers {

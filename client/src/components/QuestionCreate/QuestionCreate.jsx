@@ -1,4 +1,5 @@
 import { useState } from "react";
+import style from './Question.module.css'
 
 function QuestionCreate() {
 
@@ -15,16 +16,16 @@ function QuestionCreate() {
     }
     console.log(question);
     return (
-        <div>
-            <form action="" onChange={handleChange}>
-                <div>
-                    <label htmlFor="" >Titulo </label>
-                    <input type="text" name="title" />
+        <div className={style.contain}>
+            <form action="" onChange={handleChange} className={style.form}>
+                <div className={style.div}>
+                    <label htmlFor="title">Titulo </label>
+                    <input type="text" name="title" placeholder="Titulo"/>
                 </div>
 
-                <div>
-                    <label htmlFor="" >Descripcion</label>
-                    <input type="text" name="description" />
+                <div className={style.div}>
+                    <label htmlFor="description">Descripcion</label>
+                    <textarea type="text"  cols="30" rows="8" name="description" placeholder="Descripcion"></textarea>
                 </div>
                 <button type="submit">Enviar pregunta</button>
             </form>

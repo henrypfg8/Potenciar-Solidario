@@ -1,5 +1,7 @@
 const { User } = require("../db.js");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
 //autenticar usuario
 const authLoginHandler = async (req, res) => {
     const { email, password } = req.body;
@@ -20,9 +22,22 @@ const authLoginHandler = async (req, res) => {
             where: { email: email, password: hashPassword },
         });
 
-        const passwordValid = await bcryptjs.compare(password, user.password);
+        const passwordValid = await bcrypt.compare(
+            password,
+            userExist.password
+        );
 
         if (passwordValid) {
+            const id = userExist.id;
+            const token = jwt.sign({ id: id }, process.env.JWT_SECRET);
+            const cookieOptions = {
+                expires: new Date(
+                    Date.now() +
+                        process.env.JTW_TIEMPO_EXPIRA * 24 * 60 * 60 * 1000
+                ),
+                httpOnly: true,
+            };
+            res.cookie("jwt", token, cookieOptions);
             res.status(200).json({ message: "Autenticación exitosa" });
         } else {
             return res

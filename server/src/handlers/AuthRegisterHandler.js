@@ -1,6 +1,7 @@
 const { User } = require("../db.js");
 const bcrypt = require("bcryptjs");
 
+
 const authRegisterHandler = async (req, res) => {
     const {
         name,

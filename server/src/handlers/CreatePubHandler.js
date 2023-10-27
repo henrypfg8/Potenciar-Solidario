@@ -1,7 +1,7 @@
 const { Publication } = require("../db.js");
+
 const createPublicationHandler = async (req, res) => {
   const {
-    id,
     title,
     description,
     category,
@@ -19,11 +19,10 @@ const createPublicationHandler = async (req, res) => {
 
   try {
     if (!title || !description || !category || !contact || !organization) {
-      throw new Error("Vayanse a la mierda");
+      throw new Error("Faltan datos obligatorios");
     }
 
-    const posts = await Publication.create(
-      id,
+    const publication = await Publication.create({
       title,
       description,
       category,
@@ -36,13 +35,14 @@ const createPublicationHandler = async (req, res) => {
       url,
       image,
       registrationLink,
-      contact
-    );
+      contact,
+    });
 
-    res.status(201).json(posts);
+    res.status(201).json(publication);
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: error.message });
   }
 };
+
 module.exports = { createPublicationHandler };

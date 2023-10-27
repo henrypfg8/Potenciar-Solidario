@@ -15,7 +15,6 @@ const DeleteUserHandler = async (req, res) => {
       throw new Error("No se proporcionó un ID válido");
     }
   } catch (error) {
-    // Handle any unhandled errors here, if necessary
-    res.status(500).send({ message: error.message }); // Generic error response
+    res.status(500).send({ message: error.message });
   }
 };

@@ -32,6 +32,13 @@ export default function Header ({ isScrolled }) {
 
                     :
 
+                    pathname === '/detalle' ? 
+                    (<Link to='/' className={Styles.backButton}>
+                        VOLVER A LA CARTELERA
+                    </Link>)
+
+                    :
+
                     (
                         pathname === '/formulario' ? 
                         (<Link to='/' className={Styles.backButton}>

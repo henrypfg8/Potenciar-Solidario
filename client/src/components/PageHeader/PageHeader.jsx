@@ -15,7 +15,7 @@ export default function PageHeader () {
 
             <div className={Styles.PageHeader__Description}>
                 <p>
-                    Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina. Esta es la descripcion de la pagina.
+                    Visualiza y publica anuncios esenciales para tu ONG, manteniendo a tu comunidad informada y participando en el foro para obtener respuestas y colaborar con otros miembros, fomentando la comunicación y la colaboración.
                 </p>
             </div>
             

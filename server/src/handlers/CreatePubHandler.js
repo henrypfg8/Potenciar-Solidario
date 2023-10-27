@@ -19,10 +19,14 @@ const createPublicationHandler = async (req, res) => {
 
   try {
     if (!title || !description || !category || !contact || !organization) {
-      throw new Error("Faltan datos obligatorios");
+
+
+      throw new Error("Faltan campos obligatorios");
     }
 
     const publication = await Publication.create({
+      id,
+
       title,
       description,
       category,

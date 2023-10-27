@@ -8,15 +8,20 @@ const {
   HandlerGetPublications,
 } = require("../handlers/HandlersPublication.js");
 const { userPost } = require("../handlers/userPost.js");
+const { updateUserHan } = require("../handlers/updateUserHan.js");
+const { DeleteUserHandler } = require("../handlers/DeleteUserH.js");
+
 
 const router = Router();
 
 // rutas
+router.post("/register", login);
 router.get("/posts", HandlerGetPublications);
 router.get("/posts/:id", HandlerGetPublications);
-router.post("/register", login);
 router.post("/posts", createPublicationHandler);
-router.post("/users", userPost);
+router.post("/user", userPost);
+router.put('/users/:id', updateUserHan)
+router.delete("/users/:id", DeleteUserHandler);
 router.delete("/posts/:id", deletePublication);
 
 module.exports = router;

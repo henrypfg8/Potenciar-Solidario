@@ -2,7 +2,7 @@ const { User } = require("../db");
 
 const userPostHandlers = async (req, res) => {
   try {
-    const userData = req.body;
+    const {userData} = req.body;
 
     const newUser = await User.create(userData);
     if (!newUser) throw new Error("Datos erroneos al crear el user");

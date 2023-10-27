@@ -1,4 +1,4 @@
-const DeleteUser = require("../controllers/DeleteUserC.js");
+const { DeleteUser } = require("../controllers/DeleteUserC.js");
 
 const DeleteUserHandler = async (req, res) => {
   try {
@@ -17,4 +17,8 @@ const DeleteUserHandler = async (req, res) => {
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
+};
+
+module.exports = {
+  DeleteUserHandler,
 };

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const DetailComponent = (props) => {
+const PostDetail = (props) => {
     const { postDetail } = props;
     return (
         <div>
@@ -21,4 +21,4 @@ const DetailComponent = (props) => {
     )
 }
 
-export default DetailComponent;
+export default PostDetail;

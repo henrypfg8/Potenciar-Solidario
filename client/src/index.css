@@ -1,5 +1,5 @@
 :root {
-  font-family: "Monsterrat", sans-serif;
+  /* font-family: "Monsterrat", sans-serif; */
   line-height: 1.5;
   font-weight: 400;
 
@@ -13,9 +13,11 @@
   --darkblue: #0f3054;
   --blue: #005692;
   --lightblue: #a4d4ff;
+
 }
 
 * {
+  font-family: "Visby Round CF";
   margin: 0;
   padding: 0;
   box-sizing: border-box;

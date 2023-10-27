@@ -1,15 +1,18 @@
 import {useForm} from 'react-hook-form'
-import './auth.css'
+import './auth.css';
+
 const Login = () => {
+    
     const {register, handleSubmit, formState: {errors}} = useForm();
     
-    const onSubmit = data => {
-        console.log(data); //datos del formulario
+    const onSubmit = user => {
+        console.log(user); //datos del formulario
     }
 
   return (
     <div className='auth__container' >
     <form action="" onSubmit={handleSubmit(onSubmit)} className='auth__form' autoCorrect='off'>
+        {/* campo para el email */}
         <div>
             <label className='auth__label' htmlFor="email">correo</label>
             {errors.email && <p className='auth__error'>Debe ser un correo valido</p>}
@@ -22,6 +25,7 @@ const Login = () => {
                 id='email' placeholder='Escribe tu correo' 
                 />
         </div>
+        {/* Campo para la contraseñá */}
         <div>
             <label className='auth__label' htmlFor="password">Escribe tu contraseña</label>
             {errors.password && <p className='auth__error'>To contraseña debe ser minímo de 6 caracterés</p>}

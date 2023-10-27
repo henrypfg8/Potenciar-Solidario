@@ -31,12 +31,12 @@ function App() {
   }
   
   useEffect(() => {
-    root.addEventListener('scroll', scrollHandler)
+    root.addEventListener('scroll', scrollHandler);
 
     return () => {
       root.removeEventListener('scroll', scrollHandler)
     }
-  })
+  }, [])
 
  
   return (

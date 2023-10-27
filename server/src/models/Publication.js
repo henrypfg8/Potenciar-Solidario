@@ -21,6 +21,8 @@ module.exports = (sequelize) => {
             },
             category: {
                 type: DataTypes.STRING,
+
+                allowNull: true,
             },
             startDate: {
                 type: DataTypes.DATEONLY,

@@ -56,7 +56,7 @@ body html {
     font-size: 1em;
 }
 .contain:hover{
-    background-color: #00559211;
+    /* background-color: #74baff5b; */
     /* border: none; */
     transition: 0.3s;
 }
@@ -94,23 +94,31 @@ body html {
     transition: 0.5s;
     min-height: 32vh;
     max-height: 32vh;
+    margin: 10px;
+    background-color: var(--color-cuartiario);
+    
 }
-
+.contain button:hover{
+    background: var(--color-primario);
+}
 .contain p{
     font-size: 1.1em;
 }
 .contain button{
     font-family: 'MiFuente';
-    font-weight: bold;
+    /* font-weight: bold;/ */
     display: flex;
     flex-direction: row;
+    border: var(--color-primario);
     align-items: center;
     justify-content: center;
     padding: 0.3rem; 
     margin: 0.3rem;
-    background-color: #0083C5;
+    font-size: 0.9rem;
+    background-color: var(--color-primario);
+    border-radius: 5% 5%;
     /* box-shadow: -2px -1px 6px 6px #fff; */
-    border: 2px solid #0083C5;
+    /* border: 2px solid #0083C5; */
     color: #FFF;
     cursor: pointer;
     

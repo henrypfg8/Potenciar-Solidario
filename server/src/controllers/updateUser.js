@@ -1,8 +1,8 @@
 const { User } = require("../db");
 
-const updateUser = async (userId, userData) => {
+const updateUser = async (id, userData) => {
   try {
-    const user = await User.findByPk(userId);
+    const user = await User.findByPk(id);
 
     if (!user) throw new Error("Usuario no encontrado");
 

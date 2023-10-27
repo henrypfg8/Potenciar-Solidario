@@ -158,8 +158,29 @@ export const deleteUser = (id) => {
             const response = await axios.delete(`/users/${id}`);
             dispatch({type: DELETE_USER, payload: response.data});
         } catch (error) {
-            throw new Error(error.response + "por favor contactar a soporte por este error")
+            throw new Error(error.response + "por favor contactar a soporte por este error");
         }
     }
 }
 
+export const getUsers = () => {
+    return async function (dispatch) {
+        try {
+            const response = await axios.get("/users");
+            dispatch({type: GET_USERS, payload: response.data});
+        } catch (error) {
+            throw new Error(error.response + "por favor contactar a soporte por este error");
+        }
+    }
+}
+
+export const getUserDetail = (id) => {
+    return async function (dispatch) {
+        try {
+            const response = await axios.get(`/users/${id}`);
+            dispatch({type: GET_USER_DETAIL, payload: response.data});
+        } catch (error) {
+            throw new Error(error.response + "por favor contactar a soporte por este error");
+        }
+    }
+}

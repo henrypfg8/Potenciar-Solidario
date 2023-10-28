@@ -1,4 +1,4 @@
-const { updateUser } = require("../controllers/UpdateUser");
+const { updateUser } = require("../controllers/updateUser");
 
 const updateUserHan = async (req, res) => {
   const { id } = req.params;

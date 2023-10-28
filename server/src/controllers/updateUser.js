@@ -19,6 +19,7 @@ const updateUser = async (id, userData) => {
     user.admin = userData.admin;
 
     await user.save();
+    
     return user;
   } catch (error) {
     throw new Error("Error actualizar el usuario", error);

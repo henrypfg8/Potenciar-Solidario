@@ -13,7 +13,7 @@ export default function Posts () {
   const [ postsLocal, setPostsLocal ] = useState(posts);
 
   useEffect(() => {
-    setPostsLocal(posts, console.log(posts));
+    setPostsLocal(posts);
     
   }, [posts])
 
@@ -25,17 +25,15 @@ export default function Posts () {
       <SearchBar />
 
       <div className={Styles.Cards}>
-        {
-          postsLocal?.map(({ id, title, organization, category, description }) => (
-            <Post 
-              key={id}
-              title={title}
-              organization={organization}
-              category={category}
-              description={description}
-              />
-          ))
-        }
+        {postsLocal?.map(({ id, title, organization, category, description }) => (
+          <Post 
+            key={id}
+            title={title}
+            organization={organization}
+            category={category}
+            description={description}
+          />
+        ))}
       </div>
       
     </div>

@@ -18,26 +18,20 @@ const ContainerForm = () => {
         contact: '',
         status: false,
         organization: '',
-        linkInscription: '',
+        registrationLink: '',
         url: '',
     });
-    // const handleClose = () => {
-    //     //Navigate('/') // Navegar a la ruta especificada
-    // }
+ 
     return (
         <>   
-        {/* <div>
-            <button className='btnClose' onClick={handleClose}>X</button>
-        </div> */}
             <div className='container'>
-
-            <Form
-                setPost={setPost}
-                post={post} />
-            <FormView
-                post={post}
-                setPost={setPost} />
-        </div>
+                <Form
+                    setPost={setPost}
+                    post={post} />
+                <FormView
+                    post={post}
+                    setPost={setPost} />
+            </div>
         </>
 
     )

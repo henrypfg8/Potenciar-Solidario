@@ -8,6 +8,7 @@ const updateUser = async (id, userData) => {
 
     user.name = userData.name;
     user.lastName = userData.lastName;
+    user.email = userData.email;
     user.description = userData.description;
     user.DNI = userData.DNI;
     user.birth_date = userData.birth_date;
@@ -17,8 +18,10 @@ const updateUser = async (id, userData) => {
       userData.habitual_location_of_residence;
     user.geographical_area_residence = userData.geographical_area_residence;
     user.admin = userData.admin;
+    user.password = userData.password;
 
     await user.save();
+    
     return user;
   } catch (error) {
     throw new Error("Error actualizar el usuario", error);

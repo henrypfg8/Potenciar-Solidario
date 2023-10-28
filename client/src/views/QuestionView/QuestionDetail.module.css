@@ -1,3 +1,7 @@
+@font-face {
+    font-family: 'FuenteBold';
+    src: url('../../fonts/VisbyRoundCF-Bold.otf')
+}
 .text{
     padding: 2rem;
     margin: 50px;
@@ -12,17 +16,26 @@
     min-height: 100vh;
 
 }
-.container h3{
-    font-size: 2em;
+.container h1{
+    font-size: 3em;
+    font-family: 'FuenteBold';
     font-style: bold;
 }
 .container p{
     font-size: 1.06em;
     margin: 5px;
 }
-.container button{
-    padding: 0.4rem;
+.container textarea{
+    width: 40vw;
+    align-items: center;
 }
+.question{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .title{
     margin: 10px;
     display: flex;
@@ -31,5 +44,74 @@
     font-size: 2.5em;
 }
 .div{
-    /* padding: 10px; */
+    padding: 10px;
+    margin: 10px;
+}
+.container h4{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin: 10px;
+
+}
+.container h3{
+    font-family: 'FuenteBold';
+    color: #000000;
+}
+
+.response{
+    border-bottom: 1px solid rgba(126, 126, 126, 0.212);
+    margin: 2rem;
+    padding: 0.6rem;    
+    
+}
+.comment{
+    transition: 0.5s;
+}
+.response p{
+    font-size: 1.3em;
+}
+.response a{
+    color: #00000062;
+    font-family: 'FuenteBold';
+    cursor: pointer;
+}
+.response a:hover{
+    color: #042685;
+    
+}
+
+.question{
+    margin: 1rem;
+    padding: 1rem;
+
+}
+.question button{
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+    /* border: none; */
+}
+.date{
+    display: flex;
+    flex-direction: row;
+    margin: 0.5rem;
+    justify-content: space-around;
+}
+.date h5{
+    display: inline;
+    font-size: 1em;
+    font-family: 'FuenteBold';
+}
+.div1{
+    border-bottom: 1px solid rgba(126, 126, 126, 0.212);
+    width: 100vw;
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.div1 p{
+    font-size: 1.2em;
+    margin: 10px;
 }

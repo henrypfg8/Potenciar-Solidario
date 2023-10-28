@@ -1,8 +1,9 @@
 const { User, Publication } = require("../db");
 
-const controllerGetUsers = async (id) => {
-  if (id) {
-    const user = await User.findById(id, {
+const controllerGetUsers = async (id, ID) => {
+  if (ID) {
+    const user = await User.findOne({
+      where: { id: id },
       include: { model: Publication },
     });
     return user;
@@ -14,4 +15,4 @@ const controllerGetUsers = async (id) => {
   return allUsers;
 };
 
-module.exports = {controllerGetUsers};
+module.exports = { controllerGetUsers };

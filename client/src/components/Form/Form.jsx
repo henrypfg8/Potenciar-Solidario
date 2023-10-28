@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-// import {createPost} from '../../Redux/actions'
 import {useDispatch} from 'react-redux'
 import { createPost,} from '../../Redux/actions'
 import useFormPostValidate from "../../hooks/useFormPostValidate";
 import Success from './Success';
 import { useState } from 'react';
 import { uploadImagePost } from './cloudinary';
+
 const Form = ({ setPost, post }) => {
 
     const [isloadig, setLoading] = useState(false);
@@ -21,7 +21,7 @@ const Form = ({ setPost, post }) => {
         //los datos obligatorios:
         const { title, description, organization, startDate, contact, category} = post;
    
-        if (!title || !description || !organization && !startDate || !contact || !category) {
+        if (!title || !description || !organization || !startDate || !contact || !category) {
            setAlertMessage(true);
            setTimeout(() => {
                 setAlertMessage(false);
@@ -43,9 +43,9 @@ const Form = ({ setPost, post }) => {
             creationDate: fechaConvertida, //agregar la fecha de creacion
         
         }
-            // Luego, despachamos el post actualizado
+            // Luego, despachar el post actualizado
         dispatch(createPost(updatedPost));
-        // Mostramos el éxito
+        // Mostrar el éxito
         setSuccess(true);
         setTimeout(() => {
             setSuccess(false);
@@ -102,7 +102,7 @@ const Form = ({ setPost, post }) => {
         <div>
             
             {success && <Success />} {/* Si se publica correctamente mostrar el mensaje */}
-            <form action="" className='form' onSubmit={handleSubmit}>
+            <form action="" method='post' className='form' onSubmit={handleSubmit}>
                 {alertMessage && <p className='form__alert'>Los campos obligatorios no deben ir vacíos</p>}
                 <div className='form__field'>
                     <label htmlFor="title">Titulo <span className='form__span'>(obligatorio)</span></label>

@@ -3,15 +3,20 @@ import './auth.css';
 
 const Login = () => {
     
-    const {register, handleSubmit, formState: {errors}} = useForm();
+    const {register, handleSubmit, formState: {errors}, reset} = useForm();
     
     const onSubmit = user => {
         console.log(user); //datos del formulario
+
+        //Hacer el dispatch de la acción para iniciar sesión
+
+        // Limpiar el formulario
+        reset();
     }
 
   return (
     <div className='auth__container' >
-    <form action="" onSubmit={handleSubmit(onSubmit)} className='auth__form' autoCorrect='off'>
+    <form action="" method='post' onSubmit={handleSubmit(onSubmit)} className='auth__form' autoCorrect='off'>
         {/* campo para el email */}
         <div>
             <label className='auth__label' htmlFor="email">correo</label>

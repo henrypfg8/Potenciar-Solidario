@@ -1,19 +1,30 @@
 import { useForm } from 'react-hook-form' // validaciones con react-hook-form
 import './auth.css'
+import { uploadImagePost } from '../Form/cloudinary';
+
 
 const Register = () => {
 
-    const { register, handleSubmit, formState: { errors }} = useForm(); // Configuración del hook form
+    const { register, handleSubmit, formState: { errors }, reset} = useForm(); // Configuración del hook form
 
-    const onSubmit = user => { // Función que se ejecuta al hacer submit
+    const onSubmit = async user => { // Función que se ejecuta al hacer submit
 
-        user.profile_picture = user.profile_picture[0].name // Se agrega el nombre de la imagen al objeto user
-        console.log(user); //datos del formulario
+        const data = new FormData();
+        data.append('file', user.profile_picture[0]);
+        data.append('upload_preset', 'demo2023');
+        const result = await uploadImagePost(data); // Subir la imagen a cloudinary
+        user.profile_picture = result; // Agregar la imagen al objeto user
+
+        //Hacer el dispatch de la acción para crear el usuario
+  
+        // Limpiar el formulario
+        reset();
+
     }
 
     return (
         <div className='auth__container' >
-            <form action="" onSubmit={handleSubmit(onSubmit)} className='auth__form' autoCorrect='off'>
+            <form action="" method='post' onSubmit={handleSubmit(onSubmit)} className='auth__form' autoCorrect='off'>
 
                 {/* campo para el nombre */}
                 <div>
@@ -21,7 +32,7 @@ const Register = () => {
                     {errors.name && <p className='auth__error'>El nombre es obligatorio</p>}
                     <input className='auth__input' 
                         type="text" 
-                        {...register('name', { required: true, minLength: 3, maxLength: 50 },)} // Validación de nombre
+                        {...register('name', { required: true, minLength: 2, maxLength: 50 },)} // Validación de nombre
                         id='name' placeholder='Escribe tu nombre' 
                     />
                 </div>
@@ -110,17 +121,22 @@ const Register = () => {
                     <label className='auth__label' htmlFor="habitual_location_of_residence">Lugar de recidencia</label>
                     {errors.habitual_location_of_residence && <p className='auth__error'>Este campo es obligatorio</p>}
                     <input className='auth__input' 
-                        type="text" {...register('habitual_location_of_residence', { required: true, minLength: 5})}  // Validación de lugar de residencia
+                        type="text" {...register('habitual_location_of_residence', { required: true, minLength: 2})}  // Validación de lugar de residencia
                         id='habitual_location_of_residence' placeholder='Lugar de residencia' />
                 </div>
 
                     {/* Campo de  area de localizacion */}
                 <div>
                     <label className='auth__label' htmlFor="geographical_area_residence">Are de Localización</label>
-                    {errors.geographical_area_residence && <p className='auth__error'>Este campo es obligatorio</p>}
                     <input className='auth__input' 
-                        type="text" {...register('geographical_area_residence', { required: true, minLength: 5, })}  // Validación de area de localización
+                        type="text" {...register('geographical_area_residence')}  // Opcional
                         id='geographical_area_residence' placeholder='Tu Localización' />
+                </div>
+                <div>
+                    <label className='auth__label' htmlFor="description">Descripcion</label>
+                    <input className='auth__input' 
+                        type="text" {...register('description')}  // Opcional
+                        id='description' placeholder='Alguna descripción' />
                 </div>
 
                 {/* boton para crear cuenta */}

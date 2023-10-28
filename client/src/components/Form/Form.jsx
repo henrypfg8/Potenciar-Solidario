@@ -5,32 +5,52 @@ import { createPost,} from '../../Redux/actions'
 import useFormPostValidate from "../../hooks/useFormPostValidate";
 import Success from './Success';
 import { useState } from 'react';
-
+import { uploadImagePost } from './cloudinary';
 const Form = ({ setPost, post }) => {
+
+    const [isloadig, setLoading] = useState(false);
+    const [imgFile, setImgFile] = useState(null);
+    const [alertMessage, setAlertMessage] = useState(false);
     const [success, setSuccess] = useState(false);
     const dispatch = useDispatch();
     const {handleValidate, error} = useFormPostValidate(post);
 
-
-    const handleSubmit = (e) => {
+    // Manejar el envío del formulario
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
- 
-
         //los datos obligatorios:
-        const { title, description, organization, startDate, contact, linkInscription } = post;
+        const { title, description, organization, startDate, contact, category} = post;
    
-        if (!title || !description || !organization && !startDate || !contact || !linkInscription) {
-            alert("Falta información");
+        if (!title || !description || !organization && !startDate || !contact || !category) {
+           setAlertMessage(true);
+           setTimeout(() => {
+                setAlertMessage(false);
+           }, 4000)
             return
         }
-     
-        else dispatch(createPost(post))
+        setAlertMessage(false);
+        //  
+        setLoading(true) 
+        const res = await uploadImagePost(imgFile);
+        setLoading(false);
+
+        const fecha = new Date().toLocaleDateString();
+        const partes = fecha.split('/');
+        const fechaConvertida = partes[2] + '-' + partes[1] + '-' + partes[0];
+        const updatedPost = { 
+            ...post,
+            image: res,  //agregar la url de la imagen
+            creationDate: fechaConvertida, //agregar la fecha de creacion
+        
+        }
+            // Luego, despachamos el post actualizado
+        dispatch(createPost(updatedPost));
+        // Mostramos el éxito
         setSuccess(true);
         setTimeout(() => {
             setSuccess(false);
-        }, [1500])
-
+        }, [1500]);
+   
        setPost({
         ...post,
         title: '',
@@ -44,7 +64,7 @@ const Form = ({ setPost, post }) => {
         contact: '',
         status: false,
         organization: '',
-        linkInscription: '',
+        registrationLink: '',
         url: '',
        }) // Limpiar el formulario
     };
@@ -60,30 +80,32 @@ const Form = ({ setPost, post }) => {
             ...prevState,
             [name]: value
         }));
-
-
     };
 
     // Actualizar el estado con la imagen
-    const handleFileChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-            const { name } = e.target;
-            const file = e.target.files[0];
+    const uploadImage = async e => {   
+        const file = e.target.files;
+        const data = new FormData();
+        //cerar un objeto de tipo formdata
+        data.append('file', file[0]);
+        setPost({
+            ...post,
+            imagePreview: URL.createObjectURL(file[0]) // mostrar imagen previa
+        
+        })
+       
+        data.append('upload_preset', 'demo2023'); 
+        setImgFile(data) ; //guardar la imagen en el estado
+     }
 
-            setPost(prevState => ({
-                ...prevState,
-                [name]: file.name,
-                imagePreview: URL.createObjectURL(file)
-            }));
-        }
-    };
     return (
         <div>
-            {success && <Success />}
+            
+            {success && <Success />} {/* Si se publica correctamente mostrar el mensaje */}
             <form action="" className='form' onSubmit={handleSubmit}>
-                
+                {alertMessage && <p className='form__alert'>Los campos obligatorios no deben ir vacíos</p>}
                 <div className='form__field'>
-                    <label htmlFor="title">Titulo</label>
+                    <label htmlFor="title">Titulo <span className='form__span'>(obligatorio)</span></label>
                     {error.title && <p className='form__error'>{error.title}</p>}
                     <input type="text" id='title' placeholder='titulo'
                         name='title'
@@ -92,7 +114,7 @@ const Form = ({ setPost, post }) => {
                 </div>
                 {/* End form field */}
                 <div className='form__field'>
-                    <label htmlFor="category">Categoria</label>
+                    <label htmlFor="category" >Categoria <span className='form__span'>(obligatorio)</span></label>
                     {error.category && <p className='form__error'>{error.category}</p>}
                     <input type="text" id='category' placeholder='categoria'
                         value={post.category}
@@ -102,7 +124,7 @@ const Form = ({ setPost, post }) => {
                 {/* End form field */}
 
                 <div className='form__field'>
-                    <label htmlFor="description">Descripcion</label>
+                    <label htmlFor="description">Descripcion<span className='form__span'>(obligatorio)</span></label>
                     {error.description && <p className='form__error'>{error.description}</p>}
                     <textarea id="description" cols="30" rows="10" placeholder='descripcion'
                         name='description'
@@ -111,7 +133,7 @@ const Form = ({ setPost, post }) => {
                 </div>
                 {/* End form field */}
                 <div className='form__field'>
-                    <label htmlFor="startDate">Fecha de inicio</label>
+                    <label htmlFor="startDate">Fecha de inicio <span className='form__span'>(obligatorio)</span></label>
                     <p className='form__error'>{error.startDate}</p>
                     <input type="date" id='startDate' placeholder='fecha'
                         name='startDate'
@@ -120,7 +142,7 @@ const Form = ({ setPost, post }) => {
                 </div>
                 {/* End form field */}
                 <div className='form__field'>
-                    <label htmlFor="endDate">Fecha de fin</label>
+                    <label htmlFor="endDate">Fecha de fin <span className='form__span'>(obligatorio)</span></label>
                     <p className='form__error'>{error.endDate}</p>
                     <input type="date" id='endDate' placeholder='fecha'
                         name='endDate'
@@ -132,16 +154,15 @@ const Form = ({ setPost, post }) => {
                 {/* End form field */}
                 <div className='form__field'>
                     <label htmlFor="image">Selecciona un imagen</label>
-                    <input
-                        type="file"
-                        id='image'
-                        name='image'
-                        onChange={handleFileChange} />
+                    <input  type="file" 
+                            name="image" 
+                            id="image" 
+                            onChange={uploadImage}/>
                 </div>
                 {/* End form field */}
 
                 <div className='form__field'>
-                    <label htmlFor="contact" >Contacto</label>
+                    <label htmlFor="contact" >Contacto <span className='form__span'>(obligatorio)</span></label>
                     {error.contact && <p className='form__error'>{error.contact}</p>}
                     <input type='text' id='contact' placeholder='contacto'
                         name='contact'
@@ -150,7 +171,7 @@ const Form = ({ setPost, post }) => {
                 </div>
                 {/* End form field */}
                 <div className='form__field'>
-                    <label htmlFor="organization">Organización</label>
+                    <label htmlFor="organization">Organización <span className='form__span'>(obligatorio)</span></label>
                     {error.organization && <p className='form__error'>{error.organization}</p>}
                     <input type="text" id='organization' placeholder='nombre de la organización'
                         name='organization'
@@ -159,10 +180,10 @@ const Form = ({ setPost, post }) => {
                     />
                 </div>
                 <div className='form__field'>
-                    <label htmlFor=" linkInscription">Enlace de para inscribirse </label>
-                    <input type="text" id='linkInscription' placeholder='Enlace de para inscribirse'
-                        name='linkInscription'
-                        value={post.linkInscription}
+                    <label htmlFor="registrationLink">Enlace de para inscribirse </label>
+                    <input type="text" id='registrationLink' placeholder='Enlace de para inscribirse'
+                        name='registrationLink'
+                        value={post.registrationLink}
                         onChange={handleChange}
                     />
                 </div>
@@ -174,7 +195,7 @@ const Form = ({ setPost, post }) => {
                         onChange={handleChange}
                     />
                 </div>
-                <button className='form__btn' type='submit'>Enviar Solicitud</button>
+                <button className='form__btn' type='submit' disabled={isloadig}>Enviar Solicitud</button>
             </form>
         </div>
     )

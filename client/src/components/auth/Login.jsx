@@ -28,7 +28,7 @@ const Login = () => {
         {/* Campo para la contraseñá */}
         <div>
             <label className='auth__label' htmlFor="password">Escribe tu contraseña</label>
-            {errors.password && <p className='auth__error'>To contraseña debe ser minímo de 6 caracterés</p>}
+            {errors.password && <p className='auth__error'>Tu contraseña debe ser minímo de 6 caracterés</p>}
             <input className='auth__input' 
                 type="password" {...register('password', { required: true, minLength: 6, maxLength: 50 })} 
                 id='password' placeholder='Escribe tu password' />

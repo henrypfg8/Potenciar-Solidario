@@ -144,7 +144,18 @@
     font-size: 0.6rem;
     animation: success 1s ease-in ;
   }
-
+.form__alert{
+  color: #cf0505;
+  border: 1px solid #cf0505;
+  border-radius: 4px;
+  text-align: center;
+  padding: 0.4rem 0;
+}
+.form__span{
+  font-size: 0.7rem;
+  color: #cf0505;
+  font-weight: 100;
+}
   @keyframes success {
     0%{
    

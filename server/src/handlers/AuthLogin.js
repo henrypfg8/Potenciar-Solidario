@@ -41,7 +41,7 @@ const authLoginHandler = async (req, res) => {
                     expiresIn: "1h",
                 });
 
-                return res.send(" Se valida autenticacion y se genera token",{ jwt: token });
+                return res.send({ jwt: token });
             } catch (error) {
                 // console.error("error en generación de token:", error);
                 return res

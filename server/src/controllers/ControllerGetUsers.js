@@ -14,4 +14,4 @@ const controllerGetUsers = async (id) => {
   return allUsers;
 };
 
-module.exports = controllerGetUsers;
+module.exports = {controllerGetUsers};

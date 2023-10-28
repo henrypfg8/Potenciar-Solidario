@@ -1,7 +1,15 @@
-const { userPostHandlers } = require("../handlers/PostUser");
+const { User } = require('../db')
 
-const userPost = async (req, res) => {
-  userPostHandlers(req, res);
+const userPost = async (userData) => {
+  try {
+    const newUser = await User.create(userData)
+
+    return newUser;
+
+    
+  } catch (error) {
+    throw new Error('Error al crear el usuario' + error)
+  }
 };
 
 module.exports = {userPost};

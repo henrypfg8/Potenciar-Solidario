@@ -33,7 +33,7 @@ body html {
 }
 .container h1{
     font-family: 'MiFuenteBold';
-    font-weight: bold;
+    font-weight: bold;  
     color: #005692;
 }
 
@@ -109,11 +109,11 @@ body html {
     border: var(--color-primario);
     align-items: center;
     justify-content: center;
-    padding: 0.3rem; 
+    padding:  0.8rem 1rem; 
     margin: 0.3rem;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     background-color: var(--color-primario);
-    border-radius: 6%;
+    border-radius: 5px;
     min-height: 5vh;
     max-height: 5vh;
     transition: 0.3s;
@@ -150,21 +150,32 @@ body html {
      margin-top: 20px;
      max-width:60vw;
      max-height:70vh;
+     margin: 10px;
+     padding: 1rem;
     }
     .container{
-        /* margin-top: 60px; */
+        margin-top: 20px;
     }
     .contain a{
-        width: 40vw;
-        margin: 10pxs;
+        font-size: 0.8em;
+        /* width: 40vw; */
+        /* margin: 10pxs; */
     }
+    .contain p{
+        font-size: 1em;
+        margin: 0.5rem;
+    }
+    
     .div{
         width:70vw;
         
     }
+    .contain button{
+        font-size: 0.9rem;
+        padding: 0.7rem 0.8rem;
+    }
     .containerCenter{
         display:flex;
-        
-    
+       
     }
 }

@@ -1,6 +1,22 @@
 @font-face {
     font-family: 'FuenteBold';
-    src: url('../../fonts/VisbyRoundCF-Bold.otf')
+    src: url('../../fonts/VisbyRoundCF-DemiBold.otf')
+}
+.title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+}
+.title p{
+    display: flex;
+    font-family: 'FuenteBold';
+}
+.title h2{
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
 }
 .text{
     padding: 2rem;
@@ -14,7 +30,7 @@
     align-items: center;
     margin: 10px;
     min-height: 100vh;
-
+    
 }
 .container h1{
     font-size: 3em;
@@ -25,10 +41,7 @@
     font-size: 1.06em;
     margin: 5px;
 }
-.container textarea{
-    width: 40vw;
-    align-items: center;
-}
+
 .question{
     display: flex;
     flex-direction: column;
@@ -61,12 +74,43 @@
 
 .response{
     border-bottom: 1px solid rgba(126, 126, 126, 0.212);
-    margin: 2rem;
+    margin: 1rem;
     padding: 0.6rem;    
+    
+    background-color: rgba(126, 126, 126, 0.212);
     
 }
 .comment{
     transition: 0.5s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    padding: 10px;
+
+}
+
+.comment textarea{
+    margin-bottom: 0.4rem;
+    width: 20vw;
+}
+.comment button{
+    padding: 0.5rem 1rem;
+    background-color: #095084;
+    border: #095084;
+    color: #fff;
+    
+    transition: 0.2s;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.comment button:hover{
+    background: #095184bb;
+    transition: 0.2s;
+}
+.comment p{
+    font-family: "FuenteBold";
 }
 .response p{
     font-size: 1.3em;
@@ -84,13 +128,27 @@
 .question{
     margin: 1rem;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
 
 }
+
 .question button{
+    display: block;
     margin: 1rem;
     padding: 0.5rem 1rem;
-    /* border: none; */
+    padding: 0.5rem 1rem;
+    background-color: #095084;
+    border: #095084;
+    color: #fff;
+    transition: 0.2s;
+    border-radius: 5px;
+    cursor: pointer;
 }
+.question textarea{
+    width: 40vw;
+}
+
 .date{
     display: flex;
     flex-direction: row;
@@ -114,4 +172,15 @@
 .div1 p{
     font-size: 1.2em;
     margin: 10px;
+}
+
+@media (max-width: 575.98px){
+    .question textarea{
+        width: 70vw;
+        height: 20vh;
+        
+    }
+    .response{
+        font-size: 0.6rem;
+    }
 }

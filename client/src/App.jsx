@@ -40,7 +40,6 @@ function App() {
     root.addEventListener('scroll', scrollHandler);
 
     dispatch(getPosts());
-    console.log("se hizo el get");
 
     return () => {
       root.removeEventListener('scroll', scrollHandler)

@@ -34,7 +34,7 @@ const updateUserHan = async (req, res) => {
     })
     if (!user) return res.status(401).json({msg: "No se ha podido actualizar el usuario"})
         
-    return res.status(200).json({ msg: 'Usuario Actualizado' }, user);
+    return res.status(200).json(user);
             
   } catch (error) {
     res.status(401).json({error: error.message})

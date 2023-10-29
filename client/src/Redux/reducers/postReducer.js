@@ -4,6 +4,7 @@ DELETE_POST,
 GET_POSTS,
 GET_POST_DETAIL,
 CLEAR_POST_DETAIL,
+UPDATE_POST,
 } from "../action-types";
 
 const initialState = {
@@ -46,7 +47,16 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 postDetail: [],
-            };     
+            };   
+            
+        case UPDATE_POST:
+            const updatedPost = action.payload;
+            const updatedPosts = state.posts.map(post =>
+            post.id === updatedPost.id ? updatedPost : post);
+            return {
+                ...state,
+                posts: updatedPosts,
+            }  ;  
             
             default:
                 return {...state};  

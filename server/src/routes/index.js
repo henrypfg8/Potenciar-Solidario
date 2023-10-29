@@ -11,6 +11,9 @@ const { handlerGetUsers } = require("../handlers/HandlerGetUsers.js");
 const { authLoginHandler } = require("../handlers/AuthLogin.js");
 const { PutPublicationHandler } = require("../handlers/PutPubH.js");
 const { handlerCategory } = require("../handlers/HandlerCategory.js");
+const { UpdateQuestionH } = require("../handlers/UpdateQuestionH.js");
+const { DeleteQuestionHandler } = require("../handlers/DeleteQuestionH.js");
+const { getQuestion } = require("../handlers/getQuestion.js");
 
 const router = Router();
 
@@ -32,4 +35,8 @@ router.post("/posts", createPublicationHandler);
 router.put("/posts/:id", PutPublicationHandler);
 router.delete("/posts/:id", DeletePubCont);
 
+router.put("/question", UpdateQuestionH);
+router.delete("/question/:id", DeleteQuestionHandler);
+router.get("/questions", getQuestion);
+router.get("/questions/:id", getQuestion);
 module.exports = router;

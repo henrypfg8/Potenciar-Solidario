@@ -37,6 +37,7 @@
         font-size: 1.35em;
         color: white;
         font-weight: lighter;
+        line-height: 1.2;
     }
 
 @media (max-width: 768px) {

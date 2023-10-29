@@ -2,6 +2,7 @@ export const CREATE_POST = "CREATE_POST";
 export const DELETE_POST = "DELETE_POST";
 export const GET_POSTS = "GET_POSTS";
 export const GET_POST_DETAIL = "GET_POST_DETAIL";
+export const UPDATE_POST = "UPDATE_POST";
 export const SEARCH_POST = "SEARCH_POST";
 export const FILTER = "FILTER";
 export const CLEAR_SEARCH = "CLEAR_SEARCH";

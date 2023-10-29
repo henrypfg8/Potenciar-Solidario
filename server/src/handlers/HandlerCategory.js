@@ -2,7 +2,7 @@ const { controllerCategory } = require("../controllers/ControllerCategory");
 
 const handlerCategory = async (req, res) => {
   try {
-    const category = req.params.category;
+    const { category } = req.query;
     const categoryFn = await controllerCategory(category);
     if (categoryFn.length === 0)
       throw new Error("No existen Publicaciones con la categoria seleccionada");

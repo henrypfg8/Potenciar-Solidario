@@ -3,6 +3,7 @@ CREATE_POST,
 DELETE_POST,
 GET_POSTS,
 GET_POST_DETAIL,
+UPDATE_POST,
 SEARCH_POST,
 FILTER,
 CLEAR_SEARCH,
@@ -63,7 +64,18 @@ export const getPostDetail = (id) => {
             const response = await axios.get(`http://localhost:19789/posts/${id}`);
             dispatch({type: GET_POST_DETAIL, payload: response.data});
         } catch (error) {
-            throw new Error(error.response + "por favor contactar a soporte por este error")
+            throw new Error(error.response + "por favor contactar a soporte por este error");
+        }
+    }
+}
+
+export const updatePost = (id, updatePostData) => {
+    return async function (dispatch) {
+        try {
+            const response = await axios.put(`http://localhost:19789/posts/${id}`);
+            dispatch({type: UPDATE_POST, payload: response.data});
+        } catch (error) {
+            throw new Error(error.response + "por favor contactar a soporte por este error");
         }
     }
 }

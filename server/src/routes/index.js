@@ -36,7 +36,7 @@ router.post("/posts", createPublicationHandler);
 router.put("/posts/:id", PutPublicationHandler);
 router.delete("/posts/:id", DeletePubCont);
 
-router.put("/question", UpdateQuestionH);
+router.put("/question/:id", UpdateQuestionH);
 router.delete("/question/:id", DeleteQuestionHandler);
 router.get("/questions", getQuestion);
 router.get("/questions/:id", getQuestion);

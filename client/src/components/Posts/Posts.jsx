@@ -11,6 +11,8 @@ export default function Posts () {
   const posts = useSelector(state => state.posts.posts);
   const [ postsLocal, setPostsLocal ] = useState(posts);
 
+  console.log(postsLocal);
+
   useEffect(() => {
     setPostsLocal(posts);
     
@@ -26,6 +28,7 @@ export default function Posts () {
         {postsLocal?.map(({ id, title, organization, category, description }) => (
           <Post 
             key={id}
+            id={id}
             title={title}
             organization={organization}
             category={category}

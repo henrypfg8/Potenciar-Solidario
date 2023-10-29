@@ -56,7 +56,7 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: updatedPosts,
-            }  ;  
+            };  
             
             default:
                 return {...state};  

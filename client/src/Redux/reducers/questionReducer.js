@@ -4,6 +4,7 @@ DELETE_QUESTION,
 GET_QUESTIONS,
 GET_QUESTION_DETAIL,
 CLEAR_QUESTION_DETAIL,
+UPDATE_QUESTION,
 } from "../action-types";
 
 const initialState = {
@@ -45,6 +46,16 @@ const questionReducer = (state = initialState, action) => {
                 ...state,
                 questionDetail: [],
             };
+
+        case UPDATE_QUESTION:
+            const updatedQuestion = action.payload;
+            const updatedQuestions = state.questions.map(question =>
+                question.id === updatedQuestion.id ? updatedQuestion : question
+                );
+                return {
+                    ...state,
+                    questions: updatedQuestions,
+                }    
             
             default:
                 return {...state};

@@ -17,7 +17,9 @@ GET_QUESTION_DETAIL,
 CREATE_USER,
 DELETE_USER,
 GET_USERS,
-GET_USER_DETAIL
+GET_USER_DETAIL,
+UPDATE_USER,
+UPDATE_QUESTION
 } from "./action-types"
 
 import axios from "axios";
@@ -155,6 +157,17 @@ export const getQuestionDetail = (id) => {
     }
 }
 
+export const updateQuestion = (id, updatedQuestionData) => {
+    return async function (dispatch) {
+        try {
+            const response = await axios.put(`http://localhost:19789/questions/${id}`)
+            dispatch({type: UPDATE_QUESTION, payload: response.data});
+        } catch (error) {
+            throw new Error(error.response + "por favor contactar a soporte por este error");
+        }
+    }
+}
+
 export const createUser = (user) => {
     return async function (dispatch) {
         try {
@@ -193,6 +206,17 @@ export const getUserDetail = (id) => {
         try {
             const response = await axios.get(`http://localhost:19789/users/${id}`);
             dispatch({type: GET_USER_DETAIL, payload: response.data});
+        } catch (error) {
+            throw new Error(error.response + "por favor contactar a soporte por este error");
+        }
+    }
+}
+
+export const updateUser = (id, updatedUserData) => {
+    return async function (dispatch) {
+        try {
+            const response = await axios.put(`http://localhost:19789/users/${id}`);
+            dispatch({type: UPDATE_USER, payload: response.data})
         } catch (error) {
             throw new Error(error.response + "por favor contactar a soporte por este error");
         }

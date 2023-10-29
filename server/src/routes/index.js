@@ -14,6 +14,7 @@ const { handlerCategory } = require("../handlers/HandlerCategory.js");
 const { UpdateQuestionH } = require("../handlers/UpdateQuestionH.js");
 const { DeleteQuestionHandler } = require("../handlers/DeleteQuestionH.js");
 const { getQuestion } = require("../handlers/getQuestion.js");
+const { createQuestionHandler } = require("../handlers/CreateQuestionHandler.js");
 
 const router = Router();
 
@@ -39,4 +40,5 @@ router.put("/question", UpdateQuestionH);
 router.delete("/question/:id", DeleteQuestionHandler);
 router.get("/questions", getQuestion);
 router.get("/questions/:id", getQuestion);
+router.post("/question", createQuestionHandler);
 module.exports = router;

@@ -1,7 +1,6 @@
 import Styles from './posts.module.css';
 //
 import Post from '../Post/Post';
-import SearchBar from '../SearchBar/SearchBar';
 //
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
@@ -22,7 +21,6 @@ export default function Posts () {
 
       <h1 style={{marginTop: '10px'}}>Publicaciones de la cartelera</h1>
 
-      <SearchBar />
 
       <div className={Styles.Cards}>
         {postsLocal?.map(({ id, title, organization, category, description }) => (

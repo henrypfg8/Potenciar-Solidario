@@ -8,6 +8,7 @@ const UpdateQuestion = async (id, userData) => {
     updateQ.text = userData.text;
 
     await updateQ.save();
+    
   } catch (error) {
     throw new Error("No se ha podido actualizar la pregunta.");
   }

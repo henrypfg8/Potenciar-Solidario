@@ -4,7 +4,7 @@ body html {
 }
 @font-face {
     font-family: 'MiFuenteBold';
-    src: url('../../fonts/VisbyRoundCF-ExtraBold.otf');
+    src: url('../../fonts/VisbyRoundCF-Medium.otf');
 }
 :root {
     --color-primario:#0f3054;
@@ -13,7 +13,7 @@ body html {
     --color-cuartiario:#a4d4ff;
     --color-quintario:#ea9642;
   }
-  
+
 .containerCenter{
     display: flex;
     flex-direction: row;
@@ -35,8 +35,9 @@ body html {
 .container h1{
     font-family: 'MiFuenteBold';
     font-weight: bold;  
-    color: #005692;
-}
+    color: black;
+   }
+
 
 .title {
     margin: 8px;
@@ -110,22 +111,23 @@ body html {
 .contain button{
     display: flex;
     flex-direction: row;
-    border: var(--color-primario);
+    border: none !important;
     align-items: center;
     justify-content: center;
-    padding:  0.8rem 1rem; 
+    padding: 0.4rem; 
     margin-top: 1rem;
-    font-size: 0.8rem;
-    background-color: var(--color-primario);
+    font-size: 0.9rem;
+    background: var(--blue_color);
     border-radius: 5px;
     min-height: 5vh;
     max-height: 5vh;
     transition: 0.3s;
-    /* box-shadow: -2px -1px 6px 6px #fff; */
-    /* border: 2px solid #0083C5; */
     color: #FFF;
-    cursor: pointer;
-    
+    cursor: pointer; 
+}
+.contain button:hover{
+    background: #034879;
+
 }
 
 .anwers {

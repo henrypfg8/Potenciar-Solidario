@@ -11,7 +11,7 @@ import { getPosts } from "../../Redux/actions";
 
 
 const Post = (props) => {
-  const { id, title, organization, category, image, description } = props;
+  const { id, title, organization, category, img, description } = props;
   const dispatch = useDispatch();
   
 console.log(image)
@@ -35,7 +35,7 @@ console.log(image)
       <p className={Styles.Post__category}>{category}</p>
 
       <div className={Styles.Post__description}>
-        <img className={Styles.Post__img} src={image} alt="imagen" />
+        <img className={Styles.Post__img} src={img} alt="imagen" />
 
         <p>{description}</p>
       </div>

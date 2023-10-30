@@ -17,7 +17,7 @@ import Register from './components/auth/Register';
 import SearchBar from './components/SearchBar/SearchBar';
 import PostDetailView from './views/PostDetailView/PostDetailView';
 //
-
+import Admin from './views/admin/Admin';
 
 
 function App() {

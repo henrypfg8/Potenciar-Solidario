@@ -29,7 +29,7 @@ export default function Header ({ isScrolled }) {
                         </Link>)
                     )
                     :
-                    pathname === '/detalle' ? 
+                    pathname.includes('/detalle') ? 
                     (<Link to='/' className={Styles.backButton}>
                         VOLVER A LA CARTELERA
                     </Link>)

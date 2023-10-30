@@ -1,28 +1,39 @@
 import { useForm } from 'react-hook-form' // validaciones con react-hook-form
-import './auth.css'
-import { uploadImagePost } from '../Form/cloudinary';
-import { createUser } from '../../Redux/actions';
+import './auth.css';
+import { useState } from 'react';
+import { createUser } from '../../Redux/actions/usersActions';
 import { useDispatch } from 'react-redux';
+import Success from '../Form/Success';
+import { uploadImageCloudinary} from '../Form/cloudinary';
+import { useNavigate } from 'react-router-dom';
 
 
 const Register = () => {
 
-    const { register, handleSubmit, formState: { errors }, reset} = useForm(); // Configuración del hook form
-    const dispatch = useDispatch()
+    const [success, setSuccess] = useState(false);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm(); // Configuración del hook form
+
 
     const onSubmit = async user => { // Función que se ejecuta al hacer submit
 
         const data = new FormData();
         data.append('file', user.profile_picture[0]);
-        data.append('upload_preset', 'demo2023');
-        const result = await uploadImagePost(data); // Subir la imagen a cloudinary
-        user.profile_picture = result; // Agregar la imagen al objeto user
+        data.append('upload_preset', 'photo_users');
+       setSuccess(true);
+        const result = await uploadImageCloudinary(data); // Subir la imagen a cloudinary
+        user.profile_picture = result;
+        navigate('/'); // Agregar la imagen al objeto user
+        setTimeout(() => {
+            setSuccess(false);
+           
+        }, 2000);
 
         //Hacer el dispatch de la acción para crear el usuario
-        dispatch(createUser(user))
-
+  
         // Limpiar el formulario
-        
         reset();
 
     }

@@ -123,6 +123,9 @@
     color: #00000062;
     font-family: 'FuenteBold';
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 .response a:hover{
     color: #042685;

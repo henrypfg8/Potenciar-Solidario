@@ -12,7 +12,7 @@ module.exports = (sequelize) => {
       },
 
       answer: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.TEXT,
         allowNull: false,
       },
 

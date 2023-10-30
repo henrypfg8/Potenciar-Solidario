@@ -35,14 +35,14 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
                     respuestasUsuario.length > 0 ?
                         <div className={style.title}>
                             <h2>
-                                {respuestasUsuario.length > 1 ? <h2><p>{respuestasUsuario.length}</p> Preguntas</h2> : <
-                                    h2><p>1</p>Pregunta</h2>}
+                                {respuestasUsuario.length > 1 ? <h2><p>{respuestasUsuario.length}</p> Respuestas</h2> : <
+                                    h2><p>1</p>Respuesta</h2>}
 
                             </h2>
                         </div>
                         :
                         <div>
-                            <h2>No hay preguntas</h2>
+                            <h2>No hay respuestas</h2>
                         </div>
                 }
 

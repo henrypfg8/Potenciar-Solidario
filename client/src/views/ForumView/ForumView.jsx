@@ -16,8 +16,6 @@ function ForumView({ datos }) {
                 <LeftBar />
                 <div className={style.container}>
                     <h1>Foro general</h1>
-                    <SearchBar />
-
                     <div className={style.div}>
 
                         {datos && datos?.map(dato => {

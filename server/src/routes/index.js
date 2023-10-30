@@ -15,6 +15,7 @@ const { UpdateQuestionH } = require("../handlers/UpdateQuestionH.js");
 const { DeleteQuestionHandler } = require("../handlers/DeleteQuestionH.js");
 const { getQuestion } = require("../handlers/getQuestion.js");
 const { createQuestionHandler } = require("../handlers/CreateQuestionHandler.js");
+const {authHandler} = require("../handlers/authHandler.js"); //middlewere validacion de rutas
 
 const router = Router();
 

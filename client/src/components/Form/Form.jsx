@@ -4,7 +4,7 @@ import { createPost, } from '../../Redux/actions/postsActions'
 
 import Success from './Success';
 import { useState } from 'react';
-import { uploadImagePost } from './cloudinary';
+import { uploadImageCloudinary } from './cloudinary';
 import { useForm } from 'react-hook-form'
 
 const Form = ({ setPost, post }) => {
@@ -20,7 +20,7 @@ const Form = ({ setPost, post }) => {
     const onSubmit = async data => {
 
         setLoading(true)
-        const res = await uploadImagePost(imgFile);
+        const res = await uploadImageCloudinary(imgFile);
         setLoading(false);
         const updatedPost = {
             ...data,
@@ -76,7 +76,7 @@ const Form = ({ setPost, post }) => {
 
         })
 
-        data.append('upload_preset', 'demo2023');
+        data.append('upload_preset', 'posts_users');
         setImgFile(data); //guardar la imagen en el estado
     }
 

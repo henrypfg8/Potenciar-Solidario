@@ -1,12 +1,16 @@
 import Swal from 'sweetalert2'
 
-const Success = () => {
+// eslint-disable-next-line react/prop-types
+const Success = ({frase}) => {
     Swal.fire({
-        position: 'top-end',
+        position: 'center',
         icon: 'success',
-        title: 'Se ha publicado correctamente',
+        title:`${frase}`,
         showConfirmButton: false,
-        timer: 1500
+        timer: 2000,
+        color : '#005692',
+        iconColor : '#005692'
+      
       })
   return (
     <div>

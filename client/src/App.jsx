@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getPosts } from './Redux/actions';
+import { getPosts } from './Redux/actions/postsActions';
 //
 import './App.css'
 //

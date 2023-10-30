@@ -7,7 +7,7 @@ import SearchBar from '../../components/SearchBar/SearchBar'
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 //
-import { getPosts } from '../../Redux/actions';
+import { getPosts } from '../../Redux/actions/postsActions';
 
 
 

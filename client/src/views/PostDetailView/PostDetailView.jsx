@@ -22,6 +22,7 @@ const Detail = () => {
     url
   } = post;
   
+
   useEffect(() => {
     axios
       .get(`http://localhost:19789/posts/${id}`)

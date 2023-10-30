@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from 'react-redux'
-import { createPost, } from '../../Redux/actions'
+import { createPost, } from '../../Redux/actions/postsActions'
 
 import Success from './Success';
 import { useState } from 'react';

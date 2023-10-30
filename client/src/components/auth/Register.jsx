@@ -1,6 +1,10 @@
 import { useForm } from 'react-hook-form' // validaciones con react-hook-form
 import './auth.css'
 import { uploadImagePost } from '../Form/cloudinary';
+import { createUser } from '../../Redux/actions/usersActions';
+import { useDispatch } from 'react-redux';
+import Success from '../Form/Success';
+import { uploadImagePost } from '../Form/cloudinary';
 
 
 const Register = () => {

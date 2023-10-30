@@ -1,9 +1,10 @@
 
 import { useState } from "react";
+import {useDispatch} from 'react-redux'
 import style from './QuestionCreate.module.css'
 
 function QuestionCreate() {
-
+// const dispatch = useDispath()
     const [question, setQuetions] = useState({
         title: '',
         description: ''
@@ -15,7 +16,15 @@ function QuestionCreate() {
             [event.target.name]: event.target.value
         })
     }
-    console.log(question);
+
+    // const submitQuestion = async() => {
+    //     try {
+    //         dispatch()
+    //     } catch (error) {
+            
+    //     }
+
+    // }
     return (
     <div className={style.contain}>
             <form action="" onChange={handleChange} className={style.form}>

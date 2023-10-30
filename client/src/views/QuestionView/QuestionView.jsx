@@ -2,6 +2,8 @@
 import style from './QuestionDetail.module.css'
 import data from '../../assets/data'
 import { useState } from 'react';
+import { FlechaAbajoIcon } from '../../assets/FlechaParaAbajoIcon';
+import { FlechaParaArriba } from '../../assets/FlechaParaArribaIcon';
 function QuestionView({ preguntaUsuario, respuestasUsuario }) {
     const { usuariosRespuestas } = data;
 
@@ -60,8 +62,9 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
                             </h4>
 
 
-
-                            <a onClick={() => handleView(index)}>Añadir comentario</a>
+                            {!view[index] ?  <a onClick={() => handleView(index)}>Añadir comentario<FlechaAbajoIcon/></a> : <a onClick={() => handleView(index)}>Añadir comentario<FlechaParaArriba/></a>
+                            }
+                           
                             {view[index] && <div className={style.comment}>
                             <p>Comentar</p>
                                 <textarea type="text" cols="6" rows="5" />

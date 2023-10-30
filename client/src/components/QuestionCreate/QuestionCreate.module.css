@@ -1,3 +1,7 @@
+@font-face {
+    font-family: 'Fuente';
+    src: url('../../fonts/VisbyRoundCF-DemiBold.otf');
+}
 .contain{
     display: flex;
     flex-direction: column;
@@ -28,10 +32,11 @@
     border: 1px solid #cbd5e1;
 }
 .div label{
+    font-family: 'Fuente';
     font-weight: bold;
-    margin: 0.3rem 0;
-    display: block;
-
+    /* margin: 0.6rem ; */
+    padding: auto;
+    
 }
 .div input{
     padding: 0.2rem;
@@ -52,7 +57,17 @@
     font-weight: bolder;
     font-size: 1.2rem;
 }
+
 .form button:hover{
     
     background: #034879;
+}
+
+.errores{
+    color: red;
+    font-size: 0.7rem;
+    height: 3vh;
+    min-height: 3vh;
+    max-height: 3vh;
+    margin: 6px;
 }

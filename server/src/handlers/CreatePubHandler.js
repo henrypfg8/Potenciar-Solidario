@@ -1,8 +1,9 @@
-const { Publication } = require("../db.js");
+const { CreatePublication } = require("../controllers/CreatePublication");
+
+
 
 const createPublicationHandler = async (req, res) => {
   const {
-    id,
     title,
     description,
     category,
@@ -19,13 +20,10 @@ const createPublicationHandler = async (req, res) => {
   } = req.body;
 
   try {
-    if (!title || !description || !category || !contact || !organization) {
+    if (!title || !description || !category || !contact || !organization) throw new Error("Faltan campos obligatorios");
+  
 
-
-      throw new Error("Faltan campos obligatorios");
-    }
-
-    const publication = await Publication.create({
+   const publication = await CreatePublication({
       id,
       title,
       description,
@@ -41,7 +39,7 @@ const createPublicationHandler = async (req, res) => {
       registrationLink,
       contact,
     });
-
+ 
     res.status(201).json(publication);
   } catch (error) {
     console.error(error);

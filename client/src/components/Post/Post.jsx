@@ -13,6 +13,8 @@ import { getPosts } from "../../Redux/actions";
 const Post = (props) => {
   const { id, title, organization, category, image, description } = props;
   const dispatch = useDispatch();
+  
+console.log(image)
 
   const deleteHandler = (e) => {
     e.preventDefault();

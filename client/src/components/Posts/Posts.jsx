@@ -4,6 +4,7 @@ import Post from '../Post/Post';
 //
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
+//
 
 
 export default function Posts () {
@@ -11,10 +12,10 @@ export default function Posts () {
   const posts = useSelector(state => state.posts.posts);
   const [ postsLocal, setPostsLocal ] = useState(posts);
 
-  console.log(postsLocal);
 
   useEffect(() => {
     setPostsLocal(posts);
+    
     
   }, [posts])
 

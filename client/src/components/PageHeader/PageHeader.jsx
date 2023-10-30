@@ -2,7 +2,7 @@ import Styles from './pageHeader.module.css';
 //
 import { useEffect, useRef } from 'react';
 //
-import CarteleraIcon from '../../utils/icons/CarteleraIcon';
+import CarteleraIcon from '../../assets/CarteleraIcon';
 
 
 export default function PageHeader () {

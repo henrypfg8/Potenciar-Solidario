@@ -18,9 +18,9 @@ const Detail = () => {
     }, [])
 
   return (
-    <div>
+    <div className={Styles.DetailView}>
       <h1>{post?.title}</h1>
-      <h2>Categoría: {post?.category}</h2>
+      <h2>{post?.category}</h2>
       <p>Descripción: {post?.description}</p>
       <p>Usuario: {post?.user}</p>
       <p>ONG: {post?.organization}</p>

@@ -3,6 +3,7 @@ const {DeletePubCont }= require("../controllers/DeletePublication.js");
 //DOMpurify for DOM sanitization
 const deletePublication = async (req, res) => {
   const { id } = req.params;
+  console.log(id)
   try {
     const deletedRows = await DeletePubCont(id);
     if (deletedRows !== 0) {

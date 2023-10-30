@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       description: {
-        type: DataTypes.TEXT,
+        type: DataTypes.TEXT(1000),
         allowNull: true,
       },
       category: {

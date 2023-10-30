@@ -1,6 +1,6 @@
 const { Router } = require("express");
 
-const { DeletePubCont } = require("../controllers/DeletePublication.js");
+const { deletePublication } = require('../handlers/DeletePub');
 const { createPublicationHandler } = require("../handlers/CreatePubHandler.js");
 const { HandlerGetPublications } = require("../handlers/Publication.js");
 const { userPostHandlers } = require("../handlers/PostUser.js");
@@ -34,7 +34,7 @@ router.get("/posts", HandlerGetPublications);
 router.get("/posts/:id", HandlerGetPublications);
 router.post("/posts", createPublicationHandler);
 router.put("/posts/:id", PutPublicationHandler);
-router.delete("/posts/:id", DeletePubCont);
+router.delete("/posts/:id", deletePublication);
 
 router.put("/question/:id", UpdateQuestionH);
 router.delete("/question/:id", DeleteQuestionHandler);

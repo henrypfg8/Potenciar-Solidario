@@ -13,5 +13,3 @@ export const combinedFilter = (filterType, value) => {
 export const clearSearch = () => {
     return {type: CLEAR_SEARCH}
 }
-
-

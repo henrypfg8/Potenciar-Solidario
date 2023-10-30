@@ -5,6 +5,7 @@ GET_POSTS,
 GET_POST_DETAIL,
 CLEAR_POST_DETAIL,
 UPDATE_POST,
+UPDATE_POST_LIKES
 } from "../action-types";
 
 const initialState = {
@@ -56,7 +57,9 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: updatedPosts,
-            };  
+            }; 
+        
+        case UPDATE_POST_LIKES:     
             
             default:
                 return {...state};  

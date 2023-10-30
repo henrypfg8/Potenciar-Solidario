@@ -3,12 +3,15 @@ import {  useForm } from 'react-hook-form' // validaciones con react-hook-form
 import { createUser } from '../../Redux/actions';
 import { useDispatch } from 'react-redux';
 import Success from '../Form/Success';
-import { uploadImagePost } from '../Form/cloudinary';
+import { uploadImageCloudinary} from '../Form/cloudinary';
 import { useNavigate } from 'react-router-dom';
 import './auth.css';
 
+
 const Register = () => {
+
     const [success, setSuccess] = useState(false);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm(); // Configuración del hook form
@@ -28,9 +31,9 @@ const Register = () => {
 
         const data = new FormData();
         data.append('file', user.profile_picture[0]);
-        data.append('upload_preset', 'demo2023');
+        data.append('upload_preset', 'photo_users');
        setSuccess(true);
-        const result = await uploadImagePost(data); // Subir la imagen a cloudinary
+        const result = await uploadImageCloudinary(data); // Subir la imagen a cloudinary
         user.profile_picture = result;
         navigate('/'); // Agregar la imagen al objeto user
         setTimeout(() => {

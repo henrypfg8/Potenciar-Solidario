@@ -17,7 +17,7 @@ import Register from './components/auth/Register';
 import SearchBar from './components/SearchBar/SearchBar';
 import PostDetailView from './views/PostDetailView/PostDetailView';
 //
-
+import Admin from './views/admin/Admin';
 
 
 function App() {
@@ -76,6 +76,7 @@ function App() {
         {/* auth */}
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/admin' element={<Admin/>}/>
       </Routes>
     </div>
   )

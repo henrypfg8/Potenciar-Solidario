@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form' // validaciones con react-hook-form
 import './auth.css'
 import { uploadImagePost } from '../Form/cloudinary';
-import { createUser } from '../../Redux/actions';
+import { createUser } from '../../Redux/actions/usersActions';
 import { useDispatch } from 'react-redux';
 
 

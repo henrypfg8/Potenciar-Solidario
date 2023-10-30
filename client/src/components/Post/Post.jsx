@@ -7,7 +7,7 @@ import DeleteIcon from '../../assets/DeleteIcon';
 //
 import axios from 'axios';
 //
-import { getPosts } from "../../Redux/actions";
+import { getPosts } from "../../Redux/actions/postsActions";
 
 
 const Post = (props) => {

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
 import style from './QuestionCreate.module.css'
-import { createQuestion } from "../../Redux/actions";
+import { createQuestion } from "../../Redux/actions/questionsActions";
 import validationQuestion from "./QuestionValidate";
 import Swal from "sweetalert2";
 

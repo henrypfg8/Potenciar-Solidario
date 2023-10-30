@@ -33,7 +33,7 @@ const authLoginHandler = async (req, res) => {
         if (passwordValid) {
             try {
                 const payload = { id: userExist.id };
-                //console.log(payload);
+                console.log(payload);
                 const privateKey = process.env.JWT_PRIVATE_KEY;
                 // console.log("privateKey:", privateKey);
                 const token = jwt.sign(payload, privateKey, {
@@ -41,7 +41,7 @@ const authLoginHandler = async (req, res) => {
                     expiresIn: "1h",
                 });
 
-                return res.send({ jwt: token });
+                return res.send({ jwt: token, id: userExist.id });
             } catch (error) {
                 // console.error("error en generación de token:", error);
                 return res

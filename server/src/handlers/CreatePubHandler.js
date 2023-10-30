@@ -1,4 +1,4 @@
-const { Publication } = require("../db.js");
+const { Publication, User} = require("../db.js");
 
 const createPublicationHandler = async (req, res) => {
   const {
@@ -17,6 +17,9 @@ const createPublicationHandler = async (req, res) => {
     registrationLink,
     contact,
   } = req.body;
+
+  const userId = req.userId
+  console.log(`este es el user id ${userId}`)
 
   try {
     if (!title || !description || !category || !contact || !organization) {
@@ -40,6 +43,7 @@ const createPublicationHandler = async (req, res) => {
       image,
       registrationLink,
       contact,
+      userID: userId
     });
 
     res.status(201).json(publication);

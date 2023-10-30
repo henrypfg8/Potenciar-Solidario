@@ -15,6 +15,7 @@ import QuestionCreate from './components/QuestionCreate/QuestionCreate';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import PostDetail from './components/PostDetail/PostDetail';
+import Admin from './views/admin/Admin';
 //
 
 
@@ -69,6 +70,7 @@ function App() {
         {/* auth */}
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/admin' element={<Admin/>}/>
       </Routes>
     </div>
   )

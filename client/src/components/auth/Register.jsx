@@ -11,15 +11,26 @@ import './auth.css';
 
 const Register = () => {
 
-    const { register, handleSubmit, formState: { errors }, reset} = useForm(); // Configuración del hook form
+    const [success, setSuccess] = useState(false);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm(); // Configuración del hook form
+
 
     const onSubmit = async user => { // Función que se ejecuta al hacer submit
 
         const data = new FormData();
         data.append('file', user.profile_picture[0]);
-        data.append('upload_preset', 'demo2023');
-        const result = await uploadImagePost(data); // Subir la imagen a cloudinary
-        user.profile_picture = result; // Agregar la imagen al objeto user
+        data.append('upload_preset', 'photo_users');
+       setSuccess(true);
+        const result = await uploadImageCloudinary(data); // Subir la imagen a cloudinary
+        user.profile_picture = result;
+        navigate('/'); // Agregar la imagen al objeto user
+        setTimeout(() => {
+            setSuccess(false);
+           
+        }, 2000);
 
         //Hacer el dispatch de la acción para crear el usuario
   

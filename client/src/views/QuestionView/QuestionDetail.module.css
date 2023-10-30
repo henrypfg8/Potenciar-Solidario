@@ -109,6 +109,10 @@
     background: #095184bb;
     transition: 0.2s;
 }
+.question button:hover{
+    background: #095184bb;
+    transition: 0.2s;
+}
 .comment p{
     font-family: "FuenteBold";
 }
@@ -130,7 +134,7 @@
     padding: 1rem;
     display: flex;
     flex-direction: column;
-
+    
 }
 
 .question button{
@@ -140,6 +144,7 @@
     padding: 0.5rem 1rem;
     background-color: #095084;
     border: #095084;
+    transition: 0.2s;
     color: #fff;
     transition: 0.2s;
     border-radius: 5px;

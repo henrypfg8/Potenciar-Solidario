@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import {  useForm } from 'react-hook-form' // validaciones con react-hook-form
-import './auth.css';
+import { createUser } from '../../Redux/actions';
+import { useDispatch } from 'react-redux';
 import Success from '../Form/Success';
 import { uploadImagePost } from '../Form/cloudinary';
 import { useNavigate } from 'react-router-dom';
-
+import './auth.css';
 
 const Register = () => {
     const [success, setSuccess] = useState(false);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm(); // Configuración del hook form
-    
+
     const validateAge = (value) => {
         const inputDate = new Date(value);
         const currentDate = new Date();
@@ -38,7 +40,7 @@ const Register = () => {
 
         //Hacer el dispatch de la acción para crear el usuario
 
-
+        dispatch(createUser(user));
 
         // Limpiar el formulario
         reset();

@@ -13,6 +13,7 @@ import { getPosts } from "../../Redux/actions/postsActions";
 const Post = (props) => {
   const { id, title, organization, category, image, description } = props;
   const dispatch = useDispatch();
+  
 
   const deleteHandler = (e) => {
     e.preventDefault();
@@ -33,7 +34,7 @@ const Post = (props) => {
       <p className={Styles.Post__category}>{category}</p>
 
       <div className={Styles.Post__description}>
-        <img className={Styles.Post__img} src={image} alt="imagen" />
+        <img className={Styles.Post__image} src={image} alt="imagen" />
 
         <p>{description}</p>
       </div>

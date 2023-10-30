@@ -1,23 +1,9 @@
-// const { Publication } = require("./src/db.js");
-// const { User } = require("./src/db.js");
+const { Publication } = require("../db");
 
-// const CreatePublication = async (req,res) => {
-//      {
-//         id,
-//         title,
-//         description,
-//         category,
-//         startDate,
-//         endDate,
-//         modificationDate,
-//         creationDate,
-//         status,
-//         organization,
-//         url,
-//         image,
-//         registrationLink,
-//         contact,
-//       } = req.body;
-//   return post; //!
-// };
-// module.exports = CreatePublication;
+
+const CreatePublication = async (userData) => {
+  const newPublication = await Publication.create(userData);
+  if (!newPublication) throw new Error("No se pudo crear la Publicación.");
+  return newPublication;
+};
+module.exports = {CreatePublication};

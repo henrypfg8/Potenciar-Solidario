@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import Success from '../Form/Success';
 import { uploadImageCloudinary} from '../Form/cloudinary';
 import { useNavigate } from 'react-router-dom';
-import './auth.css';
 
 
 const Register = () => {

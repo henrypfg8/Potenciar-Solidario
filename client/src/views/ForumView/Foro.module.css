@@ -144,7 +144,7 @@ body html {
 .center{
     display: flex;
     flex-direction: column;
-    width: 55vw;
+    width: 57vw;
 }
 
 @media (max-width: 575.98px) {  
@@ -155,6 +155,7 @@ body html {
      margin: 10px;
      padding: 1rem;
     }
+    
     .container{
         margin-top: 20px;
     }
@@ -189,8 +190,15 @@ body html {
     }
     .contain{
         margin: 20px;
-        width: 80vw;
+        max-width: 80vw;
+        min-width: 80vw;
         /* height: 100vh; */
+    }
+    .center{
+        width: 70vw;
+        max-width: 70vw;   
+        min-width: 70vw;
+        
     }
 
 }

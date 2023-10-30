@@ -172,8 +172,7 @@ export const createUser = (user) => {
     return async function (dispatch) {
         try {
             const response = await axios.post("http://localhost:19789/users", user);
-            console.log(user)
-            dispatch({type: CREATE_USER, payload: response.data});
+            dispatch({type: CREATE_USER, payload: response});
         } catch (error) {   
             throw new Error(error.response + "por favor contactar a soporte por este error");
         }

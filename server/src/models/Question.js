@@ -9,15 +9,19 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         autoIncrement: true,
       },
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       text: {
-        type: DataTypes.STRING(),
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       userId: {
         // toma id del usuario que realiza la pregunta
         type: DataTypes.UUID,
         allowNull: false,
-        field: 'UserId'
+        field: "UserId",
       },
       categoryId: {
         // toma el id de la categoria

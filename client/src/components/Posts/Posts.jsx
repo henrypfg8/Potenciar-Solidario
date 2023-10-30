@@ -27,7 +27,7 @@ export default function Posts () {
 
 
       <div className={Styles.Cards}>
-        {postsLocal?.map(({ id, title, organization, category, description, image }) => (
+        {postsLocal?.map(({ id, title, organization, category, description, img }) => (
           <Post 
             key={id}
             id={id}

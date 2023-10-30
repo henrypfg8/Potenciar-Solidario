@@ -14,7 +14,6 @@ const Post = (props) => {
   const { id, title, organization, category, img, description } = props;
   const dispatch = useDispatch();
   
-console.log(image)
 
   const deleteHandler = (e) => {
     e.preventDefault();

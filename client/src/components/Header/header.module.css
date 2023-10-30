@@ -45,20 +45,20 @@
             color: white
         }
 
-@media (max-width: 992px) {
+@media screen and (max-width: 992px) {
     .header {
         gap: 230px
     }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .header {
         gap: 50px
     }
     
 }
 
-@media (max-width: 576px) {
+@media screen and (max-width: 576px) {
     .backButton {
         display: none;
     }

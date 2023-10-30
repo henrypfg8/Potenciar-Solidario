@@ -14,15 +14,15 @@ import QuestionDetail from './components/QuestionsDetail/QuestionDetail';
 import QuestionCreate from './components/QuestionCreate/QuestionCreate';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import PostDetail from './components/PostDetail/PostDetail';
-import Admin from './views/admin/Admin';
+import SearchBar from './components/SearchBar/SearchBar';
+import PostDetailView from './views/PostDetailView/PostDetailView';
 //
 
 
 
 function App() {
   // eslint-disable-next-line no-unused-vars
-  const location = useLocation();
+  const { pathname } = useLocation();
   const posts = useSelector(state => state.posts.posts);
   const dispatch = useDispatch();
 
@@ -53,12 +53,18 @@ function App() {
      
       <Header isScrolled={isScrolled}/>
       <PageHeader />
+      
+      {pathname === '/' || pathname === '/foro' ? 
+      <SearchBar />
+      :
+      null}
+      
 
       <Routes>
 
         <Route path='/' element={<Home/>} />
         <Route path='/formulario' element={<ContainerForm/>}/>
-        <Route path='/detalle:id' element={<PostDetail/>} />
+        <Route path='/detalle/:id' element={<PostDetailView/>} />
 
 
         <Route path='/foro' element={<Forum/>}/> 

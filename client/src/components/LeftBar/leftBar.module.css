@@ -16,6 +16,7 @@
         padding: 13px 0;
         gap: 10px;
     }
+    
 
         .button {
             color: inherit;
@@ -31,27 +32,37 @@
             background: var(--lightblue);
             transition: background-color, border, color 0.4s;
         }
-        
-        
+            
         .button:hover {
             background-color: var(--darkblue);
             color: white;
-            border: solid var(--lightblue) 5px
+            border: solid var(--lightblue) 4px
 
         }
 
-        
         .select {
             width: 90%;
         }
 
-   
 
 #active {
     background-color: var(--darkblue);
     color: white;
     cursor: inherit;
-    border: solid var(--lightblue) 5px
+    border: solid var(--lightblue) 4px;
+}
+
+@media screen and (max-width: 768px) {
+    .LeftBar {
+        width: 100%;
+    }
+    .LeftBar__Buttons {
+        flex-direction: row;
+        width: 97%;
+    }
+    #LeftBar__Filters {
+        flex-direction: column;
+    }
 }
 
     

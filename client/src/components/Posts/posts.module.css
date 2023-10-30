@@ -1,6 +1,7 @@
 .Posts {
     width: 70%;
     max-height: 100%;
+    overflow: scroll;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,10 +9,15 @@
 
     .Cards {
         width: 100%;
-        overflow: scroll;
         flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
+
+@media screen and (max-width:768px) {
+    .Posts {
+        width: 100%
+    }
+}
 

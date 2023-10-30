@@ -4,6 +4,7 @@ DELETE_USER,
 GET_USERS,
 GET_USER_DETAIL,
 CLEAR_USER_DETAIL,
+UPDATE_USER
 } from "../action-types";
 
 const initialState = {
@@ -48,6 +49,16 @@ const userReducer = (state = initialState, action) => {
                 userDetail: [],
             };
 
+        case UPDATE_USER:
+            const updaetdUser = action.payload;
+            const updatedUsers = state.users.map(user =>
+                user.id === updatedUser.id ? updatedUser : user
+                );
+                return {
+                    ...state,
+                    users: updatedUsers,
+                }    
+        
             default:
                 return {...state};
     }

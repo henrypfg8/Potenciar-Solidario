@@ -4,6 +4,7 @@ const HandlerGetPublications = async (req, res) => {
   try {
     const { id } = req.params;
     if (id) {
+      console.log(id)
       const getOne = await getPublications(id);
 
       if (getOne.length === 0) {

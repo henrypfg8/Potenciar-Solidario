@@ -1,11 +1,14 @@
 import { useForm } from 'react-hook-form' // validaciones con react-hook-form
 import './auth.css'
 import { uploadImagePost } from '../Form/cloudinary';
+import { createUser } from '../../Redux/actions';
+import { useDispatch } from 'react-redux';
 
 
 const Register = () => {
 
     const { register, handleSubmit, formState: { errors }, reset} = useForm(); // Configuración del hook form
+    const dispatch = useDispatch()
 
     const onSubmit = async user => { // Función que se ejecuta al hacer submit
 
@@ -16,8 +19,10 @@ const Register = () => {
         user.profile_picture = result; // Agregar la imagen al objeto user
 
         //Hacer el dispatch de la acción para crear el usuario
-  
+        dispatch(createUser(user))
+
         // Limpiar el formulario
+        
         reset();
 
     }

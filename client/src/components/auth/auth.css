@@ -83,3 +83,17 @@
 .auth__btn:hover {
     background: #023458;
 }
+.auth__links {
+    display: flex;
+   justify-content: space-between;
+   margin: 1rem auto 0 auto;
+}
+.auth__google{
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+}
+.auth__google--icon {
+    width: 30px;
+    cursor: pointer;
+}

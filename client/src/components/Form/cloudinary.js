@@ -1,8 +1,8 @@
-export const uploadImagePost  = async (data) => {
+export const uploadImageCloudinary  = async (data) => {
     try{
         // setLoading(true)
         const res = await fetch(
-            'https://api.cloudinary.com/v1_1/dtvbans9e/image/upload', //url de cloudinary
+            'https://api.cloudinary.com/v1_1/djntomnvt/image/upload', //url de cloudinary
             {
                 method: 'POST',
                 body: data

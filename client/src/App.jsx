@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "./Redux/actions/postsActions";
 import { getCategories } from "./Redux/actions/categoriesActions";
+import { getOngs } from "./Redux/actions/ongsActions";
 //
 import "./App.css";
 //
@@ -40,7 +41,7 @@ function App() {
     root.addEventListener("scroll", scrollHandler);
 
     dispatch(getPosts());
-    dispatch(getCategories());
+    dispatch(getOngs());
 
     return () => {
       root.removeEventListener("scroll", scrollHandler);

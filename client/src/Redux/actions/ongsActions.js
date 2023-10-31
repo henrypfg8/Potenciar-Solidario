@@ -16,7 +16,7 @@ export const getOngs = () => {
     }
 }
 
-export const getOngsByName = (query) => {
+export const getPostsByOngs = (query) => {
     return async function (dispatch) {
         try {
             const response = await axios.get(`http://localhost:19789/ongs?name=${query}`);

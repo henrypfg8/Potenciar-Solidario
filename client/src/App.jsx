@@ -42,6 +42,7 @@ function App() {
 
     dispatch(getPosts());
     dispatch(getOngs());
+    dispatch(getCategories());
 
     return () => {
       root.removeEventListener("scroll", scrollHandler);

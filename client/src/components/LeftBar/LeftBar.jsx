@@ -9,21 +9,18 @@ import Select from "react-select";
 export default function LeftBar() {
   const { pathname } = useLocation();
   const ongs = useSelector((state) => state.ongsAndCategories.ongs);
+  const categories = useSelector(state => state.ongsAndCategories.categories);
 
-  const categoryOptions = [];
+  const categoryOptions = categories.map(cat => ({
+    label: cat.name, value: cat.name 
+  }))
   const ongOptions = Array.from(new Set(ongs.map((ong) => ong.nombre))).map(
     (nombre) => ({
       label: nombre,
       value: nombre,
     })
   );
-  const dateOptions = [
-    { label: "Filtrar por fecha", value: "Todas las fechas" },
-    { label: "Hace menos de 1 año", value: "Hace menos de 1 año" },
-    { label: "Hace menos de 2 años", value: "Hace menos de 2 años" },
-    { label: "Hace menos de 5 años", value: "Hace menos de 5 años" },
-    { label: "Hace 5 años o mas", value: "Hace 5 años o mas" },
-  ];
+
 
   //////////////////////////////////////////////////////
 
@@ -61,11 +58,11 @@ export default function LeftBar() {
       <div className={Styles.LeftBar__Buttons} id={Styles.LeftBar__Filters}>
         <h3>Filtros de búsqueda</h3>
 
-        {/* <Select
+        <Select
           className={Styles.select}
           options={categoryOptions}
           isSearchable={true}
-        /> */}
+        />
         <Select
           className={Styles.select}
           options={ongOptions}

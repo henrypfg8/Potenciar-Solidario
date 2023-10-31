@@ -4,6 +4,7 @@ import userReducer from "./reducers/userReducer";
 import postReducer from "./reducers/postReducer";
 import questionReducer from "./reducers/questionReducer";
 import ongsAndCategoriesReducer from "./reducers/ongsAndCategoriesReducer";
+import authReducer from "./auth/AuthReducer";
 import thunk from "redux-thunk";
 
 // Combina los reducers
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   questions: questionReducer,
   ongsAndCategories: ongsAndCategoriesReducer,
 
+  auth: authReducer,
 });
 
 // Aplica el middleware usando composeWithDevTools

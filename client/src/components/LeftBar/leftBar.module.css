@@ -30,15 +30,13 @@
             align-items: center;
             text-align: center;
             font-size: 1.5em;
-            background: var(--lightblue);
-            transition: background-color, border, color 0.4s;
+            background-color: var(--lightblue);
+            transition: border, color, background-color 0.2s;
         }
             
         .button:hover {
             background-color: var(--darkblue);
             color: white;
-            border: solid var(--lightblue) 4px
-
         }
 
         .select {
@@ -50,7 +48,7 @@
     background-color: var(--darkblue);
     color: white;
     cursor: inherit;
-    border: solid var(--lightblue) 4px;
+    /* border: solid var(--lightblue) 4px; */
 }
 
 @media screen and (max-width: 768px) {

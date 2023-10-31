@@ -10,6 +10,7 @@ const rootReducer = combineReducers({
   users: userReducer,
   posts: postReducer,
   questions: questionReducer,
+
 });
 
 // Aplica el middleware usando composeWithDevTools

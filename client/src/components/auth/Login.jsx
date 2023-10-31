@@ -2,17 +2,23 @@ import { useForm } from 'react-hook-form'
 import './auth.css';
 import { GoogleLogin} from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode';
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+// import { useState } from 'react';
 
 
 const Login = () => {
-    const [userwithGoogle, setUserWhithGoogle] = useState({})
 
+    const state= useSelector(state => state.auth)
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    useEffect(() => {
+       
+    }, [])
+    console.log(state)
 
     const onSubmit = user => {
-        console.log(user); //datos del formulario
-
+         //datos del formulario
+        console.log(user);
         //Hacer el dispatch de la acción para iniciar sesión
 
         // Limpiar el formulario
@@ -20,7 +26,9 @@ const Login = () => {
     }
    
 
-    
+    const loginWithGoogle = async (email) => {
+        console.log(email);
+    }
       
     return (
         <div className='auth__container' >
@@ -55,9 +63,9 @@ const Login = () => {
                     <div className='auth__google'>
                         <GoogleLogin
                             onSuccess={credentialResponse => {
+                                console.log(credentialResponse)
                                 const user = jwtDecode(credentialResponse.credential)
-                                setUserWhithGoogle(user);
-                                console.log(user);
+                                loginWithGoogle(user.email)
                             }}
                             
                             onError={(error) => {

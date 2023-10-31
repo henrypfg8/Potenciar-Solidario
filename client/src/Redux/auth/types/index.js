@@ -1,0 +1,7 @@
+export const types = {
+    REGISTER : 'REGISTER',
+    LOGIN : 'LOGIN',
+    LOGOUT : 'LOGOUT',
+    GET_PROFILE : 'GET_PROFILE',
+    ERROR_REGISTER : 'ERROR_REGISTER',
+}

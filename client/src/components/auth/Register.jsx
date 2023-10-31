@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form' // validaciones con react-hook-form
 import './auth.css';
 import { useState } from 'react';
-import { createUser } from '../../Redux/actions/usersActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../../Redux/auth/AuthActions';
 import Success from '../Form/Success';
 import { uploadImageCloudinary } from '../Form/cloudinary';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,8 @@ import { useNavigate } from 'react-router-dom';
 const Register = () => {
 
     const [success, setSuccess] = useState(false);
-
+    const {error} = useSelector(state => state.auth)
+  
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm(); // Configuración del hook form
@@ -26,14 +27,15 @@ const Register = () => {
         setSuccess(true);
         const result = await uploadImageCloudinary(data); // Subir la imagen a cloudinary
         user.profile_picture = result;
-        navigate('/'); // Agregar la imagen al objeto user
+
+        navigate('/login'); // Agregar la imagen al objeto user
         setTimeout(() => {
             setSuccess(false);
 
         }, 2000);
 
         //Hacer el dispatch de la acción para crear el usuario
-
+        dispatch(registerUser(user));
         // Limpiar el formulario
         reset();
 
@@ -52,7 +54,8 @@ const Register = () => {
     };
     return (
         <div className='auth__container' >
-            {success && <Success />}
+            {success && !error && <Success frase='Haz Creado tu cuenta exitosamente' color='#005692'/>}
+            {error && <Success frase='No se pudo crear tu cuenta' color='#DD0C0C'/>}
             <form action="" method='post' onSubmit={handleSubmit(onSubmit)} className='auth__form' autoCorrect='off'>
 
                 {/* campo para el nombre */}
@@ -132,10 +135,10 @@ const Register = () => {
                     <label className='auth__label' htmlFor="phone">Número de telefono</label>
                     {errors?.phone?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
                     {errors?.phone?.type === 'pattern' && <p className='auth__error'>Debe ser un número de telefono</p>}
-                    {errors?.phone?.type === 'maxLength' && <p className='auth__error'>Tu telefono debe ser máximo de 10 digitos</p>}
+                    {errors?.phone?.type === 'maxLength' && <p className='auth__error'>Tu telefono debe ser máximo de 8 digitos</p>}
                     <input className='auth__input'
                         type="text" {...register('phone', {
-                            required: true, maxLength : 10,  pattern: { // Validación de telefono
+                            required: true, maxLength : 8,  pattern: { // Validación de telefono
                                 value: /^\d+$/,
                                 message: "Debe ser un numero de telefono"
                             }
@@ -163,10 +166,10 @@ const Register = () => {
                 {/* Campo para subir foto */}
                 <div>
                     <label className='auth__label' htmlFor="profile_picture">Foto de perfil</label>
-                    {errors.profile_picture && <p className='auth__error'>Selecciona una foto válida</p>}
+                    {errors?.profile_picture?.type === 'pattern' && <p className='auth__error'>Debe ser un archivo de imagen</p>}
                     <input className='auth__input'
                         type="file" {...register('profile_picture', {
-                            required: true, pattern: { // Validación de foto de perfil
+                            required:false, pattern: { // Validación de foto de perfil
                                 value: '([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)',
                                 message: "Debe ser un archivo de imagen"
                             }

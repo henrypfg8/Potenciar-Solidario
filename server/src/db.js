@@ -54,13 +54,12 @@ const {
 } = sequelize.models;
 
 //Relacion de modelos
-User.hasMany(Review, { foreignKey: "userID" });
+
 User.hasMany(Publication, { foreignKey: "userID" });
 User.hasMany(Question, { foreignKey: "userId" });
 User.hasMany(Answer, { foreignKey: "userId" });
 Publication.belongsTo(User, { foreignKey: "userID" });
 Publication.belongsTo(Category, { foreignKey: "categoryId" });
-Publication.hasMany(Review, { foreignKey: "PostID" });
 Category.hasMany(Publication, { foreignKey: "categoryId" });
 Category.hasMany(Question, { foreignKey: "categoryId" });
 Question.belongsTo(Category, { foreignKey: "categoryId" });

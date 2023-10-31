@@ -5,14 +5,9 @@ module.exports = (sequelize) => {
     "Organization",
     {
       id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
-        allowNull: false,
-        validate: {
-          isInt: true,
-          min: 1,
-        },
+        primaryKey: true,
       },
 
       nombre: {

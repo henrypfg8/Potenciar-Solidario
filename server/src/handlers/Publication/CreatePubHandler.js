@@ -15,7 +15,7 @@ const createPublicationHandler = async (req, res) => {
         image,
         registrationLink,
         contact,
-        /* likes, */ //? agregar cuando cambiar force: true para que se agregue la columna.
+         likes 
     } = req.body;
 
    /*  const userId = req.userId;
@@ -40,8 +40,7 @@ const createPublicationHandler = async (req, res) => {
             image,
             registrationLink,
             contact,
-            
-            /* likes, */
+            likes, 
         });
 
         res.status(201).json(publication);

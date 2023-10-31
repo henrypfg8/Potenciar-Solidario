@@ -6,9 +6,6 @@ const DeletePubCont = async (id) => {
   if (!user) {
     return { deletedRows: 0, message: "User not found" };
   }
-  // const deletedRows = await Publication.destroy({
-  //   where: { id: id },
-  // });
   return user;
 };
 

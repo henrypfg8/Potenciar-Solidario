@@ -44,17 +44,21 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      profile_picture: {
+      organization: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      profile_picture: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
       habitual_location_of_residence: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       geographical_area_residence: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       admin: {
         type: DataTypes.BOOLEAN,

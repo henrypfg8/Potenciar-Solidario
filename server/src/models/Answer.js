@@ -22,15 +22,6 @@ module.exports = (sequelize) => {
           len: [20, 1000],
         },
       },
-
-      creationDate: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-        validate: {
-          isDate: true,
-          isBefore: "2023-10-01",
-        },
-      },
     },
     { timestamps: false }
   );

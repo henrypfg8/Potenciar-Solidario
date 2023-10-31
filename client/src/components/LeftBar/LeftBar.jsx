@@ -21,6 +21,8 @@ export default function LeftBar() {
     })
   );
 
+  
+
 
   //////////////////////////////////////////////////////
 
@@ -62,12 +64,15 @@ export default function LeftBar() {
           className={Styles.select}
           options={categoryOptions}
           isSearchable={true}
+          menuPlacement="top"
+          placeholder='Categorias'
         />
         <Select
           className={Styles.select}
           options={ongOptions}
           isSearchable={true}
           menuPlacement="top"
+          placeholder='Organizaciones'
         />
         <Select className={Styles.select} />
 

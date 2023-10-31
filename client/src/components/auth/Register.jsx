@@ -33,7 +33,8 @@ const Register = () => {
         }, 2000);
 
         //Hacer el dispatch de la acción para crear el usuario
-
+        dispatch(createUser(user))
+        console.log(user)
         // Limpiar el formulario
         reset();
 

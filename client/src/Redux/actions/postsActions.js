@@ -6,6 +6,7 @@ GET_POST_DETAIL,
 UPDATE_POST,
 SEARCH_POST,
 CLEAR_POST_DETAIL,
+GET_POSTS_BY_DATE,
 } from "../action-types"
     
 import axios from "axios";
@@ -77,6 +78,19 @@ import axios from "axios";
             }
         }
     }
+
+    export const getPostsByDate = (initialDate, finalDate) => {
+        return async function (dispatch) {
+            try {
+                const response = await axios.get("http://localhost:19789/filterByDate", initialDate, finalDate);
+                dispatch({type: GET_POSTS_BY_DATE, payload: response.data});
+            } catch (error) {
+                console.log(error, "por favor contactar a soporte por este error")
+            }
+        }
+    }
+
+
     export const clearPostDetail = () => {
         return {type: CLEAR_POST_DETAIL}
     }

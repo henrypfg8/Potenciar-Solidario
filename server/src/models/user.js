@@ -46,7 +46,7 @@ module.exports = (sequelize) => {
       },
       organization: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       profile_picture: {
         type: DataTypes.STRING,

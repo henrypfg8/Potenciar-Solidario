@@ -16,7 +16,7 @@ export const getCategories = () => {
     }
 }
 
-export const getCategoriesByName = (query) => {
+export const getPostsByCategories = (query) => {
     return async function (dispatch) {
         try {
             const response = await axios.get(`http://localhost:19789/categories?name=${query}`);

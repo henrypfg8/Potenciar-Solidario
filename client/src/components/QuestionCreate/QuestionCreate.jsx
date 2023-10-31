@@ -1,13 +1,23 @@
 /* eslint-disable no-unused-vars */
 
 import { useEffect, useState } from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import style from './QuestionCreate.module.css'
 import { createQuestion } from "../../Redux/actions/questionsActions";
 import validationQuestion from "./QuestionValidate";
 import Swal from "sweetalert2";
+import { getCategories } from "../../Redux/actions/categoriesActions";
 function QuestionCreate() {
     const dispatch = useDispatch()
+    const categories = useSelector(state => state.ongsAndCategories.categories)
+
+    console.log(categories);
+
+    useEffect(() => {
+        dispatch(getCategories())
+    },[])
+
+
     const [errores, setErrores] = useState({
         title: '',
         text: ''

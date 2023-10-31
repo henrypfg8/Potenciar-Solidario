@@ -15,6 +15,7 @@ const authRegisterHandler = async (req, res) => {
         geographical_area_residence,
         admin,
         password,
+        organization
     } = req.body;
 
     try {
@@ -37,12 +38,16 @@ const authRegisterHandler = async (req, res) => {
             habitual_location_of_residence,
             geographical_area_residence,
             admin,
+            organization,
             password: hashPassword,
         });
 
-        res.status(200).json({
-            message: `Usuario ${user.name} creado con éxito`,
-        });
+        const userWithoutPassword = JSON.parse(JSON.stringify(user));
+        delete userWithoutPassword.password;
+
+
+
+        res.status(200).json({ userWithoutPassword });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: error.message });

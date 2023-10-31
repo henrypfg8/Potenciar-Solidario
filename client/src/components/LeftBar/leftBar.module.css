@@ -43,6 +43,12 @@
             width: 90%;
         }
 
+        .Filters__date {
+            width: 80%;
+            display: flex;
+            justify-content: space-between;
+        }
+
 
 #active {
     background-color: var(--darkblue);

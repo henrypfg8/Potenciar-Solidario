@@ -37,9 +37,6 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         allowNull: false,
         field: "UserId",
-        validate: {
-          isUUID: true,
-        },
       },
       categoryId: {
         // toma el id de la categoria

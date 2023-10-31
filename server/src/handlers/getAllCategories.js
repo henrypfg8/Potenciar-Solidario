@@ -1,8 +1,8 @@
 const { controllerCategories } = require("../controllers/getAllCategoriesC");
 
-const getAllCategories = (req, res) => {
+const getAllCategories = async (req, res) => {
   try {
-    const allCategories = controllerCategories();
+    const allCategories = await controllerCategories();
     if (allCategories.length === 0) throw new Error("No existen categorias");
 
     return res.status(200).json(allCategories);

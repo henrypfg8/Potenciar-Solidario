@@ -1,9 +1,9 @@
 const { controllerOngs } = require("../controllers/ControllerGetOngs");
 
-const handlerOngs = (req, res) => {
+const handlerOngs = async (req, res) => {
   try {
     const { ongs } = req.query;
-    const OngsFn = controllerOngs(ongs);
+    const OngsFn = await controllerOngs(ongs);
 
     if (OngsFn.length === 0)
       throw new Error("No existen Publicaciones con la categoria seleccionada");

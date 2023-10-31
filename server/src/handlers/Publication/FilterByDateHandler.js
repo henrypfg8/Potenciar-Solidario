@@ -1,4 +1,4 @@
-const { Publication } = require("../db.js");
+const { Publication } = require("../../db.js");
 const { Op } = require("sequelize");
 
 const FilterByDate = async (req, res) => {

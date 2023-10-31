@@ -1,4 +1,6 @@
 const { User } = require("../../db");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 //Bearer.asddasd1w49801hnfo8912
 const authHandler = async (req, res, next) => {

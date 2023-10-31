@@ -1,6 +1,5 @@
-const {
-    CreatePublication,
-} = require("../../controllers/Publication/CreatePublication");
+const { Publication, User } = require("../db.js");
+const {CreatePublication} = require("../../controllers/Publication/CreatePublication");
 
 const createPublicationHandler = async (req, res) => {
     const {
@@ -42,7 +41,7 @@ const createPublicationHandler = async (req, res) => {
             image,
             registrationLink,
             contact,
-
+            userID: userId,
             likes,
         });
 

@@ -1,6 +1,6 @@
 const { Router } = require("express");
 
-const { deletePublication } = require('../handlers/DeletePub');
+const { deletePublication } = require("../handlers/DeletePub");
 const { createPublicationHandler } = require("../handlers/CreatePubHandler.js");
 const { HandlerGetPublications } = require("../handlers/Publication.js");
 const { userPostHandlers } = require("../handlers/PostUser.js");
@@ -14,13 +14,20 @@ const { handlerCategory } = require("../handlers/HandlerCategory.js");
 const { UpdateQuestionH } = require("../handlers/UpdateQuestionH.js");
 const { DeleteQuestionHandler } = require("../handlers/DeleteQuestionH.js");
 const { getQuestion } = require("../handlers/getQuestion.js");
-const { createQuestionHandler } = require("../handlers/CreateQuestionHandler.js");
-const {authHandler} = require("../handlers/authHandler.js"); //middlewere validacion de rutas
+const {
+  createQuestionHandler,
+} = require("../handlers/CreateQuestionHandler.js");
+const { handlerOngs } = require("../handlers/handlerGetOngs");
+const { getAllCategories } = require("../handlers/getAllCategories");
+const { authHandler } = require("../handlers/authHandler.js"); //middlewere validacion de rutas
 
 const router = Router();
 
 // rutas
-router.get("/posts/category?", handlerCategory);
+router.get("/ongs/name?=", handlerOngs);
+router.get("/categories", getAllCategories);
+
+router.get("/categories/name?=", handlerCategory);
 
 router.post("/register", authRegisterHandler);
 router.post("/login", authLoginHandler);

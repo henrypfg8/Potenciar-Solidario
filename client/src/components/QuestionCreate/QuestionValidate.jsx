@@ -8,5 +8,8 @@ if(input.title.length < 10){
 if(!input.text){
     errores.text = 'Debe de tener una descripcion'
 }
+if(!input.categories){
+    errores.categories = 'Debe de seleccionar una categoria'
+}
 return errores;
 }

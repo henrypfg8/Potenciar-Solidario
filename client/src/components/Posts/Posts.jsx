@@ -25,7 +25,7 @@ export default function Posts () {
 
 
       <div className={Styles.Cards}>
-        {postsLocal?.map(({ id, title, organization, category, description, image }) => (
+        {postsLocal?.map(({ id, title, organization, category, description, image, startDate }) => (
           <Post 
             key={id}
             id={id}
@@ -34,6 +34,7 @@ export default function Posts () {
             category={category}
             description={description}
             image={image}
+            startDate={startDate}
           />
         ))}
       </div>

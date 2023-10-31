@@ -1,24 +1,33 @@
 const { User } = require("../../db");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-const login = async (req, res) => {
-  try {
-    const { email, password } = req.Query;
-    if (!email || !password) {
-      res.status(400).send("Faltan datos");
+//Bearer.asddasd1w49801hnfo8912
+const authHandler = async (req, res, next) => {
+    const { authorization } = req.headers;
+    let token = "";
+    if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
+        token = authorization.substring(7);
     }
 
-    const user = User.findOne({ where: { email } });
+    //console.log(token);
 
-    if (!user) return res.status(404).send("Usuario no encontrado");
+    if (!token)
+        return res.status(401).json({ error: "token missing or invalid" });
 
-    return user.password === password
-      ? res.json({
-          access: true,
-        })
-      : res.status(403).send("Contraseña incorrecta");
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
+    try {
+        let decodenToken = await jwt.verify(token, process.env.JWT_PRIVATE_KEY);
+        //console.log(decodenToken)
+        req.userId = decodenToken.id;
+        if (decodenToken) {
+            console.log("token valido");
+            next();
+        }
+    } catch (error) {
+        return res
+            .status(401)
+            .json({ error: "Error en la validacion del token" });
+    }
 };
 
-module.exports = {login};
+module.exports = { authHandler };

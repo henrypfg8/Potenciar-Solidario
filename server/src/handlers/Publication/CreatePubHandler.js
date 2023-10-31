@@ -1,50 +1,54 @@
-const { CreatePublication } = require("../../controllers/Publication/CreatePublication");
+const {CreatePublication} = require("../../controllers/Publication/CreatePublication");
 
 const createPublicationHandler = async (req, res) => {
-  const {
-    title,
-    description,
-    category,
-    startDate,
-    endDate,
-    modificationDate,
-    creationDate,
-    status,
-    organization,
-    url,
-    image,
-    registrationLink,
-    contact,
-    likes,
-  } = req.body;
+    const {
+        title,
+        description,
+        category,
+        startDate,
+        endDate,
+        modificationDate,
+        creationDate,
+        status,
+        organization,
+        url,
+        image,
+        registrationLink,
+        contact,
+        likes,
+    } = req.body;
 
-  try {
-    if (!title || !description || !category || !contact || !organization)
-      throw new Error("Faltan campos obligatorios");
+    const userId = req.userId;
+    console.log(`este es el user id ${userId}`);
 
-    const publication = await CreatePublication({
-      id,
-      title,
-      description,
-      category,
-      startDate,
-      endDate,
-      modificationDate,
-      creationDate,
-      status,
-      organization,
-      url,
-      image,
-      registrationLink,
-      contact,
-      likes,
-    });
+    try {
+        if (!title || !description || !category || !contact || !organization)
+            throw new Error("Faltan campos obligatorios");
 
-    res.status(201).json(publication);
-  } catch (error) {
-    console.error(error);
-    res.status(400).json({ error: error.message });
-  }
+        const publication = await CreatePublication({
+            id,
+            title,
+            description,
+            category,
+            startDate,
+            endDate,
+            modificationDate,
+            creationDate,
+            status,
+            organization,
+            url,
+            image,
+            registrationLink,
+            contact,
+            userID: userId,
+            likes,
+        });
+
+        res.status(201).json(publication);
+    } catch (error) {
+        console.error(error);
+        res.status(400).json({ error: error.message });
+    }
 };
 
 module.exports = { createPublicationHandler };

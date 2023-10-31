@@ -1,46 +1,25 @@
 const { User } = require("../../db");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
+import { OAuth2Client } from "google-auth-library";
 
-// Controlador de autenticación de Google
 const authGoogleHandler = async (req, res) => {
-    const { googleUserId, email } = req.body; // Supongamos que el cliente envía el ID y correo de Google
-
-    if (!googleUserId || !email) {
-        return res.status(400).json({ message: "Datos de Google incompletos" });
-    }
+    const client = new OAuth2Client(process.env.CLIENT_ID);
+    const { idToken } = req.body;
 
     try {
-        const userExist = await User.findOne({ where: { email: email } });
+        const response = await client.verifyIdToken({ idToken, audience: process.env.CLIENT_ID })
+        const { email } = response.payload;
 
-        if (!userExist) {
-            // Si el correo de Google no se encuentra en la base de datos, puedes crear un nuevo usuario o manejarlo como prefieras.
-            // Aquí, creamos un nuevo usuario con ese correo.
-            const newUser = await User.create({ email: email, googleUserId: googleUserId });
-            
-            // Puedes generar un token para el nuevo usuario y devolvérselo.
-            const payload = { id: newUser.id };
-            const privateKey = process.env.JWT_PRIVATE_KEY;
-            const token = jwt.sign(payload, privateKey, {
-                algorithm: "HS256",
-                expiresIn: "1h",
-            });
-
-            return res.send({ jwt: token, id: newUser.id });
+        const exist = await User.findOne({ where: { email: email } });
+        
+        if (exist) {
+            return res.status(200).json({ message: "Acceso concedido" });
         } else {
-            // Si el correo de Google ya existe en la base de datos, puedes autenticar al usuario existente.
-            const payload = { id: userExist.id };
-            const privateKey = process.env.JWT_PRIVATE_KEY;
-            const token = jwt.sign(payload, privateKey, {
-                algorithm: "HS256",
-                expiresIn: "1h",
-            });
-
-            return res.send({ jwt: token, id: userExist.id });
+            return res.status(400).json({ message: "El correo electrónico no está registrado, por favor regístrese" });
         }
     } catch (error) {
-        res.status(500).json({ message: "Error de servidor" });
+        console.log(error.message);
+        return res.status(500).json({ message: "Error en la autenticación" });
     }
 };
 

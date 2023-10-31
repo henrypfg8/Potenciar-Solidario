@@ -7,6 +7,8 @@ CLEAR_USER_DETAIL,
 UPDATE_USER,
 } from "../action-types"
 
+import axios from "axios";
+
     export const createUser = (user) => {
         return async function (dispatch) {
             try {

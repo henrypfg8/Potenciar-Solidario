@@ -8,7 +8,7 @@ SEARCH_POST,
 CLEAR_POST_DETAIL,
 } from "../action-types"
     
-    import axios from "axios";
+import axios from "axios";
     
     export const createPost = (post) => {
         return async function (dispatch) {

@@ -5,7 +5,9 @@ GET_QUESTIONS,
 GET_QUESTION_DETAIL,
 CLEAR_QUESTION_DETAIL,
 UPDATE_QUESTION
-} from "../action-types"
+} from "../action-types";
+
+import axios from "axios";
 
 export const createQuestion = (question) => {
     console.log(question);

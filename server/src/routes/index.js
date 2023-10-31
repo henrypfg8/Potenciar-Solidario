@@ -20,6 +20,7 @@ const { getAllCategories } = require("../handlers/Category/getAllCategories");
 const { handlerAllOngs } = require("../handlers/Organization/getAllOngs");
 const {FilterByDate} = require("../handlers/Publication/FilterByDateHandler.js");
 const { authHandler } = require("../handlers/Authentication/authHandler.js"); //middlewere validacion de rutas
+const {authGoogleHandler} = require("../handlers/Authentication/authGoogleLoginHandler.js");
 const router = Router();
 
 // rutas
@@ -53,4 +54,6 @@ router.get("/questions", getQuestion);
 router.get("/questions/:id", getQuestion);
 router.post("/question", createQuestionHandler);
 
+
+router.post("/authGoogle", authGoogleHandler);
 module.exports = router;

@@ -1,32 +1,47 @@
 /* eslint-disable react/prop-types */
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createPost, } from '../../Redux/actions/postsActions'
 import { useNavigate } from 'react-router-dom';
 import Success from './Success';
 import { useState } from 'react';
 import { uploadImageCloudinary } from './cloudinary';
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
+import Select from 'react-select';
+
 
 const Form = ({ setPost, post }) => {
-    const { register, formState: { errors }, handleSubmit, reset } = useForm();
+
+
+    const ongs = useSelector(state => state.ongsAndCategories.ongs);
+    const categories = useSelector(state => state.ongsAndCategories.categories)
+
+    const { register, formState: { errors }, handleSubmit, reset, control } = useForm();
     const fecha = new Date().toLocaleDateString()
     const partes = fecha.split('/');
+
+    const options = categories.map(cat => ({ value: cat.name, label: cat.name }));
+    const options2 = ongs.map(ong => ({ value: ong.nombre, label: ong.nombre }));
+
     const fechaConvertida = partes[2] + '-' + partes[1] + '-' + partes[0];
 
     const [imgFile, setImgFile] = useState(null);
     const [success, setSuccess] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+
     const onSubmit = async data => {
+
+
         setSuccess(true);
         const res = await uploadImageCloudinary(imgFile);
-        
+
         const updatedPost = {
             ...data,
             image: res,  //agregar la url de la imagen
-            creationDate: fechaConvertida,//agregar la fecha 
+            creationDate: fechaConvertida,
         };
-     
+
         dispatch(createPost(updatedPost));
         // Mostrar el éxito
         navigate('/');
@@ -48,7 +63,7 @@ const Form = ({ setPost, post }) => {
             organization: '',
             registrationLink: '',
             url: '',
-           }) // Limpiar el formulario
+        }) // Limpiar el formulario
         //limpiar el formulario
         reset();
     }
@@ -83,35 +98,48 @@ const Form = ({ setPost, post }) => {
     return (
         <div>
 
-            {success && <Success frase='Se ha enviado al panel exitosamente' />} {/* Si se publica correctamente mostrar el mensaje */}
+            {success && <Success frase='Se ha enviado al panel exitosamente' color='#005692' />} {/* Si se publica correctamente mostrar el mensaje */}
             <form action="" method='post' className='form' onSubmit={handleSubmit(onSubmit)} onChange={handleChange}>
                 <div className='form__field'>
                     <label htmlFor="title">Titulo</label>
                     {errors?.title?.type === 'maxLength' && <p className='auth__error'>El titulo No debe tener más de 50 caracteres</p>}
-                    {errors?.title?.type === 'minLength' && <p className='auth__error'>El titulo debe tener al menos 1 caracteres</p>}
+                    {errors?.title?.type === 'minLength' && <p className='auth__error'>El titulo debe tener al menos 5 caracteres</p>}
                     {errors?.title?.type === 'required' && <p className='auth__error'>El titulo es obligatorio</p>}
                     <input type="text" id='title' placeholder='titulo'
-                        {...register('title', { required: true, minLength: 1, maxLength: 50 })}
+                        {...register('title', { required: true, minLength: 5, maxLength: 50 })}
                     />
                 </div>
                 {/* End form field */}
                 <div className='form__field'>
-                    <label htmlFor="category" >Categoria </label>
-                    {errors?.category?.type === 'maxLength' && <p className='auth__error'>La categoria No debe tener más de 50 caracteres</p>}
-                    {errors?.category?.type === 'minLength' && <p className='auth__error'>La categoria debe tener al menos 1 caracteres</p>}
-                    {errors?.category?.type === 'required' && <p className='auth__error'>La categoria es obligatorio</p>}
-                    <input type="text" id='category' placeholder='categoria'
-                        {...register('category', { required: true, minLength: 1, maxLength: 50 })} />
+                    <label htmlFor="category">Categoria</label>
+                    {errors.category && <p className='auth__error'>La categoria es obligatoria</p>}
+                    <Controller
+                        name="category"
+                        control={control}
+                        rules={{ required: 'La categoria es obligatoria' }} // Reglas de validación con mensaje de error
+                        render={({ field, fieldState: { error } }) => (
+                            console.log(error),
+                            <Select
+                                {...field}
+                                options={options}
+                                onChange={(e) => {
+                                    // Actualiza el valor del formulario
+                                    field.onChange(e.value);
+                                }}
+                                value={options.find(option => option.value === field.value)}
+                            />
+                        )}
+                    />
                 </div>
                 {/* End form field */}
 
                 <div className='form__field'>
                     <label htmlFor="description">Descripcion</label>
                     {errors?.description?.type === 'maxLength' && <p className='auth__error'>La descripcion No debe tener más de 1000 caracteres</p>}
-                    {errors?.description?.type === 'minLength' && <p className='auth__error'>La descripcion debe tener al menos 1 caracteres</p>}
+                    {errors?.description?.type === 'minLength' && <p className='auth__error'>La descripcion debe tener al menos 20 caracteres</p>}
                     {errors?.description?.type === 'required' && <p className='auth__error'>La descripcion es obligatorio</p>}
                     <textarea id="description" cols="30" rows="10" placeholder='descripcion'
-                        {...register('description', { required: true, minLength: 1, maxLength: 1000 })}
+                        {...register('description', { required: true, minLength: 20, maxLength: 1000 })}
                     ></textarea>
                 </div>
                 {/* End form field */}
@@ -174,13 +202,24 @@ const Form = ({ setPost, post }) => {
                 </div>
                 {/* End form field */}
                 <div className='form__field'>
-                    <label htmlFor="organization">Organización </label>
-
-                    {errors?.organization?.type === 'maxLength' && <p className='auth__error'>El nombre de la organización No debe tener más de 50 caracteres</p>}
-                    {errors?.organization?.type === 'minLength' && <p className='auth__error'>El nombre de la organización debe tener al menos 1 caracteres</p>}
-                    {errors?.organization?.type === 'required' && <p className='auth__error'>El nombre de la organización es obligatorio</p>}
-                    <input type="text" id='organization' placeholder='nombre de la organización'
-                        {...register('organization', { required: true, minLength: 1, maxLength: 50 })}
+                <label htmlFor="organization">Organización</label>
+                {errors?.organization?.type === 'required' && <p className='auth__error'>La organización es obligatoria</p>}
+                <Controller
+                        name="organization"
+                        control={control}
+                        rules={{ required: 'La organización es obligatoria' }} // Reglas de validación con mensaje de error
+                        render={({ field, fieldState: { error } }) => (
+                            console.log(error),
+                            <Select
+                                {...field}
+                                options={options2}
+                                onChange={(e) => {
+                                    // Actualiza el valor del formulario
+                                    field.onChange(e.value);
+                                }}
+                                value={options.find(option => option.value === field.value)}
+                            />
+                        )}
                     />
                 </div>
                 <div className='form__field'>

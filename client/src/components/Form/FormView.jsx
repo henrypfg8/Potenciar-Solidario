@@ -26,7 +26,9 @@ const FormView = ({ post, setPost }) => {
                      <button className='publication__btn--delete'
                         onClick={ handleDeleteImage}>Eliminar</button>
                </div>
-            ) : (<div className='publication__image--none'>La Imagen Aparecerá Aquí</div>)}  {/* si no se selecciona una imagen, se agregará un mensaje*/}
+            ) : (<div className='publication__image--div'>
+                <p className='publication__image--none'>La imagen aparecerá aquí</p>
+            </div>)}  {/* si no se selecciona una imagen, se agregará un mensaje*/}
             <p></p>
             <div className='publication__date'>
                 <p >{post.startDate && 'Fecha de inicio: '}<span>{post.startDate}</span></p>

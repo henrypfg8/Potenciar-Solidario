@@ -87,6 +87,7 @@
     display: flex;
    justify-content: space-between;
    margin: 1rem auto 0 auto;
+   align-items: center;
 }
 .auth__google{
     display: flex;

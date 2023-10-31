@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from 'react-redux'
 import { createPost, } from '../../Redux/actions/postsActions'
-
+import { useNavigate } from 'react-router-dom';
 import Success from './Success';
 import { useState } from 'react';
 import { uploadImageCloudinary } from './cloudinary';
@@ -12,24 +12,24 @@ const Form = ({ setPost, post }) => {
     const fecha = new Date().toLocaleDateString()
     const partes = fecha.split('/');
     const fechaConvertida = partes[2] + '-' + partes[1] + '-' + partes[0];
-    const [isloadig, setLoading] = useState(false);
+
     const [imgFile, setImgFile] = useState(null);
     const [success, setSuccess] = useState(false);
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     const onSubmit = async data => {
-
-        setLoading(true)
+        setSuccess(true);
         const res = await uploadImageCloudinary(imgFile);
-        setLoading(false);
+        
         const updatedPost = {
             ...data,
             image: res,  //agregar la url de la imagen
             creationDate: fechaConvertida,//agregar la fecha 
         };
+     
         dispatch(createPost(updatedPost));
         // Mostrar el éxito
-        setSuccess(true);
+        navigate('/');
         setTimeout(() => {
             setSuccess(false);
         }, [2000]);
@@ -152,6 +152,7 @@ const Form = ({ setPost, post }) => {
                     <input type="file"
                         name="image"
                         id="image"
+                        accept='image/*'
                         onChange={uploadImage} />
                 </div>
                 {/* End form field */}
@@ -212,7 +213,7 @@ const Form = ({ setPost, post }) => {
                         })}
                     />
                 </div>
-                <button className='form__btn' type='submit' disabled={isloadig}>Enviar Solicitud</button>
+                <button className='form__btn' type='submit'>Enviar Solicitud</button>
             </form>
         </div>
     )

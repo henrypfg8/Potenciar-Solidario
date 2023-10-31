@@ -8,13 +8,9 @@ import Select from "react-select";
 
 export default function LeftBar() {
   const { pathname } = useLocation();
+  const ongs = useSelector((state) => console.log(state));
 
-
-
-
-  const categoryOptions = [
-
-  ];
+  const categoryOptions = [];
   const dateOptions = [
     { label: "Filtrar por fecha", value: "Todas las fechas" },
     { label: "Hace menos de 1 año", value: "Hace menos de 1 año" },
@@ -22,6 +18,10 @@ export default function LeftBar() {
     { label: "Hace menos de 5 años", value: "Hace menos de 5 años" },
     { label: "Hace 5 años o mas", value: "Hace 5 años o mas" },
   ];
+
+ 
+
+  //////////////////////////////////////////////////////
 
   return (
     <div className={Styles.LeftBar}>
@@ -68,7 +68,22 @@ export default function LeftBar() {
           defaultValue={dateOptions[0]}
           options={dateOptions}
         />
+        <Select className={Styles.select} />
+
+        <div className={Styles.Filters__date}>
+          <label>
+            Desde:
+            <input type="date" value='2023-01-01'></input>
+          </label>
+
+          <label>
+            Hasta:
+            <input type="date"></input>
+          </label>
+        </div>
+
       </div>
+
     </div>
   );
 }

@@ -9,39 +9,68 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
+        validate: {
+          isInt: true,
+          min: 1,
+        },
       },
 
       title: {
         type: DataTypes.STRING,
         allowNull: true,
+        validate: {
+          isString: (value) => {
+            if (typeof value !== "string") {
+              throw new Error("El titulo debe contener texto válido"); //!
+            }
+          },
+          len: [5, 50],
+        },
       },
       description: {
-        type: DataTypes.TEXT(1000),
+        type: DataTypes.TEXT,
         allowNull: true,
+        validate: {
+          len: [20, 1000],
+        },
       },
       category: {
         type: DataTypes.STRING,
-
         allowNull: true,
       },
       startDate: {
         type: DataTypes.DATEONLY,
         allowNull: true,
+        validate: {
+          isDate: true,
+          isBefore: "2023-10-01",
+        },
       },
-
       endDate: {
         type: DataTypes.DATEONLY,
         allowNull: true,
+        validate: {
+          isDate: true,
+          isBefore: "2023-10-01",
+          isAfter: "2023-11-01",
+        },
       },
-
       modificationDate: {
         type: DataTypes.DATEONLY,
         allowNull: true,
+        validate: {
+          isDate: true,
+          isBefore: "2023-10-01",
+        },
       },
 
       creationDate: {
         type: DataTypes.DATEONLY,
         allowNull: true,
+        validate: {
+          isDate: true,
+          isBefore: "2023-10-01",
+        },
       },
 
       status: {
@@ -57,6 +86,9 @@ module.exports = (sequelize) => {
       url: {
         type: DataTypes.STRING,
         allowNull: true,
+        validate: {
+          isUrl: true,
+        },
       },
 
       image: {
@@ -67,6 +99,9 @@ module.exports = (sequelize) => {
       registrationLink: {
         type: DataTypes.STRING,
         allowNull: true,
+        validate: {
+          isUrl: true,
+        },
       },
 
       contact: {
@@ -76,6 +111,10 @@ module.exports = (sequelize) => {
       likes: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+        validate: {
+          isInt: true,
+          min: 0, //!
+        },
       },
     },
     { timestamps: false }

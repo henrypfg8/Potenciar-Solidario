@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
@@ -41,7 +42,6 @@ function QuestionCreate() {
             Swal.fire({
                 icon: 'success',
                 title: 'Pregunta creada con exito',
-                // text: '!',
             })
 
         }

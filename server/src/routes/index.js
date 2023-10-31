@@ -15,11 +15,18 @@ const { UpdateQuestionH } = require("../handlers/UpdateQuestionH.js");
 const { DeleteQuestionHandler } = require("../handlers/DeleteQuestionH.js");
 const { getQuestion } = require("../handlers/getQuestion.js");
 const { createQuestionHandler } = require("../handlers/CreateQuestionHandler.js");
-
+const { handlerOngs } = require("../handlers/handlerGetOngs");
+const { getAllCategories } = require("../handlers/getAllCategories");
+const { handlerAllOngs } = require("../handlers/getAllOngs");
+const { authHandler } = require("../handlers/authHandler.js"); //middlewere validacion de rutas
 const router = Router();
 
 // rutas
-router.get("/posts/category?", handlerCategory);
+router.get("/ongs/name?=", handlerOngs);
+router.get("/categories", getAllCategories);
+
+router.get("/categories/name?=", handlerCategory);
+router.get("/ongs", handlerAllOngs);
 
 router.post("/register", authRegisterHandler);
 router.post("/login", authLoginHandler);

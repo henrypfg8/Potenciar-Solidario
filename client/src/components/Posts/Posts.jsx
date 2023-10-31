@@ -12,7 +12,6 @@ export default function Posts () {
   const posts = useSelector(state => state.posts.posts);
   const [ postsLocal, setPostsLocal ] = useState(posts);
 
-
   useEffect(() => {
     setPostsLocal(posts);
     
@@ -26,7 +25,7 @@ export default function Posts () {
 
 
       <div className={Styles.Cards}>
-        {postsLocal?.map(({ id, title, organization, category, description }) => (
+        {postsLocal?.map(({ id, title, organization, category, description, image }) => (
           <Post 
             key={id}
             id={id}
@@ -34,6 +33,7 @@ export default function Posts () {
             organization={organization}
             category={category}
             description={description}
+            image={image}
           />
         ))}
       </div>

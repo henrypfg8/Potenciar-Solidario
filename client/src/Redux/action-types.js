@@ -3,6 +3,7 @@ export const DELETE_POST = "DELETE_POST";
 export const GET_POSTS = "GET_POSTS";
 export const GET_POST_DETAIL = "GET_POST_DETAIL";
 export const UPDATE_POST = "UPDATE_POST";
+export const UPDATE_POST_LIKES = "UPDATE_POST_LIKES";
 export const SEARCH_POST = "SEARCH_POST";
 export const FILTER = "FILTER";
 export const CLEAR_SEARCH = "CLEAR_SEARCH";
@@ -19,3 +20,8 @@ export const DELETE_USER = "DELETE_USER";
 export const GET_USERS = "GET_USERS";
 export const GET_USER_DETAIL = "GET_USER_DETAIL";
 export const UPDATE_USER = "UPDATE_USER";
+export const GET_CATEGORIES = "GET_CATEGORIES";
+export const GET_CATEGORIES_BY_NAME = "GET_CATEGORIES_BY_NAME";
+export const GET_ONGS = "GET_ONGS";
+export const GET_ONGS_BY_NAME = "GET_ONGS_BY_NAME";
+

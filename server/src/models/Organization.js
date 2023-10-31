@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Answer",
+    "Organization",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -15,21 +15,17 @@ module.exports = (sequelize) => {
         },
       },
 
-      answer: {
-        type: DataTypes.TEXT,
+      nombre: {
+        type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          len: [20, 1000],
-        },
       },
-
-      creationDate: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-        validate: {
-          isDate: true,
-          isBefore: "2023-10-01",
+      validate: {
+        isString: (value) => {
+          if (typeof value !== "string") {
+            throw new Error("El nombre debe ser string"); //!
+          }
         },
+        len: [5, 50],
       },
     },
     { timestamps: false }

@@ -40,8 +40,12 @@ const Login = () => {
         </div>
 
         <button className='auth__btn' type='submit'>Iniciar Sesión</button>
-        <div>
+        <div className='auth__links'>
             <p>¿No tienes Cuenta? <a href="/register">Crear Cuenta</a></p>
+            <div className='auth__google'>
+                <img className='auth__google--icon' src="/images/google.png" alt="image-icon" />
+                <p>Iniciar sesión con google</p>
+            </div>
         </div>
     </form>
 </div>

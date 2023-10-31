@@ -1,6 +1,6 @@
 import {
 GET_CATEGORIES,
-GET_CATEGORIES_BY_NAME,
+GET_POSTS_BY_CATEGORIES,
 } from "../action-types"
 
 import axios from "axios";
@@ -20,7 +20,7 @@ export const getCategoriesByName = (query) => {
     return async function (dispatch) {
         try {
             const response = await axios.get(`http://localhost:19789/categories?name=${query}`);
-            dispatch({type: GET_CATEGORIES_BY_NAME, payload: response.data});
+            dispatch({type: GET_POSTS_BY_CATEGORIES, payload: response.data});
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error")
         }

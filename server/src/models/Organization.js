@@ -18,15 +18,16 @@ module.exports = (sequelize) => {
       nombre: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      validate: {
-        isString: (value) => {
-          if (typeof value !== "string") {
-            throw new Error("El nombre debe ser string"); //!
-          }
+        validate: {
+          isString: (value) => {
+            if (typeof value !== "string") {
+              throw new Error("El nombre debe ser string"); //!
+            }
+          },
+          len: [5, 50],
         },
-        len: [5, 50],
       },
+     
     },
     { timestamps: false }
   );

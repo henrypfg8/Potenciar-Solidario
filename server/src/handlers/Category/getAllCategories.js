@@ -1,4 +1,4 @@
-const { controllerCategories } = require("../controllers/getAllCategoriesC");
+const { controllerCategories } = require("../../controllers/Category/getAllCategoriesC");
 
 const getAllCategories = async (req, res) => {
   try {

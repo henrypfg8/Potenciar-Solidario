@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
     "Organization",
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,

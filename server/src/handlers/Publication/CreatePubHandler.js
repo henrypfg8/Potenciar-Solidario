@@ -1,4 +1,3 @@
-const { Publication, User } = require("../db.js");
 const {CreatePublication} = require("../../controllers/Publication/CreatePublication");
 
 const createPublicationHandler = async (req, res) => {

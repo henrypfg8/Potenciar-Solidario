@@ -1,4 +1,4 @@
-const { User } = require("../../db.js");
+const { User } = require("../../db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -6,6 +6,7 @@ require("dotenv").config();
 //autenticar usuario
 const authLoginHandler = async (req, res) => {
     const { email, password } = req.body;
+    console.log(email, password)
 
     if (!email || !password) {
         return res.status(400).json({ message: "Ingrese email y contraseña" });
@@ -13,7 +14,7 @@ const authLoginHandler = async (req, res) => {
 
     try {
         const userExist = await User.findOne({ where: { email: email } });
-
+        console.log(userExist)
         if (!userExist) {
             return res
                 .status(400)
@@ -24,7 +25,7 @@ const authLoginHandler = async (req, res) => {
             password,
             userExist.password
         );
-
+            console.log(passwordValid)
         if (!passwordValid)
             return res
                 .status(400)
@@ -35,7 +36,7 @@ const authLoginHandler = async (req, res) => {
                 const payload = { id: userExist.id };
                 console.log(payload);
                 const privateKey = process.env.JWT_PRIVATE_KEY;
-                // console.log("privateKey:", privateKey);
+                console.log("privateKey:", privateKey);
                 const token = jwt.sign(payload, privateKey, {
                     algorithm: "HS256",
                     expiresIn: "1h",
@@ -43,7 +44,7 @@ const authLoginHandler = async (req, res) => {
 
                 return res.send({ jwt: token, id: userExist.id });
             } catch (error) {
-                // console.error("error en generación de token:", error);
+                console.error("error en generación de token:", error);
                 return res
                     .status(500)
                     .json({ message: "Error en la generación del token" });

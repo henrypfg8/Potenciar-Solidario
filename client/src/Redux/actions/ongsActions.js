@@ -1,7 +1,7 @@
 import {
 GET_ONGS,
 GET_ONGS_BY_NAME
-} from "./action-types"
+} from "../action-types"
 
 import axios from "axios";
 

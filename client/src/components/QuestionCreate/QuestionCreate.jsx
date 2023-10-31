@@ -10,11 +10,11 @@ function QuestionCreate() {
     const dispatch = useDispatch()
     const [errores, setErrores] = useState({
         title: '',
-        description: ''
+        text: ''
     })
     const [question, setQuetions] = useState({
         title: '',
-        description: ''
+        text: ''
     })
     const [firstSubmit, setFirstSubmit] = useState(false)
 
@@ -36,19 +36,29 @@ function QuestionCreate() {
         setFirstSubmit(true)
         const errores = validationQuestion(question);
         setErrores(errores);
-        
-        if(Object.keys(errores).length > 0) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Intente de nuevo',
-                text: 'Debe rellenar todos los campos!',
-            })
-        }else{
-            Swal.fire({
-                icon: 'success',
-                title: 'Pregunta creada con exito',
-            })
+        try {
+            if(Object.keys(errores).length > 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Intente de nuevo',
+                    text: 'Debe rellenar todos los campos!',
+                })
+            }else{
+                const created = await dispatch(createQuestion(question))
+                if(created){
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pregunta creada con exito',
+                    })
+                }
+            }
+            
+        } catch (error) {
+            throw new Error(error.message)
+            
         }
+        
     }
 
 
@@ -73,16 +83,16 @@ function QuestionCreate() {
                 </div>
 
                 <div className={style.div}>
-                    <label htmlFor="description">Descripcion</label>
+                    <label htmlFor="text">Descripcion</label>
                     <div  className={style.errores}>
 
-                    {errores.description && <p>{errores.description}</p>}
+                    {errores.text && <p>{errores.text}</p>}
                     </div>
                     {
-                        errores.description ? 
-                        <textarea type="text" cols="30" rows="8" name="description" placeholder="Descripcion" style={{background:'rgba(255, 0, 0, 0.226)'}}/> 
+                        errores.text ? 
+                        <textarea type="text" cols="30" rows="8" name="text" placeholder="Descripcion" style={{background:'rgba(255, 0, 0, 0.226)'}}/> 
                         :
-                        <textarea type="text" cols="30" rows="8" name="description" placeholder="Descripcion"/>
+                        <textarea type="text" cols="30" rows="8" name="text" placeholder="Descripcion"/>
 
                     }
                     

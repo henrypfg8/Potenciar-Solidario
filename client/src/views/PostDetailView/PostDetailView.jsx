@@ -22,6 +22,7 @@ const Detail = () => {
     url
   } = post;
   
+  console.log(image)
 
   useEffect(() => {
     axios

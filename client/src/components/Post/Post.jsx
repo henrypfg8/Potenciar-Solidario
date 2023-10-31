@@ -13,7 +13,6 @@ const Post = (props) => {
   const { id, title, organization, category, image, description } = props;
   const dispatch = useDispatch();
 
-
   const deleteHandler = (e) => {
     e.preventDefault();
     axios.delete(`http://localhost:19789/posts/${id}`);
@@ -24,20 +23,25 @@ const Post = (props) => {
 
   return (
     <Link to={`/detalle/${id}`} className={Styles.Post}>
-      <DeleteIcon className={Styles.Post__icon} onClick={deleteHandler} />
-
       <h1 className={Styles.Post__title}>{title}</h1>
-
-      <h2 className={Styles.Post__organization}>{organization}</h2>
 
       <p className={Styles.Post__category}>{category}</p>
 
-      <div className={Styles.Post__description}>
-        {image && (
-          <img className={Styles.Post__image} src={image} alt="imagen" />
-        )}
+      <div className={Styles.Post__Organization}>
+        <h2 className={Styles.organization}> Organización: </h2>
+        <h2 className={Styles.organizationName}>{organization}</h2>
+      </div>
 
+      <div className={Styles.Post__Image}>
+        {image && <img className={Styles.image} src={image} alt="imagen" />}
+      </div>
+
+      <div className={Styles.Post__description}>
         <p>{description}</p>
+      </div>
+
+      <div className={Styles.Post__BottomBar}>
+        <DeleteIcon className={Styles.Post__icon} onClick={deleteHandler} />
       </div>
     </Link>
   );

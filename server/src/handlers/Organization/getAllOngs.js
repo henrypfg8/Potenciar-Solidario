@@ -1,4 +1,4 @@
-const { controllerOngs } = require("../controllers/getAllOngsC");
+const { controllerOngs } = require("../../controllers/Organization/getAllOngsC");
 
 const handlerAllOngs = async (req, res) => {
   try {

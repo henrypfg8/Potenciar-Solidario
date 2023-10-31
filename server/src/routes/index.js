@@ -1,24 +1,24 @@
 const { Router } = require("express");
 
-const { deletePublication } = require('../handlers/DeletePub');
-const { createPublicationHandler } = require("../handlers/CreatePubHandler.js");
-const { HandlerGetPublications } = require("../handlers/Publication.js");
-const { userPostHandlers } = require("../handlers/PostUser.js");
-const { updateUserHan } = require("../handlers/UpdateUser.js");
-const { DeleteUserHandler } = require("../handlers/DeleteUserH.js");
-const { authRegisterHandler } = require("../handlers/AuthRegisterHandler.js");
-const { handlerGetUsers } = require("../handlers/HandlerGetUsers.js");
-const { authLoginHandler } = require("../handlers/AuthLogin.js");
-const { PutPublicationHandler } = require("../handlers/PutPubH.js");
-const { handlerCategory } = require("../handlers/HandlerCategory.js");
-const { UpdateQuestionH } = require("../handlers/UpdateQuestionH.js");
-const { DeleteQuestionHandler } = require("../handlers/DeleteQuestionH.js");
-const { getQuestion } = require("../handlers/getQuestion.js");
-const { createQuestionHandler } = require("../handlers/CreateQuestionHandler.js");
-const { handlerOngs } = require("../handlers/handlerGetOngs");
-const { getAllCategories } = require("../handlers/getAllCategories");
-const { handlerAllOngs } = require("../handlers/getAllOngs");
-const { authHandler } = require("../handlers/authHandler.js"); //middlewere validacion de rutas
+const { deletePublication } = require('../handlers/Publication/DeletePub');
+const { createPublicationHandler } = require("../handlers/Publication/CreatePubHandler");
+const { HandlerGetPublications } = require("../handlers/Publication/Publication");
+const { userPostHandlers } = require("../handlers/User/PostUser");
+const { updateUserHan } = require("../handlers/User/UpdateUser.js");
+const { DeleteUserHandler } = require("../handlers/User/DeleteUserH.js");
+const { authRegisterHandler } = require("../handlers/Authentication/AuthRegisterHandler.js");
+const { handlerGetUsers } = require("../handlers/User/HandlerGetUsers.js");
+const { authLoginHandler } = require("../handlers/Authentication/AuthLogin.js");
+const { PutPublicationHandler } = require("../handlers/Publication/PutPubH.js");
+const { handlerCategory } = require("../handlers/Category/HandlerCategory.js");
+const { UpdateQuestionH } = require("../handlers/Question/UpdateQuestionH.js");
+const { DeleteQuestionHandler } = require("../handlers/Question/DeleteQuestionH.js");
+const { getQuestion } = require("../handlers/Question/getQuestion.js");
+const { createQuestionHandler } = require("../handlers/Question/CreateQuestionHandler.js");
+const { handlerOngs } = require("../handlers/Organization/handlerGetOngs");
+const { getAllCategories } = require("../handlers/Category/getAllCategories");
+const { handlerAllOngs } = require("../handlers/Organization/getAllOngs");
+const { authHandler } = require("../handlers/Authentication/authHandler.js"); //middlewere validacion de rutas
 const router = Router();
 
 // rutas

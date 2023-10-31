@@ -8,9 +8,15 @@ import Select from "react-select";
 
 export default function LeftBar() {
   const { pathname } = useLocation();
-  const ongs = useSelector((state) => console.log(state));
+  const ongs = useSelector((state) => state.ongsAndCategories.ongs);
 
   const categoryOptions = [];
+  const ongOptions = Array.from(new Set(ongs.map((ong) => ong.nombre))).map(
+    (nombre) => ({
+      label: nombre,
+      value: nombre,
+    })
+  );
   const dateOptions = [
     { label: "Filtrar por fecha", value: "Todas las fechas" },
     { label: "Hace menos de 1 año", value: "Hace menos de 1 año" },
@@ -18,8 +24,6 @@ export default function LeftBar() {
     { label: "Hace menos de 5 años", value: "Hace menos de 5 años" },
     { label: "Hace 5 años o mas", value: "Hace 5 años o mas" },
   ];
-
- 
 
   //////////////////////////////////////////////////////
 
@@ -57,23 +61,23 @@ export default function LeftBar() {
       <div className={Styles.LeftBar__Buttons} id={Styles.LeftBar__Filters}>
         <h3>Filtros de búsqueda</h3>
 
-        <Select
+        {/* <Select
           className={Styles.select}
-          defaultValue={categoryOptions[0]}
           options={categoryOptions}
           isSearchable={true}
-        />
+        /> */}
         <Select
           className={Styles.select}
-          defaultValue={dateOptions[0]}
-          options={dateOptions}
+          options={ongOptions}
+          isSearchable={true}
+          menuPlacement="top"
         />
         <Select className={Styles.select} />
 
         <div className={Styles.Filters__date}>
           <label>
             Desde:
-            <input type="date" value='2023-01-01'></input>
+            <input type="date" value="2023-01-01"></input>
           </label>
 
           <label>
@@ -81,9 +85,7 @@ export default function LeftBar() {
             <input type="date"></input>
           </label>
         </div>
-
       </div>
-
     </div>
   );
 }

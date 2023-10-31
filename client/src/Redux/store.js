@@ -1,4 +1,5 @@
 import { applyMiddleware, createStore, combineReducers } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import userReducer from "./reducers/userReducer";
 import postReducer from "./reducers/postReducer";
 import questionReducer from "./reducers/questionReducer";
@@ -11,7 +12,10 @@ const rootReducer = combineReducers({
   questions: questionReducer,
 });
 
-// Aplica el middleware usando applyMiddleware
-const store = createStore(rootReducer, applyMiddleware(thunk));
+// Aplica el middleware usando composeWithDevTools
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 export default store;

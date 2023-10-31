@@ -11,7 +11,7 @@ export const getCategories = () => {
             const response = await axios.get("http://localhost:19789/categories")
             dispatch({type: GET_CATEGORIES, payload: response.data});
         } catch (error) {
-            
+            throw new Error(error.response + "por favor contacte a soporte por este error");
         }
     }
 }

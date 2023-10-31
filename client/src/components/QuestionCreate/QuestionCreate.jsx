@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
@@ -5,7 +6,6 @@ import style from './QuestionCreate.module.css'
 import { createQuestion } from "../../Redux/actions/questionsActions";
 import validationQuestion from "./QuestionValidate";
 import Swal from "sweetalert2";
-
 function QuestionCreate() {
     const dispatch = useDispatch()
     const [errores, setErrores] = useState({
@@ -16,21 +16,27 @@ function QuestionCreate() {
         title: '',
         description: ''
     })
+    const [firstSubmit, setFirstSubmit] = useState(false)
 
     const handleChange = (event) => {
-        setErrores(validationQuestion({
-            ...question,
-            [event.target.name]: event.target.value
-        }))
         setQuetions({
             ...question,
             [event.target.name]: event.target.value
         })
+        if (firstSubmit) {
+            setErrores(validationQuestion({
+                ...question,
+                [event.target.name]: event.target.value
+            }))
+        }
     }
 
-    const submitQuestion = async () => {
+    const submitQuestion = async (event) => {
         event.preventDefault()
-        console.log(question);
+        setFirstSubmit(true)
+        const errores = validationQuestion(question);
+        setErrores(errores);
+        
         if(Object.keys(errores).length > 0) {
             Swal.fire({
                 icon: 'error',
@@ -41,14 +47,10 @@ function QuestionCreate() {
             Swal.fire({
                 icon: 'success',
                 title: 'Pregunta creada con exito',
-                // text: '!',
             })
-
         }
-
-
-
     }
+
 
     return (
         <div className={style.contain}>

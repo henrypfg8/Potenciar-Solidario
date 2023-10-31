@@ -7,7 +7,6 @@ import CarteleraIcon from '../../assets/CarteleraIcon';
 
 export default function PageHeader () {
 
- 
     
     return (
         <div className={Styles['PageHeader']} ref={PageHeader}>

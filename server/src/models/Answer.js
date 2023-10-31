@@ -9,16 +9,27 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
+        validate: {
+          isInt: true,
+          min: 1,
+        },
       },
 
       answer: {
         type: DataTypes.TEXT,
         allowNull: false,
+        validate: {
+          len: [20, 1000],
+        },
       },
 
       creationDate: {
         type: DataTypes.DATEONLY,
         allowNull: false,
+        validate: {
+          isDate: true,
+          isBefore: "2023-10-01",
+        },
       },
     },
     { timestamps: false }

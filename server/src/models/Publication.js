@@ -69,7 +69,7 @@ module.exports = (sequelize) => {
         allowNull: true,
         validate: {
           isDate: true,
-          isBefore: "2023-10-01",
+          // isBefore: "2023-10-01",
         },
       },
 
@@ -89,9 +89,9 @@ module.exports = (sequelize) => {
       url: {
         type: DataTypes.STRING,
         allowNull: true,
-        validate: {
-          isUrl: true,
-        },
+        // validate: {
+        //   isUrl: true,
+        // },
       },
 
       image: {
@@ -102,9 +102,9 @@ module.exports = (sequelize) => {
       registrationLink: {
         type: DataTypes.STRING,
         allowNull: true,
-        validate: {
-          isUrl: true,
-        },
+        // validate: {
+        //   isUrl: true,
+        // },
       },
 
       contact: {

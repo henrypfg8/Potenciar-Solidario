@@ -4,13 +4,29 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 //
 import DeleteIcon from "../../assets/DeleteIcon";
+import CalendarIcon from '../../assets/CalendarIcon';
 //
 import axios from "axios";
 //
 import { getPosts } from "../../Redux/actions/postsActions";
 
 const Post = (props) => {
-  const { id, title, organization, category, image, description } = props;
+  const { id, title, organization, category, image, description, startDate } = props;
+  const start_date = startDate.split('-');
+  const months = {
+  1: "Enero",
+  2: "Febrero",
+  3: "Marzo",
+  4: "Abril",
+  5: "Mayo",
+  6: "Junio",
+  7: "Julio",
+  8: "Agosto",
+  9: "Septiembre",
+  10: "Octubre",
+  11: "Noviembre",
+  12: "Diciembre"
+};
   const dispatch = useDispatch();
 
   const deleteHandler = (e) => {
@@ -32,16 +48,19 @@ const Post = (props) => {
         <h2 className={Styles.organizationName}>{organization}</h2>
       </div>
 
-      <div className={Styles.Post__Image}>
-        {image && <img className={Styles.image} src={image} alt="imagen" />}
-      </div>
+      {/* <div className={Styles.Post__Image}>
+      </div> */}
 
       <div className={Styles.Post__description}>
+        {image && <img className={Styles.image} src={image} alt="imagen" />}
+
         <p>{description}</p>
       </div>
 
       <div className={Styles.Post__BottomBar}>
-        <DeleteIcon className={Styles.Post__icon} onClick={deleteHandler} />
+        <CalendarIcon className={Styles.BottomBar__calendarIcon}/>
+        <p className={Styles.BottomBar__startDate}> {start_date[2]} de {months[start_date[1]]} {start_date[0]} </p>
+        <DeleteIcon className={Styles.BottomBar__deleteIcon} onClick={deleteHandler} />
       </div>
     </Link>
   );

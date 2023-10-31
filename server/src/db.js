@@ -69,7 +69,8 @@ Answer.belongsTo(User, { foreignKey: "userId" });
 Answer.belongsTo(Question, { foreignKey: "questionId" });
 Answer.hasMany(Comment, { foreignKey: "answerId" });
 Comment.belongsTo(Answer, { foreignKey: "answerId" });
-Organization.hasOne(User, { foreignKey: "organizationId" });
+User.belongsTo(Organization, { foreignKey: "organizationId" }) 
+Organization.hasMany(User, { foreignKey: "organizationId" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

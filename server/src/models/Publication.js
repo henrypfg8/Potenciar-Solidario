@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
 
       title: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         validate: {
           isString: (value) => {
             if (typeof value !== "string") {
@@ -29,18 +29,18 @@ module.exports = (sequelize) => {
       },
       description: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: false,
         validate: {
           len: [20, 1000],
         },
       },
       category: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       startDate: {
         type: DataTypes.DATEONLY,
-        allowNull: true,
+        allowNull: false,
         validate: {
           isDate: true,
           isAfter: "2023-09-30", // Permite desde "2023-10-01" en adelante
@@ -69,18 +69,15 @@ module.exports = (sequelize) => {
         allowNull: true,
         validate: {
           isDate: true,
-          // isBefore: "2023-10-01",
         },
       },
-
       status: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-
       organization: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         validate: {
           len: [4, 100],
         },
@@ -89,9 +86,6 @@ module.exports = (sequelize) => {
       url: {
         type: DataTypes.STRING,
         allowNull: true,
-        // validate: {
-        //   isUrl: true,
-        // },
       },
 
       image: {
@@ -111,14 +105,14 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-    /*   likes: {
+     likes: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         validate: {
           isInt: true,
-          min: 0, //!
+          min: 0, 
         },
-      }, */
+      },
     },
     { timestamps: false }
   );

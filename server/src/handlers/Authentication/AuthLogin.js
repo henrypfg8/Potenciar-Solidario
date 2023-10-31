@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-//autenticar usuario
+//Este handler sirve para autenticar usuario cuando hace login con email y contraseña 
 const authLoginHandler = async (req, res) => {
     const { email, password,  } = req.body;
 
@@ -20,7 +20,7 @@ const authLoginHandler = async (req, res) => {
                 .json({ message: "error en la utenticacion" });
         }
 
-        const passwordValid = await bcrypt.compare(
+        const passwordValid = await bcrypt.compare( 
             password,
             userExist.password
         );
@@ -31,17 +31,17 @@ const authLoginHandler = async (req, res) => {
                 .json({ message: "error en la utenticacion" });
 
         if (passwordValid) {
-            try {
+            try { //firma de token para usar en autenticacion de rutas
                 const payload = { id: userExist.id };
                 console.log(payload);
                 const privateKey = process.env.JWT_PRIVATE_KEY;
                 console.log("privateKey:", privateKey);
                 const token = jwt.sign(payload, privateKey, {
                     algorithm: "HS256",
-                    expiresIn: "1h",
+                    expiresIn: "10d",
                 });
 
-                return res.send({ jwt: token, id: userExist.id });
+                return res.send({ jwt: token, id: userExist.id }); //envio token y id de usuario para almacenar y usar desde cliente
             } catch (error) {
                 console.error("error en generación de token:", error);
                 return res

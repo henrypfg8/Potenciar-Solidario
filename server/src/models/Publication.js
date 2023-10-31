@@ -43,7 +43,8 @@ module.exports = (sequelize) => {
         allowNull: true,
         validate: {
           isDate: true,
-          isBefore: "2023-10-01",
+          isAfter: "2023-09-30", // Permite desde "2023-10-01" en adelante
+    
         },
       },
       endDate: {
@@ -51,8 +52,7 @@ module.exports = (sequelize) => {
         allowNull: true,
         validate: {
           isDate: true,
-          isBefore: "2023-10-01",
-          isAfter: "2023-11-01",
+          isBefore: "2023-12-02", // Permite hasta "2023-12-01"
         },
       },
       modificationDate: {
@@ -111,14 +111,14 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      likes: {
+    /*   likes: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         validate: {
           isInt: true,
           min: 0, //!
         },
-      },
+      }, */
     },
     { timestamps: false }
   );

@@ -15,18 +15,18 @@ const createPublicationHandler = async (req, res) => {
         image,
         registrationLink,
         contact,
-        likes,
+        /* likes, */ //? agregar cuando cambiar force: true para que se agregue la columna.
     } = req.body;
 
-    const userId = req.userId;
-    console.log(`este es el user id ${userId}`);
+   /*  const userId = req.userId;
+    console.log(`este es el user id ${userId}`); */
 
     try {
         if (!title || !description || !category || !contact || !organization)
             throw new Error("Faltan campos obligatorios");
 
         const publication = await CreatePublication({
-            id,
+            
             title,
             description,
             category,
@@ -40,8 +40,8 @@ const createPublicationHandler = async (req, res) => {
             image,
             registrationLink,
             contact,
-            userID: userId,
-            likes,
+            
+            /* likes, */
         });
 
         res.status(201).json(publication);

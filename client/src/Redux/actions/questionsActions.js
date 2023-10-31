@@ -8,6 +8,7 @@ UPDATE_QUESTION
 } from "../action-types"
 
 export const createQuestion = (question) => {
+    console.log(question);
     return async function (dispatch) {
         try {
             const response = await axios.post("http://localhost:19789/questions", question);

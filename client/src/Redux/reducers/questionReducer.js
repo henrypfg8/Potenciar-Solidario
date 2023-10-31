@@ -34,6 +34,7 @@ const questionReducer = (state = initialState, action) => {
             return {
                 ...state,
                 questions: action.payload,
+                allQuestions: action.payload,
             };    
         
         case GET_QUESTION_DETAIL:

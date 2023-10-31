@@ -8,7 +8,7 @@ SEARCH_POST,
 CLEAR_POST_DETAIL,
 } from "../action-types"
     
-    import axios from "axios";
+import axios from "axios";
     
     export const createPost = (post) => {
         return async function (dispatch) {
@@ -17,8 +17,7 @@ CLEAR_POST_DETAIL,
                 console.log(response + "soy el response")
                 dispatch({type: CREATE_POST, payload: response.data})
             } catch (error) {
-                console.log(error)
-                throw new Error(error.response + "por favor contactar a soporte por este error");
+                console.log(error, "por favor contactar a soporte por este error")
             }
         }
     }
@@ -29,7 +28,7 @@ CLEAR_POST_DETAIL,
                 const response = await axios.delete(`http://localhost:19789/posts/${id}`);
                 dispatch({type:DELETE_POST, payload: response.data});
             } catch (error) {
-                throw new Error(error.response + "por favor contactar a soporte por este error");
+                console.log(error, "por favor contactar a soporte por este error")
             }
         }
     }
@@ -41,7 +40,7 @@ CLEAR_POST_DETAIL,
                 const response = await axios.get("http://localhost:19789/posts")
                 dispatch({type: GET_POSTS, payload: response.data})
             } catch (error) {
-                throw new Error(error.response + "por favor contactar a soporte por este error")
+                console.log(error, "por favor contactar a soporte por este error")
             }
         }
     }
@@ -52,7 +51,7 @@ CLEAR_POST_DETAIL,
                 const response = await axios.get(`http://localhost:19789/posts/${id}`);
                 dispatch({type: GET_POST_DETAIL, payload: response.data});
             } catch (error) {
-                throw new Error(error.response + "por favor contactar a soporte por este error");
+                console.log(error, "por favor contactar a soporte por este error")
             }
         }
     }
@@ -63,7 +62,7 @@ CLEAR_POST_DETAIL,
                 const response = await axios.put(`http://localhost:19789/posts/${id}`);
                 dispatch({type: UPDATE_POST, payload: response.data});
             } catch (error) {
-                throw new Error(error.response + "por favor contactar a soporte por este error");
+                console.log(error, "por favor contactar a soporte por este error")
             }
         }
     }
@@ -74,7 +73,7 @@ CLEAR_POST_DETAIL,
                 const response = await axios.get(`http://localhost:19789/posts?name=${query}`);
                 dispatch({type: SEARCH_POST, payload: response.data});
             } catch (error) {
-                throw new Error(error.response + "por favor contactar a soporte por este error")
+                console.log(error, "por favor contactar a soporte por este error")
             }
         }
     }

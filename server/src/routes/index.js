@@ -19,6 +19,7 @@ const {
 } = require("../handlers/CreateQuestionHandler.js");
 const { handlerOngs } = require("../handlers/handlerGetOngs");
 const { getAllCategories } = require("../handlers/getAllCategories");
+const { handlerAllOngs } = require("../handlers/getAllOngs");
 const { authHandler } = require("../handlers/authHandler.js"); //middlewere validacion de rutas
 
 const router = Router();
@@ -28,6 +29,7 @@ router.get("/ongs/name?=", handlerOngs);
 router.get("/categories", getAllCategories);
 
 router.get("/categories/name?=", handlerCategory);
+router.get("/ongs", handlerAllOngs);
 
 router.post("/register", authRegisterHandler);
 router.post("/login", authLoginHandler);

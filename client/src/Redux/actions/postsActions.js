@@ -13,8 +13,8 @@ CLEAR_POST_DETAIL,
     export const createPost = (post) => {
         return async function (dispatch) {
             try {
-                console.log(post)
                 const response = await axios.post("http://localhost:19789/posts", post);
+                console.log(response + "soy el response")
                 dispatch({type: CREATE_POST, payload: response.data})
             } catch (error) {
                 console.log(error)

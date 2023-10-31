@@ -21,6 +21,8 @@ const ongsAndCategoriesReducer = (state = initialState, action) => {
                 ...state,
                 ongs: action.payload,
             };    
+        default:
+            return {...state};    
     }
 };
 

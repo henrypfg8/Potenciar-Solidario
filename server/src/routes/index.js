@@ -20,7 +20,7 @@ const {authHandler} = require("../handlers/authHandler.js"); //middlewere valida
 const router = Router();
 
 // rutas
-router.get("/posts/category?", handlerCategory);
+router.get("/posts/category?", handlerCategory); 
 
 router.post("/register", authRegisterHandler);
 router.post("/login", authLoginHandler);

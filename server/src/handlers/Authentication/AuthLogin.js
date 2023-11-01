@@ -3,9 +3,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-//Este handler sirve para autenticar usuario cuando hace login con email y contraseña 
+//Este handler sirve para autenticar usuario cuando hace login con email y contraseña
 const authLoginHandler = async (req, res) => {
-    const { email, password,  } = req.body;
+    const { email, password } = req.body;
+    console.log(email, password);
 
     if (!email || !password) {
         return res.status(400).json({ message: "Ingrese email y contraseña" });
@@ -13,29 +14,30 @@ const authLoginHandler = async (req, res) => {
 
     try {
         const userExist = await User.findOne({ where: { email: email } });
-        console.log(userExist)
+        //console.log(userExist);
         if (!userExist) {
             return res
                 .status(400)
                 .json({ message: "error en la utenticacion" });
         }
 
-        const passwordValid = await bcrypt.compare( 
+        const passwordValid = await bcrypt.compare(
             password,
             userExist.password
         );
-            console.log(passwordValid)
+        //console.log(passwordValid);
         if (!passwordValid)
             return res
                 .status(400)
                 .json({ message: "error en la utenticacion" });
 
         if (passwordValid) {
-            try { //firma de token para usar en autenticacion de rutas
+            try {
+                //firma de token para usar en autenticacion de rutas
                 const payload = { id: userExist.id };
-                console.log(payload);
+                //console.log(payload);
                 const privateKey = process.env.JWT_PRIVATE_KEY;
-                console.log("privateKey:", privateKey);
+                //console.log("privateKey:", privateKey);
                 const token = jwt.sign(payload, privateKey, {
                     algorithm: "HS256",
                     expiresIn: "10d",

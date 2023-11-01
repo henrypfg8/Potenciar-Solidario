@@ -1,26 +1,35 @@
 /* eslint-disable react/prop-types */
 import style from './QuestionDetail.module.css'
 import data from '../../assets/data'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FlechaAbajoIcon } from '../../assets/FlechaParaAbajoIcon';
 import { FlechaParaArriba } from '../../assets/FlechaParaArribaIcon';
 import io from 'socket.io-client'
+const socket = io('/')
 
 function QuestionView({ preguntaUsuario, respuestasUsuario }) {
-    const socket = io('/')
     const { usuariosRespuestas } = data;
 
     const [view, setView] = useState({});
-    const [chat, setChat] = useState('')
+    const [message, setMessage] = useState('')
+    const [messages, setMessages] = useState([])
 
     const handleChange = (event) => {
         event.preventDefault()
-        setChat(event.target.value)
+        setMessage(event.target.value)
     }
-    const handleSubmit = (chat) => {
-        socket.emit('chat', chat)
+    const handleSubmit = (message) => {
+        socket.emit('message', message)
         
     }
+
+    useEffect(()=>{
+        socket.on("message", message => {
+            console.log(message);
+            setMessages([...messages, message])
+            });
+
+    }, [])
     const handleView = (id) => {
         setView(prevState => ({
             ...prevState,
@@ -65,7 +74,7 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
                         <div key={index} className={style.response}>
 
                             <p>{respuesta.texto}</p>
-                            <h4>
+                            <h4>  
                                 {usuariosRespuestas.map(usuario => {
                                     if (usuario.id === respuesta.id) {
                                         return usuario.username;
@@ -80,7 +89,7 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
                             {view[index] && <div className={style.comment}>
                             <p>Comentar</p>
                                 <textarea type="text" cols="6" rows="5" onChange={()=>handleChange(event)} />
-                                <button onClick={()=> handleSubmit(chat)}>Añadir comentario</button>
+                                <button onClick={()=> handleSubmit(message)}>Añadir comentario</button>
                             </div>}
                         </div>
                     )

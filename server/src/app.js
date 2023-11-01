@@ -15,7 +15,7 @@ const io = new Server(httpServer);
 
 io.on("connection", (socket) => {
   console.log("Un usuario se conecto por WebSockets");
-  socket.on("chat", (data) => {
+  socket.on("message", (data) => {
     console.log("Evento recibido:", data);
     socket.broadcast.emit('message', data)
     // Manejar el evento de websocket

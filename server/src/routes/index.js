@@ -40,10 +40,10 @@ const { searchPublication } = require("../handlers/searchPublicationH");
 
 router.get("/posts/busqueda", searchPublication);
 // rutas
-router.get("/ongs/name?=", handlerOngs);
+router.get("/ongs/filter", handlerOngs);
 router.get("/categories", getAllCategories);
 
-router.get("/categories/name?=", handlerCategory);
+router.get("/categories/filter", handlerCategory);
 router.get("/ongs", handlerAllOngs);
 
 router.get("/filterByDate", FilterByDate);

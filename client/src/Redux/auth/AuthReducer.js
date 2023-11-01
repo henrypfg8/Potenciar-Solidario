@@ -2,11 +2,12 @@ import { types } from "./types";
 
 const initialState = {
     user: {},
+    userProfile: {},
     token: localStorage.getItem('token'),
     isAuthenticated: false,
     isAdmin : false,
     loading: true,
-    error: null
+    errorRegister: null
 }
 
 const authReducer = (state = initialState, action) => {
@@ -18,12 +19,12 @@ const authReducer = (state = initialState, action) => {
                 user: action.payload,
             }
         case types.LOGIN:
-            localStorage.setItem('token', action.payload.token);
+            //localStorage.setItem('token', action.payload.token);
             return {
                 ...state,
-                ...action.payload,
+                user: action.payload,
                 isAuthenticated: true,
-                isAdmin: action.payload.user.isAdmin,
+                // isAdmin: action.payload.user.isAdmin,
                 loading: false,
             }
         case types.LOGOUT:
@@ -36,11 +37,18 @@ const authReducer = (state = initialState, action) => {
                 isAdmin: false,
                 loading: false,
             } 
-        case types.ERROR_REGISTER:
+
+        case types.GET_PROFILE:
             return {
                 ...state,
-                error: action.payload,
-            }    
+                userProfile: action.payload,
+                loading: false,
+            } 
+        case types.ERROR_REGISTER:
+                return {
+                    ...state,
+                    errorRegister: action.payload,
+                }         
          default : {
                 return {...state};
          }         

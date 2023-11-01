@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { createPost, } from '../../Redux/actions/postsActions'
 import { useNavigate } from 'react-router-dom';
-import Success from './Success';
+import Swiper from './Swiper';
 import { useState } from 'react';
 import { uploadImageCloudinary } from './cloudinary';
 import { useForm, Controller } from 'react-hook-form'
@@ -98,7 +98,7 @@ const Form = ({ setPost, post }) => {
     return (
         <div>
 
-            {success && <Success frase='Se ha enviado al panel exitosamente' color='#005692' />} {/* Si se publica correctamente mostrar el mensaje */}
+            {success && <Swiper frase='Se ha enviado al panel exitosamente' color='#005692' />} {/* Si se publica correctamente mostrar el mensaje */}
             <form action="" method='post' className='form' onSubmit={handleSubmit(onSubmit)} onChange={handleChange}>
                 <div className='form__field'>
                     <label htmlFor="title">Titulo</label>

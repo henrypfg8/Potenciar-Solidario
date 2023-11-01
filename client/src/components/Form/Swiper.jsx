@@ -1,13 +1,13 @@
 import Swal from 'sweetalert2'
 
 // eslint-disable-next-line react/prop-types
-const Success = ({frase, color}) => {
+const Swiper = ({frase, color, tipo}) => {
     Swal.fire({
         position: 'center',
-        icon: 'success',
+        icon: `${tipo}`,
         title:`${frase}`,
         showConfirmButton: false,
-        timer: 2000,
+        timer: 3000,
         color : `${color}`,
         iconColor : `${color}`
       
@@ -19,4 +19,4 @@ const Success = ({frase, color}) => {
   )
 }
 
-export default Success
+export default Swiper

@@ -1,24 +1,30 @@
 import { useForm } from 'react-hook-form'
 import './auth.css';
 import { GoogleLogin} from '@react-oauth/google'
+import { getProfile } from '../../Redux/auth/AuthActions';
 import { jwtDecode } from 'jwt-decode';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginUser } from '../../Redux/auth/AuthActions';
 import { useEffect } from 'react';
 // import { useState } from 'react';
 
 
 const Login = () => {
 
-    const state= useSelector(state => state.auth)
+    const {user}= useSelector(state => state.auth)
+    //const {userProfile}= useSelector(state => state.auth)
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+   const dispatch = useDispatch();
+
     useEffect(() => {
-       
+        dispatch(getProfile())
+      
     }, [])
-    console.log(state)
+    console.log(user);
 
     const onSubmit = user => {
          //datos del formulario
-        console.log(user);
+        dispatch(loginUser(user.email, user.password))
         //Hacer el dispatch de la acción para iniciar sesión
 
         // Limpiar el formulario

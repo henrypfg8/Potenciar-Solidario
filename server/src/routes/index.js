@@ -38,7 +38,7 @@ const {
 const router = Router();
 const { searchPublication } = require("../handlers/searchPublicationH");
 
-router.get("/posts/name?=", searchPublication);
+router.get("/posts/busqueda", searchPublication);
 // rutas
 router.get("/ongs/name?=", handlerOngs);
 router.get("/categories", getAllCategories);

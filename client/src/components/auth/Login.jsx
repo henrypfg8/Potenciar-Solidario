@@ -11,17 +11,12 @@ import { useEffect } from 'react';
 
 const Login = () => {
 
-    const {user}= useSelector(state => state.auth)
+  
     //const {userProfile}= useSelector(state => state.auth)
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
    const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getProfile())
-      
-    }, [])
-    console.log(user);
-
+    // sale objeto vacio
     const onSubmit = user => {
          //datos del formulario
         dispatch(loginUser(user.email, user.password))

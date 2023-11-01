@@ -26,13 +26,14 @@ export function useQuestionCreate() {
         categories: ''
     })
     const [firstSubmit, setFirstSubmit] = useState(false)
-
+    
     const handleChange = (event) => {
         setQuetions({
             ...question,
             [event.target.name]: event.target.value
         })
         if (firstSubmit) {
+            setFirstSubmit(true)
             setErrores(validationQuestion({
                 ...question,
                 [event.target.name]: event.target.value
@@ -40,6 +41,7 @@ export function useQuestionCreate() {
         }
     }
     const handleCategoryChange = (selectedOption) => {
+        setFirstSubmit(true)
         setQuetions({
             ...question,
             categories: selectedOption.value
@@ -89,5 +91,5 @@ export function useQuestionCreate() {
             throw new Error(error.message)}
     }
 
-    return { question,categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion };
+    return { firstSubmit, question,categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion };
 }

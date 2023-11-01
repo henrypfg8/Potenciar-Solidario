@@ -34,8 +34,8 @@
 }
 textarea:focus,input:focus {
     outline: none;
-    background-color: #ddd;
-    box-shadow: 0 0 10px #719ECE; 
+    background-color: #dddddd65;
+    box-shadow: 0 0 2px #719ECE; 
 }
 
 .div label{

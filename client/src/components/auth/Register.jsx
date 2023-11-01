@@ -47,7 +47,7 @@ const Register = () => {
             dispatch(registerUser(user))
                 .then(data  => {
                 if (data) {
-                    navigate('/')
+                    navigate('/login')
                 }
             
                 }) 

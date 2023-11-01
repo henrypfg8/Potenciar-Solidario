@@ -3,8 +3,8 @@ import Select from "react-select";
 import { useQuestionCreate } from '../../components/QuestionCreate/QuestionCreate';
 
 function QuestionCreateView() {
-    const { firstSubmit, question, categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion } = useQuestionCreate();
-console.log(question);
+    const { disableButton, firstSubmit, question, categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion } = useQuestionCreate();
+// console.log(question);
     return (
         <div className={style.contain}>
             <form action="" onChange={handleChange} className={style.form}>
@@ -45,7 +45,13 @@ console.log(question);
                             <textarea type="text" cols="30" rows="8" name="text" placeholder="Descripcion" style={{ boxShadow:  firstSubmit ? '0 0 0 1px rgb(73, 255, 73)': '', border: firstSubmit ? '1px rgb(73, 255, 73) solid' : ''}}/>
                     }
                 </div>
-                <button type="submit" onClick={submitQuestion}>Enviar pregunta</button>
+                {
+                    disableButton 
+                    ? 
+                    <button type="submit" onClick={submitQuestion} disabled className={style.buttonDisable}>Enviar pregunta</button>
+                    :
+                    <button type="submit" onClick={submitQuestion} className={style.button}>Enviar pregunta</button> 
+                }
             </form>
         </div>
     )

@@ -23,7 +23,7 @@ const Form = ({ setPost, post }) => {
     const options2 = ongs.map(ong => ({ value: ong.nombre, label: ong.nombre }));
 
     const fechaConvertida = partes[2] + '-' + partes[1] + '-' + partes[0];
-
+    console.log(fechaConvertida)
     const [imgFile, setImgFile] = useState(null);
     const [success, setSuccess] = useState(false);
     const dispatch = useDispatch();
@@ -154,7 +154,8 @@ const Form = ({ setPost, post }) => {
                         {...register('startDate', {
                             required: true, min: fechaConvertida, pattern: {
                                 value: /^\d{4}-\d{2}-\d{2}$/,
-                                message: 'Debe ser una fecha valida'
+                                message: 'Debe ser una fecha valida',
+                                
                             }
                         })}
                     />

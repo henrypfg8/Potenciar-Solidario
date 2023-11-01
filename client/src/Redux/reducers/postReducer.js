@@ -7,7 +7,8 @@ import {
   UPDATE_POST,
   UPDATE_POST_LIKES,
   GET_POSTS_BY_CATEGORIES,
-  GET_POSTS_BY_ONGS
+  GET_POSTS_BY_ONGS,
+  SEARCH_POST
 } from "../action-types";
 
 const initialState = {
@@ -73,7 +74,11 @@ const postReducer = (state = initialState, action) => {
         ...state,
         postsByOngs: action.payload,
       };
-
+    case SEARCH_POST:
+      return {
+        ...state,
+        posts: action.payload
+      }
     case UPDATE_POST_LIKES:
 
     default:

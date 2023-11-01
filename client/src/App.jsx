@@ -19,6 +19,7 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import PostDetailView from "./views/PostDetailView/PostDetailView";
 //
 import Admin from "./views/admin/Admin";
+
 import QuestionCreateView from "./views/QuestionCreateView/QuestionCreateView";
 
 function App() {
@@ -26,7 +27,6 @@ function App() {
   const { pathname } = useLocation();
   const posts = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
-
   //Manejo de Header segun el scroll:
   const [isScrolled, setIsScrolled] = useState(false);
 

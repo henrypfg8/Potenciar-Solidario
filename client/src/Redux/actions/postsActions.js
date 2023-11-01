@@ -71,7 +71,7 @@ import axios from "axios";
     export const searchPost = (query) => {
         return async function (dispatch) {
             try {
-                const response = await axios.get(`http://localhost:19789/posts?name=${query}`);
+                const response = await axios.get(`http://localhost:19789/posts/busqueda?busqueda=${query}`);
                 dispatch({type: SEARCH_POST, payload: response.data});
             } catch (error) {
                 console.log(error, "por favor contactar a soporte por este error")
@@ -89,7 +89,6 @@ import axios from "axios";
             }
         }
     }
-
 
     export const clearPostDetail = () => {
         return {type: CLEAR_POST_DETAIL}

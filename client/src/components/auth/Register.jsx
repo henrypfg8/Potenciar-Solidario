@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form' // validaciones con react-hook-form
 import './auth.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../../Redux/auth/AuthActions';
+import { registerUser, } from '../../Redux/auth/AuthActions';
 import Swiper from '../Form/Swiper';
 import { uploadImageCloudinary } from '../Form/cloudinary';
 import { useNavigate } from 'react-router-dom';
@@ -12,11 +12,13 @@ const Register = () => {
 
     const [success, setSuccess] = useState(false);
 
-    const { errorRegister } = useSelector(state => state.auth)
+    const { errorRegister} = useSelector(state => state.auth)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm(); // Configuración del hook form
+
+
     // Función para validar que la fecha es de alguien que tiene al menos 18 años
     const validateAge = (value) => {
         const inputDate = new Date(value);
@@ -42,8 +44,14 @@ const Register = () => {
             //Hacer el dispatch de la acción para crear el usuario
             setSuccess(true);
 
-            dispatch(registerUser(user));
-            navigate('/login'); 
+            dispatch(registerUser(user))
+                .then(data  => {
+                if (data) {
+                    navigate('/login')
+                }
+            
+                }) 
+                .catch(error => console.log(error))
             // Limpiar el formulario
 
             setTimeout(() => {
@@ -62,7 +70,7 @@ const Register = () => {
             {/* {error && errorRegister  && <Success frase='No se pudo crear tu cuenta' color='#DD0C0C' tipo='error' />} */}
          
             <form action="" method='post' onSubmit={handleSubmit(onSubmit)} className='auth__form' autoCorrect='off'>
-            {errorRegister && <p className='auth__error'>El correo ya esta en uso</p>}
+            {/* {errorRegister && <p className='auth__error'>El correo ya esta en uso</p>} */}
 
                 {/* campo para el nombre */}
                 <div>

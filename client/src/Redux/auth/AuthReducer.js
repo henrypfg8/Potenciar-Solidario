@@ -1,7 +1,7 @@
 import { types } from "./types";
 
 const initialState = {
-    user: {},
+    user:{},
     userProfile: {},
     token: localStorage.getItem('token'),
     isAuthenticated: false,
@@ -13,16 +13,16 @@ const initialState = {
 const authReducer = (state = initialState, action) => {
     switch(action.type){
         case types.REGISTER:
-           
+          
             return {
                 ...state,
                 user: action.payload,
             }
         case types.LOGIN:
-            //localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('token', action.payload.token);
             return {
                 ...state,
-                user: action.payload,
+                userProfile: action.payload,
                 isAuthenticated: true,
                 // isAdmin: action.payload.user.isAdmin,
                 loading: false,

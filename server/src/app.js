@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const routes = require("./routes/index");
-const io = require("socket.io")(server);
+const io = require("socket.io");
 
 require("./db.js");
 

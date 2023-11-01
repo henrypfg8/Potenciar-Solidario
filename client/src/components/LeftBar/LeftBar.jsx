@@ -1,7 +1,7 @@
 import Styles from "./leftBar.module.css";
 //
 import { useLocation, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 //
 import Select from "react-select";
 //
@@ -9,20 +9,21 @@ import Select from "react-select";
 export default function LeftBar() {
   const { pathname } = useLocation();
   const ongs = useSelector((state) => state.ongsAndCategories.ongs);
-  const categories = useSelector(state => state.ongsAndCategories.categories);
+  const categories = useSelector((state) => state.ongsAndCategories.categories);
 
-  const categoryOptions = categories.map(cat => ({
-    label: cat.name, value: cat.name 
-  }))
+  const categoryOptions = categories.map((cat) => ({
+    label: cat.name,
+    value: cat.name,
+  }));
+  categoryOptions.unshift({label: "Todas las categorias", value: "Todas las categorias"});
+
   const ongOptions = Array.from(new Set(ongs.map((ong) => ong.nombre))).map(
     (nombre) => ({
       label: nombre,
       value: nombre,
     })
   );
-
-  
-
+  ongOptions.unshift({label: "Todas las organizaciones", value: "Todas las organizaciones"})
 
   //////////////////////////////////////////////////////
 
@@ -63,16 +64,18 @@ export default function LeftBar() {
         <Select
           className={Styles.select}
           options={categoryOptions}
+          defaultValue={categoryOptions[0]}
           isSearchable={true}
           menuPlacement="top"
-          placeholder='Categorias'
+          placeholder="Categorias"
         />
         <Select
           className={Styles.select}
           options={ongOptions}
+          defaultValue={ongOptions[0]}
           isSearchable={true}
           menuPlacement="top"
-          placeholder='Organizaciones'
+          placeholder="Organizaciones"
         />
         <Select className={Styles.select} />
 

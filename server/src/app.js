@@ -12,7 +12,9 @@ const server = express();
 server.name = "API";
 const httpServer = createServer(server);
 const io = new Server(httpServer, {
-  /* options */
+  cors: {
+    origin: "http://localhost:5173",
+  },
 });
 
 io.on("connection", (socket) => {

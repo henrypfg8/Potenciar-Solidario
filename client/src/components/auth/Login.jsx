@@ -15,8 +15,19 @@ const Login = () => {
     //const {userProfile}= useSelector(state => state.auth)
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
    const dispatch = useDispatch();
+   const {user, userProfile} = useSelector(state => state.auth);
 
-    // sale objeto vacio
+    // useEffect(() => {
+    //     if(user){
+    //         dispatch(getProfile(user.id))
+    //     }
+
+
+    // }, [user, dispatch])
+    // if(userProfile){
+    //     console.log(userProfile);
+    // }
+    //sale objeto vacio
     const onSubmit = user => {
          //datos del formulario
         dispatch(loginUser(user.email, user.password))

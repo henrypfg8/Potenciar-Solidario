@@ -4,13 +4,24 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const routes = require("./routes/index");
-const io = require("socket.io")(server);
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 require("./db.js");
 
 const server = express();
-const serverIo = io(server);
 server.name = "API";
+const httpServer = createServer(server);
+const io = new Server(httpServer, {
+  /* options */
+});
 
+io.on("connection", (socket) => {
+  console.log("Un usuario se conecto por WebSockets");
+  socket.on("custom-event", (data) => {
+    console.log("Evento recibido:", data);
+    // Manejar el evento de websocket
+  });
+});
 server.use(cors());
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
@@ -41,12 +52,4 @@ server.use((err, _req, res, _next) => {
   res.status(status).send(message);
 });
 
-serverIo.on("connection", (socket) => {
-  console.log("A user connected via WebSocket");
-
-  socket.on("custom-event", (data) => {
-    console.log("Received custom-event:", data);
-  });
-});
-
-module.exports = server;
+module.exports = httpServer;

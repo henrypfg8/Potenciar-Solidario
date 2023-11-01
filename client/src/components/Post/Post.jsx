@@ -9,6 +9,8 @@ import CalendarIcon from '../../assets/CalendarIcon';
 import axios from "axios";
 //
 import { getPosts } from "../../Redux/actions/postsActions";
+//
+import Swal from 'sweetalert2';
 
 const Post = (props) => {
   const { id, title, organization, category, image, description, startDate } = props;
@@ -31,7 +33,29 @@ const Post = (props) => {
 
   const deleteHandler = (e) => {
     e.preventDefault();
-    axios.delete(`http://localhost:19789/posts/${id}`);
+
+    Swal.fire({
+      title: '¿Seguro que quieres eliminar la publicación?',
+      // text: "You won't be able to revert this!",
+      icon: 'warning',
+      iconColor: '#005692',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:19789/posts/${id}`);
+        Swal.fire({
+          title: 'Publicación Eliminada',
+          icon: 'success',
+          customClass: {
+            confirmButton: 'swallowOkButton'
+          }
+        })
+      }
+    })
     setTimeout(() => {
       dispatch(getPosts());
     }, 200);

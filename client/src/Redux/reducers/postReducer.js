@@ -16,6 +16,7 @@ const initialState = {
   postDetail: [],
   postsByCategories: [],
   postsByOngs: [],
+  postsByDate: [],
 };
 
 const postReducer = (state = initialState, action) => {

@@ -19,7 +19,7 @@ const authReducer = (state = initialState, action) => {
                 user: action.payload,
             }
         case types.LOGIN:
-            //localStorage.setItem('token', action.payload.token);
+            localStorage.setItem('token', action.payload.token);
             return {
                 ...state,
                 userProfile: action.payload,

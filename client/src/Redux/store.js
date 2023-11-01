@@ -6,6 +6,14 @@ import questionReducer from "./reducers/questionReducer";
 import ongsAndCategoriesReducer from "./reducers/ongsAndCategoriesReducer";
 import authReducer from "./auth/AuthReducer";
 import thunk from "redux-thunk";
+import {persistReducer, persistStore} from 'redux-persist'
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+  key : 'root',
+  storage,
+  whitelist: ['auth']
+}
 
 // Combina los reducers
 const rootReducer = combineReducers({
@@ -17,10 +25,12 @@ const rootReducer = combineReducers({
   auth: authReducer,
 });
 
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 // Aplica el middleware usando composeWithDevTools
-const store = createStore(
-  rootReducer,
+export const store = createStore(
+  persistedReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-export default store;
+
+export const persistor = persistStore(store);

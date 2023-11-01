@@ -15,7 +15,6 @@ export default function Posts () {
   useEffect(() => {
     setPostsLocal(posts);
     
-    
   }, [posts])
 
   return (

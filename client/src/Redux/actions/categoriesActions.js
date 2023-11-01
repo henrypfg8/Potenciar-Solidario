@@ -19,7 +19,7 @@ export const getCategories = () => {
 export const getPostsByCategories = (query) => {
     return async function (dispatch) {
         try {
-            const response = await axios.get(`http://localhost:19789/categories?name=${query}`);
+            const response = await axios.get(`http://localhost:19789/categories/filter?category=${query}`);
             dispatch({type: GET_POSTS_BY_CATEGORIES, payload: response.data});
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error")

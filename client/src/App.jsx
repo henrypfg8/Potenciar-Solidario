@@ -20,13 +20,20 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import PostDetailView from "./views/PostDetailView/PostDetailView";
 //
 import Admin from "./views/admin/Admin";
-
+import { getProfile } from "./Redux/auth/AuthActions";
 function App() {
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
   const posts = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
-
+  //profile
+  const {userProfile, user}= useSelector(state => state.auth)
+  useEffect(() => {
+    if (user) {
+      dispatch(getProfile(user.id))
+    }
+  }, [user, dispatch]);
+  console.log(userProfile)
   //Manejo de Header segun el scroll:
   const [isScrolled, setIsScrolled] = useState(false);
 

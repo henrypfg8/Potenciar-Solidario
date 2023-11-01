@@ -20,7 +20,7 @@ const registerUser = (user) => {
 const getProfile =  (id) => {
     return async dispatch => {
         try {
-            const { data } = await axios.get(`http://localhost:19789/users/${id}`);
+            const { data } = await axios(`http://localhost:19789/users/${id}`);
             //console.log(data.id) // si aparece la data
             dispatch({ type: types.GET_PROFILE, payload: data });
             return Promise.resolve(data);

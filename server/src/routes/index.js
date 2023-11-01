@@ -36,7 +36,7 @@ const {
   authGoogleHandler,
 } = require("../handlers/Authentication/authGoogleLoginHandler.js");
 const router = Router();
-const { searchPublication } = require("../handlers/serachPubublicationH");
+const { searchPublication } = require("../handlers/searchPublicationH");
 
 router.get("/posts/busqueda", searchPublication);
 // rutas

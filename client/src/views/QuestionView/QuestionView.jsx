@@ -4,11 +4,23 @@ import data from '../../assets/data'
 import { useState } from 'react';
 import { FlechaAbajoIcon } from '../../assets/FlechaParaAbajoIcon';
 import { FlechaParaArriba } from '../../assets/FlechaParaArribaIcon';
+import io from 'socket.io-client'
+
 function QuestionView({ preguntaUsuario, respuestasUsuario }) {
+    const socket = io('/')
     const { usuariosRespuestas } = data;
 
-    const [view, setView] = useState({})
+    const [view, setView] = useState({});
+    const [chat, setChat] = useState('')
 
+    const handleChange = (event) => {
+        event.preventDefault()
+        setChat(event.target.value)
+    }
+    const handleSubmit = (chat) => {
+        socket.emit('chat', chat)
+        
+    }
     const handleView = (id) => {
         setView(prevState => ({
             ...prevState,
@@ -67,8 +79,8 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
                            
                             {view[index] && <div className={style.comment}>
                             <p>Comentar</p>
-                                <textarea type="text" cols="6" rows="5" />
-                                <button>Añadir comentario</button>
+                                <textarea type="text" cols="6" rows="5" onChange={()=>handleChange(event)} />
+                                <button onClick={()=> handleSubmit(chat)}>Añadir comentario</button>
                             </div>}
                         </div>
                     )

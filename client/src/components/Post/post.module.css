@@ -9,6 +9,8 @@
     position: relative;
     transition: transform 0.3s;
     transform: scale(1);
+    border: solid #526387 2px;
+    border-radius: 7px;
 }
 .Post:hover {
     transform: scale(1.02);
@@ -16,7 +18,7 @@
 
 
     .Post__title {
-        border: solid black 1px;
+        border-bottom: solid black 1px;
         width: 100%;
         border-top-right-radius: 5px;
         border-top-left-radius: 5px;
@@ -32,6 +34,7 @@
         text-overflow: ellipsis;
         padding: 2px;
         background-color: var(--blue);
+        color: rgb(225, 225, 225);
     }
    
     .organizationName {
@@ -43,7 +46,7 @@
         position: absolute;
         right: 1%;
         top: 3px;
-        color: gray
+        color: rgb(225, 225, 225);
     }
 
     .Post__description {
@@ -69,6 +72,7 @@
         width: 100%;
         position: relative;
         display: flex;
+        align-items: center;
         background-color: var(--darkblue);
         border-bottom-left-radius: 5px;
         border-bottom-right-radius: 5px;
@@ -96,10 +100,49 @@
         .BottomBar__startDate {
             color: white;
             display: inline;
-            align-self: center;
             margin-left: 5px;
-            font-size: 1.3em
+            padding-right: 5px;
+            font-size: 1.3em;
+            border-right: solid gray 1px;
         }
+        
+        .BottomBar__SocialIcons {
+            margin: 0 5px;
+            width: 71.5%;
+            display: flex;
+        }
+            .SocialIcons__likeContainer {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: background-color 0.3s;
+            }
+            .SocialIcons__likeContainer:hover {
+                background-color: var(--blue)
+            }
+                .likeIcon {
+                    color: white;
+                    width: 30px;
+                    height: 30px;
+                }
+            .SocialIcons__commentContainer {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: background-color 0.3s;
+            }
+            .SocialIcons__commentContainer:hover {
+                background-color: var(--blue)
+
+            }
+                
+                .commentIcon {
+                    color: white;
+                    width: 30px;
+                    height: 30px;
+                }
 
 .swallowOkButton {
     background-color: var(--blue);

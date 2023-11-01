@@ -1,21 +1,31 @@
 import Styles from "./leftBar.module.css";
 //
 import { useLocation, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from 'react'
 //
 import Select from "react-select";
 //
+import { getPostsByDate } from "../../Redux/actions/postsActions";
 
 export default function LeftBar() {
   const { pathname } = useLocation();
+  const dispatch = useDispatch();
+
   const ongs = useSelector((state) => state.ongsAndCategories.ongs);
   const categories = useSelector((state) => state.ongsAndCategories.categories);
+
+  const [fromDate, setFromDate] = useState("");
+  const [untilDate, setUntilDate] = useState("");
 
   const categoryOptions = categories.map((cat) => ({
     label: cat.name,
     value: cat.name,
   }));
-  categoryOptions.unshift({label: "Todas las categorias", value: "Todas las categorias"});
+  categoryOptions.unshift({
+    label: "Todas las categorias",
+    value: "Todas las categorias",
+  });
 
   const ongOptions = Array.from(new Set(ongs.map((ong) => ong.nombre))).map(
     (nombre) => ({
@@ -23,7 +33,29 @@ export default function LeftBar() {
       value: nombre,
     })
   );
-  ongOptions.unshift({label: "Todas las organizaciones", value: "Todas las organizaciones"})
+  ongOptions.unshift({
+    label: "Todas las organizaciones",
+    value: "Todas las organizaciones",
+  });
+
+  const handleDateChange = (e) => {
+    const { target: { name, value } } = e;
+
+
+    if (name === 'fromDate') setFromDate(value);
+    else setUntilDate(value);
+  };
+
+  useEffect(() => {
+    if (fromDate !== '' && untilDate !== '') {
+      let from = fromDate.split('-');
+      let until = untilDate.split('');
+
+      if (from[0] >= 2023 && until[0] > from[0]) {
+        dispatch(getPostsByDate());
+      }
+    }
+  }, [fromDate, untilDate])
 
   //////////////////////////////////////////////////////
 
@@ -82,12 +114,24 @@ export default function LeftBar() {
         <div className={Styles.Filters__date}>
           <label>
             Desde:
-            <input type="date" value="2023-01-01"></input>
+            <input
+              type="date"
+              name="fromDate"
+              value={fromDate}
+              onChange={handleDateChange}
+              className={Styles.dateInput}
+            ></input>
           </label>
 
           <label>
             Hasta:
-            <input type="date"></input>
+            <input
+              type="date"
+              name="untilDate"
+              value={untilDate}
+              onChange={handleDateChange}
+              className={Styles.dateInput}
+            ></input>
           </label>
         </div>
       </div>

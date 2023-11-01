@@ -7,6 +7,11 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    transition: transform 0.3s;
+    transform: scale(1);
+}
+.Post:hover {
+    transform: scale(1.02);
 }
 
 
@@ -43,7 +48,6 @@
 
     .Post__description {
         flex: 1;
-        width: 100%;
         min-height: 40px;
         display: flex;
         overflow: hidden;
@@ -53,10 +57,9 @@
         border-bottom: solid black 1px
     }
 
-    .Post__img {
-        border: solid black 1px;
-        width: 300px;
-        height: 300px;
+    .image {
+        width: auto;
+        max-height: 400px;
         align-self: flex-start;
         display: inline;
     }
@@ -97,6 +100,10 @@
             margin-left: 5px;
             font-size: 1.3em
         }
+
+.swallowOkButton {
+    background-color: var(--blue);
+}
 
 
      

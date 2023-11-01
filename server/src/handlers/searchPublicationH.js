@@ -4,7 +4,7 @@ const searchPublication = async (req, res) => {
   try {
     const { busqueda } = req.query;
     if (busqueda && typeof busqueda === "string") {
-      const palabraBusqueda = await controllerBusqueda(busqueda);
+      const palabraBusqueda = await controllerBusqueda(busqueda.trim());
       if (palabraBusqueda.length === 0)
         throw new Error("La palabra clave de búsqueda es inválida");
 

@@ -13,7 +13,6 @@ import Home from "./views/HomeView/Home";
 import PageHeader from "./components/PageHeader/PageHeader";
 import ContainerForm from "./views/FormContainer/ContainerForm";
 import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
-import QuestionCreate from "./components/QuestionCreate/QuestionCreate";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import SearchBar from "./components/SearchBar/SearchBar";
@@ -21,6 +20,8 @@ import PostDetailView from "./views/PostDetailView/PostDetailView";
 //
 import Admin from "./views/admin/Admin";
 import { getProfile } from "./Redux/auth/AuthActions";
+import QuestionCreateView from "./views/QuestionCreateView/QuestionCreateView";
+
 function App() {
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
@@ -70,7 +71,7 @@ function App() {
 
         <Route path="/foro" element={<Forum />} />
 
-        <Route path="/foro/crear" element={<QuestionCreate />} />
+        <Route path="/foro/crear" element={<QuestionCreateView />} />
         <Route path="/foro/:id" element={<QuestionDetail />} />
 
         {/* auth */}

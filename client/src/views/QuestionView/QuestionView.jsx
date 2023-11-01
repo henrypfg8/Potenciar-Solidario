@@ -19,6 +19,7 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
     }
     const handleSubmit = (chat) => {
         socket.emit('chat', chat)
+        console.log(chat);
         
     }
     const handleView = (id) => {

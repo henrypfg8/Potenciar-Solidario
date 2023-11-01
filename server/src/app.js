@@ -4,12 +4,11 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const routes = require("./routes/index");
-const io = require("socket.io");
-
+const io = require("socket.io")(server);
 require("./db.js");
 
 const server = express();
-
+const serverIo = io(server);
 server.name = "API";
 
 server.use(cors());
@@ -40,6 +39,14 @@ server.use((err, _req, res, _next) => {
   const message = err.message || err;
   console.error(err);
   res.status(status).send(message);
+});
+
+serverIo.on("connection", (socket) => {
+  console.log("A user connected via WebSocket");
+
+  socket.on("custom-event", (data) => {
+    console.log("Received custom-event:", data);
+  });
 });
 
 module.exports = server;

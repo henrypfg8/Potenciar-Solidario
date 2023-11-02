@@ -26,3 +26,4 @@ export const GET_ONGS = "GET_ONGS";
 export const GET_POSTS_BY_ONGS = "GET_POSTS_BY_ONGS";
 export const GET_POSTS_BY_DATE = "GET_POSTS_BY_DATE";
 
+export const GET_POSTS_FILTERED = "GET_POSTS_FILTERED";

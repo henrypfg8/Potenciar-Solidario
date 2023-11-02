@@ -8,16 +8,16 @@ import {
   UPDATE_POST_LIKES,
   GET_POSTS_BY_CATEGORIES,
   GET_POSTS_BY_ONGS,
-  SEARCH_POST
+  SEARCH_POST,
+
+  GET_POSTS_FILTERED
 } from "../action-types";
 
 const initialState = {
   posts: [],
   allPosts: [],
   postDetail: [],
-  postsByCategories: [],
-  postsByOngs: [],
-  postsByDate: [],
+
 };
 
 const postReducer = (state = initialState, action) => {
@@ -79,6 +79,13 @@ const postReducer = (state = initialState, action) => {
         ...state,
         posts: action.payload
       }
+
+    case GET_POSTS_FILTERED:
+      return {
+        ...state,
+        posts: action.payload
+      }
+
     case UPDATE_POST_LIKES:
 
     default:

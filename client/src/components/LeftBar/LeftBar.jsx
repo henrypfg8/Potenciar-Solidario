@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 //
 import Select from "react-select";
 //
-import { getPostsByDate } from "../../Redux/actions/postsActions";
+import { getPostsFiltered } from '../../Redux/actions/postsActions';
 
 export default function LeftBar() {
   const { pathname } = useLocation();
@@ -14,48 +14,58 @@ export default function LeftBar() {
 
   const ongs = useSelector((state) => state.ongsAndCategories.ongs);
   const categories = useSelector((state) => state.ongsAndCategories.categories);
+  const [ filters, setFilters ] = useState({
+    category: '',
+    ong: '',
+    fromDate: '',
+    untilDate: ''
+  });
 
-  const [fromDate, setFromDate] = useState("");
-  const [untilDate, setUntilDate] = useState("");
+  const handleFilters = (e) => {
+    const { name, value } = e;
+    const filtersCOPY = {...filters}
+    filtersCOPY[name] = value;
 
+    dispatch(getPostsFiltered(filtersCOPY));
+
+    setFilters(filtersCOPY);
+  }
+  const handleDateFilters = (e) => {
+    const { name, value } = e.target;
+    const filtersCOPY = {...filters};
+    
+    filtersCOPY[name] = value;
+
+    if (value > '2023-01-01') dispatch(getPostsFiltered(filtersCOPY))
+
+    setFilters(filtersCOPY);
+    
+  }
+ 
   const categoryOptions = categories.map((cat) => ({
     label: cat.name,
     value: cat.name,
+    name: 'category'
   }));
   categoryOptions.unshift({
     label: "Todas las categorias",
-    value: "Todas las categorias",
+    value: "",
+    name: 'category'
   });
 
   const ongOptions = Array.from(new Set(ongs.map((ong) => ong.nombre))).map(
     (nombre) => ({
       label: nombre,
       value: nombre,
+      name: 'ong'
     })
   );
   ongOptions.unshift({
     label: "Todas las organizaciones",
-    value: "Todas las organizaciones",
+    value: "",
+    name: 'ong'
   });
 
-  const handleDateChange = (e) => {
-    const { target: { name, value } } = e;
-
-
-    if (name === 'fromDate') setFromDate(value);
-    else setUntilDate(value);
-  };
-
-  useEffect(() => {
-    if (fromDate !== '' && untilDate !== '') {
-      let from = fromDate.split('-');
-      let until = untilDate.split('');
-
-      if (from[0] >= 2023 && until[0] > from[0]) {
-        dispatch(getPostsByDate());
-      }
-    }
-  }, [fromDate, untilDate])
 
   //////////////////////////////////////////////////////
 
@@ -100,6 +110,7 @@ export default function LeftBar() {
           isSearchable={true}
           menuPlacement="top"
           placeholder="Categorias"
+          onChange={handleFilters}
         />
         <Select
           className={Styles.select}
@@ -108,6 +119,7 @@ export default function LeftBar() {
           isSearchable={true}
           menuPlacement="top"
           placeholder="Organizaciones"
+          onChange={handleFilters}
         />
         <Select className={Styles.select} />
 
@@ -117,8 +129,8 @@ export default function LeftBar() {
             <input
               type="date"
               name="fromDate"
-              value={fromDate}
-              onChange={handleDateChange}
+              value={filters.fromDate}
+              onChange={handleDateFilters}
               className={Styles.dateInput}
             ></input>
           </label>
@@ -128,8 +140,8 @@ export default function LeftBar() {
             <input
               type="date"
               name="untilDate"
-              value={untilDate}
-              onChange={handleDateChange}
+              value={filters.untilDate}
+              onChange={handleDateFilters}
               className={Styles.dateInput}
             ></input>
           </label>

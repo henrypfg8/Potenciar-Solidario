@@ -35,15 +35,30 @@ const { authHandler } = require("../handlers/Authentication/authHandler.js"); //
 const {
   authGoogleHandler,
 } = require("../handlers/Authentication/authGoogleLoginHandler.js");
-const router = Router();
 const { searchPublication } = require("../handlers/searchPublicationH");
 
+
+const { applyFilters } = require('../handlers/Publication/applyFilters');
+
+
+
+const router = Router();
+
+
+
 router.get("/posts/busqueda", searchPublication);
+
+
+
 // rutas
-router.get("/ongs/filter", handlerOngs);
+
+router.get('/filters?', applyFilters)
+
+
+//router.get("/ongs/filter", handlerOngs);
 router.get("/categories", getAllCategories);
 
-router.get("/categories/filter", handlerCategory);
+//router.get("/categories/filter", handlerCategory);
 router.get("/ongs", handlerAllOngs);
 
 router.get("/filterByDate", FilterByDate);
@@ -62,6 +77,7 @@ router.get("/posts/:id", HandlerGetPublications);
 router.post("/posts", createPublicationHandler);
 router.put("/posts/:id", PutPublicationHandler);
 router.delete("/posts/:id", deletePublication);
+
 
 router.put("/question/:id", UpdateQuestionH);
 router.delete("/question/:id", DeleteQuestionHandler);

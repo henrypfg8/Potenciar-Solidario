@@ -25,6 +25,8 @@ const { searchPublication } = require("../handlers/searchPublicationH");
 const { applyFilters } = require('../handlers/Publication/applyFilters');
 const {createAnswerHandler} = require('../handlers/Aswer/CreateAnswer.js')
 const {UpdateAnswerHandler} = require('../handlers/Aswer/UpdateAnswer.js')
+const {getForoCategories} = require('../handlers/ForoCategories/handlerAllCategories.js')
+
 const router = Router();
 
 router.get("/posts/busqueda", searchPublication);
@@ -36,6 +38,7 @@ router.get('/filters?', applyFilters)
 
 //router.get("/ongs/filter", handlerOngs);
 router.get("/categories", getAllCategories);
+router.get('/forumCategories', getForoCategories)
 
 //router.get("/categories/filter", handlerCategory);
 router.get("/ongs", handlerAllOngs);

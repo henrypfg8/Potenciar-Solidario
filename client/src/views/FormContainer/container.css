@@ -146,9 +146,7 @@
   }
 .form__alert{
   color: #cf0505;
-  border: 1px solid #cf0505;
-  border-radius: 4px;
-  text-align: center;
+  text-align: left;
   padding: 0.4rem 0;
 }
 .form__span{

@@ -1,7 +1,7 @@
 import { types } from "./types";
 import axios from "axios";
 
-const registerUser = (user) => {
+const registerUser = user => {
     return async dispatch => {
         try {
             const { data } = await axios.post('http://localhost:19789/register', user);
@@ -17,7 +17,8 @@ const registerUser = (user) => {
     }
 };
 
-const getProfile =  (id) => {
+
+const getProfile =  id => {
     return async dispatch => {
         try {
             const { data } = await axios(`http://localhost:19789/users/${id}`);
@@ -32,21 +33,63 @@ const getProfile =  (id) => {
        
         }
     }
-}
+};
 const loginUser = (email, password) => {
     return async dispatch => {
         try {
             const { data } = await axios.post('http://localhost:19789/login', { email, password });
-            
+            console.log(data)
             dispatch({ type: types.LOGIN, payload: data });
+            return Promise.resolve(data);
         }
         catch (error) {
-            dispatch({ type: types.ERROR_REGISTER, payload: error.response.data.message })
+            dispatch({ type: types.ERROR_LOGIN, payload: error.response.data.message })
+            console.log(error.response.data);
+            return Promise.reject(error);
         }
     }
+};
+
+const loginWithGoogle = (idToken)=> {
+    return async dispatch => {
+        try {
+            const { data } = await axios.post(`http://localhost:19789/authGoogle`, idToken);
+            console.log(data)
+            dispatch({ type: types.LOGIN_WITH_GOOGLE, payload: data });
+            // return Promise.resolve(data);
+        }
+        catch (error) {
+            dispatch({ type: types.ERROR_LOGIN, payload: error.response.data.message })
+            console.log(error.response.data);
+            // return Promise.reject(error);
+        }
+    }
+
 }
+
+// const userAuthentificated = () => {
+//     return async dispatch => {
+//         try {
+//             const { data } = await axios.get('http://localhost:19789/isauth', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
+//             console.log(data)
+//             dispatch({ type: types.IS_AUTHENTICATED, payload: data });
+//             return Promise.resolve(data);
+//         }
+//         catch (error) {
+//             dispatch({ type: types.ERROR_REGISTER, payload: error.response.data.message })
+//             console.log(error.response.data);
+//             return Promise.reject(error);
+//         }
+//     }
+
+// }
+
+
 export {
     registerUser,
     getProfile,
-    loginUser
+    loginUser,
+    loginWithGoogle
+
+    // userAuthentificated
 }

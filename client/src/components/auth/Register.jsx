@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form' // validaciones con react-hook-form
 import './auth.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, } from '../../Redux/auth/AuthActions';
 import Swiper from '../Form/Swiper';
@@ -9,16 +9,21 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Register = () => {
-
+    const { isAuthenticated } = useSelector(state => state.auth)
     const [success, setSuccess] = useState(false);
 
-    const { errorRegister} = useSelector(state => state.auth)
-
+    const [errorRegister, setErrorRegister] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset } = useForm(); // Configuración del hook form
+    const timeouts = [];
+    const token = localStorage.getItem('token');
+    useEffect(() => {
+        if (isAuthenticated || token) {
+            navigate('/')
+        }
 
-
+    }, [isAuthenticated])
     // Función para validar que la fecha es de alguien que tiene al menos 18 años
     const validateAge = (value) => {
         const inputDate = new Date(value);
@@ -35,42 +40,57 @@ const Register = () => {
 
     const onSubmit = async user => { // Función que se ejecuta al hacer submit
 
-            const data = new FormData();
-            data.append('file', user.profile_picture[0]);
-            data.append('upload_preset', 'photo_users');
-            const result = await uploadImageCloudinary(data); // Subir la imagen a cloudinary
-            user.profile_picture = result;
+        const data = new FormData();
+        data.append('file', user.profile_picture[0]);
+        data.append('upload_preset', 'photo_users');
+        const result = await uploadImageCloudinary(data); // Subir la imagen a cloudinary
+        user.profile_picture = result;
 
-            //Hacer el dispatch de la acción para crear el usuario
-            setSuccess(true);
 
-            dispatch(registerUser(user))
-                .then(data  => {
-                if (data) {
-                    navigate('/login')
-                }
-            
-                }) 
-                .catch(error => console.log(error))
-            // Limpiar el formulario
+        dispatch(registerUser(user))
+            .then(() => {
+                setSuccess(true);
+                setErrorRegister(false);
+           
+               
+                const successTimeout = setTimeout(() => {
+                    navigate('/login');
+                    setSuccess(false);
+                }, 3000);
+                timeouts.push(successTimeout);
 
-            setTimeout(() => {
+            })
+            .catch(error => {
+                console.log(error.response.data.message);
+                setErrorRegister(true);
                 setSuccess(false);
 
-            }, 3000);
-            reset();
-            return
-        
-    
+                const errorTimeout = setTimeout(() => {
+                    setErrorRegister(false);
+                }, 3000);
+                timeouts.push(errorTimeout);
+            })
 
+        // Limpiar el formulario    
+        reset();
+        return
     };
+    useEffect(() => {
+        return () => {
+            timeouts.forEach(clearTimeout); // Limpia todos los timeouts
+        };
+    }, []);
+
+    
     return (
         <div className='auth__container' >
-            {success && !errorRegister && <Swiper frase='Haz Creado tu cuenta exitosamente, Ahora inicia sesión' color='#005692' tipo='success' />}
+
             {/* {error && errorRegister  && <Success frase='No se pudo crear tu cuenta' color='#DD0C0C' tipo='error' />} */}
-         
+            {success && <Swiper frase='Cuenta creada con éxito, Ahora inicia sesión' color='#005692' tipo='success' />}
+            {success && (<p className='auth__sucesss'>Cuenta creada con éxito, Ahora inicia sesión </p>)}
+            {errorRegister && <Swiper frase='El usuario posiblemente ya existe, No se pudo crear tu cuenta' color='#DD0C0C' tipo='error' />}
             <form action="" method='post' onSubmit={handleSubmit(onSubmit)} className='auth__form' autoCorrect='off'>
-            {/* {errorRegister && <p className='auth__error'>El correo ya esta en uso</p>} */}
+                {errorRegister ? <p className='auth__error'>El usuario ya existe</p> : ''}
 
                 {/* campo para el nombre */}
                 <div>

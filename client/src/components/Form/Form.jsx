@@ -3,17 +3,35 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createPost, } from '../../Redux/actions/postsActions'
 import { useNavigate } from 'react-router-dom';
 import Swiper from './Swiper';
-import { useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import { useEffect, useState } from 'react';
 import { uploadImageCloudinary } from './cloudinary';
 import { useForm, Controller } from 'react-hook-form'
 import Select from 'react-select';
 
 
 const Form = ({ setPost, post }) => {
-
-
+    const dispatch = useDispatch();
     const ongs = useSelector(state => state.ongsAndCategories.ongs);
-    const categories = useSelector(state => state.ongsAndCategories.categories)
+    const categories = useSelector(state => state.ongsAndCategories.categories);
+    const [errorPost, setErrorPost] = useState(false);
+    const [userId, setUserId] = useState('')
+    const { isAuthenticated } = useSelector(state => state.auth);
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token || !isAuthenticated) {
+            // Si no hay token o el estado no está autenticado, redirigir a login
+            navigate('/login');
+        } else {
+            const token = localStorage.getItem('token')
+            const decodedToken = jwtDecode(token);
+            setUserId(decodedToken)
+        }
+    }, [isAuthenticated, navigate])
+
 
     const { register, formState: { errors }, handleSubmit, reset, control } = useForm();
     const fecha = new Date().toLocaleDateString()
@@ -23,11 +41,9 @@ const Form = ({ setPost, post }) => {
     const options2 = ongs.map(ong => ({ value: ong.nombre, label: ong.nombre }));
 
     const fechaConvertida = partes[2] + '-' + partes[1] + '-' + partes[0];
-    console.log(fechaConvertida)
     const [imgFile, setImgFile] = useState(null);
     const [success, setSuccess] = useState(false);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+
 
 
     const onSubmit = async data => {
@@ -40,14 +56,20 @@ const Form = ({ setPost, post }) => {
             ...data,
             image: res,  //agregar la url de la imagen
             creationDate: fechaConvertida,
+            userID: userId.id,
         };
 
-        dispatch(createPost(updatedPost));
-        // Mostrar el éxito
-        navigate('/');
-        setTimeout(() => {
-            setSuccess(false);
-        }, [2000]);
+        dispatch(createPost(updatedPost)).then(() => {
+            navigate('/');
+            setErrorPost(false);
+            setTimeout(() => {
+                setSuccess(false);
+            }, [3000]);
+        }).catch((error) => {
+            setErrorPost(true);
+            console.log(error.response.data.message)
+        })
+
         setPost({
             ...post,
             title: '',
@@ -97,14 +119,14 @@ const Form = ({ setPost, post }) => {
 
     return (
         <div>
-
-            {success && <Swiper frase='Se ha enviado al panel exitosamente' color='#005692' />} {/* Si se publica correctamente mostrar el mensaje */}
+            {errorPost && (<p className='form__alert'>No se pudo crear la publicación</p>)} {/* Si no se publica correctamente mostrar el mensaje */}
+            {success && <Swiper frase='Se ha enviado al panel exitosamente' color='#005692' tipo='success' />} {/* Si se publica correctamente mostrar el mensaje */}
             <form action="" method='post' className='form' onSubmit={handleSubmit(onSubmit)} onChange={handleChange}>
                 <div className='form__field'>
                     <label htmlFor="title">Titulo</label>
-                    {errors?.title?.type === 'maxLength' && <p className='auth__error'>El titulo No debe tener más de 50 caracteres</p>}
-                    {errors?.title?.type === 'minLength' && <p className='auth__error'>El titulo debe tener al menos 5 caracteres</p>}
-                    {errors?.title?.type === 'required' && <p className='auth__error'>El titulo es obligatorio</p>}
+                    {errors?.title?.type === 'maxLength' && <p className='form__alert'>El titulo No debe tener más de 50 caracteres</p>}
+                    {errors?.title?.type === 'minLength' && <p className='form__alert'>El titulo debe tener al menos 5 caracteres</p>}
+                    {errors?.title?.type === 'required' && <p className='form__alert'>El titulo es obligatorio</p>}
                     <input type="text" id='title' placeholder='titulo'
                         {...register('title', { required: true, minLength: 5, maxLength: 50 })}
                     />
@@ -112,13 +134,13 @@ const Form = ({ setPost, post }) => {
                 {/* End form field */}
                 <div className='form__field'>
                     <label htmlFor="category">Categoria</label>
-                    {errors.category && <p className='auth__error'>La categoria es obligatoria</p>}
+                    {errors.category && <p className='form__alert'>La categoria es obligatoria</p>}
                     <Controller
                         name="category"
                         control={control}
                         rules={{ required: 'La categoria es obligatoria' }} // Reglas de validación con mensaje de error
                         render={({ field, fieldState: { error } }) => (
-                            console.log(error),
+                            //console.log(error),
                             <Select
                                 {...field}
                                 options={options}
@@ -135,9 +157,9 @@ const Form = ({ setPost, post }) => {
 
                 <div className='form__field'>
                     <label htmlFor="description">Descripcion</label>
-                    {errors?.description?.type === 'maxLength' && <p className='auth__error'>La descripcion No debe tener más de 1000 caracteres</p>}
-                    {errors?.description?.type === 'minLength' && <p className='auth__error'>La descripcion debe tener al menos 20 caracteres</p>}
-                    {errors?.description?.type === 'required' && <p className='auth__error'>La descripcion es obligatorio</p>}
+                    {errors?.description?.type === 'maxLength' && <p className='form__alert'>La descripcion No debe tener más de 1000 caracteres</p>}
+                    {errors?.description?.type === 'minLength' && <p className='form__alert'>La descripcion debe tener al menos 20 caracteres</p>}
+                    {errors?.description?.type === 'required' && <p className='form__alert'>La descripcion es obligatorio</p>}
                     <textarea id="description" cols="30" rows="10" placeholder='descripcion'
                         {...register('description', { required: true, minLength: 20, maxLength: 1000 })}
                     ></textarea>
@@ -145,9 +167,9 @@ const Form = ({ setPost, post }) => {
                 {/* End form field */}
                 <div className='form__field'>
                     <label htmlFor="startDate">Fecha de inicio </label>
-                    {errors?.startDate?.type === 'required' && <p className='auth__error'>La fecha de inicio es obligatorio</p>}
-                    {errors?.startDate?.type === 'min' && <p className='auth__error'>La fecha de inicio debe ser mayor a la fecha actual</p>}
-                    {errors?.startDate?.type === 'pattern' && <p className='auth__error'>Debe ser una fecha valida</p>}
+                    {errors?.startDate?.type === 'required' && <p className='form__alert'>La fecha de inicio es obligatorio</p>}
+                    {errors?.startDate?.type === 'min' && <p className='form__alert'>La fecha de inicio debe ser mayor a la fecha actual</p>}
+                    {errors?.startDate?.type === 'pattern' && <p className='form__alert'>Debe ser una fecha valida</p>}
 
                     <input type="date" id='startDate' placeholder='fecha'
                         defaultValue={fechaConvertida}
@@ -155,7 +177,7 @@ const Form = ({ setPost, post }) => {
                             required: true, min: fechaConvertida, pattern: {
                                 value: /^\d{4}-\d{2}-\d{2}$/,
                                 message: 'Debe ser una fecha valida',
-                                
+
                             }
                         })}
                     />
@@ -163,8 +185,8 @@ const Form = ({ setPost, post }) => {
                 {/* End form field */}
                 <div className='form__field'>
                     <label htmlFor="endDate">Fecha de fin </label>
-                    {errors?.endDate?.type === 'required' && <p className='auth__error'>La fecha de fin es obligatorio</p>}
-                    {errors?.endDate?.type === 'min' && <p className='auth__error'>La fecha de fin debe ser mayor a la fecha actual</p>}
+                    {errors?.endDate?.type === 'required' && <p className='form__alert'>La fecha de fin es obligatorio</p>}
+                    {errors?.endDate?.type === 'min' && <p className='form__alert'>La fecha de fin debe ser mayor a la fecha actual</p>}
                     <input type="date" id='endDate' placeholder='fecha'
                         {...register('endDate', {
                             required: true, min: fechaConvertida, pattern: {
@@ -188,10 +210,10 @@ const Form = ({ setPost, post }) => {
 
                 <div className='form__field'>
                     <label htmlFor="contact" >Contacto</label>
-                    {errors?.contact?.type === 'required' && <p className='auth__error'>El contacto es obligatorio</p>}
-                    {errors?.contact?.type === 'maxLength' && <p className='auth__error'>El contacto No debe tener más de 10 números</p>}
-                    {errors?.contact?.type === 'minLength' && <p className='auth__error'>El contacto debe tener al menos 5 números</p>}
-                    {errors?.contact?.type === 'pattern' && <p className='auth__error'>Debe ser un numero de telefono</p>}
+                    {errors?.contact?.type === 'required' && <p className='form__alert'>El contacto es obligatorio</p>}
+                    {errors?.contact?.type === 'maxLength' && <p className='form__alert'>El contacto No debe tener más de 10 números</p>}
+                    {errors?.contact?.type === 'minLength' && <p className='form__alert'>El contacto debe tener al menos 5 números</p>}
+                    {errors?.contact?.type === 'pattern' && <p className='form__alert'>Debe ser un numero de telefono</p>}
                     <input type='text' id='contact' placeholder='contacto'
                         {...register('contact', {
                             required: true, minLength: 5, maxLength: 10, pattern: {
@@ -203,14 +225,14 @@ const Form = ({ setPost, post }) => {
                 </div>
                 {/* End form field */}
                 <div className='form__field'>
-                <label htmlFor="organization">Organización</label>
-                {errors?.organization?.type === 'required' && <p className='auth__error'>La organización es obligatoria</p>}
-                <Controller
+                    <label htmlFor="organization">Organización</label>
+                    {errors?.organization?.type === 'required' && <p className='form__alert'>La organización es obligatoria</p>}
+                    <Controller
                         name="organization"
                         control={control}
                         rules={{ required: 'La organización es obligatoria' }} // Reglas de validación con mensaje de error
                         render={({ field, fieldState: { error } }) => (
-                            console.log(error),
+                           // console.log(error),
                             <Select
                                 {...field}
                                 options={options2}
@@ -225,9 +247,9 @@ const Form = ({ setPost, post }) => {
                 </div>
                 <div className='form__field'>
                     <label htmlFor="registrationLink">Enlace de para inscribirse </label>
-                    {errors?.registrationLink?.type === 'maxLength' && <p className='auth__error'>El enlace No debe tener más de 100 caracteres</p>}
-                    {errors?.registrationLink?.type === 'minLength' && <p className='auth__error'>El enlace debe tener al menos 5 caracteres</p>}
-                    {errors?.registrationLink?.type === 'pattern' && <p className='auth__error'>Debe ser un enlace valido</p>}
+                    {errors?.registrationLink?.type === 'maxLength' && <p className='form__alert'>El enlace No debe tener más de 100 caracteres</p>}
+                    {errors?.registrationLink?.type === 'minLength' && <p className='form__alert'>El enlace debe tener al menos 5 caracteres</p>}
+                    {errors?.registrationLink?.type === 'pattern' && <p className='form__alert'>Debe ser un enlace valido</p>}
                     <input type="text" id='registrationLink' placeholder='Enlace de para inscribirse'
                         {...register('registrationLink', {
                             required: false, minLength: 5, maxLength: 100, pattern: {
@@ -240,9 +262,9 @@ const Form = ({ setPost, post }) => {
                 </div>
                 <div className='form__field'>
                     <label htmlFor="url">Mas Informacion </label>
-                    {errors?.url?.type === 'maxLength' && <p className='auth__error'>El enlace No debe tener más de 100 caracteres</p>}
-                    {errors?.url?.type === 'minLength' && <p className='auth__error'>El enlace debe tener al menos 5 caracteres</p>}
-                    {errors?.url?.type === 'pattern' && <p className='auth__error'>Debe ser un enlace valido</p>}
+                    {errors?.url?.type === 'maxLength' && <p className='form__alert'>El enlace No debe tener más de 100 caracteres</p>}
+                    {errors?.url?.type === 'minLength' && <p className='form__alert'>El enlace debe tener al menos 5 caracteres</p>}
+                    {errors?.url?.type === 'pattern' && <p className='form__alert'>Debe ser un enlace valido</p>}
                     <input type="text" id='url' placeholder='url para mas informacion'
                         {...register('url', {
                             required: false, minLength: 5, maxLength: 100, pattern: {

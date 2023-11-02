@@ -44,7 +44,7 @@ const Login = () => {
     const loginWithGoogle = async (token) => {
         console.log(token.credential);
         try {
-            const {data}  = await axios.post('http://localhost:19789/authGoogle', token) 
+            const {data}  = await axios.post('http://localhost:19789/authGoogle', {idToken:token.credential}) 
             console.log(data);
         } catch (error) {
             console.log(error);

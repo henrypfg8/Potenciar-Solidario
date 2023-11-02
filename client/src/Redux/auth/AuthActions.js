@@ -27,7 +27,7 @@ const getProfile =  id => {
             return Promise.resolve(data);
         }
         catch (error) {
-            console.log(error);
+            console.log(error.response.data);
             dispatch({ type: types.ERROR_REGISTER, payload: error.response.data })
             return Promise.reject(error);
        
@@ -38,7 +38,7 @@ const loginUser = (email, password) => {
     return async dispatch => {
         try {
             const { data } = await axios.post('http://localhost:19789/login', { email, password });
-            console.log(data)
+
             dispatch({ type: types.LOGIN, payload: data });
             return Promise.resolve(data);
         }
@@ -50,18 +50,18 @@ const loginUser = (email, password) => {
     }
 };
 
-const loginWithGoogle = (idToken)=> {
+const  loginWithGoogleAction = (token)=> {
     return async dispatch => {
         try {
-            const { data } = await axios.post(`http://localhost:19789/authGoogle`, idToken);
-            console.log(data)
+            const { data } = await axios.post(`http://localhost:19789/authGoogle`, {idToken:token.credential});
+            // console.log(data)
             dispatch({ type: types.LOGIN_WITH_GOOGLE, payload: data });
-            // return Promise.resolve(data);
+            return Promise.resolve(data);
         }
         catch (error) {
             dispatch({ type: types.ERROR_LOGIN, payload: error.response.data.message })
             console.log(error.response.data);
-            // return Promise.reject(error);
+             return Promise.reject(error);
         }
     }
 
@@ -89,7 +89,7 @@ export {
     registerUser,
     getProfile,
     loginUser,
-    loginWithGoogle
+    loginWithGoogleAction
 
     // userAuthentificated
 }

@@ -23,6 +23,9 @@ const { authHandler } = require("../handlers/Authentication/authHandler.js"); //
 const {authGoogleHandler,} = require("../handlers/Authentication/authGoogleLoginHandler.js");
 const { searchPublication } = require("../handlers/searchPublicationH");
 const { applyFilters } = require('../handlers/Publication/applyFilters');
+const {createAnswerHandler} = require('../handlers/Aswer/CreateAnswer.js')
+const {UpdateAnswerHandler} = require('../handlers/Aswer/UpdateAnswer.js')
+const {getForoCategories} = require('../handlers/ForoCategories/handlerAllCategories.js')
 
 const router = Router();
 
@@ -35,6 +38,7 @@ router.get('/filters?', applyFilters)
 
 //router.get("/ongs/filter", handlerOngs);
 router.get("/categories", getAllCategories);
+router.get('/forumCategories', getForoCategories)
 
 //router.get("/categories/filter", handlerCategory);
 router.get("/ongs", handlerAllOngs);
@@ -63,5 +67,7 @@ router.get("/questions", getQuestion);
 router.get("/questions/:id", getQuestion);
 router.post("/question", createQuestionHandler);
 
+router.post("/answers",createAnswerHandler)
+router.put("/answers/:id",UpdateAnswerHandler)
 router.post("/authGoogle", authGoogleHandler);
 module.exports = router;

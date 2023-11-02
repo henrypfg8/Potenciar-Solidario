@@ -1,11 +1,13 @@
 import {
 GET_CATEGORIES,
-GET_ONGS
+GET_ONGS,
+GET_FORUM_CATEGORIES
 } from "../action-types";
 
 const initialState = {
     categories: [],
     ongs: [],
+    forumCategories: [],
 };
 
 const ongsAndCategoriesReducer = (state = initialState, action) => {
@@ -20,7 +22,14 @@ const ongsAndCategoriesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ongs: action.payload,
-            };    
+            };
+            
+        case GET_FORUM_CATEGORIES:
+            return {
+                ...state,
+                forumCategories: action.payload,
+            }    
+            
         default:
             return {...state};    
     }

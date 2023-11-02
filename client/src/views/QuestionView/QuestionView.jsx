@@ -2,6 +2,7 @@
 import style from './QuestionDetail.module.css'
 import data from '../../assets/data'
 import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FlechaAbajoIcon } from '../../assets/FlechaParaAbajoIcon';
 import { FlechaParaArriba } from '../../assets/FlechaParaArribaIcon';
 import io from 'socket.io-client'
@@ -11,8 +12,7 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
     const { usuariosRespuestas } = data;
 
     const [view, setView] = useState({});
-    const [message, setMessage] = useState('')
-    const [messages, setMessages] = useState([])
+    const [chat, setChat] = useState('')
 
     const handleChange = (event) => {
         event.preventDefault()
@@ -37,6 +37,12 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
         })
         )
     }
+    useEffect(()=>{
+        socket.on('message', message => {
+
+            console.log(message);
+        });
+    },[])
 
 
     return (

@@ -1,51 +1,63 @@
 import { useForm } from 'react-hook-form'
 import './auth.css';
 import { GoogleLogin} from '@react-oauth/google'
-import { getProfile } from '../../Redux/auth/AuthActions';
-import { jwtDecode } from 'jwt-decode';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../../Redux/auth/AuthActions';
-import { useEffect } from 'react';
-// import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Login = () => {
 
   
-    //const {userProfile}= useSelector(state => state.auth)
+    const {isAuthenticated} = useSelector(state => state.auth)
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-   const dispatch = useDispatch();
-   const {user, userProfile} = useSelector(state => state.auth);
+    const [errorLogin, setErrorLogin] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate(); 
 
-    // useEffect(() => {
-    //     if(user){
-    //         dispatch(getProfile(user.id))
-    //     }
+  const token = localStorage.getItem('token');
+    useEffect(() => {
+        if (isAuthenticated || token) {
+            navigate('/')
+        }
 
+    }, [isAuthenticated])
 
-    // }, [user, dispatch])
-    // if(userProfile){
-    //     console.log(userProfile);
-    // }
-    //sale objeto vacio
     const onSubmit = user => {
          //datos del formulario
-        dispatch(loginUser(user.email, user.password))
         //Hacer el dispatch de la acción para iniciar sesión
-
+        dispatch(loginUser(user.email, user.password)).then(() => {
+            navigate('/');
+            setErrorLogin(false);
+        })
+        .catch((error) => {
+            console.log(error.response.data.message);
+            setErrorLogin(true);
+        })
+   
         // Limpiar el formulario
         reset();
     }
    
 
-    const loginWithGoogle = async (email) => {
-        console.log(email);
+    const loginWithGoogle = async (token) => {
+        console.log(token.credential);
+        try {
+            const {data}  = await axios.post('http://localhost:19789/authGoogle', token) 
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+     
     }
       
     return (
         <div className='auth__container' >
             <form action="" method='post' onSubmit={handleSubmit(onSubmit)} className='auth__form' autoCorrect='off'>
                 {/* campo para el email */}
+                <h1 className='auth__title'>Iniciar Sesión</h1>
+               {errorLogin && <p className='auth__error'>Correo o contraseña incorrectos</p>}
                 <div>
                     <label className='auth__label' htmlFor="email">correo</label>
                     {errors.email && <p className='auth__error'>Debe ser un correo valido</p>}
@@ -74,10 +86,8 @@ const Login = () => {
                     <p>¿No tienes Cuenta? <a href="/register">Crear Cuenta</a></p>
                     <div className='auth__google'>
                         <GoogleLogin
-                            onSuccess={credentialResponse => {
-                                console.log(credentialResponse)
-                                const user = jwtDecode(credentialResponse.credential)
-                                loginWithGoogle(user.email)
+                            onSuccess={async  credentialResponse => {
+                                loginWithGoogle(credentialResponse)
                             }}
                             
                             onError={(error) => {

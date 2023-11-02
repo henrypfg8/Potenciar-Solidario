@@ -98,3 +98,8 @@
     width: 30px;
     cursor: pointer;
 }
+.auth__sucesss{
+    color : var(--blue_color);
+    font-weight: bold;
+    text-align: center;
+}

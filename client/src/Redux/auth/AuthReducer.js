@@ -1,14 +1,19 @@
+
 import { types } from "./types";
+
+const token = localStorage.getItem('token');    
 
 const initialState = {
     user:{},
     userProfile: {},
-    token: localStorage.getItem('token'),
-    isAuthenticated: false,
+    token:token,
+    isAuthenticated: !!token,
     isAdmin : false,
     loading: true,
-    errorRegister: null
+    errorRegister: null,
+    errorLogin: null,
 }
+
 
 const authReducer = (state = initialState, action) => {
     switch(action.type){
@@ -19,10 +24,10 @@ const authReducer = (state = initialState, action) => {
                 user: action.payload,
             }
         case types.LOGIN:
-            localStorage.setItem('token', action.payload.token);
+          localStorage.setItem('token', JSON.stringify(action.payload.jwt));
             return {
                 ...state,
-                userProfile: action.payload,
+                token: action.payload.jwt,
                 isAuthenticated: true,
                 // isAdmin: action.payload.user.isAdmin,
                 loading: false,
@@ -37,7 +42,14 @@ const authReducer = (state = initialState, action) => {
                 isAdmin: false,
                 loading: false,
             } 
-
+        case types.LOGIN_WITH_GOOGLE:
+            localStorage.setItem('token', JSON.stringify(action.payload.jwt));
+            return {
+                ...state,
+                token: action.payload.jwt,
+                isAuthenticated: true,
+                loading: false,
+            }
         case types.GET_PROFILE:
             return {
                 ...state,
@@ -48,10 +60,17 @@ const authReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     errorRegister: action.payload,
-                }         
+                } 
+             
+        case types.ERROR_LOGIN:
+                return {
+                    ...state,
+                    errorLogin: action.payload,
+                }
          default : {
                 return {...state};
-         }         
+         }
+
     }
 };
 

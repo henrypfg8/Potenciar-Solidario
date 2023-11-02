@@ -31,6 +31,7 @@
             font-size: 1.5em;
             background-color: var(--lightblue);
             transition: border, color, background-color 0.2s;
+            border: solid #526387 2px;
         }
             
         .button:hover {
@@ -47,6 +48,8 @@
             display: flex;
             justify-content: space-between;
         }
+            .dateInput {
+            }
 
 
 #active {

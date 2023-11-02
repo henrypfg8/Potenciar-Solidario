@@ -11,14 +11,13 @@ require("./db.js");
 const server = express();
 server.name = "API";
 const httpServer = createServer(server);
-const io = new Server(httpServer, {
-  /* options */
-});
+const io = new Server(httpServer);
 
 io.on("connection", (socket) => {
   console.log("Un usuario se conecto por WebSockets");
-  socket.on("custom-event", (data) => {
+  socket.on("message", (data) => {
     console.log("Evento recibido:", data);
+    socket.broadcast.emit('message', data)
     // Manejar el evento de websocket
   });
 });

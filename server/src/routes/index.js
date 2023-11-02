@@ -43,6 +43,7 @@ const { handlerAllOngs } = require("../handlers/Organization/getAllOngs");
 const {FilterByDate} = require("../handlers/Publication/FilterByDateHandler.js");
 const { searchPublication } = require("../handlers/searchPublicationH");
 const { applyFilters } = require('../handlers/Publication/applyFilters');
+const { applyFiltersToQuestions } = require("../handlers/Question/applyFiltersToQuestions"); 
 
 
 const router = Router();
@@ -87,6 +88,7 @@ router.delete("/questions/:id", DeleteQuestionHandler);
 router.get("/questions", getQuestion);
 router.get("/questions/:id", getQuestion);
 router.post("/questions", createQuestionHandler);
+router.post("/questions?", applyFiltersToQuestions);
 
 //Rutas de RESPUESTAS.
 router.get("/answers", GetAnswerH)

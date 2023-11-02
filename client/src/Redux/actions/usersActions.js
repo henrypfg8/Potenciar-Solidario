@@ -60,7 +60,7 @@ import axios from "axios";
     export const updateUser = (id, updatedUserData) => {
         return async function (dispatch) {
             try {
-                const response = await axios.put(`http://localhost:19789/users/${id}`);
+                const response = await axios.put(`http://localhost:19789/users/${id}`, updatedUserData);
                 dispatch({type: UPDATE_USER, payload: response.data})
             } catch (error) {
                 console.log(error, "por favor contactar a soporte por este error");

@@ -5,6 +5,7 @@ GET_QUESTIONS,
 GET_QUESTION_DETAIL,
 CLEAR_QUESTION_DETAIL,
 UPDATE_QUESTION,
+GET_QUESTIONS_FILTERED,
 } from "../action-types";
 
 const initialState = {
@@ -56,7 +57,13 @@ const questionReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     questions: updatedQuestions,
-                }    
+                };
+         
+        case GET_QUESTIONS_FILTERED:
+            return {
+                ...state,
+                questions: action.payload,
+            }       
             
             default:
                 return {...state};

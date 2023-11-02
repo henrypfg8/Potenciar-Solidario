@@ -4,16 +4,16 @@ DELETE_QUESTION,
 GET_QUESTIONS,
 GET_QUESTION_DETAIL,
 CLEAR_QUESTION_DETAIL,
-UPDATE_QUESTION
+UPDATE_QUESTION,
+GET_QUESTIONS_FILTERED,
 } from "../action-types";
 
 import axios from "axios";
 
 export const createQuestion = (question) => {
-    console.log(question);
     return async function (dispatch) {
         try {
-            const response = await axios.post("http://localhost:19789/question", question);
+            const response = await axios.post("http://localhost:19789/questions", question);
             dispatch({type: CREATE_QUESTION, payload: response.data});
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error")
@@ -61,10 +61,22 @@ export const clearQuestionDetail = () => {
 export const updateQuestion = (id, updatedQuestionData) => {
     return async function (dispatch) {
         try {
-            const response = await axios.put(`http://localhost:19789/questions/${id}`)
+            const response = await axios.put(`http://localhost:19789/questions/${id}`, updatedQuestionData)
             dispatch({type: UPDATE_QUESTION, payload: response.data});
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error")
+        }
+    }
+}
+
+export const getQuestionsFiltered = (filters) => {
+    const { category, fromDate, untilDate } = filters;
+    return async function (dispatch) {
+        try {
+            const {data} = await axios.get("");
+            dispatch({type: GET_QUESTIONS_FILTERED, payload: data})
+        } catch (error) {
+            console.log(error, "por favor contactar a soporte por este error");
         }
     }
 }

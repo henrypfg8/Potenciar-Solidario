@@ -2,7 +2,6 @@
 import style from './QuestionDetail.module.css'
 import data from '../../assets/data'
 import { useEffect, useState } from 'react';
-import { useEffect, useState } from 'react';
 import { FlechaAbajoIcon } from '../../assets/FlechaParaAbajoIcon';
 import { FlechaParaArriba } from '../../assets/FlechaParaArribaIcon';
 import io from 'socket.io-client'
@@ -12,11 +11,11 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
     const { usuariosRespuestas } = data;
 
     const [view, setView] = useState({});
-    const [chat, setChat] = useState('')
+    const [messages, setMessages] = useState('')
 
     const handleChange = (event) => {
         event.preventDefault()
-        setMessage(event.target.value)
+        setMessages(event.target.value)
     }
     const handleSubmit = (message) => {
         socket.emit('message', message)
@@ -95,7 +94,7 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
                             {view[index] && <div className={style.comment}>
                             <p>Comentar</p>
                                 <textarea type="text" cols="6" rows="5" onChange={()=>handleChange(event)} />
-                                <button onClick={()=> handleSubmit(message)}>Añadir comentario</button>
+                                <button onClick={()=> handleSubmit(messages)}>Añadir comentario</button>
                             </div>}
                         </div>
                     )

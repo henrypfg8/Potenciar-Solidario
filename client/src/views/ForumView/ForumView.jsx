@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Open } from '../../assets/iconsForoHome';
 import LeftBar from '../../components/LeftBar/LeftBar';
-import SearchBar from '../../components/SearchBar/SearchBar';
 import style from './Foro.module.css';
 import { NavLink } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
-function ForumView({ datos }) {
+function ForumView({questions}) {
 
 
     return (
@@ -18,27 +17,27 @@ function ForumView({ datos }) {
                     <h1>Foro general</h1>
                     <div className={style.div}>
 
-                        {datos && datos?.map(dato => {
+                        {questions && questions?.map( question=> {
                             return (
-                                <div key={dato.id} className={style.contain}>
+                                <div key={question.id} className={style.contain}>
 
                                     <div className={style.center}>
-                                        <NavLink to={`/foro/${dato.preguntas.id}`}>
-                                            <h1>{dato.preguntas.titulo}</h1>
-                                        </NavLink>
-                                        <h4>@{dato.username}</h4>
-                                        <p>{dato.preguntas.descripcion}</p>
+                                        {/* <NavLink to={`/foro/${question.id}`}> */}
+                                            <h1>{question.title}</h1>
+                                        {/* </NavLink> */}
+                                        {/* <h4>@{question.username}</h4> */}
+                                        <p>{question.text}</p>
                                         <div
                                             className={style.anwers}>
 
-                                            {dato.preguntas.respuestas.length === 1 && <p><strong>{dato.preguntas.respuestas.length}</strong> respuesta</p>}
-                                            {dato.preguntas.respuestas.length > 1 && <p><strong>{dato.preguntas.respuestas.length}</strong> respuestas</p>}
+                                            {question.Answers.length === 1 && <p><strong>{question.Answers.length}</strong> respuesta</p>}
+                                            {question.Answers.length > 1 && <p><strong>{question.Answers.length}</strong> respuestas</p>}
                                         </div>
                                     </div>
-                                    <NavLink to={`/foro/${dato.preguntas.id}`}>
+                                    {/* <NavLink to={`/foro/${question.id}`}> */}
 
                                     <button>Ver más<Open /></button>
-                                    </NavLink>
+                                    {/* </NavLink> */}
                                 </div>
                             )
                         })}

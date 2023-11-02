@@ -13,7 +13,7 @@ export const createQuestion = (question) => {
     console.log(question);
     return async function (dispatch) {
         try {
-            const response = await axios.post("http://localhost:19789/questions", question);
+            const response = await axios.post("http://localhost:19789/question", question);
             dispatch({type: CREATE_QUESTION, payload: response.data});
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error")

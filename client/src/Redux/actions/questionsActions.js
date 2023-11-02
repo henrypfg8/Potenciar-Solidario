@@ -73,7 +73,7 @@ export const getQuestionsFiltered = (filters) => {
     const { category, fromDate, untilDate } = filters;
     return async function (dispatch) {
         try {
-            const {data} = await axios.get("");
+            const {data} = await axios.get(`http://localhost:19789/questions?category=${category}&fromDate=${fromDate}&untilDate=${untilDate}`);
             dispatch({type: GET_QUESTIONS_FILTERED, payload: data})
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error");

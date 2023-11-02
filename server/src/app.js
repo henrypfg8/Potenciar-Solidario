@@ -15,9 +15,12 @@ const io = new Server(httpServer);
 
 io.on("connection", (socket) => {
   console.log("Un usuario se conecto por WebSockets");
-  socket.on("message", (data) => {
-    console.log("Evento recibido:", data);
-    socket.broadcast.emit('message', data)
+  socket.on("message", (body) => {
+    console.log("Evento recibido:", body);
+    socket.broadcast.emit('message', {
+      body,
+      from: socket.id.slice(6)
+    })
     // Manejar el evento de websocket
   });
 });

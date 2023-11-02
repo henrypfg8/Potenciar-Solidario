@@ -16,7 +16,7 @@ const Form = ({ setPost, post }) => {
     const categories = useSelector(state => state.ongsAndCategories.categories);
     const [errorPost, setErrorPost] = useState(false);
     const [userId, setUserId] = useState('')
-    const { isAuthenticated } = useSelector(state => state.auth);
+    const { isAuthenticated, userProfile } = useSelector(state => state.auth);
     const navigate = useNavigate();
 
 
@@ -50,11 +50,11 @@ const Form = ({ setPost, post }) => {
 
 
         setSuccess(true);
-        const res = await uploadImageCloudinary(imgFile);
+        const urlImage = await uploadImageCloudinary(imgFile);
 
         const updatedPost = {
             ...data,
-            image: res,  //agregar la url de la imagen
+            image: urlImage,  //agregar la url de la imagen
             creationDate: fechaConvertida,
             userID: userId.id,
         };

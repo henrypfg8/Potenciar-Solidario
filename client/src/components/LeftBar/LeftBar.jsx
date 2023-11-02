@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 //
 import Select from "react-select";
 //
-import { getPostsFiltered } from '../../Redux/actions/postsActions';
+import { getPostsFiltered, setPostsFilters } from '../../Redux/actions/postsActions';
 
 export default function LeftBar() {
   const { pathname } = useLocation();
@@ -14,12 +14,15 @@ export default function LeftBar() {
 
   const ongs = useSelector((state) => state.ongsAndCategories.ongs);
   const categories = useSelector((state) => state.ongsAndCategories.categories);
-  const [ filters, setFilters ] = useState({
+
+  const filters = useSelector(state => state.posts.postsFilters);
+  const [ filtersLOCAL, setFiltersLOCAL ] = useState({
     category: '',
     ong: '',
     fromDate: '',
     untilDate: ''
   });
+  
 
   const handleFilters = (e) => {
     const { name, value } = e;
@@ -28,18 +31,20 @@ export default function LeftBar() {
 
     dispatch(getPostsFiltered(filtersCOPY));
 
-    setFilters(filtersCOPY);
+    dispatch(setPostsFilters(filtersCOPY));
+
+    setFiltersLOCAL(filtersCOPY)
   }
   const handleDateFilters = (e) => {
     const { name, value } = e.target;
     const filtersCOPY = {...filters};
-    
     filtersCOPY[name] = value;
 
     if (value > '2023-01-01') dispatch(getPostsFiltered(filtersCOPY))
 
-    setFilters(filtersCOPY);
+    dispatch(setPostsFilters(filtersCOPY));
     
+    setFiltersLOCAL(filtersCOPY)
   }
  
   const categoryOptions = categories.map((cat) => ({
@@ -66,6 +71,7 @@ export default function LeftBar() {
     name: 'ong'
   });
 
+ 
 
   //////////////////////////////////////////////////////
 
@@ -129,7 +135,7 @@ export default function LeftBar() {
             <input
               type="date"
               name="fromDate"
-              value={filters.fromDate}
+              value={filtersLOCAL.fromDate}
               onChange={handleDateFilters}
               className={Styles.dateInput}
             ></input>
@@ -140,7 +146,7 @@ export default function LeftBar() {
             <input
               type="date"
               name="untilDate"
-              value={filters.untilDate}
+              value={filtersLOCAL.untilDate}
               onChange={handleDateFilters}
               className={Styles.dateInput}
             ></input>

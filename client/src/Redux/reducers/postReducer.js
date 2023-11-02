@@ -8,14 +8,21 @@ import {
   UPDATE_POST_LIKES,
   GET_POSTS_BY_CATEGORIES,
   GET_POSTS_BY_ONGS,
-  SEARCH_POST,
+  SEARCH_POSTS,
 
-  GET_POSTS_FILTERED
+  GET_POSTS_FILTERED,
+  SET_POSTS_FILTERS
 } from "../action-types";
 
 const initialState = {
   posts: [],
-  allPosts: [],
+  postsFilters: {
+    category: '',
+    ong: '',
+    fromDate: '',
+    untilDate: ''
+  },
+  // allPosts: [],
   postDetail: [],
 
 };
@@ -74,7 +81,7 @@ const postReducer = (state = initialState, action) => {
         ...state,
         postsByOngs: action.payload,
       };
-    case SEARCH_POST:
+    case SEARCH_POSTS:
       return {
         ...state,
         posts: action.payload
@@ -84,6 +91,12 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         posts: action.payload
+      }
+
+    case SET_POSTS_FILTERS:
+      return {
+        ...state,
+        postsFilters: action.payload
       }
 
     case UPDATE_POST_LIKES:

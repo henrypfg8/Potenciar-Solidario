@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import data from "../../assets/data";
+import { useEffect } from "react";
 import ForumView from '../../views/ForumView/ForumView';
+import { useDispatch, useSelector } from "react-redux";
+import { getQuestions } from "../../Redux/actions/questionsActions";
 
 function Forum(){
-    const { usuarios } = data;
-    const [datos, setDatos] = useState([]);
-
+    const questions = useSelector(state => state.questions.questions)
+    const dispatch = useDispatch()
     useEffect(() => {
-        setDatos(usuarios)
-    }, [usuarios])
+        dispatch(getQuestions())
+    }, [])
 
-    return <ForumView datos={datos} />
+    return <ForumView questions={questions} />
 }
 
 export default Forum;

@@ -13,8 +13,8 @@ if(!input.text){
 if(input.text.length < 10){
     errores.text = 'La descripcion debe de ser minimo 10 caracteres'
 }
-if(!input.categories){
-    errores.categories = 'Debe de seleccionar una categoria'
+if(!input.categoryId){
+    errores.categoryId = 'Debe de seleccionar una categoria'
 }
 return errores;
 }

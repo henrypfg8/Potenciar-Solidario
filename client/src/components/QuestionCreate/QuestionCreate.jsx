@@ -10,7 +10,11 @@ export function useQuestionCreate() {
     const dispatch = useDispatch()
     const categories = useSelector(state => state.ongsAndCategories.categories)
     const categoryOptions = [{ label: "Selecciona una categoría", value: false }, ...categories.map(cat => ({ label: cat.name, value: cat.id }))];
+    const {user, userProfile} = useSelector(state => state.auth);
 
+  
+
+   console.log(userProfile);
     useEffect(() => {
         dispatch(getCategories())
     }, [])
@@ -18,12 +22,13 @@ export function useQuestionCreate() {
     const [errores, setErrores] = useState({
         title: '',
         text: '',
-        categories: ''
+        categoryId: ''
     })
     const [question, setQuetions] = useState({
         title: '',
         text: '',
-        categories: ''
+        categoryId: '',
+        userId: userProfile.id
     })
     const [disableButton, setDisableButton] = useState(false)
     const [firstSubmit, setFirstSubmit] = useState(false)
@@ -43,23 +48,24 @@ export function useQuestionCreate() {
     const handleCategoryChange = (selectedOption) => {
         setQuetions({
             ...question,
-            categories: selectedOption.value
+            categoryId: selectedOption.value
         })
         if (firstSubmit) {
             setErrores(validationQuestion({
                 ...question,
-                categories: selectedOption.value
+                categoryId: selectedOption.value
             }))
         }
     }
     const colourStyles = {
         control: styles => ({
             ...styles,
-            borderColor: errores.categories || errores.categories === null ? 'red' : 'rgb(73, 255, 73)',
-            boxShadow: errores.categories || errores.categories === null ? '0 0 0 1px red' : '0 0 0 1px rgb(73, 255, 73)',
+            borderColor: errores.categoryId || errores.categoryId === null ? 'red' : 'rgb(73, 255, 73)',
+            boxShadow: errores.categoryId || errores.categoryId === null ? '0 0 0 1px red' : '0 0 0 1px rgb(73, 255, 73)',
         }),
     };
     const submitQuestion = async (event) => {
+        console.log(question);
         event.preventDefault()
         setDisableButton(true)
         setFirstSubmit(true)
@@ -76,6 +82,7 @@ export function useQuestionCreate() {
                 })
             } else {
                 const created = await dispatch(createQuestion(question))
+                console.log(created);
                 setTimeout(() => {
                     if (created) {
                         Swal.fire({

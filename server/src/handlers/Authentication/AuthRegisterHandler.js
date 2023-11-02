@@ -1,5 +1,6 @@
 const { User } = require("../../db.js");
 const bcrypt = require("bcryptjs");
+const { emailSender } = require("../emailNotif/emailRegisterHandler.js");
 
 const authRegisterHandler = async (req, res) => {
     const {
@@ -41,6 +42,8 @@ const authRegisterHandler = async (req, res) => {
             organization,
             password: hashPassword,
         });
+
+        emailSender(user)
 
         const userWithoutPassword = JSON.parse(JSON.stringify(user));
         delete userWithoutPassword.password;

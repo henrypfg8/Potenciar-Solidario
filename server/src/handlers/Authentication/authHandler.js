@@ -24,7 +24,7 @@ const authHandler = async (req, res, next) => {
 
     try { //valido token con clave privada almacenada en enviroment
         let decodenToken = await jwt.verify(token, process.env.JWT_PRIVATE_KEY);
-        //console.log(decodenToken)
+        //console.log(decodenToken.id)
         req.userId = decodenToken.id;
         if (decodenToken) {
             console.log("token valido");

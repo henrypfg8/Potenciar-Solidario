@@ -25,6 +25,7 @@ export function useQuestionCreate() {
         text: '',
         categories: ''
     })
+    const [disableButton, setDisableButton] = useState(false)
     const [firstSubmit, setFirstSubmit] = useState(false)
     
     const handleChange = (event) => {
@@ -33,7 +34,6 @@ export function useQuestionCreate() {
             [event.target.name]: event.target.value
         })
         if (firstSubmit) {
-            setFirstSubmit(true)
             setErrores(validationQuestion({
                 ...question,
                 [event.target.name]: event.target.value
@@ -41,7 +41,6 @@ export function useQuestionCreate() {
         }
     }
     const handleCategoryChange = (selectedOption) => {
-        setFirstSubmit(true)
         setQuetions({
             ...question,
             categories: selectedOption.value
@@ -62,6 +61,7 @@ export function useQuestionCreate() {
     };
     const submitQuestion = async (event) => {
         event.preventDefault()
+        setDisableButton(true)
         setFirstSubmit(true)
         const errores = validationQuestion(question);
         setErrores(errores);
@@ -71,25 +71,35 @@ export function useQuestionCreate() {
                     icon: 'error',
                     title: 'Intente de nuevo',
                     text: 'Debe rellenar todos los campos!',
+                }).then(() => {
+                    setDisableButton(false) // Reactiva el botón después de cerrar la alerta
                 })
             } else {
                 const created = await dispatch(createQuestion(question))
-                if (created) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Pregunta creada con exito',
-                    })
-                }else{
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error 404',
-                        text: 'Intente nuevamente o contacte a soporte!',
-                    })
-
-                }
-            }} catch (error) {
-            throw new Error(error.message)}
+                setTimeout(() => {
+                    if (created) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Pregunta creada con exito',
+                        }).then(() => {
+                            setDisableButton(false) // Reactiva el botón después de cerrar la alerta
+                        })
+                    }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error 404',
+                            text: 'Intente nuevamente o contacte a soporte!',
+                        }).then(() => {
+                            setDisableButton(false) // Reactiva el botón después de cerrar la alerta
+                        })
+                    }
+                }, 1000);
+            }
+        } catch (error) {
+            throw new Error(error.message)
+        }
     }
+    
 
-    return { firstSubmit, question,categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion };
+    return { disableButton,firstSubmit, question,categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion };
 }

@@ -7,6 +7,8 @@ UPDATE_POST,
 SEARCH_POST,
 CLEAR_POST_DETAIL,
 GET_POSTS_BY_DATE,
+GET_POSTS_BY_CATEGORIES,
+GET_POSTS_BY_ONGS,
 } from "../action-types"
     
 import axios from "axios";
@@ -84,6 +86,28 @@ import axios from "axios";
             try {
                 const response = await axios.get("http://localhost:19789/filterByDate", initialDate, finalDate);
                 dispatch({type: GET_POSTS_BY_DATE, payload: response.data});
+            } catch (error) {
+                console.log(error, "por favor contactar a soporte por este error")
+            }
+        }
+    }
+
+    export const getPostsByCategories = (query) => {
+        return async function (dispatch) {
+            try {
+                const response = await axios.get(`http://localhost:19789/categories/filter?category=${query}`);
+                dispatch({type: GET_POSTS_BY_CATEGORIES, payload: response.data});
+            } catch (error) {
+                console.log(error, "por favor contactar a soporte por este error")
+            }
+        }
+    }
+
+    export const getPostsByOngs = (query) => {
+        return async function (dispatch) {
+            try {
+                const response = await axios.get(`http://localhost:19789/ongs/filter?ongs=${query}`);
+                dispatch({type: GET_POSTS_BY_ONGS, payload: response.data});
             } catch (error) {
                 console.log(error, "por favor contactar a soporte por este error")
             }

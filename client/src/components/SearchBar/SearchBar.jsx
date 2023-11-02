@@ -15,13 +15,8 @@ export default function SearchBar() {
 
   function changeHandler({ target: { value } }) {
     if (value === "") dispatch(getPostsFiltered(filters));
-    else {
-      if (posts.length === 0) {
-        axios.get("http://localhost:19789/posts")
-        .then(({ data }) => dispatch(searchPosts(data, value.trim())));
-      }
-      else dispatch(searchPosts(posts, value.trim()))
-    }
+    else axios.get('http://localhost:19789/posts').then(({ data }) => dispatch(searchPosts(data, value)))
+    
   }
 
   return (

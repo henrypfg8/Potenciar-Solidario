@@ -44,6 +44,7 @@
 
     .Post__category {
         position: absolute;
+        font-weight: bolder;
         right: 1%;
         top: 3px;
         color: rgb(225, 225, 225);

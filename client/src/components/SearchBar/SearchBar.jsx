@@ -1,16 +1,18 @@
 import Styles from "./searchBar.module.css";
 //
-import { useDispatch } from 'react-redux';
-import { searchPost, getPosts } from '../../Redux/actions/postsActions';
-
+import { useDispatch, useSelector } from "react-redux";
+import { searchPosts, getPostsFiltered } from "../../Redux/actions/postsActions";
 
 export default function SearchBar() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts.posts);
+  const filters = useSelector(state => state.posts.postsFilters);
+   
 
-    function changeHandler ({ target: { value } }) {
-        if (value !== '') dispatch(searchPost(value));
-        else dispatch(getPosts())
-    }
+  function changeHandler({ target: { value } }) {
+    if (value === '') dispatch(getPostsFiltered(filters));
+    else dispatch(searchPosts(posts, value));
+  }
 
   return (
     <div className={Styles["SearchBar"]}>

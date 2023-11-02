@@ -20,7 +20,7 @@ const applyFilters = async (req, res) => {
     }
 
     if (untilDate !== "") {
-      allPosts = allPosts.filter((post) => post.endDate <= untilDate);
+      allPosts = allPosts.filter((post) => post.startDate <= untilDate);
     }
 
     res.status(200).json(allPosts);

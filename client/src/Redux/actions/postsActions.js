@@ -4,15 +4,17 @@ import {
   GET_POSTS,
   GET_POST_DETAIL,
   UPDATE_POST,
-  SEARCH_POST,
+  SEARCH_POSTS,
   CLEAR_POST_DETAIL,
-//   GET_POSTS_BY_DATE,
-//   GET_POSTS_BY_CATEGORIES,
-//   GET_POSTS_BY_ONGS,
+  //   GET_POSTS_BY_DATE,
+  //   GET_POSTS_BY_CATEGORIES,
+  //   GET_POSTS_BY_ONGS,
   GET_POSTS_FILTERED,
+  SET_POSTS_FILTERS,
 } from "../action-types";
 
 import axios from "axios";
+import unorm from 'unorm';
 
 export const createPost = (post) => {
   return async function (dispatch) {
@@ -70,16 +72,33 @@ export const updatePost = (id, updatePostData) => {
   };
 };
 
-export const searchPost = (query) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.get(
-        `http://localhost:19789/posts/busqueda?busqueda=${query}`
-      );
-      dispatch({ type: SEARCH_POST, payload: response.data });
-    } catch (error) {
-      console.log(error, "por favor contactar a soporte por este error");
-    }
+export const searchPosts = (posts, searchValue) => {
+  //
+  const searchPublications = (string, subString) => {
+    const normalizedString = unorm.nfkd(string).replace(/[\u0300-\u036F]/g, "");
+    const normalizedSubString = unorm.nfkd(subString).replace(/[\u0300-\u036F]/g, "");
+
+    const regExp = new RegExp(normalizedSubString, "i");
+    const coincidence = normalizedString.match(regExp);
+
+    if (coincidence) return true;
+    else return false;
+  };
+  //
+
+  const searchedPosts = posts.filter(({ title, description, category }) => {
+    if (
+      searchPublications(title, searchValue) ||
+      searchPublications(description, searchValue) ||
+      searchPublications(category, searchValue)
+    ) return true;
+
+    else return false;
+  });
+
+  return {
+    type: SEARCH_POSTS,
+    payload: searchedPosts,
   };
 };
 
@@ -142,5 +161,12 @@ export const getPostsFiltered = (filters) => {
     } catch (error) {
       console.log(error);
     }
+  };
+};
+
+export const setPostsFilters = (postsFilters) => {
+  return {
+    type: SET_POSTS_FILTERS,
+    payload: postsFilters,
   };
 };

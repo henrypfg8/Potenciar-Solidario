@@ -9,7 +9,6 @@ import {
   GET_POSTS_BY_CATEGORIES,
   GET_POSTS_BY_ONGS,
   SEARCH_POSTS,
-
   GET_POSTS_FILTERED,
   SET_POSTS_FILTERS
 } from "../action-types";

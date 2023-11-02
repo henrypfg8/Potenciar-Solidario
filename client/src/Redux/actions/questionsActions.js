@@ -10,7 +10,6 @@ UPDATE_QUESTION
 import axios from "axios";
 
 export const createQuestion = (question) => {
-    console.log(question);
     return async function (dispatch) {
         try {
             const response = await axios.post("http://localhost:19789/question", question);

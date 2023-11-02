@@ -34,7 +34,20 @@ const answerReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     answers: updatedAnswers,
-                }    
+                } 
+                
+        case DELETE_ANSWER:
+            return {
+                ...state,
+                answers: state.answers.filter(
+                    (answer) => answer.id !== action.payload
+                ),
+            };
+            
+        default:
+            return {...state};
 
     }
 }
+
+export default answerReducer;

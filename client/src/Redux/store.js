@@ -8,6 +8,7 @@ import authReducer from "./auth/AuthReducer";
 import thunk from "redux-thunk";
 import {persistReducer, persistStore} from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
+import answerReducer from "./reducers/answersReducer";
 
 const persistConfig = {
   key : 'root',
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   posts: postReducer,
   questions: questionReducer,
   ongsAndCategories: ongsAndCategoriesReducer,
+  answers: answerReducer,
 
   auth: authReducer,
 });

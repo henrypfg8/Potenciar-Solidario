@@ -71,6 +71,9 @@ export default function LeftBar() {
     name: 'ong'
   });
 
+  useEffect(() => {
+    setFiltersLOCAL(filters);
+  }, [filters])
  
 
   //////////////////////////////////////////////////////

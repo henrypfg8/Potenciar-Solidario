@@ -1,1 +1,0 @@
-const { Question } = require("../../db")

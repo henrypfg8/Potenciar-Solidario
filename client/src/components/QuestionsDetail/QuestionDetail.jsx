@@ -1,17 +1,23 @@
 import { useParams } from "react-router-dom";
-import data from '../../assets/data'
 import QuestionView from "../../views/QuestionView/QuestionView";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getQuestionDetail } from "../../Redux/actions/questionsActions";
 
 function QuestionDetail(){
     const { id } = useParams();
-    const { usuarios, respuestas } = data;
-    
-    const preguntaUsuario = usuarios.find(usuario => usuario.id === Number(id))
-    const arrayRespuestas = preguntaUsuario?.preguntas.respuestas
-    
-    const respuestasUsuario = respuestas.filter(respuesta => arrayRespuestas.includes(respuesta.id))
+    const dispatch = useDispatch()
+    const questionDetail = useSelector(state => state.questions.questionDetail)
 
-    return <QuestionView preguntaUsuario={preguntaUsuario} respuestasUsuario={respuestasUsuario} />
+    useEffect(() => {
+        dispatch(getQuestionDetail(id))
+        console.log(questionDetail);
+    },[])
+    
+    
+
+
+    return <QuestionView question={questionDetail}/>
 }
 
 export default QuestionDetail;

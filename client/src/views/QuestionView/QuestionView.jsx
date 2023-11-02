@@ -1,24 +1,26 @@
 /* eslint-disable react/prop-types */
 import style from './QuestionDetail.module.css'
-import data from '../../assets/data'
 import { useEffect, useState } from 'react';
 import { FlechaAbajoIcon } from '../../assets/FlechaParaAbajoIcon';
 import { FlechaParaArriba } from '../../assets/FlechaParaArribaIcon';
 import io from 'socket.io-client'
 const socket = io('/')
 
-function QuestionView({ preguntaUsuario, respuestasUsuario }) {
-    const { usuariosRespuestas } = data;
-
+function QuestionView({question}) {
     const [view, setView] = useState({});
     const [messages, setMessages] = useState('')
+    const [answers, setAnswers] = useState('')
 
     const handleChange = (event) => {
-        event.preventDefault()
         setMessages(event.target.value)
+    }
+    const handleAnswers = (event) => {
+        setAnswers(event.target.value)
+
     }
     const handleSubmit = (message) => {
         socket.emit('message', message)
+        event.preventDefault()
         
     }
 
@@ -43,27 +45,32 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
         });
     },[])
 
+    console.log(question);
 
     return (
-        <div className={style.container}>
-            <div className={style.div1}>
-                <div>
+        <div >
+            {
+                question ?
+                <div className={style.container}>
 
-                    <h1>{preguntaUsuario?.preguntas.titulo}</h1>
+            <div className={style.div1}>
+                <div >
+
+                    <h1>{question?.title}</h1>
                     <div className={style.date}>
                         <a>Publicado: <h5>20-01-2021</h5></a>
                     </div>
-                    <h3>{preguntaUsuario.username}</h3>
-                    <p>{preguntaUsuario?.preguntas.descripcion}</p>
+                    {/* <h3>{question.username}</h3> */}
+                    <p>{question.text}</p>
                 </div>
             </div>
 
             <div className={style.contain}>
                 {
-                    respuestasUsuario.length > 0 ?
+                    question.Answers.length > 0 ?
                         <div className={style.title}>
                             <h2>
-                                {respuestasUsuario.length > 1 ? <h2><p>{respuestasUsuario.length}</p> Respuestas</h2> : <
+                                {question.Answers.length > 1 ? <h2><p>{question.Answers.length}</p> Respuestas</h2> : <
                                     h2><p>1</p>Respuesta</h2>}
 
                             </h2>
@@ -74,17 +81,17 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
                         </div>
                 }
 
-                {respuestasUsuario && respuestasUsuario?.map((respuesta, index) => {
+            {question.Answers?.map((respuesta, index) => {
                     return (
                         <div key={index} className={style.response}>
 
-                            <p>{respuesta.texto}</p>
+                            <p>{respuesta.text}</p>
                             <h4>  
-                                {usuariosRespuestas.map(usuario => {
+                                {/* {usuariosRespuestas.map(usuario => {
                                     if (usuario.id === respuesta.id) {
                                         return usuario.username;
                                     }
-                                })}
+                                })} */}
                             </h4>
 
 
@@ -100,10 +107,16 @@ function QuestionView({ preguntaUsuario, respuestasUsuario }) {
                     )
                 })}
                 <div className={style.question}>
-                    <textarea type="text" rows="8"/>
+                    <textarea type="text" rows="8" />
                     <button>Responder</button>
+                </div> 
+            </div> 
                 </div>
-            </div>
+                :
+                <div>
+                    Cargando
+                </div>
+            }
         </div>
     )
 }

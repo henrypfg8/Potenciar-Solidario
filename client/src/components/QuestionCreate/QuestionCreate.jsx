@@ -4,20 +4,41 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createQuestion } from "../../Redux/actions/questionsActions";
 import validationQuestion from "./QuestionValidate";
 import Swal from "sweetalert2";
-import { getCategories } from "../../Redux/actions/categoriesActions";
+import swal from 'sweetalert';
+import { getCategories } from "../../Redux/actions/categoriesActions"
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 export function useQuestionCreate() {
     const dispatch = useDispatch()
     const categories = useSelector(state => state.ongsAndCategories.categories)
     const categoryOptions = [{ label: "Selecciona una categoría", value: false }, ...categories.map(cat => ({ label: cat.name, value: cat.id }))];
-    const {user, userProfile} = useSelector(state => state.auth);
+    const [userId, setUserId] = useState('')
+    const {isAuthenticated, token} = useSelector(state => state.auth)
+    const navigate = useNavigate()
 
-  
 
-   console.log(userProfile);
+    useEffect(()=>{
+        if (!token || !isAuthenticated) {
+            swal("Necesita loguearse para poder realizar una pregunta")
+                .then((value) => {
+                    console.log(value);
+                    navigate('/login')
+                });
+        }
+        if(token){
+            const decodify = jwtDecode(token)
+            if(decodify){
+                setUserId(decodify.id)
+            }
+        }
+    },[])
     useEffect(() => {
         dispatch(getCategories())
     }, [])
+    console.log(userId);
+
+
 
     const [errores, setErrores] = useState({
         title: '',
@@ -25,22 +46,26 @@ export function useQuestionCreate() {
         categoryId: ''
     })
     const [question, setQuetions] = useState({
+        userId,
         title: '',
         text: '',
         categoryId: '',
-        userId: userProfile.id
+    
     })
+    console.log(question);
     const [disableButton, setDisableButton] = useState(false)
     const [firstSubmit, setFirstSubmit] = useState(false)
-    
+
     const handleChange = (event) => {
         setQuetions({
             ...question,
+            userId,
             [event.target.name]: event.target.value
         })
         if (firstSubmit) {
             setErrores(validationQuestion({
                 ...question,
+                userId,
                 [event.target.name]: event.target.value
             }))
         }
@@ -65,7 +90,6 @@ export function useQuestionCreate() {
         }),
     };
     const submitQuestion = async (event) => {
-        console.log(question);
         event.preventDefault()
         setDisableButton(true)
         setFirstSubmit(true)
@@ -91,7 +115,7 @@ export function useQuestionCreate() {
                         }).then(() => {
                             setDisableButton(false) // Reactiva el botón después de cerrar la alerta
                         })
-                    }else{
+                    } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'Error 404',
@@ -106,7 +130,7 @@ export function useQuestionCreate() {
             throw new Error(error.message)
         }
     }
-    
 
-    return { disableButton,firstSubmit, question,categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion };
+
+    return { disableButton, firstSubmit, question, categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion };
 }

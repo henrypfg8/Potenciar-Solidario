@@ -7,7 +7,6 @@ import { NavLink } from "react-router-dom";
 // eslint-disable-next-line react/prop-types
 function ForumView({questions}) {
 
-
     return (
         <div>
 
@@ -22,9 +21,9 @@ function ForumView({questions}) {
                                 <div key={question.id} className={style.contain}>
 
                                     <div className={style.center}>
-                                        {/* <NavLink to={`/foro/${question.id}`}> */}
+                                        <NavLink to={`/foro/${question.id}`}>
                                             <h1>{question.title}</h1>
-                                        {/* </NavLink> */}
+                                        </NavLink>
                                         {/* <h4>@{question.username}</h4> */}
                                         <p>{question.text}</p>
                                         <div
@@ -34,10 +33,10 @@ function ForumView({questions}) {
                                             {question.Answers.length > 1 && <p><strong>{question.Answers.length}</strong> respuestas</p>}
                                         </div>
                                     </div>
-                                    {/* <NavLink to={`/foro/${question.id}`}> */}
+                                    <NavLink to={`/foro/${question.id}`}>
 
                                     <button>Ver más<Open /></button>
-                                    {/* </NavLink> */}
+                                    </NavLink>
                                 </div>
                             )
                         })}

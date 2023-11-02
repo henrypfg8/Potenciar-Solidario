@@ -4,31 +4,77 @@ import { useEffect, useState } from 'react';
 import { FlechaAbajoIcon } from '../../assets/FlechaParaAbajoIcon';
 import { FlechaParaArriba } from '../../assets/FlechaParaArribaIcon';
 import io from 'socket.io-client'
+import { useDispatch, useSelector } from 'react-redux';
+import { createAnswer } from '../../Redux/actions/answersActions';
+import { useNavigate } from 'react-router';
+import swal from 'sweetalert';
+import {jwtDecode} from 'jwt-decode'; // Corrección aquí: importa jwtDecode directamente
 const socket = io('/')
 
 function QuestionView({ question }) {
+    const [userId, setUserId] = useState('')
+    const {isAuthenticated, token} = useSelector(state => state.auth)
+    const navigate = useNavigate()
     const [view, setView] = useState({});
-    const [messages, setMessages] = useState('')
-    const [answers, setAnswers] = useState('')
+    const [messages, setMessages] = useState([])
+    const [message, setMessage] = useState('');
+    const [answer, setAnswer] = useState({
+        userId,
+        questionId: '',
+        answer:''
+    })
+    const dispatch = useDispatch()
+     useEffect(()=>{
+        if (!token || !isAuthenticated) {
+            swal("Necesita loguearse para poder realizar una respuesta")
+                .then((value) => {
+                    console.log(value);
+                    navigate('/login')
+                });
+        }
+        if(token){
+            const decodify = jwtDecode(token)
+            if(decodify){
+                setUserId(decodify.id)
+                setAnswer(prev => ({ ...prev, userId: decodify.id })); // Corrección aquí: actualiza el userId en el estado de answer
+            }
+        }
+    },[])
 
     const handleChange = (event) => {
-        setMessages(event.target.value)
+        setMessage(event.target.value)
     }
+
+    console.log(answer);
     const handleAnswers = (event) => {
-        setAnswers(event.target.value)
+        setAnswer({...answer,
+            answer:event.target.value})
 
     }
-    const handleSubmit = (message) => {
-        socket.emit('message', message)
+    const answersSubmit = (event) => {
+        event.preventDefault(); // Corrección aquí: previene el comportamiento predeterminado del formulario
+        dispatch(createAnswer(answer)) // Corrección aquí: pasa el estado de answer a la acción createAnswer
+        console.log(answer);
+    }
+    const handleSubmit = (event, message) => { // Corrección aquí: agrega event a los argumentos de la función
         event.preventDefault()
-
+        const newMessage = {
+            body: message,
+            from: 'me'
+        }
+        setMessages([...messages, newMessage])
+        socket.emit('message', message)
+        
     }
+    const receiveMessage = (message) => 
+    setMessages((state) => [...state, message]);
 
     useEffect(() => {
-        socket.on("message", message => {
-            console.log(message);
-            setMessages([...messages, message])
-        });
+        socket.on("message", receiveMessage);
+
+        return () =>{
+            socket.off("message", receiveMessage)
+        }
 
     }, [])
     const handleView = (id) => {
@@ -99,16 +145,23 @@ function QuestionView({ question }) {
                                         }
 
                                         {view[index] && <div className={style.comment}>
+                                            <ul>
+                                                {messages.map((message, index) => {
+                                                    return(
+                                                        <li key={index}>{message.from}:{message.body}</li>
+                                                    )
+                                                } )}
+                                            </ul>
                                             <p>Comentar</p>
                                             <textarea type="text" cols="6" rows="5" onChange={() => handleChange(event)} />
-                                            <button onClick={() => handleSubmit(messages)}>Añadir comentario</button>
+                                            <button onClick={() => handleSubmit(message)}>Añadir comentario</button>
                                         </div>}
                                     </div>
                                 )
                             })}
                             <div className={style.question}>
-                                <textarea type="text" rows="8" />
-                                <button>Responder</button>
+                                <textarea type="text" rows="8" onChange={handleAnswers} />
+                                <button onClick={() => answersSubmit(answer)}>Responder</button>
                             </div>
                         </div>
                     </div>

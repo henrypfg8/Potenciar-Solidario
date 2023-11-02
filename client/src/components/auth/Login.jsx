@@ -3,9 +3,9 @@ import './auth.css';
 import { GoogleLogin} from '@react-oauth/google'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../../Redux/auth/AuthActions';
+import { loginUser, loginWithGoogleAction } from '../../Redux/auth/AuthActions';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+
 
 const Login = () => {
 
@@ -13,6 +13,7 @@ const Login = () => {
     const {isAuthenticated} = useSelector(state => state.auth)
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [errorLogin, setErrorLogin] = useState(false);
+    const [errorLoginWithGoogle, setErrorLoginWithGoogle] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate(); 
 
@@ -42,13 +43,19 @@ const Login = () => {
    
 
     const loginWithGoogle = async (token) => {
-        console.log(token.credential);
-        try {
-            const {data}  = await axios.post('http://localhost:19789/authGoogle', {idToken:token.credential}) 
-            console.log(data);
-        } catch (error) {
-            console.log(error);
-        }
+        dispatch(loginWithGoogleAction(token))
+        .then((data) => {
+            if(data === undefined || data === null){
+                setErrorLoginWithGoogle(true);
+                return;
+            }
+           navigate('/');
+            setErrorLoginWithGoogle(false);
+        })
+        .catch((error) => {
+            console.log(error.response.data.message);
+            setErrorLoginWithGoogle(true);
+        })
      
     }
       
@@ -58,6 +65,7 @@ const Login = () => {
                 {/* campo para el email */}
                 <h1 className='auth__title'>Iniciar Sesión</h1>
                {errorLogin && <p className='auth__error'>Correo o contraseña incorrectos</p>}
+               {errorLoginWithGoogle && <p className='auth__error'>Tu cuenta aún no esta registrada</p>}
                 <div>
                     <label className='auth__label' htmlFor="email">correo</label>
                     {errors.email && <p className='auth__error'>Debe ser un correo valido</p>}

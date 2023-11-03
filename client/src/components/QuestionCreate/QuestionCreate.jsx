@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { createQuestion } from "../../Redux/actions/questionsActions";
+import { createQuestion, getQuestions } from "../../Redux/actions/questionsActions";
 import validationQuestion from "./QuestionValidate";
 import Swal from "sweetalert2";
 import swal from 'sweetalert';
@@ -16,6 +16,28 @@ export function useQuestionCreate() {
     const categoryOptions = [{ label: "Selecciona una categoría", value: false }, ...categories.map(cat => ({ label: cat.name, value: cat.id }))];
     const [userId, setUserId] = useState('')
     const {isAuthenticated, token} = useSelector(state => state.auth)
+
+    
+    const [errores, setErrores] = useState({
+            title: '',
+            text: '',
+            categoryId: ''
+        })
+        const [question, setQuetions] = useState({
+            userId,
+            title: '',
+            text: '',
+            categoryId: '',
+        
+        })
+        const reset = () =>{
+            setQuetions({
+                userId,
+                title:'',
+                text:'',
+                categoryId:''
+            })
+        }
     const navigate = useNavigate()
 
 
@@ -30,6 +52,7 @@ export function useQuestionCreate() {
             const decodify = jwtDecode(token)
             if(decodify){
                 setUserId(decodify.id)
+                setQuetions(prevState => ({...prevState, userId: decodify.id}))
             }
         }
     },[])
@@ -37,20 +60,6 @@ export function useQuestionCreate() {
         dispatch(getForumCategories())
     }, [])
 
-
-
-    const [errores, setErrores] = useState({
-        title: '',
-        text: '',
-        categoryId: ''
-    })
-    const [question, setQuetions] = useState({
-        userId,
-        title: '',
-        text: '',
-        categoryId: '',
-    
-    })
     const [disableButton, setDisableButton] = useState(false)
     const [firstSubmit, setFirstSubmit] = useState(false)
 
@@ -111,6 +120,8 @@ export function useQuestionCreate() {
                             icon: 'success',
                             title: 'Pregunta creada con exito',
                         }).then(() => {
+                            dispatch(getQuestions())
+                            reset()
                             setDisableButton(false) 
                         })
                 }, 1000);

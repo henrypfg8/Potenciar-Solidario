@@ -63,7 +63,7 @@ Publication.belongsTo(User, { foreignKey: "userID" });
 Publication.belongsTo(Category, { foreignKey: "categoryId" });
 Category.hasMany(Publication, { foreignKey: "categoryId" });
 Category.hasMany(Question, { foreignKey: "categoryId" });
-Question.belongsTo(Category, { foreignKey: "categoryId" });
+
 Question.belongsTo(User, { foreignKey: "userId" });
 Question.hasMany(Answer, { foreignKey: "questionId" });
 Answer.belongsTo(User, { foreignKey: "userId" });

@@ -46,6 +46,7 @@ export const getQuestions = () => {
 }
 
 export const getQuestionDetail = (id) => {
+    console.log(id);
     return async function (dispatch) {
         try {
             const response = await axios.get(`http://localhost:19789/questions/${id}`);

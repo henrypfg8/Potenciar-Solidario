@@ -13,8 +13,9 @@
     const socket = io('/')
 
     function QuestionView({ question }) {
+        const dispatch = useDispatch()
         const [userId, setUserId] = useState('')
-        const {isAuthenticated, token} = useSelector(state => state.auth)
+        const {isAuthenticated, token} = useSelector(state => state?.auth)
         const [view, setView] = useState({});
         const navigate = useNavigate()
         const [messages, setMessages] = useState([])
@@ -25,17 +26,16 @@
             userId: jwtDecode(token)?.id || '',
             questionId: ''
         })
-        const dispatch = useDispatch()
+        // console.log(question?);
         
-
         const handleChange = (event) => {
             setMessage(event.target.value)
         }
-
+        
         const handleAnswers = (event) => {
             setAnswer({
                 ...answer,
-                questionId: question.id,
+                questionId: question?.id,
                 answer: event.target.value
             })
         }
@@ -112,10 +112,10 @@
                 console.log(message);
             });
         }, [])
-
-        const dateQuestion = question?.createdAt.split('T')[0]
-
-        // console.log(dateQuestion);
+        let dateQuestion;
+        if(question){
+            dateQuestion = question?.createdAt.split('T')[0]
+        }
 
         return (
             <div >
@@ -137,10 +137,10 @@
 
                             <div className={style.contain}>
                                 {
-                                    question.Answers.length > 0 ?
+                                    question?.Answers.length > 0 ?
                                         <div className={style.title}>
                                             <h2>
-                                                {question.Answers.length > 1 ? <h2><p>{question.Answers.length}</p> Respuestas</h2> : <
+                                                {question?.Answers?.length > 1 ? <h2><p>{question?.Answers?.length}</p> Respuestas</h2> : <
                                                     h2><p>1</p>Respuesta</h2>}
 
                                             </h2>
@@ -151,7 +151,7 @@
                                         </div>
                                 }
 
-                                {question.Answers?.map((respuesta, index) => {
+                                {question?.Answers?.map((respuesta, index) => {
                                     return (
                                         <div key={index} className={style.response}>
 

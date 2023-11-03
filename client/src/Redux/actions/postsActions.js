@@ -93,7 +93,7 @@ export const searchPosts = (posts, searchValue) => {
   }
 
   if (Array.isArray(searchValue)) {
-    if (searchValue.includes('')) {
+    if (searchValue.includes(' ')) {
       searchValue = searchValue.filter(e => e !== ' ');
     }
     const searchedPosts = posts.filter(({ title, description, category }) => {

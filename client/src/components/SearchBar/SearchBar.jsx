@@ -14,12 +14,15 @@ export default function SearchBar() {
   const filters = useSelector((state) => state.posts.postsFilters);
 
   function changeHandler({ target: { value } }) {
+    
+
     if (value === "") dispatch(getPostsFiltered(filters));
     else {
+      const { category, ong, fromDate, untilDate } = filters;
       value = value.trim();
       if (value.includes(" ")) value = value.split(" ");
       axios
-        .get("http://localhost:19789/posts")
+        .get(`http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`)
         .then(({ data }) => dispatch(searchPosts(data, value)));
     }
   }

@@ -2,11 +2,15 @@ import Styles from "./postDetail.module.css";
 //
 import axios from "axios";
 //
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { getPostDetail, clearPostDetail } from '../../Redux/actions/postsActions';
+
 
 const Detail = () => {
-  const [post, setPost] = useState({});
+  const postDetail = useSelector(state => state.posts.postDetail);
+  const dispatch = useDispatch();
   const { id } = useParams();
   const {
     title,
@@ -20,15 +24,15 @@ const Detail = () => {
     contact,
     creationDate,
     url
-  } = post;
+  } = postDetail;
   
-  console.log(image)
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:19789/posts/${id}`)
-      .then(({ data }) => setPost(data))
-      .catch((error) => console.log(error.message));
+    dispatch(getPostDetail(id));
+
+    return () => {
+      dispatch(clearPostDetail());
+    }
   }, []);
 
 

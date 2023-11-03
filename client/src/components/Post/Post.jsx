@@ -82,8 +82,6 @@ const Post = (props) => {
         <h2 className={Styles.organizationName}>{organization}</h2>
       </div>
 
-      {/* <div className={Styles.Post__Image}>
-      </div> */}
 
       <div className={Styles.Post__description}>
         {image && <img className={Styles.image} src={image} alt="imagen" />}

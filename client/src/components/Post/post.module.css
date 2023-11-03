@@ -63,7 +63,7 @@
 
     .image {
         width: auto;
-        max-height: 400px;
+        max-height: 100%;
         align-self: flex-start;
         display: inline;
     }

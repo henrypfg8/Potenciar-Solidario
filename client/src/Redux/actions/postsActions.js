@@ -86,42 +86,46 @@ export const updatePost = (id, updatePostData) => {
 };
 
 export const searchPosts = (posts, searchValue) => {
-
-  const action = {
-    type: SEARCH_POSTS,
-    payload: []
-  }
-
-  if (Array.isArray(searchValue)) {
-    if (searchValue.includes(' ')) {
-      searchValue = searchValue.filter(e => e !== ' ');
+  try {
+    const action = {
+      type: SEARCH_POSTS,
+      payload: []
     }
-    const searchedPosts = posts.filter(({ title, description, category }) => {
-      for (let subString of searchValue) {
-        if (
-          searchCoincidences(title, subString) ||
-          searchCoincidences(description, subString) ||
-          searchCoincidences(category, subString)
-        ) return true;
+  
+    if (Array.isArray(searchValue)) {
+      if (searchValue.includes(' ')) {
+        searchValue = searchValue.filter(e => e !== ' ');
       }
-    })
-    action.payload = searchedPosts;
-  }
+      const searchedPosts = posts.filter(({ title, description, category }) => {
+        for (let subString of searchValue) {
+          if (
+            searchCoincidences(title, subString) ||
+            searchCoincidences(description, subString) ||
+            searchCoincidences(category, subString)
+          ) return true;
+        }
+      })
+      action.payload = searchedPosts;
+    }
+    
+    else {
+      const searchedPosts = posts.filter(({ title, description, category }) => {
+        if (
+          searchCoincidences(title, searchValue) ||
+          searchCoincidences(description, searchValue) ||
+          searchCoincidences(category, searchValue)
+        ) return true;
+    
+        else return false;
+      });
+      action.payload = searchedPosts;
+    }
   
-  else {
-    const searchedPosts = posts.filter(({ title, description, category }) => {
-      if (
-        searchCoincidences(title, searchValue) ||
-        searchCoincidences(description, searchValue) ||
-        searchCoincidences(category, searchValue)
-      ) return true;
-  
-      else return false;
-    });
-    action.payload = searchedPosts;
+    return action;
+  } catch (error) {
+    console.log("Error al buscar posts:", error)
   }
 
-  return action;
 };
 
 

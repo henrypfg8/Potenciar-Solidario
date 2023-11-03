@@ -15,8 +15,10 @@ export const createQuestion = (question) => {
         try {
             const response = await axios.post("http://localhost:19789/questions", question);
             dispatch({type: CREATE_QUESTION, payload: response.data});
+            return Promise.resolve(response)
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error")
+            return Promise.reject(error)
         }
     }
 }

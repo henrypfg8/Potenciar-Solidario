@@ -112,19 +112,28 @@ export function useQuestionCreate() {
                     setDisableButton(false) 
                 })
             } else {
-                await dispatch(createQuestion(question))
+                dispatch(createQuestion(question)).then(() => {
+                    dispatch(getQuestions())
+                    Swal.fire({
+                        icon: 'succes',
+                        title: 'Pregunta creada con exito!',
+                    }).then(() => {
+                        setDisableButton(false) 
+                        navigate('/foro')
+                    })
+                    
+                }).catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Intente de nuevo',
+                        text: 'Debe rellenar todos los campos!',
+                    }).then(() => {
+                        setDisableButton(false) 
+                    })
+
+                })
     
-                setTimeout(() => {
-                   
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Pregunta creada con exito',
-                        }).then(() => {
-                            dispatch(getQuestions())
-                            reset()
-                            setDisableButton(false) 
-                        })
-                }, 1000);
+                
             }
         } catch (error) {
             throw new Error(error.message)

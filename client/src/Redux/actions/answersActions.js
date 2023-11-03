@@ -23,11 +23,14 @@ export const createAnswer = (answer) => {
         try {
             const response = await axios.post("http://localhost:19789/answers", answer);
             dispatch({type: CREATE_ANSWER, payload: response.data});
+            return Promise.resolve(response); 
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error");
+            return Promise.reject(error);
         }
     }
 }
+
 
 export const updateAnswer = (id, updatedAnswerData) => {
     return async function (dispatch) {

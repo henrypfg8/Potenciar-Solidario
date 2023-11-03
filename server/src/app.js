@@ -19,7 +19,7 @@ io.on("connection", (socket) => {
     console.log("Evento recibido:", body);
     socket.broadcast.emit('message', {
       body,
-      from: socket.id.slice(6)
+      from: socket.id.slice(2)
     })
     // Manejar el evento de websocket
   });

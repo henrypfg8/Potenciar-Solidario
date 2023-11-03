@@ -22,7 +22,6 @@ module.exports = (sequelize) => {
           len: [20, 1000],
         },
       },
-    },
-    { timestamps: false }
+    }
   );
 };

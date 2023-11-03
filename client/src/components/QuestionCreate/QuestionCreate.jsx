@@ -5,13 +5,14 @@ import { createQuestion } from "../../Redux/actions/questionsActions";
 import validationQuestion from "./QuestionValidate";
 import Swal from "sweetalert2";
 import swal from 'sweetalert';
-import { getCategories } from "../../Redux/actions/categoriesActions"
+import { getForumCategories } from "../../Redux/actions/categoriesActions"
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 export function useQuestionCreate() {
     const dispatch = useDispatch()
-    const categories = useSelector(state => state.ongsAndCategories.categories)
+    const categories = useSelector(state => state.ongsAndCategories.forumCategories)
+    console.log(categories);
     const categoryOptions = [{ label: "Selecciona una categoría", value: false }, ...categories.map(cat => ({ label: cat.name, value: cat.id }))];
     const [userId, setUserId] = useState('')
     const {isAuthenticated, token} = useSelector(state => state.auth)
@@ -22,7 +23,6 @@ export function useQuestionCreate() {
         if (!token || !isAuthenticated) {
             swal("Necesita loguearse para poder realizar una pregunta")
                 .then((value) => {
-                    console.log(value);
                     navigate('/login')
                 });
         }
@@ -34,9 +34,8 @@ export function useQuestionCreate() {
         }
     },[])
     useEffect(() => {
-        dispatch(getCategories())
+        dispatch(getForumCategories())
     }, [])
-    console.log(userId);
 
 
 
@@ -52,7 +51,6 @@ export function useQuestionCreate() {
         categoryId: '',
     
     })
-    console.log(question);
     const [disableButton, setDisableButton] = useState(false)
     const [firstSubmit, setFirstSubmit] = useState(false)
 
@@ -102,28 +100,19 @@ export function useQuestionCreate() {
                     title: 'Intente de nuevo',
                     text: 'Debe rellenar todos los campos!',
                 }).then(() => {
-                    setDisableButton(false) // Reactiva el botón después de cerrar la alerta
+                    setDisableButton(false) 
                 })
             } else {
-                const created = await dispatch(createQuestion(question))
-                console.log(created);
+                await dispatch(createQuestion(question))
+    
                 setTimeout(() => {
-                    if (created) {
+                   
                         Swal.fire({
                             icon: 'success',
                             title: 'Pregunta creada con exito',
                         }).then(() => {
-                            setDisableButton(false) // Reactiva el botón después de cerrar la alerta
+                            setDisableButton(false) 
                         })
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error 404',
-                            text: 'Intente nuevamente o contacte a soporte!',
-                        }).then(() => {
-                            setDisableButton(false) // Reactiva el botón después de cerrar la alerta
-                        })
-                    }
                 }, 1000);
             }
         } catch (error) {

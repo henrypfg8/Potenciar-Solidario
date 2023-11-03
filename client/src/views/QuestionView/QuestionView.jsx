@@ -5,58 +5,44 @@ import { FlechaAbajoIcon } from '../../assets/FlechaParaAbajoIcon';
 import { FlechaParaArriba } from '../../assets/FlechaParaArribaIcon';
 import io from 'socket.io-client'
 import { useDispatch, useSelector } from 'react-redux';
+import swal from 'sweetalert';
+import { jwtDecode } from "jwt-decode";
 import { createAnswer } from '../../Redux/actions/answersActions';
 import { useNavigate } from 'react-router';
-import swal from 'sweetalert';
-import {jwtDecode} from 'jwt-decode'; // Corrección aquí: importa jwtDecode directamente
 const socket = io('/')
 
 function QuestionView({ question }) {
     const [userId, setUserId] = useState('')
     const {isAuthenticated, token} = useSelector(state => state.auth)
-    const navigate = useNavigate()
     const [view, setView] = useState({});
+    const navigate = useNavigate()
     const [messages, setMessages] = useState([])
     const [message, setMessage] = useState('');
     const [answer, setAnswer] = useState({
-        userId,
-        questionId: '',
-        answer:''
+        answer:'',
+        userId:'',
+        questionId: ''
     })
     const dispatch = useDispatch()
-     useEffect(()=>{
-        if (!token || !isAuthenticated) {
-            swal("Necesita loguearse para poder realizar una respuesta")
-                .then((value) => {
-                    console.log(value);
-                    navigate('/login')
-                });
-        }
-        if(token){
-            const decodify = jwtDecode(token)
-            if(decodify){
-                setUserId(decodify.id)
-                setAnswer(prev => ({ ...prev, userId: decodify.id })); // Corrección aquí: actualiza el userId en el estado de answer
-            }
-        }
-    },[])
+    
 
     const handleChange = (event) => {
         setMessage(event.target.value)
     }
 
-    console.log(answer);
     const handleAnswers = (event) => {
-        setAnswer({...answer,
-            answer:event.target.value})
+        setAnswer({
+            ...answer,
+            answer: event.target.value,
+            userId: userId,
+            questionId: question.id
+        })
 
     }
-    const answersSubmit = (event) => {
-        event.preventDefault(); // Corrección aquí: previene el comportamiento predeterminado del formulario
-        dispatch(createAnswer(answer)) // Corrección aquí: pasa el estado de answer a la acción createAnswer
-        console.log(answer);
+    const answersSubmit = (answer) => {
+        dispatch(createAnswer(answer))
     }
-    const handleSubmit = (event, message) => { // Corrección aquí: agrega event a los argumentos de la función
+    const handleSubmit = (message) => {
         event.preventDefault()
         const newMessage = {
             body: message,
@@ -66,6 +52,20 @@ function QuestionView({ question }) {
         socket.emit('message', message)
         
     }
+    useEffect(()=>{
+        if (!token || !isAuthenticated) {
+            swal("Necesita loguearse para poder realizar una pregunta")
+                .then((value) => {
+                    navigate('/login')
+                });
+        }
+        if(token){
+            const decodify = jwtDecode(token)
+            if(decodify){
+                setUserId(decodify.id)
+            }
+        }
+    },[])
     const receiveMessage = (message) => 
     setMessages((state) => [...state, message]);
 
@@ -91,7 +91,9 @@ function QuestionView({ question }) {
         });
     }, [])
 
-    console.log(question);
+    const dateQuestion = question?.createdAt.split('T')[0]
+
+    // console.log(dateQuestion);
 
     return (
         <div >
@@ -104,9 +106,9 @@ function QuestionView({ question }) {
 
                                 <h1>{question?.title}</h1>
                                 <div className={style.date}>
-                                    <a>Publicado: <h5>20-01-2021</h5></a>
+                                    <a>Fecha de publicacion: <h5>{dateQuestion}</h5></a>
                                 </div>
-                                {/* <h3>{question.username}</h3> */}
+                                <h3>{question.User.name}</h3>
                                 <p>{question.text}</p>
                             </div>
                         </div>
@@ -131,14 +133,8 @@ function QuestionView({ question }) {
                                 return (
                                     <div key={index} className={style.response}>
 
-                                        <p>{respuesta.text}</p>
-                                        <h4>
-                                            {/* {usuariosRespuestas.map(usuario => {
-                                    if (usuario.id === respuesta.id) {
-                                        return usuario.username;
-                                    }
-                                })} */}
-                                        </h4>
+                                        <p>{respuesta.answer}</p>
+                                        <h4>{respuesta.User.name}</h4>
 
 
                                         {!view[index] ? <a onClick={() => handleView(index)}>Añadir comentario<FlechaAbajoIcon /></a> : <a onClick={() => handleView(index)}>Añadir comentario<FlechaParaArriba /></a>

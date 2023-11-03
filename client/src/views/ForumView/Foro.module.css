@@ -18,15 +18,17 @@ body html {
     display: flex;
     flex-direction: row;
     display: 100vw;
+    min-height: 100vh;
+    height: 100vh;
 }
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    /* margin: 40px; */
+    justify-content: flex-start; /* Alinea los elementos al inicio */
     padding: 10px;
-
+    height: 100vh;
+    min-height: 100vh;
 }
 .contain h4{
     font-family: 'MiFuenteBold';

@@ -11,7 +11,7 @@ function QuestionDetail(){
 
     useEffect(() => {
         dispatch(getQuestionDetail(id))
-        console.log(questionDetail);
+        // console.log(questionDetail);
     },[])
     
     

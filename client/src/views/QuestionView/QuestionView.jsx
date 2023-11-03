@@ -9,6 +9,7 @@ import swal from 'sweetalert';
 import { jwtDecode } from "jwt-decode";
 import { createAnswer } from '../../Redux/actions/answersActions';
 import { useNavigate } from 'react-router';
+import { getQuestionDetail } from '../../Redux/actions/questionsActions';
 const socket = io('/')
 
 function QuestionView({ question }) {
@@ -40,7 +41,11 @@ function QuestionView({ question }) {
 
     }
     const answersSubmit = (answer) => {
-        dispatch(createAnswer(answer))
+        if(answer){
+
+            dispatch(createAnswer(answer))
+            dispatch(getQuestionDetail(question.id))
+        }
     }
     const handleSubmit = (message) => {
         event.preventDefault()

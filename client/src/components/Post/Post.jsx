@@ -1,7 +1,7 @@
 import Styles from "./post.module.css";
 //
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 //
 import DeleteIcon from "../../assets/DeleteIcon";
@@ -52,14 +52,13 @@ const Post = (props) => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:19789/posts/${id}`).then((response) => {
-          Swal.fire({
-            title: "Publicación Eliminada",
-            icon: "success",
-            customClass: {
-              confirmButton: "swallowOkButton",
-            },
-          });
+        axios.delete(`http://localhost:19789/posts/${id}`);
+        Swal.fire({
+          title: "Publicación Eliminada",
+          icon: "success",
+          customClass: {
+            confirmButton: "swallowOkButton",
+          },
         });
       }
     });
@@ -100,7 +99,6 @@ const Post = (props) => {
         </p>
 
         <div className={Styles.BottomBar__SocialIcons}>
-
           <div
             className={Styles.SocialIcons__likeContainer}
             onClick={likeHandler}
@@ -112,12 +110,9 @@ const Post = (props) => {
             )}
           </div>
 
-          <div
-            className={Styles.SocialIcons__commentContainer}
-          >
+          <div className={Styles.SocialIcons__commentContainer}>
             <Comment className={Styles.commentIcon} />
           </div>
-
         </div>
 
         <DeleteIcon

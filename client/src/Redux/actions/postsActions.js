@@ -16,6 +16,19 @@ import {
 import axios from "axios";
 import unorm from 'unorm';
 
+//funcion que se usa en searchPosts()
+const searchCoincidences = (string, subString) => {
+  const normalizedString = unorm.nfkd(string).replace(/[\u0300-\u036F]/g, "");
+  const normalizedSubString = unorm.nfkd(subString).replace(/[\u0300-\u036F]/g, "");
+
+  const regExp = new RegExp(normalizedSubString, "i");
+  const coincidence = normalizedString.match(regExp);
+
+  if (coincidence) return true;
+  else return false;
+};
+
+///////////////
 export const createPost = (post) => {
   return async function (dispatch) {
     try {
@@ -73,75 +86,45 @@ export const updatePost = (id, updatePostData) => {
 };
 
 export const searchPosts = (posts, searchValue) => {
-  //
-  const searchPublications = (string, subString) => {
-    const normalizedString = unorm.nfkd(string).replace(/[\u0300-\u036F]/g, "");
-    const normalizedSubString = unorm.nfkd(subString).replace(/[\u0300-\u036F]/g, "");
 
-    const regExp = new RegExp(normalizedSubString, "i");
-    const coincidence = normalizedString.match(regExp);
-
-    if (coincidence) return true;
-    else return false;
-  };
-  //
-
-  const searchedPosts = posts.filter(({ title, description, category }) => {
-    if (
-      searchPublications(title, searchValue) ||
-      searchPublications(description, searchValue) ||
-      searchPublications(category, searchValue)
-    ) return true;
-
-    else return false;
-  });
-
-  return {
+  const action = {
     type: SEARCH_POSTS,
-    payload: searchedPosts,
-  };
+    payload: []
+  }
+
+  if (Array.isArray(searchValue)) {
+    if (searchValue.includes('')) {
+      searchValue = searchValue.filter(e => e !== ' ');
+    }
+    const searchedPosts = posts.filter(({ title, description, category }) => {
+      for (let subString of searchValue) {
+        if (
+          searchCoincidences(title, subString) ||
+          searchCoincidences(description, subString) ||
+          searchCoincidences(category, subString)
+        ) return true;
+      }
+    })
+    action.payload = searchedPosts;
+  }
+  
+  else {
+    const searchedPosts = posts.filter(({ title, description, category }) => {
+      if (
+        searchCoincidences(title, searchValue) ||
+        searchCoincidences(description, searchValue) ||
+        searchCoincidences(category, searchValue)
+      ) return true;
+  
+      else return false;
+    });
+    action.payload = searchedPosts;
+  }
+
+  return action;
 };
 
-// export const getPostsByDate = (initialDate, finalDate) => {
-//   return async function (dispatch) {
-//     try {
-//       const response = await axios.get(
-//         "http://localhost:19789/filterByDate",
-//         initialDate,
-//         finalDate
-//       );
-//       dispatch({ type: GET_POSTS_BY_DATE, payload: response.data });
-//     } catch (error) {
-//       console.log(error, "por favor contactar a soporte por este error");
-//     }
-//   };
-// };
 
-// export const getPostsByCategories = (query) => {
-//   return async function (dispatch) {
-//     try {
-//       const response = await axios.get(
-//         `http://localhost:19789/categories/filter?category=${query}`
-//       );
-//       dispatch({ type: GET_POSTS_BY_CATEGORIES, payload: response.data });
-//     } catch (error) {
-//       console.log(error, "por favor contactar a soporte por este error");
-//     }
-//   };
-// };
-
-// export const getPostsByOngs = (query) => {
-//   return async function (dispatch) {
-//     try {
-//       const response = await axios.get(
-//         `http://localhost:19789/ongs/filter?ongs=${query}`
-//       );
-//       dispatch({ type: GET_POSTS_BY_ONGS, payload: response.data });
-//     } catch (error) {
-//       console.log(error, "por favor contactar a soporte por este error");
-//     }
-//   };
-// };
 
 export const clearPostDetail = () => {
   return { type: CLEAR_POST_DETAIL };

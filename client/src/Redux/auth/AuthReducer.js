@@ -56,6 +56,24 @@ const authReducer = (state = initialState, action) => {
                 userProfile: action.payload,
                 loading: false,
             } 
+        case types.UPDATE_PROFILE:
+            return {
+                ...state,
+                userProfile: action.payload,
+                loading: false,
+            }
+        case types.DELETE_PROFILE:
+            localStorage.removeItem('token');
+            return {
+                ...state,
+                userProfile: null,
+                loading: false,
+                user : null,
+                token: null,
+                isAuthenticated: false,
+                isAdmin: false,
+                
+            }        
         case types.ERROR_REGISTER:
                 return {
                     ...state,

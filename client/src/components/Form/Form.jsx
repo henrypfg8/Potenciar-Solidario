@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from 'react-redux'
 import { createPost, } from '../../Redux/actions/postsActions'
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +7,8 @@ import { useEffect, useState } from 'react';
 import { uploadImageCloudinary } from './cloudinary';
 import { useForm, Controller } from 'react-hook-form'
 import Select from 'react-select';
-
+import PhoneInput from 'react-phone-number-input'
+import proptypes from 'prop-types'
 
 const Form = ({ setPost, post }) => {
     const dispatch = useDispatch();
@@ -16,9 +16,19 @@ const Form = ({ setPost, post }) => {
     const categories = useSelector(state => state.ongsAndCategories.categories);
     const [errorPost, setErrorPost] = useState(false);
     const [userId, setUserId] = useState('')
-    const { isAuthenticated, userProfile } = useSelector(state => state.auth);
+    const { isAuthenticated} = useSelector(state => state.auth);
     const navigate = useNavigate();
+    const { register, formState: { errors }, handleSubmit, reset, control } = useForm();
+    const fecha = new Date().toLocaleDateString()
+    const partes = fecha.split('/');
+    const fechaConvertida = partes[2] + '-' + partes[1] + '-' + partes[0];
+    const options = categories.map(cat => ({ value: cat.name, label: cat.name }));
+    const options2 = ongs.map(ong => ({ value: ong.nombre, label: ong.nombre }));
 
+   
+    const [imgFile, setImgFile] = useState(null);
+    const [success, setSuccess] = useState(false);
+    const timeouts = []; // Array de timeouts para limpiarlos en el useEffect
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -32,21 +42,7 @@ const Form = ({ setPost, post }) => {
         }
     }, [isAuthenticated, navigate])
 
-
-    const { register, formState: { errors }, handleSubmit, reset, control } = useForm();
-    const fecha = new Date().toLocaleDateString()
-    const partes = fecha.split('/');
-
-    const options = categories.map(cat => ({ value: cat.name, label: cat.name }));
-    const options2 = ongs.map(ong => ({ value: ong.nombre, label: ong.nombre }));
-
-    const fechaConvertida = partes[2] + '-' + partes[1] + '-' + partes[0];
-    const [imgFile, setImgFile] = useState(null);
-    const [success, setSuccess] = useState(false);
-
-
-
-    const onSubmit = async data => {
+    const onSubmit = async data => { // Enviar el formulario de la publicación
 
 
         setSuccess(true);
@@ -56,18 +52,28 @@ const Form = ({ setPost, post }) => {
             ...data,
             image: urlImage,  //agregar la url de la imagen
             creationDate: fechaConvertida,
-            userID: userId.id,
+            userId: userId.id,
         };
 
         dispatch(createPost(updatedPost)).then(() => {
             navigate('/');
+            setSuccess(false);
             setErrorPost(false);
-            setTimeout(() => {
+            const successTimeout = setTimeout(() => {
+                navigate('/');
                 setSuccess(false);
-            }, [3000]);
+            }, 3000);
+            timeouts.push(successTimeout);
+         
+
         }).catch((error) => {
             setErrorPost(true);
+            setSuccess(false);
             console.log(error.response.data.message)
+            const errorTimeout = setTimeout(() => {
+                setErrorPost(false);
+            }, 3000);
+            timeouts.push(errorTimeout);
         })
 
         setPost({
@@ -89,6 +95,7 @@ const Form = ({ setPost, post }) => {
         //limpiar el formulario
         reset();
     }
+    
     // Actualizar el estado con los datos del formulario
     const handleChange = (e) => {
 
@@ -117,6 +124,13 @@ const Form = ({ setPost, post }) => {
         setImgFile(data); //guardar la imagen en el estado
     }
 
+    useEffect(() => { // Limpia los timeouts
+        return () => {
+            timeouts.forEach(clearTimeout); // Limpia todos los timeouts
+        };
+    }, [timeouts]);
+
+
     return (
         <div>
             {errorPost && (<p className='form__alert'>No se pudo crear la publicación</p>)} {/* Si no se publica correctamente mostrar el mensaje */}
@@ -139,7 +153,7 @@ const Form = ({ setPost, post }) => {
                         name="category"
                         control={control}
                         rules={{ required: 'La categoria es obligatoria' }} // Reglas de validación con mensaje de error
-                        render={({ field, fieldState: { error } }) => (
+                        render={({ field, fieldState : {error} }) => (
                             //console.log(error),
                             <Select
                                 {...field}
@@ -211,17 +225,28 @@ const Form = ({ setPost, post }) => {
                 <div className='form__field'>
                     <label htmlFor="contact" >Contacto</label>
                     {errors?.contact?.type === 'required' && <p className='form__alert'>El contacto es obligatorio</p>}
-                    {errors?.contact?.type === 'maxLength' && <p className='form__alert'>El contacto No debe tener más de 10 números</p>}
-                    {errors?.contact?.type === 'minLength' && <p className='form__alert'>El contacto debe tener al menos 5 números</p>}
-                    {errors?.contact?.type === 'pattern' && <p className='form__alert'>Debe ser un numero de telefono</p>}
-                    <input type='text' id='contact' placeholder='contacto'
-                        {...register('contact', {
-                            required: true, minLength: 5, maxLength: 10, pattern: {
-                                value: /^\d+$/,
-                                message: 'Debe ser un numero de telefono'
-                            }
-                        })}
-                    />
+                    <Controller
+                        name='contact'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({field, fieldState : {error}}) => {
+                            return (
+                                <PhoneInput
+                                    
+                                    {...field}
+                            
+                                    id='contact'
+                                    placeholder='Escribe tu número de telefono'
+                                    onChange={(e) => {
+                                        // Actualiza el valor del formulario
+                                        field.onChange(e);
+                                    }}
+                                    value={field.value}
+                                    defaultCountry='AR'
+                                />
+                            )
+                        }}
+                     />
                 </div>
                 {/* End form field */}
                 <div className='form__field'>
@@ -281,4 +306,8 @@ const Form = ({ setPost, post }) => {
     )
 }
 
+Form.propTypes = {
+    post: proptypes.object.isRequired,
+    setPost: proptypes.func.isRequired
+}
 export default Form

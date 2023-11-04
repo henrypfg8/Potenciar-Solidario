@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-
-import React from 'react'
 import { Link } from 'react-router-dom';
+import proptypes from 'prop-types';
 
 const FormView = ({ post, setPost }) => {
 
@@ -47,6 +44,11 @@ const FormView = ({ post, setPost }) => {
 
         </div>
     )
+}
+
+FormView.propTypes = {
+    post: proptypes.object.isRequired,
+    setPost: proptypes.func.isRequired
 }
 
 export default FormView

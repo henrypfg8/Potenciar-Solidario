@@ -34,6 +34,38 @@ const getProfile =  id => {
         }
     }
 };
+
+const updateProfile = (id, user) => {
+    return async dispatch => {
+        try {
+            const { data } = await axios.put(`http://localhost:19789/users/${id}`,{ ...user});
+            dispatch({ type: types.UPDATE_PROFILE, payload: data });
+            return Promise.resolve(data);
+        }
+        catch (error) {
+            console.log(error.response.data);
+           
+            return Promise.reject(error);
+        }
+    }
+
+}
+const deleteProfile = (id) => {
+    return async dispatch => {
+        try {
+            const { data } = await axios.delete(`http://localhost:19789/users/${id}`);
+            dispatch({ type: types.DELETE_PROFILE});
+            return Promise.resolve(data);
+        }
+        catch (error) {
+            console.log(error.response.data);
+         
+            return Promise.reject(error);
+        }
+    }
+
+
+}
 const loginUser = (email, password) => {
     return async dispatch => {
         try {
@@ -67,6 +99,20 @@ const  loginWithGoogleAction = (token)=> {
 
 }
 
+const logoutAction = () => {
+    return  dispatch => {
+        try {
+         
+            dispatch({ type: types.LOGOUT });
+            return Promise.resolve();
+        }
+        catch (error) {
+            console.log(error);
+            return Promise.reject(error);
+        }
+    }
+
+}
 // const userAuthentificated = () => {
 //     return async dispatch => {
 //         try {
@@ -89,7 +135,10 @@ export {
     registerUser,
     getProfile,
     loginUser,
-    loginWithGoogleAction
+    loginWithGoogleAction,
+    logoutAction,
+    updateProfile,
+    deleteProfile,
 
     // userAuthentificated
 }

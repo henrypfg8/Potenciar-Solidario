@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import CardDashboard from './CardDashboard'
+import proptypes from 'prop-types'
 
-const Dashboard = ({ listSearchPost }) => {
+const Dashboard = ({ listSearchPost, }) => {
     const { posts } = useSelector(state => state.posts);
 
 
@@ -28,6 +28,7 @@ const Dashboard = ({ listSearchPost }) => {
                             <CardDashboard
                                 key={post.id}
                                 post={post}
+                                
                             />
                         )
                     })}
@@ -41,4 +42,8 @@ const Dashboard = ({ listSearchPost }) => {
     )
 }
 
+Dashboard.propTypes = {
+    listSearchPost: proptypes.array.isRequired,
+    userProfile: proptypes.object.isRequired
+}
 export default Dashboard

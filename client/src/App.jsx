@@ -19,7 +19,8 @@ import SearchBar from "./components/SearchBar/SearchBar";
 import PostDetailView from "./views/PostDetailView/PostDetailView";
 //
 import Admin from "./views/admin/Admin";
-
+import ProfileView from "./views/ProfileView/ProfileView";
+import DrawerProfile from "./components/Profile/DrawerProfile";
 import QuestionCreateView from "./views/QuestionCreateView/QuestionCreateView";
 
 function App() {
@@ -51,7 +52,9 @@ function App() {
 
   return (
     <div className="App">
+            <DrawerProfile />
       <Header isScrolled={isScrolled} />
+
       <PageHeader />
 
       {pathname === "/" || pathname === "/foro" ? <SearchBar /> : null}
@@ -70,6 +73,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/profile" element={<ProfileView />} />
       </Routes>
     </div>
   );

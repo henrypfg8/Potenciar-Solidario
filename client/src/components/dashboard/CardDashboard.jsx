@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef} from 'react'
-
+import  { useState} from 'react'
+import proptypes from 'prop-types'
 
 const CardDashboard = ({post}) => {
   const [addPostToList, setAddPostToList] = useState(false);
@@ -40,6 +40,11 @@ const CardDashboard = ({post}) => {
         </div>
     </div>
   )
+}
+
+CardDashboard.propTypes = {
+  post: proptypes.object.isRequired,
+
 }
 
 export default CardDashboard

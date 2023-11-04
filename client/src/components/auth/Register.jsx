@@ -1,29 +1,30 @@
-import { useForm } from 'react-hook-form' // validaciones con react-hook-form
-import './auth.css';
 import { useEffect, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form' // validaciones con react-hook-form
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser, } from '../../Redux/auth/AuthActions';
 import Swiper from '../Form/Swiper';
 import { uploadImageCloudinary } from '../Form/cloudinary';
 import { useNavigate } from 'react-router-dom';
-
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
+import { getCodeList } from 'country-list';
+import Select from 'react-select';
+import './auth.css';
 
 const Register = () => {
     const { isAuthenticated } = useSelector(state => state.auth)
     const [success, setSuccess] = useState(false);
-
     const [errorRegister, setErrorRegister] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { register, handleSubmit, formState: { errors }, reset } = useForm(); // Configuración del hook form
+    const { register, handleSubmit, formState: { errors }, reset, control } = useForm(); // Configuración del hook form
     const timeouts = [];
     const token = localStorage.getItem('token');
-    useEffect(() => {
-        if (isAuthenticated || token) {
-            navigate('/')
-        }
-
-    }, [isAuthenticated])
+    // Opciones para el select de paises
+    const countries = Object.values(getCodeList());
+    const options = countries.map((country) => (
+        { value: country, label: country}
+    ))
     // Función para validar que la fecha es de alguien que tiene al menos 18 años
     const validateAge = (value) => {
         const inputDate = new Date(value);
@@ -36,6 +37,13 @@ const Register = () => {
 
         return inputDate <= minDate || "Debe tener al menos 18 años";
     }
+    useEffect(() => {
+        if (isAuthenticated || token) {
+            navigate('/')
+        }
+
+    }, [isAuthenticated, navigate, token])
+
 
 
     const onSubmit = async user => { // Función que se ejecuta al hacer submit
@@ -75,11 +83,12 @@ const Register = () => {
         reset();
         return
     };
+
     useEffect(() => {
         return () => {
             timeouts.forEach(clearTimeout); // Limpia todos los timeouts
         };
-    }, []);
+    }, [timeouts]);
 
     
     return (
@@ -92,7 +101,6 @@ const Register = () => {
             <form action="" method='post' onSubmit={handleSubmit(onSubmit)} className='auth__form' autoCorrect='off'>
                 {errorRegister ? <p className='auth__error'>El usuario ya existe</p> : ''}
                 {success && (<p className='auth__sucesss'>Cuenta creada con éxito, Ahora inicia sesión </p>)}
-
                 {/* campo para el nombre */}
                 <div>
                     <label className='auth__label' htmlFor="name">nombre</label>
@@ -169,19 +177,31 @@ const Register = () => {
                 {/* Campo para el telefono */}
                 <div>
                     <label className='auth__label' htmlFor="phone">Número de telefono</label>
-                    {errors?.phone?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
-                    {errors?.phone?.type === 'pattern' && <p className='auth__error'>Debe ser un número de telefono</p>}
-                    {errors?.phone?.type === 'maxLength' && <p className='auth__error'>Tu telefono debe ser máximo de 8 digitos</p>}
-                    <input className='auth__input'
-                        type="text" {...register('phone', {
-                            required: true, maxLength: 8, pattern: { // Validación de telefono
-                                value: /^\d+$/,
-                                message: "Debe ser un numero de telefono"
-                            }
-                        })}
-                        id='phone' placeholder='Número de telefono' />
-                </div>
+                    {errors?.phone?.type === 'required' && <p className='auth__error'>El número de telefono es obligatorio</p>}
 
+                    <Controller
+                        name='phone'
+                        control={control}
+                        rules={{ required: true }}
+                        render={({field, fieldState : {error}}) => {
+                            return (
+                                <PhoneInput
+                                    
+                                    {...field}
+                                    className='auth__input'
+                                    id='phone'
+                                    placeholder='Escribe tu número de telefono'
+                                    onChange={(e) => {
+                                        // Actualiza el valor del formulario
+                                        field.onChange(e);
+                                    }}
+                                    value={field.value}
+                                    defaultCountry='AR'
+                                />
+                            )
+                        }}
+                     />
+                </div>
                 {/* Campo para el DNI */}
                 <div>
                     <label className='auth__label' htmlFor="DNI">DNI</label>
@@ -215,18 +235,31 @@ const Register = () => {
 
                 {/* Campo de  lugar de residencia*/}
                 <div>
-                    <label className='auth__label' htmlFor="habitual_location_of_residence">Lugar de recidencia</label>
-                    {errors?.habitual_location_of_residence?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
-                    {errors?.habitual_location_of_residence?.type === 'minLength' && <p className='auth__error'>Tu lugar de residencia debe ser minímo de 2 caracterés</p>}
-                    {errors?.habitual_location_of_residence?.type === 'maxLength' && <p className='auth__error'>Tu lugar de residencia debe ser máximo de 70 caracterés</p>}
-                    <input className='auth__input'
-                        type="text" {...register('habitual_location_of_residence', { required: true, minLength: 2, maxLength: 70 })}  // Validación de lugar de residencia
-                        id='habitual_location_of_residence' placeholder='Lugar de residencia' />
+                    <label className='auth__label' htmlFor='habitual_location_of_residence'>Lugar de residencia</label>   
+                    <Controller
+                        name="habitual_location_of_residence"
+                        control={control}
+                        rules={{ required: true }} // Reglas de validación con mensaje de error
+                        render={({ field, fieldState: { error } }) => (
+                            //console.log(error),
+                            <Select
+                                className='auth__input'
+                                {...field}
+                                options={options}
+                                id='habitual_location_of_residence'
+                                onChange={(e) => {
+                                    // Actualiza el valor del formulario
+                                    field.onChange(e.value);
+                                }}
+                                value={options.find(option => option.value === field.value)}
+                            />
+                        )}
+                    />
                 </div>
 
                 {/* Campo de  area de localizacion */}
                 <div>
-                    <label className='auth__label' htmlFor="geographical_area_residence">Are de Localización</label>
+                    <label className='auth__label' htmlFor="geographical_area_residence">area de Localización</label>
                     {errors?.geographical_area_residence?.type === 'maxLength' && <p className='auth__error'>Tu area de localización debe ser máximo de 50 caracterés</p>}
                     <input className='auth__input'
                         type="text" {...register('geographical_area_residence', { maxLength: 50 })}  // Opcional

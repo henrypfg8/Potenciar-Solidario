@@ -46,7 +46,7 @@ const questionReducer = (state = initialState, action) => {
         case CLEAR_QUESTION_DETAIL:
             return {
                 ...state,
-                questionDetail: null,
+                questionDetail: [],
             };
 
         case UPDATE_QUESTION:

@@ -76,7 +76,7 @@
     border-bottom: 1px solid rgba(126, 126, 126, 0.212);
     margin: 1rem;
     padding: 0.6rem;    
-    
+    width: 50vw;
     background-color: rgba(126, 126, 126, 0.212);
     
 }
@@ -190,5 +190,15 @@
     }
     .response{
         font-size: 0.6rem;
+        width: 80vw;
+        width: 100%;
     }
+}
+
+@media (max-width: 768px){
+    .response{
+        font-size: 0.7rem;
+        width: 70vw;
+    }
+    
 }

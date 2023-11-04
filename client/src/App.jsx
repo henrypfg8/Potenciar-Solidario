@@ -2,7 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "./Redux/actions/postsActions";
-import { getCategories } from "./Redux/actions/categoriesActions";
+import { getCategories, getForumCategories } from "./Redux/actions/categoriesActions";
 import { getOngs } from "./Redux/actions/ongsActions";
 //
 import "./App.css";
@@ -43,6 +43,7 @@ function App() {
     dispatch(getPosts());
     dispatch(getOngs());
     dispatch(getCategories());
+    dispatch(getForumCategories());
 
     return () => {
       root.removeEventListener("scroll", scrollHandler);

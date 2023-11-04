@@ -52,7 +52,7 @@ function App() {
 
   return (
     <div className="App">
-            <DrawerProfile />
+      <DrawerProfile /> {/* Comentar si es necesario*/}
       <Header isScrolled={isScrolled} />
 
       <PageHeader />

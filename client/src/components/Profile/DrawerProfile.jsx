@@ -45,13 +45,22 @@ const DrawerProfile = () => {
                   <MenuOutlined />
                 </Button  > : (
                     <div style={{
-                        position: 'absolute',
-                        top: '0',
-                        right: '0',
-                        zIndex: '1000'
+              
 
                     }}>
-                        {location.pathname !== '/login' && location.pathname !== '/register' && <NavLink to='/login'><Button>Iniciar sesión</Button></NavLink>}
+                        {location.pathname !== '/login' && location.pathname !== '/register' && <NavLink to='/login'><Button style={{
+                                                position: 'absolute',
+                                                top: '2rem',
+                                                right: '0.5rem',
+                                                zIndex: '1000',
+                                                color : '#005692',
+                                                border: '2px solid #005692',
+                                                width: '60px',
+                                                height: '30px',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center'
+                        }}>Login</Button></NavLink>}
                     </div>
                 )
             }

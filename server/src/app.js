@@ -12,6 +12,7 @@ const server = express();
 server.name = "API";
 const httpServer = createServer(server);
 const io = new Server(httpServer);
+global.io = io;
 
 io.on("connection", (socket) => {
   console.log("Un usuario se conecto por WebSockets");

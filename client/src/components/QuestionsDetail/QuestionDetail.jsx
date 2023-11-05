@@ -1,55 +1,41 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getQuestionDetail } from "../../Redux/actions/questionsActions";
-import { io } from "socket.io-client";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import io from 'socket.io-client'
+import { useDispatch, useSelector } from 'react-redux';
+import swal from 'sweetalert';
 import { jwtDecode } from "jwt-decode";
-import swal from "sweetalert";
-import { createAnswer } from "../../Redux/actions/answersActions";
+import { createAnswer } from '../../Redux/actions/answersActions';
+import { useNavigate } from 'react-router';
+import { getQuestionDetail } from '../../Redux/actions/questionsActions';
 
-function QuestionDetail() {
+const socket = io('/')
+
+export function QuestionDetail() {
+
     const { id } = useParams();
-    const questionDetail = useSelector((state) => state.questions.questionDetail);
-    const socket = io();
+    const questionDetail = useSelector(state => state.questions.questionDetail)
 
-    
-        dispatch(getQuestionDetail(id));
+    const dispatch = useDispatch()
+    const [userId, setUserId] = useState('')
+    const { isAuthenticated, token } = useSelector(state => state?.auth)
+    const [view, setView] = useState({});
+    const navigate = useNavigate()
+    const [messages, setMessages] = useState([])
+    const [message, setMessage] = useState('');
+    const [decodify, setDecodify] = useState('')
+    const [answer, setAnswer] = useState({
+        answer: '',
+        userId: jwtDecode(token)?.id || '',
+        questionId: ''
+    })
+
+    useEffect(() => {
+        dispatch(getQuestionDetail(id))
         // console.log(questionDetail);
-
-        const dispatch = useDispatch();
-        const [userId, setUserId] = useState('')
-        const { isAuthenticated, token } = useSelector(state => state?.auth)
-        const [view, setView] = useState({});
-        const navigate = useNavigate()
-        const [messages, setMessages] = useState([])
-        const [message, setMessage] = useState({});
-        const [decodify, setDecodify] = useState('')
-        const [answer, setAnswer] = useState({
-            answer: '',
-            userId: jwtDecode(token)?.id || '',
-            questionId: ''
-        })
-        console.log(message);
-        console.log(messages);
-
-        useEffect(() => {
-            dispatch(getQuestionDetail(id))
-            // console.log(questionDetail);
-            socket?.on(`question_${id}`, () => {
-                dispatch(getQuestionDetail(id));
-            });
-
-            return () => {
-                socket?.removeAllListeners(`question_${id}`);
-            };
-        }, []);
-    
+    }, [])
     const handleChange = (event) => {
-                setMessage((state) => ({
-                    ...state,
-                    message:[event.target.value]
-
-                }))
+        setMessage(event.target.value)
+        
     }
 
     const handleAnswers = (event) => {
@@ -92,7 +78,6 @@ function QuestionDetail() {
         socket.emit('message', message)
 
     }
-    console.log(message);
     useEffect(() => {
         if (!token || !isAuthenticated) {
             swal("Necesita loguearse para poder realizar una pregunta")
@@ -108,16 +93,8 @@ function QuestionDetail() {
         }
     }, [])
     const receiveMessage = (message) => {
-
-        setMessages((state) => ({
-            ...state,
-
-            message
-
-
-        }));
+        setMessages((state) => ([...state,message]));
     }
-    console.log(receiveMessage);
     useEffect(() => {
         socket.on("message", receiveMessage);
 
@@ -140,13 +117,11 @@ function QuestionDetail() {
             console.log(message);
         });
     }, [])
-
-
     if (questionDetail) {
         dateQuestion = questionDetail?.createdAt?.split('T')[0]
     }
 
-
+console.log(messages);
     return {
         userId,
         dateQuestion,
@@ -162,7 +137,4 @@ function QuestionDetail() {
         handleSubmit,
         handleView
     }
-
 }
-
-export default QuestionDetail;

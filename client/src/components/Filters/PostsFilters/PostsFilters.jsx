@@ -10,7 +10,9 @@ import {
   setPostsFilters,
 } from "../../../Redux/actions/postsActions";
 //
-import Posts_DateFilters from './Posts_DateFilters/Posts_DateFilters';
+import Posts_DateFilters from "./Posts_DateFilters/Posts_DateFilters";
+//
+import { format } from "date-fns";
 
 export default function PostFilters() {
   const dispatch = useDispatch();
@@ -22,32 +24,32 @@ export default function PostFilters() {
   const [filtersLOCAL, setFiltersLOCAL] = useState({
     category: "",
     ong: "",
-    fromDate: "",
-    untilDate: "",
+    fromDate: '',
+    untilDate: '',
   });
 
+  //
   const handleFilters = (e) => {
     const { name, value } = e;
     const filtersCOPY = { ...filters };
     filtersCOPY[name] = value;
-
     dispatch(getPostsFiltered(filtersCOPY));
-
     dispatch(setPostsFilters(filtersCOPY));
-
     setFiltersLOCAL(filtersCOPY);
   };
-  const handleDateFilters = (e) => {
-    const { name, value } = e.target;
-    const filtersCOPY = { ...filters };
-    filtersCOPY[name] = value;
-
-    if (value > "2023-01-01") dispatch(getPostsFiltered(filtersCOPY));
-
-    dispatch(setPostsFilters(filtersCOPY));
-
-    setFiltersLOCAL(filtersCOPY);
+  const handleFromDate = (date) => {
+    const fromDate = format(date, 'yyyy-MM-dd');
+    setFiltersLOCAL({...filters, fromDate: fromDate})
+    dispatch(setPostsFilters({...filters, fromDate: fromDate}));
+    dispatch(getPostsFiltered({...filters, fromDate: fromDate}));
   };
+  const handleUntilDate = (date) => {
+    const untilDate = format(date, 'yyyy-MM-dd');
+    setFiltersLOCAL({...filters, untilDate: untilDate});
+    dispatch(setPostsFilters({...filters, untilDate: untilDate}))
+    dispatch(getPostsFiltered({...filters, untilDate: untilDate}));
+  };
+  //
 
   const categoryOptions = categories.map((cat) => ({
     label: cat.name,
@@ -103,9 +105,12 @@ export default function PostFilters() {
         placeholder="Usuarios (todavia no estan)"
       />
 
-
-     <Posts_DateFilters />
-      
+      <Posts_DateFilters
+        handleFromDate={handleFromDate}
+        handleUntilDate={handleUntilDate}
+        fromDate={filtersLOCAL.fromDate}
+        untilDate={filtersLOCAL.untilDate}
+      />
     </div>
   );
 }

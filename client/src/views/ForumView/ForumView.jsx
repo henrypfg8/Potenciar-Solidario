@@ -14,9 +14,6 @@ function ForumView({questions}) {
             setGetQuestion(questions)
         }
     },[questions])
-
-    // getQuestion = 
-    console.log(getQuestion);
     return (
         <div>
             {

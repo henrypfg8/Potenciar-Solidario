@@ -14,7 +14,6 @@ function Forum(){
             dispatch(clearQuestionDetail())
         }
     },[])
-    
     useEffect(() => {
         dispatch(getQuestions())
         

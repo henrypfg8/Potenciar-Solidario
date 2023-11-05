@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostDetail, clearPostDetail } from '../../Redux/actions/postsActions';
+//
 
 
 const Detail = () => {
@@ -52,6 +53,9 @@ const Detail = () => {
       <time dateTime={creationDate}>
         Fecha de alta: {creationDate}
       </time>
+
+
+
     </div>
   );
 };

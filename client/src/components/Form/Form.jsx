@@ -2,10 +2,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createPost, } from '../../Redux/actions/postsActions'
 import { useNavigate } from 'react-router-dom';
 import Swiper from './Swiper';
-import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { uploadImageCloudinary } from './cloudinary';
-import { useForm, Controller, get } from 'react-hook-form'
+import { useForm, Controller,} from 'react-hook-form'
 import Select from 'react-select';
 import PhoneInput from 'react-phone-number-input'
 import proptypes from 'prop-types'
@@ -15,14 +14,9 @@ const Form = ({ setPost, post }) => {
     const ongs = useSelector(state => state.ongsAndCategories.ongs);
     const categories = useSelector(state => state.ongsAndCategories.categories);
     const [errorPost, setErrorPost] = useState(false);
-    const [userId, setUserId] = useState('')
     const { isAuthenticated } = useSelector(state => state.auth);
     const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit, reset, control } = useForm();
-
-
-
-
 
     //Obtener la fecha actual
     const fecha = new Date().toLocaleDateString()
@@ -33,20 +27,18 @@ const Form = ({ setPost, post }) => {
     const options = categories.map(cat => ({ value: cat.name, label: cat.name }));
     const options2 = ongs.map(ong => ({ value: ong.nombre, label: ong.nombre }));
 
-
     const [imgFile, setImgFile] = useState(null);
     const [success, setSuccess] = useState(false);
-    const timeouts = []; // Array de timeouts para limpiarlos en el useEffect
+
+    // Array de timeouts para limpiarlos en el useEffect
+    const timeouts = []; 
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token || !isAuthenticated) {
             // Si no hay token o el estado no está autenticado, redirigir a login
             navigate('/login');
-        } else {
-            const token = localStorage.getItem('token')
-            const decodedToken = jwtDecode(token);
-            setUserId(decodedToken)
+            return
         }
     }, [isAuthenticated, navigate])
 
@@ -113,8 +105,6 @@ const Form = ({ setPost, post }) => {
 
     // Actualizar el estado con los datos del formulario
     const handleChange = (e) => {
-
-        //console.log(error)
         const { name, value } = e.target;
 
         setPost(prevState => ({

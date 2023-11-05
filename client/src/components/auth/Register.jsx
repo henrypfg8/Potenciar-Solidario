@@ -19,7 +19,9 @@ const Register = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset, control } = useForm(); // Configuración del hook form
+    // Timeouts para los mensajes de error y éxito
     const timeouts = [];
+    // Obtener el token del localstorage
     const token = localStorage.getItem('token');
     // Opciones para el select de paises
     const countries = Object.values(getCodeList());
@@ -27,6 +29,7 @@ const Register = () => {
         { value: country, label: country}
     ))
 
+    // Redireccionar al home si el usuario está autenticado
     useEffect(() => {
         if (isAuthenticated || token) {
             navigate('/')
@@ -36,16 +39,16 @@ const Register = () => {
 
 
 
-    const onSubmit = async user => { // Función que se ejecuta al hacer submit
+    const onSubmit = async user => { // Función para registrar el usuario
 
         const data = new FormData();
         data.append('file', user.profile_picture[0]);
         data.append('upload_preset', 'photo_users');
         const result = await uploadImageCloudinary(data); // Subir la imagen a cloudinary
         user.profile_picture = result;
-        
 
-        dispatch(registerUser(user))
+
+        dispatch(registerUser(user)) //Hacer el dispatch de la acción para registrar el usuario
             .then(() => {
                 setSuccess(true);
                 setErrorRegister(false);

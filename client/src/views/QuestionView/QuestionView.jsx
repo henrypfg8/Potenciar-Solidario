@@ -67,14 +67,12 @@
                                             {view[index] && <div className={style.comment}>
                                                 <ul>
                                                     {messages.map((message, index) => {
-                                                        return(
-                                                            <li key={index}>{message.from}:{message.body}</li>
-                                                        )
+                                                       console.log(message);
                                                     } )}
                                                 </ul>
                                                 <p>Comentar</p>
-                                                <textarea type="text" cols="6" rows="5" onChange={() => handleChange(event)} />
-                                                <button onClick={() => handleSubmit(message)}>Añadir comentario</button>
+                                                <textarea type="text" cols="6" rows="5" onChange={() => handleChange(event, indexedDB)} />
+                                                <button onClick={() => handleSubmit(message, index)}>Añadir comentario</button>
                                             </div>}
                                         </div>
                                     )

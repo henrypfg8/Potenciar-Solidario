@@ -21,20 +21,27 @@ export function QuestionDetail() {
     const [view, setView] = useState({});
     const navigate = useNavigate()
     const [messages, setMessages] = useState([])
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState({});
     const [decodify, setDecodify] = useState('')
     const [answer, setAnswer] = useState({
         answer: '',
         userId: jwtDecode(token)?.id || '',
         questionId: ''
     })
+    console.log(message);
+    console.log(messages);
 
     useEffect(() => {
         dispatch(getQuestionDetail(id))
         // console.log(questionDetail);
     }, [])
     const handleChange = (event) => {
-        setMessage(event.target.value)
+        setMessage({
+            ...message,
+        [event.target.value]
+            
+           
+ })
     }
 
     const handleAnswers = (event) => {
@@ -45,7 +52,6 @@ export function QuestionDetail() {
         })
     }
     const answersSubmit = (answer) => {
-        console.log(answer)
         if (answer.answer.length < 20) {
             swal('Debe tener minimo 20 caracteres la respuesta')
         } else {
@@ -78,6 +84,7 @@ export function QuestionDetail() {
         socket.emit('message', message)
 
     }
+    console.log(message);
     useEffect(() => {
         if (!token || !isAuthenticated) {
             swal("Necesita loguearse para poder realizar una pregunta")
@@ -94,8 +101,15 @@ export function QuestionDetail() {
     }, [])
     const receiveMessage = (message) => {
 
-        setMessages((state) => [...state, message]);
+        setMessages((state) => ({
+            ...state,
+            
+                message
+            
+            
+        }));
     }
+    console.log(receiveMessage);
     useEffect(() => {
         socket.on("message", receiveMessage);
 

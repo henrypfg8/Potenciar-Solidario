@@ -19,14 +19,17 @@ const FormProfile = ({ userProfile, setSuccess }) => {
     const options = countries.map((country) => (
         { value: country, label: country }
     ))
+    // Función para abrir el modal
     const showModal = () => {
         setIsModalOpen(true);
     };
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    const onSubmit = handleSubmit((data) => {
-        dispatch(updateProfile(userProfile.id, { ...data, password: userProfile.password }))
+
+    // Función para actualizar los datos del perfil
+    const onSubmit = handleSubmit((data) => { // Función para actualizar los datos del perfil
+        dispatch(updateProfile(userProfile.id, { ...data, password: userProfile.password })) 
             .then(() => {
                 setIsModalOpen(false);
                 setSuccess(true)
@@ -38,35 +41,24 @@ const FormProfile = ({ userProfile, setSuccess }) => {
     })
     return (
         <>
-            <Button style={{
-                backgroundColor: '#fff',
-                color: '#005692',
-                border: '1px solid #005692',
-                marginTop: '2rem'
-
-            }} onClick={showModal}>
+            <Button className='profile__button--update' onClick={showModal}>
                 Editar perfil
             </Button>
 
-            <Modal title="Actualiza tu datos" open={isModalOpen} onCancel={handleCancel} cancelText='Cancelar' cancelButtonProps={{
-                style: {
-                    backgroundColor: '#fff',
-                    color: 'red',
-                    border: '1px solid red',
-                    width: '100%'
-                }
-            }} okButtonProps={{
-                style: {
-                    display: 'none'
-                }
-            }}>
+            <Modal 
+                title="Actualiza tu datos" 
+                open={isModalOpen} 
+                onCancel={handleCancel} 
+                cancelText='Cancelar' 
+                cancelButtonProps={{
+                    style: { backgroundColor: '#fff', color: 'red', border: '1px solid red', width: '100%' }}} 
+                okButtonProps={{ style: { display: 'none'}}}>
+
+                {/* Formulario para actualizar los datos del perfil */}
                 <form onSubmit={onSubmit} className='profile__form'>
                     {/* Campo para el nombre */}
                     <div className='profile__field'>
                         <label className='profile__label'>Nombre</label>
-                        {/* {errors?.name?.type === 'required' && <p>El nombre es requerido</p>}
-                        {errors?.name?.type === 'minLength' && <p>El nombre debe tener al menos 2 caracteres</p>}
-                        {errors?.name?.type === 'maxLength' && <p>El nombre debe tener menos de 50 caracteres</p>} */}
                         <div>
                             {errors?.name?.type === 'required' && <p className='profile__alert'>El nombre es requerido</p>}
                             {errors?.name?.type === 'minLength' && <p className='profile__alert'>El nombre debe tener al menos 2 caracteres</p>}
@@ -80,7 +72,6 @@ const FormProfile = ({ userProfile, setSuccess }) => {
                     {/* Campo para el apellido */}
                     <div className='profile__field'>
                         <label className='profile__label'>Apellido</label>
-                        {/* {errors?.name?.type === 'required' && <p>El nombre es requerido</p>} */}
                         <div>
                             {errors?.lastname?.type === 'required' && <p className='profile__alert'>El apellido es requerido</p>}
                             {errors?.lastname?.type === 'minLength' && <p className='profile__alert'>El apellido debe tener al menos 2 caracteres</p>}
@@ -112,7 +103,6 @@ const FormProfile = ({ userProfile, setSuccess }) => {
                     <div className='profile__field'>
                         <label className='profile__label' htmlFor="birth_date">Fecha de nacimiento</label>
                         <div>
-
                             <div>
                                 {errors?.birth_date?.type === 'required' && <p className='profile__alert'>La fecha de nacimiento es requerida</p>}
                                 {errors?.birth_date?.type === 'validate' && <p className='profile__alert'>Debes ser mayor de 18 años</p>}
@@ -125,9 +115,7 @@ const FormProfile = ({ userProfile, setSuccess }) => {
                                         validate: validateAge
                                     })} />
                             </div>
-
                         </div>
-
                     </div>
                     {/* campo para el telefono */}
                     <div className='profile__field'>
@@ -145,7 +133,7 @@ const FormProfile = ({ userProfile, setSuccess }) => {
                                     return (
                                         <PhoneInput
                                             addInternationalOption={true}
-                                               
+
                                             {...field}
                                             className='auth__input'
                                             id='phone'
@@ -184,7 +172,7 @@ const FormProfile = ({ userProfile, setSuccess }) => {
                                 rules={{ required: true }} // Reglas de validación con mensaje de error
                                 render={({ field, fieldState: { error } }) => (
                                     //console.log(error),
-                                    <Select
+                                    <Select /// Componente de React Select
                                         className='auth__input'
                                         {...field}
                                         options={options}
@@ -193,8 +181,8 @@ const FormProfile = ({ userProfile, setSuccess }) => {
                                             // Actualiza el valor del formulario
                                             field.onChange(e.value);
                                         }}
-                                        defaultInputValue={userProfile.habitual_location_of_residence}
-                                        value={options.find(option => option.value === field.value)}
+                                        defaultInputValue={userProfile.habitual_location_of_residence} // Valor inicial del input
+                                        value={options.find(option => option.value === field.value)} // Valor seleccionado
                                     />
                                 )}
                             />

@@ -38,7 +38,8 @@ const DataProfile = ({ userProfile,success, setSuccess }) => {
 }
 
 
-DataProfile.propTypes = {
+
+DataProfile.propTypes = { 
   userProfile: proptypes.object.isRequired,
   success: proptypes.bool.isRequired,
   setSuccess: proptypes.func.isRequired

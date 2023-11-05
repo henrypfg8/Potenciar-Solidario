@@ -35,7 +35,7 @@ const FormView = ({ post, setPost }) => {
             <p className='publication__description'>{post.description}</p>
             <p className='publication__contact'>{post.contact && 'Contacto: '}<span>{post.contact}</span></p>
             <p className='publication__p'>{post.organization && 'Nombre de la organización: '}<span>{post.organization}</span></p>
-            <p className='publication__p'>{post.linkInscription && 'Enlace para la inscripción: '} <span  className='post__link'>{post.linkInscription}</span> </p>
+            <p className='publication__p'>{post.registrationLink && 'Enlace para la inscripción: '} <span  className='post__link'>{post.registrationLink}</span> </p>
             {post.url && (
                 <div className='publication__btn'>
                     <Link to={`${post.url}`}>Más infomación</Link>

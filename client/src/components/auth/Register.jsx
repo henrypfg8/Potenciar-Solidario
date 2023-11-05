@@ -43,7 +43,7 @@ const Register = () => {
         data.append('upload_preset', 'photo_users');
         const result = await uploadImageCloudinary(data); // Subir la imagen a cloudinary
         user.profile_picture = result;
-
+        
 
         dispatch(registerUser(user))
             .then(() => {

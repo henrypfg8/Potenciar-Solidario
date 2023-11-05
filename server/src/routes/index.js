@@ -44,6 +44,7 @@ const {FilterByDate} = require("../handlers/Publication/FilterByDateHandler.js")
 const { searchPublication } = require("../handlers/searchPublicationH");
 const { applyFilters } = require('../handlers/Publication/applyFilters');
 const { applyFiltersToQuestions } = require("../handlers/Question/applyFiltersToQuestions"); 
+const { HandlerPostLike } = require("../handlers/Publication/PostLike.js");
 
 
 const router = Router();
@@ -79,6 +80,7 @@ router.delete("/users/:id", DeleteUserHandler);
 router.get("/posts", HandlerGetPublications);
 router.get("/posts/:id", HandlerGetPublications);
 router.post("/posts", createPublicationHandler);
+router.post("/posts/like", HandlerPostLike);
 router.put("/posts/:id", PutPublicationHandler);
 router.delete("/posts/:id", deletePublication);
 

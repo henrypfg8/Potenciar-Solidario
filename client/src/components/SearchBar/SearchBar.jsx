@@ -13,8 +13,9 @@ export default function SearchBar() {
   const posts = useSelector((state) => state.posts.posts);
   const filters = useSelector((state) => state.posts.postsFilters);
 
+
+
   function changeHandler({ target: { value } }) {
-    
 
     if (value === "") dispatch(getPostsFiltered(filters));
     else {

@@ -22,7 +22,7 @@ const Post = (props) => {
   const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(false);
 
-  const start_date = startDate.split("-");
+  const start_date = startDate?.split("-");
   const months = {
     1: "Enero",
     2: "Febrero",
@@ -81,7 +81,6 @@ const Post = (props) => {
         <h2 className={Styles.organization}> Organización: </h2>
         <h2 className={Styles.organizationName}>{organization}</h2>
       </div>
-
 
       <div className={Styles.Post__description}>
         {image && <img className={Styles.image} src={image} alt="imagen" />}

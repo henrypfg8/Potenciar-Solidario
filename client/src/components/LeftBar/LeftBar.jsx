@@ -1,80 +1,12 @@
 import Styles from "./leftBar.module.css";
 //
-import { useLocation, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from 'react'
+import { Link, useLocation } from "react-router-dom";
 //
-import Select from "react-select";
-//
-import { getPostsFiltered, setPostsFilters } from '../../Redux/actions/postsActions';
+import PostFilters from "../Filters/PostsFilters/PostsFilters";
+import ForumFilters from "../Filters/ForumFilters/ForumFilters";
 
 export default function LeftBar() {
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
-
-  const ongs = useSelector((state) => state.ongsAndCategories.ongs);
-  const categories = useSelector((state) => state.ongsAndCategories.categories);
-
-  const filters = useSelector(state => state.posts.postsFilters);
-  const [ filtersLOCAL, setFiltersLOCAL ] = useState({
-    category: '',
-    ong: '',
-    fromDate: '',
-    untilDate: ''
-  });
-  
-
-  const handleFilters = (e) => {
-    const { name, value } = e;
-    const filtersCOPY = {...filters}
-    filtersCOPY[name] = value;
-
-    dispatch(getPostsFiltered(filtersCOPY));
-
-    dispatch(setPostsFilters(filtersCOPY));
-
-    setFiltersLOCAL(filtersCOPY)
-  }
-  const handleDateFilters = (e) => {
-    const { name, value } = e.target;
-    const filtersCOPY = {...filters};
-    filtersCOPY[name] = value;
-
-    if (value > '2023-01-01') dispatch(getPostsFiltered(filtersCOPY))
-
-    dispatch(setPostsFilters(filtersCOPY));
-    
-    setFiltersLOCAL(filtersCOPY)
-  }
- 
-  const categoryOptions = categories.map((cat) => ({
-    label: cat.name,
-    value: cat.name,
-    name: 'category'
-  }));
-  categoryOptions.unshift({
-    label: "Todas las categorias",
-    value: "",
-    name: 'category'
-  });
-
-  const ongOptions = Array.from(new Set(ongs.map((ong) => ong.nombre))).map(
-    (nombre) => ({
-      label: nombre,
-      value: nombre,
-      name: 'ong'
-    })
-  );
-  ongOptions.unshift({
-    label: "Todas las organizaciones",
-    value: "",
-    name: 'ong'
-  });
-
-  useEffect(() => {
-    setFiltersLOCAL(filters);
-  }, [filters])
- 
 
   //////////////////////////////////////////////////////
 
@@ -109,53 +41,7 @@ export default function LeftBar() {
         )}
       </div>
 
-      <div className={Styles.LeftBar__Buttons} id={Styles.LeftBar__Filters}>
-        <h3>Filtros de búsqueda</h3>
-
-        <Select
-          className={Styles.select}
-          options={categoryOptions}
-          defaultValue={categoryOptions[0]}
-          isSearchable={true}
-          menuPlacement="top"
-          placeholder="Categorias"
-          onChange={handleFilters}
-        />
-        <Select
-          className={Styles.select}
-          options={ongOptions}
-          defaultValue={ongOptions[0]}
-          isSearchable={true}
-          menuPlacement="top"
-          placeholder="Organizaciones"
-          onChange={handleFilters}
-        />
-        <Select className={Styles.select} />
-
-        <div className={Styles.Filters__date}>
-          <label>
-            Desde:
-            <input
-              type="date"
-              name="fromDate"
-              value={filtersLOCAL.fromDate}
-              onChange={handleDateFilters}
-              className={Styles.dateInput}
-            ></input>
-          </label>
-
-          <label>
-            Hasta:
-            <input
-              type="date"
-              name="untilDate"
-              value={filtersLOCAL.untilDate}
-              onChange={handleDateFilters}
-              className={Styles.dateInput}
-            ></input>
-          </label>
-        </div>
-      </div>
+      {pathname === "/" ? <PostFilters /> : <ForumFilters />}
     </div>
   );
 }

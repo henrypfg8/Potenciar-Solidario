@@ -51,7 +51,8 @@ const {
   Question,
   Category,
   Organization,
-  ForoCategories
+  ForoCategories,
+  Like
 } = sequelize.models;
 
 //Relacion de modelos
@@ -75,6 +76,10 @@ Organization.hasMany(User, { foreignKey: "organizationId" });
 
 Question.belongsTo(ForoCategories, { foreignKey: "categoryId"})
 ForoCategories.hasMany(Question, { foreignKey: "categoryId" })
+
+Like.belongsTo(Publication, { foreignKey: "publicationId" });
+Like.belongsTo(User, { foreignKey: "userId" });
+Publication.hasMany(Like, { foreignKey: "publicationId" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

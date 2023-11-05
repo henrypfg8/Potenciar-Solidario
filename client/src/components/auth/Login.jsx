@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 
 const Login = () => {
 
-
     const { isAuthenticated } = useSelector(state => state.auth)
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [errorLogin, setErrorLogin] = useState(false);

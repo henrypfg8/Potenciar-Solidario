@@ -25,9 +25,12 @@
     color: var(--dark_blue_color);
     padding: 0.4rem;
     border-radius: 5px;
-    border: #cbd5e1	 1px solid;
+    border-bottom: #cbd5e1 1px solid;
     margin-top: 0.5rem;
-
+    /* -webkit-box-shadow : 2px 2px 13px -4px rgba(0,0,0,0.21);
+    -moz-box-shadow : 2px 2px 13px -4px rgba(0,0,0,0.21);
+    box-shadow : 2px 2px 13px -4px rgba(0,0,0,0.21); */
+    
 }
 @media(min-width: 768px){
     .profile__container{

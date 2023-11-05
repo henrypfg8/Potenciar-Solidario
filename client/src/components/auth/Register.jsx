@@ -10,6 +10,7 @@ import 'react-phone-number-input/style.css'
 import { getCodeList } from 'country-list';
 import Select from 'react-select';
 import './auth.css';
+import { validateAge } from '../../helpers/ValidateAge';
 
 const Register = () => {
     const { isAuthenticated } = useSelector(state => state.auth)
@@ -25,18 +26,7 @@ const Register = () => {
     const options = countries.map((country) => (
         { value: country, label: country}
     ))
-    // Función para validar que la fecha es de alguien que tiene al menos 18 años
-    const validateAge = (value) => {
-        const inputDate = new Date(value);
-        const currentDate = new Date();
-        const minDate = new Date(
-            currentDate.getFullYear() - 18,
-            currentDate.getMonth(),
-            currentDate.getDate()
-        );
 
-        return inputDate <= minDate || "Debe tener al menos 18 años";
-    }
     useEffect(() => {
         if (isAuthenticated || token) {
             navigate('/')
@@ -235,7 +225,8 @@ const Register = () => {
 
                 {/* Campo de  lugar de residencia*/}
                 <div>
-                    <label className='auth__label' htmlFor='habitual_location_of_residence'>Lugar de residencia</label>   
+                    <label className='auth__label' htmlFor='habitual_location_of_residence'>Lugar de residencia</label>
+                    {errors?.habitual_location_of_residence?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}   
                     <Controller
                         name="habitual_location_of_residence"
                         control={control}

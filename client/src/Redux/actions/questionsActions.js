@@ -50,8 +50,12 @@ export const getQuestionDetail = (id) => {
         try {
             const response = await axios.get(`http://localhost:19789/questions/${id}`);
             dispatch({type: GET_QUESTION_DETAIL, payload: response.data})
+            console.log(response);
+            return Promise.resolve(response)
+            
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error")
+            return Promise.reject(error)
         }
     }
 }

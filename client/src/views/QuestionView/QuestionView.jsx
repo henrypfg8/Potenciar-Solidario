@@ -10,6 +10,7 @@ import { jwtDecode } from "jwt-decode";
 import { createAnswer } from "../../Redux/actions/answersActions";
 import { useNavigate } from "react-router";
 import { getQuestionDetail } from "../../Redux/actions/questionsActions";
+import validation from "./validation";
 const socket = io("/");
 
 function QuestionView({ question }) {
@@ -19,6 +20,9 @@ function QuestionView({ question }) {
   const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [errores, setErrores] = useState({
+    answer: ''
+  })
   const [answer, setAnswer] = useState({
     answer: "",
     userId: "",
@@ -31,6 +35,10 @@ function QuestionView({ question }) {
   };
 
   const handleAnswers = (event) => {
+    setErrores(validation({
+      ...answer,
+      answer: event.target.value
+    }))
     setAnswer({
       ...answer,
       answer: event.target.value,
@@ -39,9 +47,21 @@ function QuestionView({ question }) {
     });
   };
   const answersSubmit = (answer) => {
-    if (answer) {
-      dispatch(createAnswer(answer));
-      dispatch(getQuestionDetail(question.id));
+    if (Object.keys(errores).length === 0) {
+      dispatch(createAnswer(answer)).then(()=>{
+        dispatch(getQuestionDetail(question.id))
+        swal({
+          icon: 'success',
+          text: "Respuesta creada con exito"
+        }).catch(() => {
+          swal({
+            icon: 'error',
+            text: `contacte a soporte` 
+
+          })
+        })
+      })
+      
     }
   };
   const handleSubmit = (message) => {
@@ -93,7 +113,7 @@ function QuestionView({ question }) {
   const dateQuestion = question?.createdAt?.split("T")[0];
 
   // console.log(dateQuestion);
-
+// console.log(question);
   return (
     <div>
       {question ? (
@@ -177,7 +197,13 @@ function QuestionView({ question }) {
               );
             })}
             <div className={style.question}>
-              <textarea type="text" rows="8" onChange={handleAnswers} />
+              <div className={style.errores}>
+
+              {errores.answer && <p>{errores.answer}</p>}
+              </div>
+              
+
+              <textarea type="text" name='answer' rows="8" onChange={handleAnswers}/>
               <button
                 disabled={answer?.answer?.length < 20}
                 onClick={() => answersSubmit(answer)}

@@ -37,7 +37,10 @@ textarea:focus,input:focus {
     background-color: #dddddd65;
     box-shadow: 0 0 2px #719ECE; 
 }
-
+.response p{
+    display: flex;
+    flex-direction: row;
+}
 .div label{
     font-family: 'Fuente';
     font-weight: bold;

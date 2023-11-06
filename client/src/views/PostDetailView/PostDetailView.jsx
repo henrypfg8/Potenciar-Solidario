@@ -26,7 +26,7 @@ const Detail = () => {
     creationDate,
     url
   } = postDetail;
-  
+
 
   useEffect(() => {
     dispatch(getPostDetail(id));
@@ -40,19 +40,30 @@ const Detail = () => {
 
   return (
     <div className={Styles.DetailView}>
-      <h1>{title}</h1>
-      <h2>{category}</h2>
-      <p>Descripción: {description}</p>
-      <p>ONG: {organization}</p>
-      <p>Fecha de inicio: {startDate}</p>
-      {endDate && <p>Fecha de fin: {endDate}</p>}
-      {image && <img src={image} alt="Imagen" />}
-      <p>Link para inscribirse: {registrationLink}</p>
-      <p>Contacto: {contact}</p>
-      {url && <p>URL para saber más: {url}</p>}
-      <time dateTime={creationDate}>
-        Fecha de alta: {creationDate}
-      </time>
+      <div className={Styles.Image}>
+        {image && <img src={image} alt="Imagen" />}
+      </div>
+      <div className={Styles.Detail}>
+        <h1>{title}</h1>
+        <h2>{category}</h2>
+        <h3>Descripción: </h3>
+        <p>{description}</p>
+        <h3>ONG: </h3>
+        <p>{organization}</p>
+        <h3>Fecha de inicio: </h3>
+        <p>{startDate}</p>
+        {endDate && <p><h3>Fecha de fin:</h3>{endDate}</p>}
+        {registrationLink && <h3>Link para inscribirse:</h3>}
+        <p>{registrationLink}</p>
+        <h3>Contacto: </h3>
+        <p>{contact}</p>
+        {url && <p>URL para saber más: {url}</p>}
+        <h3>Fecha de alta</h3>
+        <time dateTime={creationDate}>
+           {creationDate}
+        </time>
+
+      </div>
 
 
 

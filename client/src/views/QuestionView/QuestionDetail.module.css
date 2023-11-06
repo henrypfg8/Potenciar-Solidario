@@ -71,13 +71,23 @@
     font-family: 'FuenteBold';
     color: #000000;
 }
+.texto{
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: break-word;
+    
 
+}
 .response{
+    display: flex;
+    flex-direction: column;
     border-bottom: 1px solid rgba(126, 126, 126, 0.212);
     margin: 1rem;
     padding: 0.6rem;    
     width: 50vw;
     background-color: rgba(126, 126, 126, 0.212);
+    min-height: 100px;
+    overflow-wrap: break-word;
     
 }
 .comment{
@@ -162,6 +172,10 @@
     flex-direction: row;
     margin: 0.5rem;
     justify-content: space-around;
+}
+.response p{
+    display: flex;
+    flex-direction: row;
 }
 .date h5{
     display: inline;

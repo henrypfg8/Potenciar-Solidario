@@ -42,10 +42,13 @@ function App() {
   useEffect(() => {
     root.addEventListener("scroll", scrollHandler);
 
-    dispatch(getPosts());
-    dispatch(getOngs());
-    dispatch(getCategories());
-    dispatch(getForumCategories());
+    // si las rutas son /login o /register no se ejecutan los dispatch
+    if (pathname !== "/login" && pathname !== "/register") {
+      dispatch(getPosts());
+      dispatch(getOngs());
+      dispatch(getCategories());
+      dispatch(getForumCategories());
+    }
 
     return () => {
       root.removeEventListener("scroll", scrollHandler);

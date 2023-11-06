@@ -47,13 +47,24 @@ server.use((_req, res, next) => {
 });
 //--------Proteccion de rutas-----------------
  //middleware para proteccion de rutas
-// server.use((req, res, next) => {
-//   if (req.originalUrl === "/login" || req.originalUrl === "/register") {
-//     next(); //si las rutas son login o register no es necesario estar autenticaodos
-//   } else {
-//     authHandler(req, res, next); // cualquier ruta que no sean las dos anteriores va a solicitar un token que se genera cuando se inicia sesion
-//   }
-// });
+ server.use((req, res, next) => {
+  if (req.originalUrl === "/login" || req.originalUrl === "/register" || req.originalUrl === "/authGoogle") {
+    next(); // Si la ruta es /login, /register o /authGoogle, no se necesita autenticación
+  } else {
+    authHandler(req, res, (error) => {
+      if (error) {
+        // Aquí, maneja la respuesta si la autenticación falla o el token es inválido
+        console.error("Error de autenticación:", error);
+
+        // Redirige al usuario a la página de inicio de sesión
+        return res.redirect("/login");
+      }
+
+      // Si la autenticación es exitosa, continúa con la solicitud
+      next();
+    });
+  }
+});
 
 
 server.use("/", routes);

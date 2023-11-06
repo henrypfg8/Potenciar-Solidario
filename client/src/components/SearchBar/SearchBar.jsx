@@ -7,12 +7,15 @@ import {
 } from "../../Redux/actions/postsActions";
 //
 import axios from "axios";
+//
+import { configureHeaders } from '../../Redux/auth/configureHeaders .js';
+
 
 export default function SearchBar() {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.posts);
   const filters = useSelector((state) => state.posts.postsFilters);
-
+  const config = configureHeaders();
 
 
   function changeHandler({ target: { value } }) {
@@ -23,7 +26,7 @@ export default function SearchBar() {
       value = value.trim();
       if (value.includes(" ")) value = value.split(" ");
       axios
-        .get(`http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`)
+        .get(`http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`, config)
         .then(({ data }) => dispatch(searchPosts(data, value)));
     }
   }

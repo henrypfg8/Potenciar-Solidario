@@ -22,7 +22,7 @@ const authRegisterHandler = async (req, res) => {
     try {
         const userExist = await User.findOne({ where: { email: email } });
 
-        if (userExist) {
+        if (userExist  !== null) {
             return res.status(400).json({ message: "El usuario ya existe" });
         }
 

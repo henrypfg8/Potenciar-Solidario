@@ -16,9 +16,6 @@ import {
 
 import axios from "axios";
 import unorm from 'unorm';
-import { configureHeaders } from "../auth/configureHeaders .js";
-
-
 
 import { configureHeaders } from "../auth/configureHeaders ";
 

@@ -1,5 +1,7 @@
 import { types } from "./types";
 import axios from "axios";
+import { configureHeaders } from "../auth/configureHeaders .js";
+
 
 const registerUser = user => {
     return async dispatch => {
@@ -21,7 +23,8 @@ const registerUser = user => {
 const getProfile =  id => {
     return async dispatch => {
         try {
-            const { data } = await axios(`http://localhost:19789/users/${id}`);
+            const config= configureHeaders()
+            const { data } = await axios(`http://localhost:19789/users/${id}`,config);
             //console.log(data.id) // si aparece la data
             dispatch({ type: types.GET_PROFILE, payload: data });
             return Promise.resolve(data);

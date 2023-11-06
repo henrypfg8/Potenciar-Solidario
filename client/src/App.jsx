@@ -21,7 +21,8 @@ import Admin from "./views/admin/Admin";
 import ProfileView from "./views/ProfileView/ProfileView";
 import DrawerProfile from "./components/Profile/DrawerProfile";
 import QuestionCreateView from "./views/QuestionCreateView/QuestionCreateView";
-import QuestionView from "./views/QuestionView/QuestionView";
+// import QuestionView from "./views/QuestionView/QuestionView";
+import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -41,10 +42,13 @@ function App() {
   useEffect(() => {
     root.addEventListener("scroll", scrollHandler);
 
-    dispatch(getPosts());
-    dispatch(getOngs());
-    dispatch(getCategories());
-    dispatch(getForumCategories());
+    // si las rutas son /login o /register no se ejecutan los dispatch
+    if (pathname !== "/login" && pathname !== "/register") {
+      dispatch(getPosts());
+      dispatch(getOngs());
+      dispatch(getCategories());
+      dispatch(getForumCategories());
+    }
 
     return () => {
       root.removeEventListener("scroll", scrollHandler);
@@ -68,7 +72,7 @@ function App() {
         <Route path="/foro" element={<Forum />} />
 
         <Route path="/foro/crear" element={<QuestionCreateView />} />
-        <Route path="/foro/:id" element={<QuestionView/>} />
+        <Route path="/foro/:id" element={<QuestionDetail/>} />
 
         {/* auth */}
         <Route path="/register" element={<Register />} />

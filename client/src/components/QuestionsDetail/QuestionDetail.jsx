@@ -8,11 +8,11 @@ import { io } from "socket.io-client";
 function QuestionDetail() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const questionDetail = useSelector((state) => state.questions.questionDetail);
+  const questionDetail = useSelector(state => state.questions?.questionDetail)
 
   const socket = io();
-
   useEffect(() => {
+    console.log(questionDetail);
     dispatch(getQuestionDetail(id));
     // console.log(questionDetail);
 

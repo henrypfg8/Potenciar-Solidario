@@ -11,10 +11,13 @@ import {
   //   GET_POSTS_BY_ONGS,
   GET_POSTS_FILTERED,
   SET_POSTS_FILTERS,
+  LIKE
 } from "../action-types";
 
 import axios from "axios";
 import unorm from 'unorm';
+
+import { configureHeaders } from "../auth/configureHeaders ";
 
 //funcion que se usa en searchPosts()
 const searchCoincidences = (string, subString) => {
@@ -32,7 +35,8 @@ const searchCoincidences = (string, subString) => {
 export const createPost = (post) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post("http://localhost:19789/posts", post);
+      const config= configureHeaders()
+      const response = await axios.post("http://localhost:19789/posts", post, config);
       console.log(response + "soy el response");
       dispatch({ type: CREATE_POST, payload: response.data });
     } catch (error) {
@@ -44,7 +48,8 @@ export const createPost = (post) => {
 export const deletePost = (id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.delete(`http://localhost:19789/posts/${id}`);
+      const config= configureHeaders()
+      const response = await axios.delete(`http://localhost:19789/posts/${id}`,config);
       dispatch({ type: DELETE_POST, payload: response.data });
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
@@ -55,7 +60,8 @@ export const deletePost = (id) => {
 export const getPosts = () => {
   return async function (dispatch) {
     try {
-      const response = await axios.get("http://localhost:19789/posts");
+      const config= configureHeaders()
+      const response = await axios.get("http://localhost:19789/posts",config);
       dispatch({ type: GET_POSTS, payload: response.data });
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
@@ -66,7 +72,8 @@ export const getPosts = () => {
 export const getPostDetail = (id) => {
   return async function (dispatch) {
     try {
-      const response = await axios.get(`http://localhost:19789/posts/${id}`);
+      const config= configureHeaders()
+      const response = await axios.get(`http://localhost:19789/posts/${id}`,config);
       dispatch({ type: GET_POST_DETAIL, payload: response.data });
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
@@ -77,7 +84,8 @@ export const getPostDetail = (id) => {
 export const updatePost = (id, updatePostData) => {
   return async function (dispatch) {
     try {
-      const response = await axios.put(`http://localhost:19789/posts/${id}`, updatePostData);
+      const config= configureHeaders()
+      const response = await axios.put(`http://localhost:19789/posts/${id}`, updatePostData, config);
       dispatch({ type: UPDATE_POST, payload: response.data });
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
@@ -138,8 +146,9 @@ export const getPostsFiltered = (filters) => {
   const { category, ong, fromDate, untilDate } = filters;
   return async function (dispatch) {
     try {
+      const config= configureHeaders()
       const { data } = await axios.get(
-        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`
+        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,config
       );
       dispatch({
         type: GET_POSTS_FILTERED,
@@ -155,5 +164,17 @@ export const setPostsFilters = (postsFilters) => {
   return {
     type: SET_POSTS_FILTERS,
     payload: postsFilters,
+  };
+};
+
+export const like = (idUser, idPublication) => {
+  return async function (dispatch) {
+  try {
+    const config= configureHeaders()
+    const response = await axios.post(`http://localhost:19789/like`, idUser, idPublication, config)
+    dispatch({ type: LIKE, payload: response.data})
+  } catch (error) {
+    console.log(error, "por favor contactar a soporte por este error");
+  }
   };
 };

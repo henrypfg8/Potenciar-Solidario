@@ -113,22 +113,6 @@ const logoutAction = () => {
     }
 
 }
-// const userAuthentificated = () => {
-//     return async dispatch => {
-//         try {
-//             const { data } = await axios.get('http://localhost:19789/isauth', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
-//             console.log(data)
-//             dispatch({ type: types.IS_AUTHENTICATED, payload: data });
-//             return Promise.resolve(data);
-//         }
-//         catch (error) {
-//             dispatch({ type: types.ERROR_REGISTER, payload: error.response.data.message })
-//             console.log(error.response.data);
-//             return Promise.reject(error);
-//         }
-//     }
-
-// }
 
 
 export {

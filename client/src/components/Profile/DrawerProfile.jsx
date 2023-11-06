@@ -4,6 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { logoutAction } from '../../Redux/auth/AuthActions';
 import { useSelector, useDispatch } from 'react-redux'
 import {MenuOutlined} from '@ant-design/icons';
+import Styles from './profile.module.css';
 
 const DrawerProfile = () => {
 
@@ -11,6 +12,8 @@ const DrawerProfile = () => {
     const dispatch = useDispatch()
     const [open, setOpen] = useState(false);
     const location = useLocation();
+
+    // Función para abrir el drawer
     const showDrawer = () => {
         setOpen(true);
     };
@@ -26,55 +29,22 @@ const DrawerProfile = () => {
     return (
         <>
             {
-                isAuthenticated ? <Button  onClick={showDrawer}
-                    style={
-                        {
-                            position: 'absolute',
-                            top: '2rem',
-                            right: '0.5rem',
-                            zIndex: '1000',
-                            color : '#005692',
-                            border: '2px solid #005692',
-                            width: '30px',
-                            height: '30px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }
-                    }>
+                isAuthenticated ? <Button  
+                onClick={showDrawer}
+                className={Styles.profileButtonDrawer}
+                >
                   <MenuOutlined />
                 </Button  > : (
-                    <div style={{
-              
-
-                    }}>
-                        {location.pathname !== '/login' && location.pathname !== '/register' && <NavLink to='/login'><Button style={{
-                                                position: 'absolute',
-                                                top: '2rem',
-                                                right: '0.5rem',
-                                                zIndex: '1000',
-                                                color : '#005692',
-                                                border: '2px solid #005692',
-                                                width: '60px',
-                                                height: '30px',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                alignItems: 'center'
-                        }}>Login</Button></NavLink>}
+                    <div>
+                        {location.pathname !== '/login' && location.pathname !== '/register' && <NavLink to='/login'><Button className={Styles.profileButtonLogin}>Login</Button></NavLink>}
                     </div>
                 )
             }
             <Drawer title="Configuración de tu cuenta" placement="right" onClose={onClose} open={open}>
                
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-
-                    height: '100%'
-
-                }}>
-                    <NavLink onClick={() => setOpen(false)} to="/profile">Ver Perfil</NavLink>
-                    <NavLink onClick={lougout} to='/login'>Salir de sesión</NavLink>
+                <div className='profile__drawer--links' >
+                    <NavLink  onClick={() => setOpen(false)} to="/profile"> <p className='P__navLink'>Ver Perfil</p></NavLink>
+                    <NavLink onClick={lougout} to='/login'><p className='P__navLink'>Salir de sesión</p></NavLink>
                 </div>
 
             </Drawer>

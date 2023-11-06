@@ -2,10 +2,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createPost, } from '../../Redux/actions/postsActions'
 import { useNavigate } from 'react-router-dom';
 import Swiper from './Swiper';
-import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { uploadImageCloudinary } from './cloudinary';
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller,} from 'react-hook-form'
 import Select from 'react-select';
 import PhoneInput from 'react-phone-number-input'
 import proptypes from 'prop-types'
@@ -15,66 +14,67 @@ const Form = ({ setPost, post }) => {
     const ongs = useSelector(state => state.ongsAndCategories.ongs);
     const categories = useSelector(state => state.ongsAndCategories.categories);
     const [errorPost, setErrorPost] = useState(false);
-    const [userId, setUserId] = useState('')
-    const { isAuthenticated} = useSelector(state => state.auth);
+    const { isAuthenticated } = useSelector(state => state.auth);
     const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit, reset, control } = useForm();
+
+    //Obtener la fecha actual
     const fecha = new Date().toLocaleDateString()
     const partes = fecha.split('/');
     const fechaConvertida = partes[2] + '-' + partes[1] + '-' + partes[0];
+
+    //Convertir el array de categorias en un array de objetos para el select
     const options = categories.map(cat => ({ value: cat.name, label: cat.name }));
     const options2 = ongs.map(ong => ({ value: ong.nombre, label: ong.nombre }));
 
-   
     const [imgFile, setImgFile] = useState(null);
     const [success, setSuccess] = useState(false);
-    const timeouts = []; // Array de timeouts para limpiarlos en el useEffect
+
+    // Array de timeouts para limpiarlos en el useEffect
+    const timeouts = []; 
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token || !isAuthenticated) {
             // Si no hay token o el estado no está autenticado, redirigir a login
             navigate('/login');
-        } else {
-            const token = localStorage.getItem('token')
-            const decodedToken = jwtDecode(token);
-            setUserId(decodedToken)
+            return
         }
     }, [isAuthenticated, navigate])
 
     const onSubmit = async data => { // Enviar el formulario de la publicación
 
-
-        setSuccess(true);
         const urlImage = await uploadImageCloudinary(imgFile);
 
         const updatedPost = {
             ...data,
             image: urlImage,  //agregar la url de la imagen
             creationDate: fechaConvertida,
-            userId: userId.id,
+           
         };
 
-        dispatch(createPost(updatedPost)).then(() => {
-            navigate('/');
-            setSuccess(false);
-            setErrorPost(false);
-            const successTimeout = setTimeout(() => {
-                navigate('/');
-                setSuccess(false);
-            }, 3000);
-            timeouts.push(successTimeout);
-         
+        dispatch(createPost(updatedPost))
+            .then(() => {
 
-        }).catch((error) => {
-            setErrorPost(true);
-            setSuccess(false);
-            console.log(error.response.data.message)
-            const errorTimeout = setTimeout(() => {
+                setSuccess(true);
                 setErrorPost(false);
-            }, 3000);
-            timeouts.push(errorTimeout);
-        })
+                
+                const successTimeout = setTimeout(() => {
+                    navigate('/');
+                    setSuccess(false);
+                }, 3000);
+                timeouts.push(successTimeout);
+
+
+            }).catch((error) => {
+                setErrorPost(true);
+                setSuccess(false);
+                console.log(error.response.data.message)
+                const errorTimeout = setTimeout(() => {
+                    setErrorPost(false);
+                }, 3000);
+                timeouts.push(errorTimeout);
+            })
 
         setPost({
             ...post,
@@ -94,12 +94,17 @@ const Form = ({ setPost, post }) => {
         }) // Limpiar el formulario
         //limpiar el formulario
         reset();
+        return
     }
-    
+
+    useEffect(() => { // Limpia los timeouts
+        return () => {
+            timeouts.forEach(clearTimeout); // Limpia todos los timeouts
+        };
+    }, [timeouts]);
+
     // Actualizar el estado con los datos del formulario
     const handleChange = (e) => {
-
-        //console.log(error)
         const { name, value } = e.target;
 
         setPost(prevState => ({
@@ -124,11 +129,7 @@ const Form = ({ setPost, post }) => {
         setImgFile(data); //guardar la imagen en el estado
     }
 
-    useEffect(() => { // Limpia los timeouts
-        return () => {
-            timeouts.forEach(clearTimeout); // Limpia todos los timeouts
-        };
-    }, [timeouts]);
+
 
 
     return (
@@ -153,14 +154,16 @@ const Form = ({ setPost, post }) => {
                         name="category"
                         control={control}
                         rules={{ required: 'La categoria es obligatoria' }} // Reglas de validación con mensaje de error
-                        render={({ field, fieldState : {error} }) => (
+                        render={({ field, fieldState: { error } }) => (
                             //console.log(error),
                             <Select
                                 {...field}
+                                name='category'
                                 options={options}
                                 onChange={(e) => {
                                     // Actualiza el valor del formulario
                                     field.onChange(e.value);
+                                    setPost({...post, category: e.value})
                                 }}
                                 value={options.find(option => option.value === field.value)}
                             />
@@ -186,6 +189,7 @@ const Form = ({ setPost, post }) => {
                     {errors?.startDate?.type === 'pattern' && <p className='form__alert'>Debe ser una fecha valida</p>}
 
                     <input type="date" id='startDate' placeholder='fecha'
+                        name='startDate'
                         defaultValue={fechaConvertida}
                         {...register('startDate', {
                             required: true, min: fechaConvertida, pattern: {
@@ -229,24 +233,25 @@ const Form = ({ setPost, post }) => {
                         name='contact'
                         control={control}
                         rules={{ required: true }}
-                        render={({field, fieldState : {error}}) => {
+                        render={({ field, fieldState: { error } }) => {
                             return (
                                 <PhoneInput
-                                    
+
                                     {...field}
-                            
+
                                     id='contact'
                                     placeholder='Escribe tu número de telefono'
                                     onChange={(e) => {
                                         // Actualiza el valor del formulario
                                         field.onChange(e);
+                                        setPost({...post, contact: e})
                                     }}
                                     value={field.value}
                                     defaultCountry='AR'
                                 />
                             )
                         }}
-                     />
+                    />
                 </div>
                 {/* End form field */}
                 <div className='form__field'>
@@ -257,13 +262,15 @@ const Form = ({ setPost, post }) => {
                         control={control}
                         rules={{ required: 'La organización es obligatoria' }} // Reglas de validación con mensaje de error
                         render={({ field, fieldState: { error } }) => (
-                           // console.log(error),
+                            // console.log(error),
                             <Select
+                                name='organization'
                                 {...field}
                                 options={options2}
                                 onChange={(e) => {
                                     // Actualiza el valor del formulario
                                     field.onChange(e.value);
+                                    setPost({...post, organization: e.value})
                                 }}
                                 value={options.find(option => option.value === field.value)}
                             />
@@ -275,7 +282,7 @@ const Form = ({ setPost, post }) => {
                     {errors?.registrationLink?.type === 'maxLength' && <p className='form__alert'>El enlace No debe tener más de 100 caracteres</p>}
                     {errors?.registrationLink?.type === 'minLength' && <p className='form__alert'>El enlace debe tener al menos 5 caracteres</p>}
                     {errors?.registrationLink?.type === 'pattern' && <p className='form__alert'>Debe ser un enlace valido</p>}
-                    <input type="text" id='registrationLink' placeholder='Enlace de para inscribirse'
+                    <input type="text" id='registrationLink' name='registrationLink' placeholder='Enlace de para inscribirse'
                         {...register('registrationLink', {
                             required: false, minLength: 5, maxLength: 100, pattern: {
                                 value: /^(http|https):\/\/[^ "]+$/,

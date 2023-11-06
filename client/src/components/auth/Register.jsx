@@ -10,6 +10,7 @@ import 'react-phone-number-input/style.css'
 import { getCodeList } from 'country-list';
 import Select from 'react-select';
 import './auth.css';
+import { validateAge } from '../../helpers/ValidateAge';
 
 const Register = () => {
     const { isAuthenticated } = useSelector(state => state.auth)
@@ -18,25 +19,17 @@ const Register = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }, reset, control } = useForm(); // Configuración del hook form
+    // Timeouts para los mensajes de error y éxito
     const timeouts = [];
+    // Obtener el token del localstorage
     const token = localStorage.getItem('token');
     // Opciones para el select de paises
     const countries = Object.values(getCodeList());
     const options = countries.map((country) => (
         { value: country, label: country}
     ))
-    // Función para validar que la fecha es de alguien que tiene al menos 18 años
-    const validateAge = (value) => {
-        const inputDate = new Date(value);
-        const currentDate = new Date();
-        const minDate = new Date(
-            currentDate.getFullYear() - 18,
-            currentDate.getMonth(),
-            currentDate.getDate()
-        );
 
-        return inputDate <= minDate || "Debe tener al menos 18 años";
-    }
+    // Redireccionar al home si el usuario está autenticado
     useEffect(() => {
         if (isAuthenticated || token) {
             navigate('/')
@@ -46,7 +39,7 @@ const Register = () => {
 
 
 
-    const onSubmit = async user => { // Función que se ejecuta al hacer submit
+    const onSubmit = async user => { // Función para registrar el usuario
 
         const data = new FormData();
         data.append('file', user.profile_picture[0]);
@@ -55,7 +48,7 @@ const Register = () => {
         user.profile_picture = result;
 
 
-        dispatch(registerUser(user))
+        dispatch(registerUser(user)) //Hacer el dispatch de la acción para registrar el usuario
             .then(() => {
                 setSuccess(true);
                 setErrorRegister(false);
@@ -235,7 +228,8 @@ const Register = () => {
 
                 {/* Campo de  lugar de residencia*/}
                 <div>
-                    <label className='auth__label' htmlFor='habitual_location_of_residence'>Lugar de residencia</label>   
+                    <label className='auth__label' htmlFor='habitual_location_of_residence'>Lugar de residencia</label>
+                    {errors?.habitual_location_of_residence?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}   
                     <Controller
                         name="habitual_location_of_residence"
                         control={control}

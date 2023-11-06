@@ -6,6 +6,7 @@ const cors = require("cors");
 const routes = require("./routes/index");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const {authHandler} = require("./handlers/Authentication/authHandler"); //middleware para proteccion de rutas
 require("./db.js");
 
 const server = express();
@@ -44,6 +45,16 @@ server.use((_req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
+//--------Proteccion de rutas-----------------
+ //middleware para proteccion de rutas
+// server.use((req, res, next) => {
+//   if (req.originalUrl === "/login" || req.originalUrl === "/register") {
+//     next(); //si las rutas son login o register no es necesario estar autenticaodos
+//   } else {
+//     authHandler(req, res, next); // cualquier ruta que no sean las dos anteriores va a solicitar un token que se genera cuando se inicia sesion
+//   }
+// });
+
 
 server.use("/", routes);
 

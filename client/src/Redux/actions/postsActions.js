@@ -149,9 +149,9 @@ export const getPostsFiltered = (filters) => {
   const { category, ong, fromDate, untilDate } = filters;
   return async function (dispatch) {
     try {
-
+      const config= configureHeaders()
       const { data } = await axios.get(
-        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`
+        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,config
       );
       dispatch({
         type: GET_POSTS_FILTERED,
@@ -173,7 +173,8 @@ export const setPostsFilters = (postsFilters) => {
 export const like = (idUser, idPublication) => {
   return async function (dispatch) {
   try {
-    const response = await axios.post(`http://localhost:19789/like`, idUser, idPublication)
+    const config= configureHeaders()
+    const response = await axios.post(`http://localhost:19789/like`, idUser, idPublication, config)
     dispatch({ type: LIKE, payload: response.data})
   } catch (error) {
     console.log(error, "por favor contactar a soporte por este error");

@@ -18,8 +18,8 @@ const createPublicationHandler = async (req, res) => {
          likes 
     } = req.body;
 
-    //const userId = req.userId;
-    //console.log(`este es el user id ${userId}`); 
+    const userId = req.userId;
+    console.log(`este es el user id ${userId}`); 
 
     try {
         if (!title || !description || !category || !contact || !organization)
@@ -41,7 +41,7 @@ const createPublicationHandler = async (req, res) => {
             registrationLink,
             contact,
             likes, 
-            //userID:userId
+            userID:userId
         });
 
         res.status(201).json(publication);

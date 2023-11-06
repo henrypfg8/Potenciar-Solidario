@@ -1,48 +1,123 @@
 /* eslint-disable react/prop-types */
 import style from "./QuestionDetail.module.css";
+import { useEffect, useState } from "react";
 import { FlechaAbajoIcon } from "../../assets/FlechaParaAbajoIcon";
 import { FlechaParaArriba } from "../../assets/FlechaParaArribaIcon";
-import { QuestionDetail } from "../../components/QuestionsDetail/QuestionDetail";
+import io from "socket.io-client";
+import { useDispatch, useSelector } from "react-redux";
+import swal from "sweetalert";
+import { jwtDecode } from "jwt-decode";
+import { createAnswer } from "../../Redux/actions/answersActions";
+import { useNavigate } from "react-router";
+import { getQuestionDetail } from "../../Redux/actions/questionsActions";
+const socket = io("/");
 
 function QuestionView({ question }) {
- const {
-  userId,
-  dateQuestion,
-  questionDetail,
-  view,
-  messages,
-  message,
-  answer,
-  handleChange,
-  handleAnswers,
-  answersSubmit,
-  handleSubmit,
-  handleView
-} = QuestionDetail(question)
+  const [userId, setUserId] = useState("");
+  const { isAuthenticated, token } = useSelector((state) => state.auth);
+  const [view, setView] = useState({});
+  const navigate = useNavigate();
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
+  const [answer, setAnswer] = useState({
+    answer: "",
+    userId: "",
+    questionId: "",
+  });
+  const dispatch = useDispatch();
+
+  const handleChange = (event) => {
+    setMessage(event.target.value);
+  };
+
+  const handleAnswers = (event) => {
+    setAnswer({
+      ...answer,
+      answer: event.target.value,
+      userId: userId,
+      questionId: question.id,
+    });
+  };
+  const answersSubmit = (answer) => {
+    if (answer) {
+      dispatch(createAnswer(answer));
+      dispatch(getQuestionDetail(question.id));
+    }
+  };
+  const handleSubmit = (message) => {
+    event.preventDefault();
+    const newMessage = {
+      body: message,
+      from: "me",
+    };
+    setMessages([...messages, newMessage]);
+    socket.emit("message", message);
+  };
+  useEffect(() => {
+    if (!token || !isAuthenticated) {
+      swal("Necesita loguearse para poder realizar una pregunta").then(
+        (value) => {
+          navigate("/login");
+        }
+      );
+    }
+    if (token) {
+      const decodify = jwtDecode(token);
+      if (decodify) {
+        setUserId(decodify.id);
+      }
+    }
+  }, []);
+  const receiveMessage = (message) =>
+    setMessages((state) => [...state, message]);
+
+  useEffect(() => {
+    socket.on("message", receiveMessage);
+
+    return () => {
+      socket.off("message", receiveMessage);
+    };
+  }, []);
+  const handleView = (id) => {
+    setView((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  };
+  useEffect(() => {
+    socket.on("message", (message) => {
+      console.log(message);
+    });
+  }, []);
+
+  const dateQuestion = question?.createdAt?.split("T")[0];
+
+  // console.log(dateQuestion);
+
   return (
     <div>
-      {questionDetail ? 
+      {question ? (
         <div className={style.container}>
           <div className={style.div1}>
             <div>
-              <h1>{questionDetail?.title}</h1>
+              <h1>{question?.title}</h1>
               <div className={style.date}>
                 <a>
                   Fecha de publicacion: <h5>{dateQuestion}</h5>
                 </a>
               </div>
-              <h3>{questionDetail?.User?.name}</h3>
-              <p>{questionDetail?.text}</p>
+              <h3>{question?.User?.name}</h3>
+              <p>{question?.text}</p>
             </div>
           </div>
 
           <div className={style.contain}>
-            {questionDetail.Answers?.length > 0 ? (
+            {question?.Answers?.length > 0 ? (
               <div className={style.title}>
                 <h2>
-                  {questionDetail?.Answers?.length > 1 ? (
+                  {question?.Answers?.length > 1 ? (
                     <h2>
-                      <p>{questionDetail?.Answers?.length}</p> Respuestas
+                      <p>{question?.Answers?.length}</p> Respuestas
                     </h2>
                   ) : (
                     <h2>
@@ -57,14 +132,11 @@ function QuestionView({ question }) {
               </div>
             )}
 
-            {questionDetail.Answers?.map((respuesta, index) => {
+            {question.Answers?.map((respuesta, index) => {
               return (
                 <div key={index} className={style.response}>
-                  <div className={style.texto}>
-
                   <p>{respuesta.answer}</p>
                   <h4>{respuesta.User.name}</h4>
-                  </div>
 
                   {!view[index] ? (
                     <a onClick={() => handleView(index)}>
@@ -78,35 +150,48 @@ function QuestionView({ question }) {
                     </a>
                   )}
 
-                                            {view[index] && <div className={style.comment}>
-                                                <ul>
-                                                    {messages.map((message) => {
-                                                      
-                                                        return(
-                                                            <li key={index}>{message.from}:{message.body}</li>
-                                                        )
-                                                    } )}
-                                                </ul>
-                                                <p>Comentar</p>
-                                                <textarea type="text" cols="6" rows="5" onChange={() => handleChange(event)} />
-                                                <button onClick={() => handleSubmit(message)}>Añadir comentario</button>
-                                            </div>}
-                                        </div>
-                                    )
-                                })}
-                                <div className={style.question}>
-                                    <textarea type="text" rows="8" onChange={handleAnswers} />
-                                    <button onClick={() => answersSubmit(answer)}>Responder</button>
-                                </div>
-                            </div>
-                        </div>
-                        :
-                        <div>
-                            Cargando
-                        </div>
-                }
+                  {view[index] && (
+                    <div className={style.comment}>
+                      <ul>
+                        {messages.map((message, index) => {
+                          return (
+                            <li key={index}>
+                              {message.from}:{message.body}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                      <p>Comentar</p>
+                      <textarea
+                        type="text"
+                        cols="6"
+                        rows="5"
+                        onChange={() => handleChange(event)}
+                      />
+                      <button onClick={() => handleSubmit(message)}>
+                        Añadir comentario
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+            <div className={style.question}>
+              <textarea type="text" rows="8" onChange={handleAnswers} />
+              <button
+                disabled={answer?.answer?.length < 20}
+                onClick={() => answersSubmit(answer)}
+              >
+                Responder
+              </button>
             </div>
-        )
-              }
+          </div>
+        </div>
+      ) : (
+        <div>Cargando</div>
+      )}
+    </div>
+  );
+}
 
 export default QuestionView;

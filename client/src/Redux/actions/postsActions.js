@@ -11,13 +11,13 @@ import {
   //   GET_POSTS_BY_ONGS,
   GET_POSTS_FILTERED,
   SET_POSTS_FILTERS,
+  LIKE
 } from "../action-types";
 
 import axios from "axios";
 import unorm from 'unorm';
-import { configureHeaders } from "../auth/configureHeaders .js";
 
-
+import { configureHeaders } from "../auth/configureHeaders ";
 
 //funcion que se usa en searchPosts()
 const searchCoincidences = (string, subString) => {
@@ -146,9 +146,9 @@ export const getPostsFiltered = (filters) => {
   const { category, ong, fromDate, untilDate } = filters;
   return async function (dispatch) {
     try {
-
+      const config= configureHeaders()
       const { data } = await axios.get(
-        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`
+        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,config
       );
       dispatch({
         type: GET_POSTS_FILTERED,
@@ -164,5 +164,17 @@ export const setPostsFilters = (postsFilters) => {
   return {
     type: SET_POSTS_FILTERS,
     payload: postsFilters,
+  };
+};
+
+export const like = (idUser, idPublication) => {
+  return async function (dispatch) {
+  try {
+    const config= configureHeaders()
+    const response = await axios.post(`http://localhost:19789/like`, idUser, idPublication, config)
+    dispatch({ type: LIKE, payload: response.data})
+  } catch (error) {
+    console.log(error, "por favor contactar a soporte por este error");
+  }
   };
 };

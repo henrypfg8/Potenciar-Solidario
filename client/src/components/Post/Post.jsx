@@ -17,7 +17,8 @@ import Swal from "sweetalert2";
 
 const Post = (props) => {
   const { id, title, organization, category, image, description, startDate } =
-    props;
+    props || {};
+  const blurImage = {};
 
   const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(false);
@@ -53,13 +54,13 @@ const Post = (props) => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios.delete(`http://localhost:19789/posts/${id}`);
-        Swal.fire({
-          title: "Publicación Eliminada",
-          icon: "success",
-          customClass: {
-            confirmButton: "swallowOkButton",
-          },
-        });
+        // Swal.fire({
+        //   title: "Publicación Eliminada",
+        //   icon: "success",
+        //   customClass: {
+        //     confirmButton: "swallowOkButton",
+        //   },
+        // });
       }
     });
     setTimeout(() => {
@@ -83,9 +84,14 @@ const Post = (props) => {
       </div>
 
       <div className={Styles.Post__description}>
-        {image && <img className={Styles.image} src={image} alt="imagen" />}
-
-        <p>{description}</p>
+        {image ? (
+          <>
+            <img className={Styles.imageBlur} src={image} alt="imagen" />
+            <img className={Styles.image} src={image} alt="imagen" />
+          </>
+        ) : (
+          <p>{description}</p>
+        )}
       </div>
 
       <div className={Styles.Post__BottomBar}>

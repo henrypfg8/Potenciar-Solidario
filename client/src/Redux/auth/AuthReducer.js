@@ -43,7 +43,7 @@ const authReducer = (state = initialState, action) => {
                 loading: false,
             } 
         case types.LOGIN_WITH_GOOGLE:
-            localStorage.setItem('token',action.payload.jwt);
+            localStorage.setItem('token', action.payload.jwt);
             return {
                 ...state,
                 token: action.payload.jwt,

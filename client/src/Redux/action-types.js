@@ -33,3 +33,4 @@ export const CREATE_ANSWER = "CREATE_ANSWER";
 export const UPDATE_ANSWER = "UPDATE_ANSWER";
 export const DELETE_ANSWER = "DELETE_ANSWER";
 export const SET_POSTS_FILTERS = "SET_POSTS_FILTERS"
+export const LIKE = "LIKE";

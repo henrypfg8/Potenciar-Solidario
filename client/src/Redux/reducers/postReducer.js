@@ -5,12 +5,12 @@ import {
   GET_POST_DETAIL,
   CLEAR_POST_DETAIL,
   UPDATE_POST,
-  UPDATE_POST_LIKES,
   GET_POSTS_BY_CATEGORIES,
   GET_POSTS_BY_ONGS,
   SEARCH_POSTS,
   GET_POSTS_FILTERED,
-  SET_POSTS_FILTERS
+  SET_POSTS_FILTERS,
+  LIKE,
 } from "../action-types";
 
 const initialState = {
@@ -23,7 +23,7 @@ const initialState = {
   },
   // allPosts: [],
   postDetail: [],
-
+  liked: [],
 };
 
 const postReducer = (state = initialState, action) => {
@@ -98,7 +98,11 @@ const postReducer = (state = initialState, action) => {
         postsFilters: action.payload
       }
 
-    case UPDATE_POST_LIKES:
+    case LIKE:
+      return {
+        ...state,
+        liked: action.payload
+      }
 
     default:
       return { ...state };

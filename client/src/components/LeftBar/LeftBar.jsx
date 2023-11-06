@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import PostFilters from "../Filters/PostsFilters/PostsFilters";
 import ForumFilters from "../Filters/ForumFilters/ForumFilters";
 
+
 export default function LeftBar() {
   const { pathname } = useLocation();
 

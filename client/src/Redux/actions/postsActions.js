@@ -11,10 +11,13 @@ import {
   //   GET_POSTS_BY_ONGS,
   GET_POSTS_FILTERED,
   SET_POSTS_FILTERS,
+  LIKE
 } from "../action-types";
 
 import axios from "axios";
 import unorm from 'unorm';
+
+import { configureHeaders } from "../auth/configureHeaders ";
 
 //funcion que se usa en searchPosts()
 const searchCoincidences = (string, subString) => {
@@ -32,7 +35,8 @@ const searchCoincidences = (string, subString) => {
 export const createPost = (post) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post("http://localhost:19789/posts", post);
+      const config = configureHeaders();
+      const response = await axios.post("http://localhost:19789/posts", post, config);
       console.log(response + "soy el response");
       dispatch({ type: CREATE_POST, payload: response.data });
     } catch (error) {
@@ -55,7 +59,8 @@ export const deletePost = (id) => {
 export const getPosts = () => {
   return async function (dispatch) {
     try {
-      const response = await axios.get("http://localhost:19789/posts");
+      const config = configureHeaders();
+      const response = await axios.get("http://localhost:19789/posts", config);
       dispatch({ type: GET_POSTS, payload: response.data });
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
@@ -155,5 +160,16 @@ export const setPostsFilters = (postsFilters) => {
   return {
     type: SET_POSTS_FILTERS,
     payload: postsFilters,
+  };
+};
+
+export const like = (idUser, idPublication) => {
+  return async function (dispatch) {
+  try {
+    const response = await axios.post(`http://localhost:19789/like`, idUser, idPublication)
+    dispatch({ type: LIKE, payload: response.data})
+  } catch (error) {
+    console.log(error, "por favor contactar a soporte por este error");
+  }
   };
 };

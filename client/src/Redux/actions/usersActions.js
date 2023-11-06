@@ -26,7 +26,7 @@ import axios from "axios";
         return async function (dispatch) {
             try {
                 const config= configureHeaders()
-                const response = await axios.delete(`http://localhost:19789/users/${id}`,config);
+                const response = await axios.delete(`http://localhost:19789/users/${id}`, config);
                 dispatch({type: DELETE_USER, payload: response.data});
             } catch (error) {
                 console.log(error, "por favor contactar a soporte por este error")

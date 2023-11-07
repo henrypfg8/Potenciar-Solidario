@@ -5,7 +5,7 @@ GET_USERS,
 GET_USER_DETAIL,
 CLEAR_USER_DETAIL,
 UPDATE_USER,
-} from "../action-types"
+} from "../action types/usersActionTypes.js"
 import { configureHeaders } from "../auth/configureHeaders .js";
 
 import axios from "axios";

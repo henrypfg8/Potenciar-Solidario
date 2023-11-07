@@ -9,7 +9,7 @@ import {
   CLEAR_QUESTION_DETAIL,
   UPDATE_QUESTION,
   GET_QUESTIONS_FILTERED,
-} from "../action-types";
+} from "../action types/questionsActionTypes.js";
 
 const initialState = {
   questions: [],

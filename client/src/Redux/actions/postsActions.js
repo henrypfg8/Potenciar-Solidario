@@ -12,7 +12,7 @@ import {
   GET_POSTS_FILTERED,
   SET_POSTS_FILTERS,
   LIKE
-} from "../action-types";
+} from "../action types/postsActionTypes.js";
 
 import axios from "axios";
 import unorm from 'unorm';

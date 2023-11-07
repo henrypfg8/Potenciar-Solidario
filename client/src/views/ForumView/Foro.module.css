@@ -91,7 +91,6 @@ body html {
     align-items: start;
     justify-content: center;
     /* padding: 0.9rem; */
-    border-bottom: #00559226 solid 1px ;
     border-left:#0055927b solid 1px ;
     transition: 0.5s;
     min-height: 20vh;
@@ -113,7 +112,7 @@ body html {
 .contain h1{
     border: 1px solid #00559226;
     width: 60vw;
-    padding: 0.3rem;
+    padding: 0.6rem;
     border-radius: 5px 5px 0 0 ;
     background-color: #0f3054;
     color: #FFF;
@@ -141,13 +140,17 @@ body html {
 
 .anwers {
     display: flex;
-    flex-direction: column  ;
-    align-items: end;
+    flex-direction: row;
+    align-items: center;
     justify-content: end;
     width: 100%;
-    padding: 0.4rem;
+    background-color:#0f3054;
 }
-
+.anwers p{
+    margin: 0.5rem;
+    font-size: 0.7rem;
+    color: #a8a8a8;
+}
 .div {
     display: flex;
     flex-direction: column;
@@ -158,42 +161,21 @@ body html {
     flex-direction: column;
 }
 .center p{
-    margin: 1rem
+    margin: 1rem;
+    padding: 1rem;
 }
 
 @media (max-width: 575.98px) {  
-    .contain{
-     margin-top: 20px;
-     max-width:60vw;
-     max-height:70vh;
-     margin: 10px;
-     padding: 1rem;
-    }
-    
-    .container{
-        margin-top: 20px;
-    }
-    .contain a{
-        font-size: 0.8em;
-    }
-    .contain p{
-        font-size: 1em;
-    }
-    
-    .div{
-        width:70vw;
-        margin: 1rem;
-        
-    }
-    .contain button{
-        font-size: 0.9rem;
-        padding: 0.7rem 0.8rem;
-    }
-    .containerCenter{
-        display:flex;
-        flex-direction: column;
-       
-    }
+ .center h1{
+    width:80vw;
+    max-width: 88vw;
+    font-size: 1.4rem;
+    padding: 0.5rem;
+ }
+}
+.center p{
+    margin-left: 0.9rem;
+    font-size: 0.8rem;
 }
 @media (max-width: 768px){
     .containerCenter{

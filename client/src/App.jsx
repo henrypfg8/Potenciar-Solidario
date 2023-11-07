@@ -23,6 +23,7 @@ import QuestionCreateView from "./views/QuestionCreateView/QuestionCreateView";
 import QuestionView from "./views/QuestionView/QuestionView";
 import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
 import UserPostsView from "./views/UserPostsView/UserPostsView";
+import { getQuestions } from "./Redux/actions/questionsActions";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -51,10 +52,15 @@ function App() {
       dispatch(getForumCategories());
     }
 
+
     return () => {
       root.removeEventListener("scroll", scrollHandler);
     };
   }, [token]);
+  useEffect(() => {
+    dispatch(getQuestions())
+    
+}, [])
 
   return (
     <div className="App">

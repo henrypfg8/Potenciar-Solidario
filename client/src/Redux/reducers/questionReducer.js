@@ -9,14 +9,15 @@ import {
   CLEAR_QUESTION_DETAIL,
   UPDATE_QUESTION,
   GET_QUESTIONS_FILTERED,
+  SET_QUESTIONS_FILTERS,
 } from "../action types/questionsActionTypes.js";
 
 const initialState = {
   questions: [],
   questionsFilters: {
-    category: '',
-    fromDate: '',
-    untilDate: ''
+    category: "",
+    fromDate: "",
+    untilDate: "",
   },
   allQuestions: [],
   questionDetail: null,
@@ -102,8 +103,8 @@ const questionReducer = (state = initialState, action) => {
     case SET_QUESTIONS_FILTERS:
       return {
         ...state,
-        questionsFilters: action.payload
-      }
+        questionsFilters: action.payload,
+      };
 
     default:
       return { ...state };

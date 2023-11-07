@@ -66,7 +66,7 @@ export const createAnswerComment = (comment) => {
     return async function (dispatch) {
         try {
             const config = configureHeaders()
-            const response = await axios.post("http://localhost:19789/answers/", comment, config);
+            const response = await axios.post("http://localhost:19789/answers/comments", comment, config);
             dispatch({type: CREATE_ANSWER_COMMENT, payload: response.data})
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error");

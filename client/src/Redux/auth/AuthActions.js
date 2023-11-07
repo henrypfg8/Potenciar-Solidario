@@ -118,6 +118,34 @@ const logoutAction = () => {
     }
 
 }
+const deleteSuccess = () => {
+    return dispatch => {
+        try {
+            dispatch({ type: types.DELETE_SUCCESS });
+            return Promise.resolve();
+        }
+        catch (error) {
+            console.log(error);
+            return Promise.reject(error);
+        }
+    }
+
+}
+const delteSuccessClean = () => {
+
+    return dispatch => {
+        try {
+            dispatch({ type: types. CLEAN_DELETE_SUCCESS });
+            return Promise.resolve();
+        }
+        catch (error) {
+            console.log(error);
+            return Promise.reject(error);
+        }
+    }
+
+
+}
 
 
 export {
@@ -128,6 +156,8 @@ export {
     logoutAction,
     updateProfile,
     deleteProfile,
+    deleteSuccess,
+    delteSuccessClean,
 
     // userAuthentificated
 }

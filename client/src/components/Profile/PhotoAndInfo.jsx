@@ -1,17 +1,15 @@
 import { useState } from 'react'
 import proptypes from 'prop-types'
-import { deleteProfile } from '../../Redux/auth/AuthActions';
+import { deleteProfile, deleteSuccess, delteSuccessClean} from '../../Redux/auth/AuthActions';
 import { Modal, Button, Avatar, } from 'antd';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch,  } from 'react-redux'
 import { UserOutlined, } from '@ant-design/icons';
-import Swiper from '../Form/Swiper';
 import { updateProfile } from '../../Redux/auth/AuthActions';
 import { uploadImageCloudinary } from '../Form/cloudinary';
 
 
 const PhotoAndInfo = ({ userProfile,}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { deleteSuccess } = useSelector(state => state.auth)
    
     const dispatch = useDispatch();
 
@@ -32,11 +30,14 @@ const PhotoAndInfo = ({ userProfile,}) => {
     const handleDeleteAccount = () => {
         dispatch(deleteProfile(userProfile.id))
             .then(() => {
-                
-        
+                dispatch(deleteSuccess())
+                setTimeout(() => {
+                    dispatch(delteSuccessClean())
+                }, [3000])
             })
             .catch(error => {
                 console.log(error.response.data)
+                dispatch(delteSuccessClean())
                
             })
     }

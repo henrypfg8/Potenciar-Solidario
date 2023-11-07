@@ -25,7 +25,9 @@ const DrawerProfile = () => {
     const lougout = () => {
         dispatch(logoutAction())
         setOpen(false);
-    }
+    };
+
+   
     return (
         <>
             {

@@ -50,6 +50,7 @@ const authReducer = (state = initialState, action) => {
                 token: action.payload.jwt,
                 isAuthenticated: true,
                 loading: false,
+                deleteSuccess: false,
             }
         case types.GET_PROFILE:
             return {
@@ -86,13 +87,20 @@ const authReducer = (state = initialState, action) => {
                 return {
                     ...state,
                     errorLogin: action.payload,
+                    deleteSuccess: false,
                 }
-
+                
+        case types.DELETE_SUCCESS:
+            return {
+                ...state,
+                deleteSuccess: true,
+            }        
         case types.CLEAN_DELETE_SUCCESS:
             return {
                 ...state,
                 deleteSuccess: false,
             }
+
          default : {
                 return {...state};
          }

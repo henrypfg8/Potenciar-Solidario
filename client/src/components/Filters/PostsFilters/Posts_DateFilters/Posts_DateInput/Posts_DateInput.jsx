@@ -13,7 +13,7 @@ import {
   getPostsFiltered,
 } from "../../../../../Redux/actions/postsActions";
 
-const DateInput = ({
+const Posts_DateInput = ({
   handleFromDate,
   handleUntilDate,
   fromDate,
@@ -80,4 +80,4 @@ const DateInput = ({
   );
 };
 
-export default DateInput;
+export default Posts_DateInput;

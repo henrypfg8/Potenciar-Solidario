@@ -7,7 +7,7 @@ const updateUser = async (id, userData) => {
     if (!user) throw new Error("Usuario no encontrado");
 
     user.name = userData.name;
-    user.lastName = userData.lastName;
+    user.lastname = userData.lastname;
     user.email = userData.email;
     user.description = userData.description;
     user.DNI = userData.DNI;
@@ -19,6 +19,7 @@ const updateUser = async (id, userData) => {
     user.geographical_area_residence = userData.geographical_area_residence;
     user.admin = userData.admin;
     user.password = userData.password;
+    user.organization = userData.organization;
 
     await user.save();
     

@@ -30,6 +30,13 @@ const DateInput = ({
     setIsOpen(!isOpen);
   };
 
+  const handleChange = (e) => {
+    if (handleFromDate) handleFromDate(e);
+    else handleUntilDate(e);
+
+    setIsOpen(!isOpen)
+  }
+
   const handleReset = (e) => {
     e.preventDefault();
     if (fromDate) {
@@ -64,7 +71,7 @@ const DateInput = ({
         {isOpen && (
           <DatePicker
             selected={fromDate || untilDate}
-            onChange={handleFromDate || handleUntilDate}
+            onChange={handleChange}
             inline
           />
         )}

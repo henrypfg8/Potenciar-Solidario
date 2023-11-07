@@ -4,24 +4,27 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 //
-import DeleteIcon from "../../assets/DeleteIcon";
 import CalendarIcon from "../../assets/CalendarIcon";
 import { Like, LikeActive, Comment } from "../../assets/SocialIcons/";
-
+import { PostOptions_Icon } from "../../assets/PostOptions_Icons";
+import Post_Options from "./Post_Options/Post_Options";
 //
 import axios from "axios";
 //
 import { getPosts } from "../../Redux/actions/postsActions";
 //
 import Swal from "sweetalert2";
+import { configureHeaders } from "../../Redux/auth/configureHeaders ";
+
+//////////////////////////////
 
 const Post = (props) => {
   const { id, title, organization, category, image, description, startDate } =
     props || {};
-  const blurImage = {};
-
+  const config = configureHeaders();
   const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(false);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const start_date = startDate?.split("-");
   const months = {
@@ -39,38 +42,17 @@ const Post = (props) => {
     12: "Diciembre",
   };
 
-  const deleteHandler = (e) => {
-    e.preventDefault();
-
-    Swal.fire({
-      title: "¿Seguro que quieres eliminar la publicación?",
-      icon: "warning",
-      iconColor: "#005692",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Confirmar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios.delete(`http://localhost:19789/posts/${id}`);
-        // Swal.fire({
-        //   title: "Publicación Eliminada",
-        //   icon: "success",
-        //   customClass: {
-        //     confirmButton: "swallowOkButton",
-        //   },
-        // });
-      }
-    });
-    setTimeout(() => {
-      dispatch(getPosts());
-    }, 200);
-  };
   const likeHandler = (e) => {
     e.preventDefault();
     setIsLiked(!isLiked);
   };
+  
+  const postOptionsHandler = (e) => {
+    e.preventDefault();
+    setIsOptionsOpen(!isOptionsOpen, console.log(isOptionsOpen));
+  };
+
+  /////////////////////////////////////////////////
 
   return (
     <Link to={`/detalle/${id}`} className={Styles.Post}>
@@ -118,10 +100,13 @@ const Post = (props) => {
           </div>
         </div>
 
-        <DeleteIcon
-          className={Styles.BottomBar__deleteIcon}
-          onClick={deleteHandler}
-        />
+        <div
+          className={Styles.BottomBar__OptionsContainer}
+          onClick={postOptionsHandler}
+        >
+          <PostOptions_Icon className={Styles.BottomBar__optionsIcon} />
+          {isOptionsOpen && <Post_Options />}
+        </div>
       </div>
     </Link>
   );

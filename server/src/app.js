@@ -16,12 +16,12 @@ const io = new Server(httpServer);
 global.io = io;
 
 io.on("connection", (socket) => {
-  console.log("Un usuario se conecto por WebSockets");
+  let username = 'anonymous'
   socket.on("message", (body) => {
-    console.log("Evento recibido:", body);
+    socket.username = username
     socket.broadcast.emit('message', {
       body,
-      from: socket.id.slice(2)
+      from: socket.username
     })
     // Manejar el evento de websocket
   });

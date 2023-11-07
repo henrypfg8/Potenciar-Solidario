@@ -100,7 +100,9 @@ router.delete("/answers/:id", DeleteAnswerH)
 router.post("/authGoogle", authGoogleHandler);
 
 //Rutas de COMENTARIOS.
-
+router.post("/answers/comments")
+router.put("/answers/comments/:id")
+router.delete("/answers/comments/:id")
 
 
 module.exports = router;

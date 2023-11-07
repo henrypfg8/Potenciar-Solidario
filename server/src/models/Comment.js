@@ -4,8 +4,18 @@ module.exports = (sequelize) => {
   sequelize.define(
     "Comment",
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+        validate: {
+          isInt: true,
+          min: 1,
+        }
+      },
       user: {
-        //id: DataTypes.STRING,
+        id: DataTypes.STRING,
         type: DataTypes.STRING,
         allowNull:false,
         validate: {

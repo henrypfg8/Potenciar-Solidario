@@ -2,7 +2,7 @@ const { Comment } = require('../../db');
 
 const DeleteCommentC = async (userId) => {
   try {
-    if (id) {
+    if (userId) {
       const deletedRows = await Comment.destroy({ where: { user: userId } });
 
       if (deletedRows === 0) {

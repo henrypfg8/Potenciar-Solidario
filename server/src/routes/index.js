@@ -49,7 +49,7 @@ const { HandlerPostLike } = require("../handlers/Publication/PostLike.js");
 //HANDLERS DE COMMENTS
 const {CreateCommentHandler} = require('../handlers/Comments/CreateCommentH.js')
 const {DeleteCommentHandler} = require('../handlers/Comments/DeleteCommentH.js');
-
+const {UpdateCommentHandler} = require('../handlers/Comments/PutCommentH.js')
 const router = Router();
 
 router.get("/posts/busqueda", searchPublication);
@@ -104,8 +104,12 @@ router.post("/authGoogle", authGoogleHandler);
 
 //Rutas de COMENTARIOS.
 router.post("/answers/comments",CreateCommentHandler)
-router.put("/answers/comments/:id")
+router.put("/answers/comments/:id",UpdateCommentHandler)
 router.delete("/answers/comments/:id",DeleteCommentHandler)
 
+//Rutas de REVIEWS.
+router.post("/posts/reviews")
+router.put("/posts/reviews/:id")
+router.delete("/posts/reviews/:id")
 
 module.exports = router;

@@ -6,7 +6,7 @@ DELETE_ANSWER,
 CREATE_ANSWER_COMMENT,
 DELETE_ANSWER_COMMENT,
 UPDATE_ANSWER_COMMENT,
-} from "../action-types";
+} from "../action types/answersActionTypes.js";
 
 const initialState = {
     answers: [],

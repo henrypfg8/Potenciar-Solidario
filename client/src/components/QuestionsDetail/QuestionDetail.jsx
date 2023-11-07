@@ -14,7 +14,6 @@ function QuestionDetail() {
   useEffect(() => {
     console.log(questionDetail);
     dispatch(getQuestionDetail(id));
-    // console.log(questionDetail);
 
     socket?.on(`question_${id}`, () => {
       dispatch(getQuestionDetail(id));

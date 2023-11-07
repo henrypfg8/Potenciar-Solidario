@@ -21,8 +21,7 @@ import Admin from "./views/admin/Admin";
 import ProfileView from "./views/ProfileView/ProfileView";
 import DrawerProfile from "./components/Profile/DrawerProfile";
 import QuestionCreateView from "./views/QuestionCreateView/QuestionCreateView";
-// import QuestionView from "./views/QuestionView/QuestionView";
-import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
+import QuestionView from "./views/QuestionView/QuestionView";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -31,7 +30,6 @@ function App() {
   const dispatch = useDispatch();
   //Manejo de Header segun el scroll:
   const [isScrolled, setIsScrolled] = useState(false);
-
   const root = document.querySelector("#root");
 
   function scrollHandler() {
@@ -39,21 +37,23 @@ function App() {
     else setIsScrolled(false);
   }
 
-  useEffect(() => {
-    root.addEventListener("scroll", scrollHandler);
+  const token = localStorage.getItem('token');
 
-    // si las rutas son /login o /register no se ejecutan los dispatch
-    if (pathname !== "/login" && pathname !== "/register") {
-      dispatch(getPosts());
-      dispatch(getOngs());
-      dispatch(getCategories());
-      dispatch(getForumCategories());
-    }
+useEffect(() => {
+  root.addEventListener("scroll", scrollHandler);
+  
+  //si el token cambia o existe se vuelven a cargar los datos
+  if (token) {
+    dispatch(getPosts());
+    dispatch(getOngs());
+    dispatch(getCategories());
+    dispatch(getForumCategories());
+  }
 
-    return () => {
-      root.removeEventListener("scroll", scrollHandler);
-    };
-  }, []);
+  return () => {
+    root.removeEventListener("scroll", scrollHandler);
+  };
+}, [token]);
 
   return (
     <div className="App">
@@ -72,7 +72,7 @@ function App() {
         <Route path="/foro" element={<Forum />} />
 
         <Route path="/foro/crear" element={<QuestionCreateView />} />
-        <Route path="/foro/:id" element={<QuestionDetail/>} />
+        <Route path="/foro/:id" element={<QuestionView/>} />
 
         {/* auth */}
         <Route path="/register" element={<Register />} />

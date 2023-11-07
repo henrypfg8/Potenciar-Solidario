@@ -93,13 +93,16 @@
     flex-direction: column;
     border-bottom: 1px solid rgba(126, 126, 126, 0.212);
     margin: 1rem;
-    padding: 0.6rem;    
+    padding: 0.6rem;   
+    height: max-content; 
     width: 50vw;
+    max-width: 50vw;
+    min-width: 50vw;
     background-color: rgba(126, 126, 126, 0.212);
-    min-height: 100px;
-    overflow-wrap: break-word;
-    
+    word-wrap: break-word;
+    word-break: break-word;
 }
+
 .comment{
     transition: 0.5s;
     display: flex;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Drawer, Button } from 'antd';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation,} from 'react-router-dom';
 import { logoutAction } from '../../Redux/auth/AuthActions';
 import { useSelector, useDispatch } from 'react-redux'
 import {MenuOutlined} from '@ant-design/icons';
@@ -25,7 +25,9 @@ const DrawerProfile = () => {
     const lougout = () => {
         dispatch(logoutAction())
         setOpen(false);
-    }
+    };
+
+   
     return (
         <>
             {
@@ -44,7 +46,9 @@ const DrawerProfile = () => {
                
                 <div className='profile__drawer--links' >
                     <NavLink  onClick={() => setOpen(false)} to="/profile"> <p className='P__navLink'>Ver Perfil</p></NavLink>
+                    <NavLink onClick={() => setOpen(false)} to='/'><p className='P__navLink'>Volver al inicio</p></NavLink>
                     <NavLink onClick={lougout} to='/login'><p className='P__navLink'>Salir de sesión</p></NavLink>
+
                 </div>
 
             </Drawer>

@@ -44,14 +44,11 @@ const questionReducer = (state = initialState, action) => {
       if (state.questionDetail) {
         const answersActual = state.questionDetail?.Answers;
 
-        console.log(answersActual, "el gordo actual");
         const answersNuevo = action.payload?.Answers;
 
         const nuevasNotificaciones = answersNuevo?.filter(
           (el) => !answersActual?.some((el2) => el2.id == el.id)
         );
-
-        console.log(nuevasNotificaciones, "nuevasnotificaciones");
 
         nuevasNotificaciones?.forEach((nuevaNotif) =>
           toast(

@@ -1,7 +1,7 @@
 import { types } from "./types";
 import axios from "axios";
 import { configureHeaders } from "../auth/configureHeaders .js";
-
+const config= configureHeaders()
 
 const registerUser = user => {
     return async dispatch => {
@@ -23,7 +23,7 @@ const registerUser = user => {
 const getProfile =  id => {
     return async dispatch => {
         try {
-            const config= configureHeaders()
+           
             const { data } = await axios(`http://localhost:19789/users/${id}`,config);
             //console.log(data.id) // si aparece la data
             dispatch({ type: types.GET_PROFILE, payload: data });
@@ -41,7 +41,7 @@ const getProfile =  id => {
 const updateProfile = (id, user) => {
     return async dispatch => {
         try {
-            const { data } = await axios.put(`http://localhost:19789/users/${id}`,{ ...user});
+            const { data } = await axios.put(`http://localhost:19789/users/${id}`,{ ...user}, config);
             dispatch({ type: types.UPDATE_PROFILE, payload: data });
             return Promise.resolve(data);
         }
@@ -56,7 +56,9 @@ const updateProfile = (id, user) => {
 const deleteProfile = (id) => {
     return async dispatch => {
         try {
-            const { data } = await axios.delete(`http://localhost:19789/users/${id}`);
+            const config= configureHeaders()
+    
+            const { data } = await axios.delete(`http://localhost:19789/users/${id}`, config);
             dispatch({ type: types.DELETE_PROFILE});
             return Promise.resolve(data);
         }
@@ -73,7 +75,7 @@ const loginUser = (email, password) => {
     return async dispatch => {
         try {
             const { data } = await axios.post('http://localhost:19789/login', { email, password });
-
+            console.log(data)
             dispatch({ type: types.LOGIN, payload: data });
             return Promise.resolve(data);
         }
@@ -116,6 +118,34 @@ const logoutAction = () => {
     }
 
 }
+const deleteSuccess = () => {
+    return dispatch => {
+        try {
+            dispatch({ type: types.DELETE_SUCCESS });
+            return Promise.resolve();
+        }
+        catch (error) {
+            console.log(error);
+            return Promise.reject(error);
+        }
+    }
+
+}
+const delteSuccessClean = () => {
+
+    return dispatch => {
+        try {
+            dispatch({ type: types. CLEAN_DELETE_SUCCESS });
+            return Promise.resolve();
+        }
+        catch (error) {
+            console.log(error);
+            return Promise.reject(error);
+        }
+    }
+
+
+}
 
 
 export {
@@ -126,6 +156,8 @@ export {
     logoutAction,
     updateProfile,
     deleteProfile,
+    deleteSuccess,
+    delteSuccessClean,
 
     // userAuthentificated
 }

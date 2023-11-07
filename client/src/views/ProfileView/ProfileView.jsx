@@ -9,6 +9,7 @@ import './Profile.css'
 
 const ProfileView = () => {
     const { isAuthenticated, userProfile } = useSelector(state => state.auth);
+  
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [success, setSuccess] = useState(false)
@@ -20,8 +21,13 @@ const ProfileView = () => {
             navigate('/login');
         } else {
             const decodedToken = jwtDecode(token); // Decodificar el token y obtener el id del usuario
-
+            console.log(decodedToken.id)
             dispatch(getProfile(decodedToken.id))
+                .then(() => {
+            
+                 }).catch((error) => {
+                    console.log(error.response.data);
+                 })
         }
     }, [dispatch, isAuthenticated, navigate])
 
@@ -32,7 +38,9 @@ const ProfileView = () => {
         <>
       
             <div className='profile__container'>
-                <PhotoAndInfo userProfile={userProfile} />
+                <PhotoAndInfo userProfile={userProfile}
+                 success={success}
+                 setSuccess={setSuccess} />
                 <DataProfile userProfile={userProfile}
                     success={success}
                     setSuccess={setSuccess} />

@@ -48,7 +48,7 @@ function QuestionView({ question }) {
   };
   const answersSubmit = (answer) => {
     if (Object.keys(errores).length === 0) {
-      dispatch(createAnswer(answer)).then(()=>{
+      dispatch(createAnswer(answer)).then(() => {
         dispatch(getQuestionDetail(question.id))
         swal({
           icon: 'success',
@@ -56,12 +56,12 @@ function QuestionView({ question }) {
         }).catch(() => {
           swal({
             icon: 'error',
-            text: `contacte a soporte` 
+            text: `contacte a soporte`
 
           })
         })
       })
-      
+
     }
   };
   const handleSubmit = (message) => {
@@ -113,22 +113,21 @@ function QuestionView({ question }) {
   const dateQuestion = question?.createdAt?.split("T")[0];
 
   // console.log(dateQuestion);
-// console.log(question);
+  // console.log(question);
   return (
     <div>
       {question ? (
         <div className={style.container}>
           <div className={style.div1}>
-            <div>
-              <h1>{question?.title}</h1>
-              <div className={style.date}>
-                <a>
-                  Fecha de publicacion: <h5>{dateQuestion}</h5>
-                </a>
-              </div>
-              <h3>{question?.User?.name}</h3>
-              <p>{question?.text}</p>
+            <h1>{question?.title}</h1>
+            <div className={style.date}>
+              <a>
+                Fecha de publicacion: <h5>{dateQuestion}</h5>
+              </a>
             </div>
+            <h3>{question?.User?.name}</h3>
+            <p>{question?.text}</p>
+
           </div>
 
           <div className={style.contain}>
@@ -183,6 +182,7 @@ function QuestionView({ question }) {
                       </ul>
                       <p>Comentar</p>
                       <textarea
+                        style={{ resize: 'none' }}
                         type="text"
                         cols="6"
                         rows="5"
@@ -199,11 +199,11 @@ function QuestionView({ question }) {
             <div className={style.question}>
               <div className={style.errores}>
 
-              {errores.answer && <p>{errores.answer}</p>}
+                {errores.answer && <p>{errores.answer}</p>}
               </div>
-              
 
-              <textarea type="text" name='answer' rows="8" onChange={handleAnswers}/>
+
+              <textarea style={{ resize: 'none' }} type="text" name='answer' rows="8" onChange={handleAnswers} />
               <button
                 disabled={answer?.answer?.length < 20}
                 onClick={() => answersSubmit(answer)}

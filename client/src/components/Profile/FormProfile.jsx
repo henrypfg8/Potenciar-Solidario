@@ -8,8 +8,9 @@ import PhoneInput from 'react-phone-number-input';
 import Select from 'react-select';
 import { getCodeList } from 'country-list';
 import { validateAge } from '../../helpers/ValidateAge';
+import Swiper from '../Form/Swiper';
 
-const FormProfile = ({ userProfile, setSuccess }) => {
+const FormProfile = ({ userProfile, setSuccess, success }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { register, formState: { errors }, handleSubmit, control } = useForm();
 
@@ -32,7 +33,10 @@ const FormProfile = ({ userProfile, setSuccess }) => {
         dispatch(updateProfile(userProfile.id, { ...data, password: userProfile.password })) 
             .then(() => {
                 setIsModalOpen(false);
-                setSuccess(true)
+                setSuccess(true);
+                setTimeout(() => [
+                    setSuccess(false)
+                ], [3000])
             })
             .catch(error => {
                 console.log(error.response.data)
@@ -44,7 +48,7 @@ const FormProfile = ({ userProfile, setSuccess }) => {
             <Button className='profile__button--update' onClick={showModal}>
                 Editar perfil
             </Button>
-
+            {success && <Swiper frase='Se actualizo correctamente' color='#005692' tipo='success'/>}
             <Modal 
                 title="Actualiza tu datos" 
                 open={isModalOpen} 
@@ -123,12 +127,11 @@ const FormProfile = ({ userProfile, setSuccess }) => {
                         <label className='profile__label' htmlFor="phone">Telefono</label>
                         <div>
                             {errors?.phone?.type === 'required' && <p className='profile__alert'>El telefono es requerido</p>}
-                            {errors?.phone?.type === 'minLength' && <p className='profile__alert'>El telefono debe tener al menos 6 caracteres</p>}
-                            {errors?.phone?.type === 'maxLength' && <p className='profile__alert'>El telefono debe tener menos de 15 caracteres</p>}
+                            {errors?.phone?.type === 'maxLength' && <p className='profile__alert'>El telefono debe tener menos de 15 digitos</p>}
                             <Controller
                                 name='phone'
                                 control={control}
-                                rules={{ required: true, minLength: 6, maxLength: 15 }}
+                                rules={{ required: true,  maxLength: 15 }}
                                 render={({ field, fieldState: { error } }) => {
                                     return (
                                         <PhoneInput
@@ -201,13 +204,13 @@ const FormProfile = ({ userProfile, setSuccess }) => {
                         <label className='profile__label' htmlFor="DNI">DNI</label>
                         <div>
                             {errors?.DNI?.type === 'required' && <p className='profile__alert'>El DNI es requerido</p>}
-                            {errors?.DNI?.type === 'minLength' && <p className='profile__alert'>El DNI debe tener al menos 8 caracteres</p>}
+                            {errors?.DNI?.type === 'minLength' && <p className='profile__alert'>El DNI debe tener al menos 5 caracteres</p>}
                             {errors?.DNI?.type === 'maxLength' && <p className='profile__alert'>El DNI debe tener menos de 8 caracteres</p>}
 
                             <input className='profile__input' type="text"
                                 id='DNI'
                                 defaultValue={userProfile.DNI}
-                                {...register('DNI', { required: true, minLength: 8, maxLength: 8 })} />
+                                {...register('DNI', { required: true, minLength: 5, maxLength: 8 })} />
                         </div>
                     </div>
                     <button className='profile__btn' type='submit'>Guardar Cambios</button>

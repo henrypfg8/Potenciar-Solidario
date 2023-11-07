@@ -119,7 +119,6 @@ function QuestionView({ question }) {
       {question ? (
         <div className={style.container}>
           <div className={style.div1}>
-            <div>
               <h1>{question?.title}</h1>
               <div className={style.date}>
                 <a>
@@ -128,7 +127,7 @@ function QuestionView({ question }) {
               </div>
               <h3>{question?.User?.name}</h3>
               <p>{question?.text}</p>
-            </div>
+            
           </div>
 
           <div className={style.contain}>

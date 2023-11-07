@@ -2,7 +2,7 @@ import {
 GET_CATEGORIES,
 GET_ONGS,
 GET_FORUM_CATEGORIES
-} from "../action-types";
+} from "../action types/ongAndCategoriesActionTypes.js";
 
 const initialState = {
     categories: [],

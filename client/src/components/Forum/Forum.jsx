@@ -17,7 +17,7 @@ function Forum(){
     useEffect(() => {
         dispatch(getQuestions())
         
-    }, [dispatch])
+    }, [])
     console.log(questions);
     return <ForumView questions={questions} />
 }

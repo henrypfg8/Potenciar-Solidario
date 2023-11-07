@@ -20,37 +20,6 @@ export default function PostFilters() {
   const ongs = useSelector((state) => state.ongsAndCategories.ongs);
   const categories = useSelector((state) => state.ongsAndCategories.categories);
 
-  const filters = useSelector((state) => state.posts.postsFilters);
-  const [filtersLOCAL, setFiltersLOCAL] = useState({
-    category: "",
-    ong: "",
-    fromDate: '',
-    untilDate: '',
-  });
-
-  //
-  const handleFilters = (e) => {
-    const { name, value } = e;
-    const filtersCOPY = { ...filters };
-    filtersCOPY[name] = value;
-    dispatch(getPostsFiltered(filtersCOPY));
-    dispatch(setPostsFilters(filtersCOPY));
-    setFiltersLOCAL(filtersCOPY);
-  };
-  const handleFromDate = (date) => {
-    const fromDate = format(date, 'yyyy-MM-dd');
-    setFiltersLOCAL({...filters, fromDate: fromDate})
-    dispatch(setPostsFilters({...filters, fromDate: fromDate}));
-    dispatch(getPostsFiltered({...filters, fromDate: fromDate}));
-  };
-  const handleUntilDate = (date) => {
-    const untilDate = format(date, 'yyyy-MM-dd');
-    setFiltersLOCAL({...filters, untilDate: untilDate});
-    dispatch(setPostsFilters({...filters, untilDate: untilDate}))
-    dispatch(getPostsFiltered({...filters, untilDate: untilDate}));
-  };
-  //
-
   const categoryOptions = categories.map((cat) => ({
     label: cat.name,
     value: cat.name,
@@ -61,7 +30,6 @@ export default function PostFilters() {
     value: "",
     name: "category",
   });
-
   const ongOptions = Array.from(new Set(ongs.map((ong) => ong.nombre))).map(
     (nombre) => ({
       label: nombre,
@@ -74,6 +42,34 @@ export default function PostFilters() {
     value: "",
     name: "ong",
   });
+
+  //
+  const filters = useSelector((state) => state.posts.postsFilters);
+  const [filtersLOCAL, setFiltersLOCAL] = useState({
+    category: "",
+    ong: "",
+    fromDate: "",
+    untilDate: "",
+  });
+  const handleFilters = (e) => {
+    const { name, value } = e;
+    dispatch(getPostsFiltered({...filters, [name]: value}));
+    dispatch(setPostsFilters({...filters, [name]: value}));
+    setFiltersLOCAL({...filters, [name]: value});
+  };
+  const handleFromDate = (date) => {
+    const fromDate = format(date, "yyyy-MM-dd");
+    setFiltersLOCAL({ ...filters, fromDate: fromDate });
+    dispatch(setPostsFilters({ ...filters, fromDate: fromDate }));
+    dispatch(getPostsFiltered({ ...filters, fromDate: fromDate }));
+  };
+  const handleUntilDate = (date) => {
+    const untilDate = format(date, "yyyy-MM-dd");
+    setFiltersLOCAL({ ...filters, untilDate: untilDate });
+    dispatch(setPostsFilters({ ...filters, untilDate: untilDate }));
+    dispatch(getPostsFiltered({ ...filters, untilDate: untilDate }));
+  };
+  //
 
   useEffect(() => {
     setFiltersLOCAL(filters);

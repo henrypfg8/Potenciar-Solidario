@@ -11,7 +11,7 @@ import {
   GET_POSTS_FILTERED,
   SET_POSTS_FILTERS,
   LIKE,
-} from "../action-types";
+} from "../action types/postsActionTypes.js";
 
 const initialState = {
   posts: [],

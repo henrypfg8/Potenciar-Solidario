@@ -3,11 +3,15 @@ GET_ANSWERS,
 CREATE_ANSWER,
 UPDATE_ANSWER,
 DELETE_ANSWER,
-} from "../action-types";
+CREATE_ANSWER_COMMENT,
+DELETE_ANSWER_COMMENT,
+UPDATE_ANSWER_COMMENT,
+} from "../action types/answersActionTypes.js";
 
 const initialState = {
     answers: [],
     allAnswers: [],
+    answerComments: [],
 }
 
 const answerReducer = (state = initialState, action) => {
@@ -43,6 +47,30 @@ const answerReducer = (state = initialState, action) => {
                     (answer) => answer.id !== action.payload
                 ),
             };
+        
+        case CREATE_ANSWER_COMMENT:
+            return {
+                ...state,
+                answerComments: [...state.answerComments, action.payload],
+            };
+            
+        case DELETE_ANSWER_COMMENT:
+            return {
+                ...state, 
+                answerComments: state.answerComments.filter(
+                    (answerComment) => answerComment.id !== action.payload
+                ),
+            };
+            
+        case UPDATE_ANSWER_COMMENT:
+            const updatedAnswerComment = action.payload;
+            const updatedAnswerComments = state.answerComments.map(answerComment =>
+                answerComment.id === updatedAnswerComment.id ? updatedAnswerComment : answerComment
+                );
+            return {
+                ...state,
+                answerComments: updatedAnswerComments,
+            };    
             
         default:
             return {...state};

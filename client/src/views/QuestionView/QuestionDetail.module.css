@@ -218,8 +218,14 @@
     }
     .response{
         font-size: 0.6rem;
+        max-width: none;
+    
+    }
+    .contain{
         width: 80vw;
-        width: 100%;
+    }
+    .div1{
+        max-width: 90vw;
     }
 }
 

@@ -5,8 +5,14 @@ module.exports = (sequelize) => {
     "Comment",
     {
       user: {
-        id: DataTypes.STRING,
+       // id: DataTypes.STRING,
         type: DataTypes.STRING,
+        allowNull:false,
+        validate: {
+          notEmpty: {
+            msg: "El campo de usuario no puede estar vacío",
+          },
+        },
       },
       thread: {
         id: DataTypes.STRING,

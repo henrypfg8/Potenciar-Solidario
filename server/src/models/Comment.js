@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
     "Comment",
     {
       user: {
-       // id: DataTypes.STRING,
+        //id: DataTypes.STRING,
         type: DataTypes.STRING,
         allowNull:false,
         validate: {

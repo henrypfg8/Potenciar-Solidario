@@ -11,9 +11,10 @@ import { getCodeList } from 'country-list';
 import Select from 'react-select';
 import './auth.css';
 import { validateAge } from '../../helpers/ValidateAge';
-
 const Register = () => {
     const { isAuthenticated } = useSelector(state => state.auth)
+
+
     const [success, setSuccess] = useState(false);
     const [errorRegister, setErrorRegister] = useState(false);
     const dispatch = useDispatch();
@@ -89,7 +90,6 @@ const Register = () => {
 
             {/* {error && errorRegister  && <Success frase='No se pudo crear tu cuenta' color='#DD0C0C' tipo='error' />} */}
             {success && <Swiper frase='Cuenta creada con éxito, Ahora inicia sesión' color='#005692' tipo='success' />}
-           
             {errorRegister && <Swiper frase='El usuario posiblemente ya existe, No se pudo crear tu cuenta' color='#DD0C0C' tipo='error' />}
             <form action="" method='post' onSubmit={handleSubmit(onSubmit)} className='auth__form' autoCorrect='off'>
                 {errorRegister ? <p className='auth__error'>El usuario ya existe</p> : ''}
@@ -171,11 +171,11 @@ const Register = () => {
                 <div>
                     <label className='auth__label' htmlFor="phone">Número de telefono</label>
                     {errors?.phone?.type === 'required' && <p className='auth__error'>El número de telefono es obligatorio</p>}
-
+                    {errors?.phone?.type === 'maxLength' && <p className='auth__error'>Tu número de telefono debe ser máximo de 15 digitos</p>}
                     <Controller
                         name='phone'
                         control={control}
-                        rules={{ required: true }}
+                        rules={{ required: true, maxLength : 15}}
                         render={({field, fieldState : {error}}) => {
                             return (
                                 <PhoneInput

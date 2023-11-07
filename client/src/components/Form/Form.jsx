@@ -50,6 +50,7 @@ const Form = ({ setPost, post }) => {
             ...data,
             image: urlImage,  //agregar la url de la imagen
             creationDate: fechaConvertida,
+            
            
         };
 

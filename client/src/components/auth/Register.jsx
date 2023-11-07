@@ -47,7 +47,6 @@ const Register = () => {
 
   //ongOptions select
   const ongs = useSelector((state) => state.ongsAndCategories.ongs);
-  console.log(ongs);
 
   const ongOptions = Array.from(new Set(ongs.map((ong) => ong.nombre))).map(
     (nombre) => ({
@@ -196,10 +195,11 @@ const Register = () => {
             name='phone'
             control={control}
             rules={{ required: true, maxLength: 15 }}
+          
             render={({ field, fieldState: { error } }) => {
               return (
                 <PhoneInput
-
+           
                   {...field}
                   className='auth__input'
                   id='phone'
@@ -209,7 +209,10 @@ const Register = () => {
                     field.onChange(e);
                   }}
                   value={field.value}
+                  limitMaxLength={true}
                   defaultCountry='AR'
+                  international
+                  countryCallingCodeEditable={false}
                 />
               )
             }}
@@ -235,6 +238,7 @@ const Register = () => {
                     field.onChange(e.value);
                     
                   }}
+                  
                   value={ongOptions.find(option => option.value === field.value)}
 
 

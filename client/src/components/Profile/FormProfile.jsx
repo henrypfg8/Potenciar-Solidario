@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Modal, } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from '../../Redux/auth/AuthActions';
 import proptypes from 'prop-types'
 import PhoneInput from 'react-phone-number-input';
@@ -14,6 +14,15 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { register, formState: { errors }, handleSubmit, control } = useForm();
 
+
+    const ongs = useSelector((state) => state.ongsAndCategories.ongs);
+    const ongOptions = Array.from(new Set(ongs.map((ong) => ong.nombre))).map(
+        (nombre) => ({
+            label: nombre,
+            value: nombre,
+            name: "ong",
+        })
+    );
     const dispatch = useDispatch();
     // Opciones para el select de paises
     const countries = Object.values(getCodeList());
@@ -30,7 +39,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
 
     // Función para actualizar los datos del perfil
     const onSubmit = handleSubmit((data) => { // Función para actualizar los datos del perfil
-        dispatch(updateProfile(userProfile.id, { ...data, password: userProfile.password })) 
+        dispatch(updateProfile(userProfile.id, { ...data, password: userProfile.password }))
             .then(() => {
                 setIsModalOpen(false);
                 setSuccess(true);
@@ -48,15 +57,16 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
             <Button className='profile__button--update' onClick={showModal}>
                 Editar perfil
             </Button>
-            {success && <Swiper frase='Se actualizo correctamente' color='#005692' tipo='success'/>}
-            <Modal 
-                title="Actualiza tu datos" 
-                open={isModalOpen} 
-                onCancel={handleCancel} 
-                cancelText='Cancelar' 
+            {success && <Swiper frase='Se actualizo correctamente' color='#005692' tipo='success' />}
+            <Modal
+                title="Actualiza tu datos"
+                open={isModalOpen}
+                onCancel={handleCancel}
+                cancelText='Cancelar'
                 cancelButtonProps={{
-                    style: { backgroundColor: '#fff', color: 'red', border: '1px solid red', width: '100%' }}} 
-                okButtonProps={{ style: { display: 'none'}}}>
+                    style: { backgroundColor: '#fff', color: 'red', border: '1px solid red', width: '100%' }
+                }}
+                okButtonProps={{ style: { display: 'none' } }}>
 
                 {/* Formulario para actualizar los datos del perfil */}
                 <form onSubmit={onSubmit} className='profile__form'>
@@ -131,12 +141,12 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                             <Controller
                                 name='phone'
                                 control={control}
-                                rules={{ required: true,  maxLength: 15 }}
+                                rules={{ required: true, maxLength: 15 }}
+                                //defaultValue={userProfile.phone}
                                 render={({ field, fieldState: { error } }) => {
                                     return (
                                         <PhoneInput
-                                            addInternationalOption={true}
-
+                               
                                             {...field}
                                             className='auth__input'
                                             id='phone'
@@ -146,7 +156,11 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                                                 field.onChange(e);
                                             }}
                                             value={field.value}
+                                            limitMaxLength={true}
                                             defaultCountry='AR'
+                                            international
+                                            countryCallingCodeEditable={false}
+                                           
                                         />
                                     )
                                 }}
@@ -173,6 +187,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                                 name="habitual_location_of_residence"
                                 control={control}
                                 rules={{ required: true }} // Reglas de validación con mensaje de error
+                                defaultValue={userProfile.habitual_location_of_residence}
                                 render={({ field, fieldState: { error } }) => (
                                     //console.log(error),
                                     <Select /// Componente de React Select
@@ -211,6 +226,40 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                                 id='DNI'
                                 defaultValue={userProfile.DNI}
                                 {...register('DNI', { required: true, minLength: 5, maxLength: 8 })} />
+                        </div>
+                    </div>
+                    {/* Campo para el DNI */}
+                    <div className='profile__field'>
+                        <label className='profile__label' htmlFor="DNI">Organización</label>
+                        <div>
+                            {errors?.organization?.type === 'required' && <p className='profile__alert'>La organización es requerida</p>}
+                            {errors?.organization?.type === 'minLength' && <p className='profile__alert'>La organización debe tener al menos 2 caracteres</p>}
+                            <Controller
+                                name='organization'
+                                rules={{ required: true, minLength: 2, }}
+                                control={control}
+                                defaultValue={userProfile.organization}
+                                render={({ field, fieldState: { error } }) => {
+                                    return <Select
+                                    
+                                        {...field}
+                                        className='auth__input'
+                                        options={ongOptions}
+                                        id='organization'
+                                        onChange={(e) => {
+                                            // Actualiza el valor del formulario
+                                            field.onChange(e.value);
+
+                                        }}
+                                        value={ongOptions.find(option => option.value === field.value)}
+                                        defaultInputValue={userProfile.organization}
+                                        defaultValue={userProfile.organization}
+
+
+                                    />
+                                }}
+
+                            />
                         </div>
                     </div>
                     <button className='profile__btn' type='submit'>Guardar Cambios</button>

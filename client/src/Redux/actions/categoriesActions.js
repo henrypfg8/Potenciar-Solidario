@@ -1,7 +1,7 @@
 import {
 GET_CATEGORIES,
 GET_FORUM_CATEGORIES,
-} from "../action-types"
+} from "../action types/ongAndCategoriesActionTypes.js"
 
 import axios from "axios";
 import { configureHeaders } from "../auth/configureHeaders .js";

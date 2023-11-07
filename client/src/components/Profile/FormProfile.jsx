@@ -33,7 +33,10 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
         dispatch(updateProfile(userProfile.id, { ...data, password: userProfile.password })) 
             .then(() => {
                 setIsModalOpen(false);
-                setSuccess(true)
+                setSuccess(true);
+                setTimeout(() => [
+                    setSuccess(false)
+                ], [3000])
             })
             .catch(error => {
                 console.log(error.response.data)

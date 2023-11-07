@@ -14,8 +14,9 @@ function ForumView({questions}) {
             setGetQuestion(questions)
         }
     },[questions])
+    console.log(questions);
     return (
-        <div>
+        <div style={{minHeight:'100vh'}}>
             {
                 getQuestion.length === 0
                 ?
@@ -44,16 +45,18 @@ function ForumView({questions}) {
                                         </NavLink>
                                         <p>{question.text}</p>
                                     </div>
+                                    <br style={{border: '1px red solid'}} />
                                         {/* <NavLink to={`/foro/${question.id}`}>
                                         <button>Ver más<Open /></button>
                                         </NavLink> */}
-                                        <div
+                                        <footer
                                             className={style.anwers}>
     
                                             {question.Answers.length === 1 && <p><strong>{question.Answers.length}</strong> respuesta</p>}
                                             {question.Answers.length > 1 && <p><strong>{question.Answers.length}</strong> respuestas</p>}
-                                        <h4>@{question.User.name}</h4>
-                                        </div>
+                                        <p>@{question.User.name}</p>
+                                        <p>Creada el dia</p>
+                                        </footer>
                                 </div>
                             )
                         })}

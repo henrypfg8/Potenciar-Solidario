@@ -8,15 +8,18 @@ import { useForm, Controller,} from 'react-hook-form'
 import Select from 'react-select';
 import PhoneInput from 'react-phone-number-input'
 import proptypes from 'prop-types'
+import { getProfile } from '../../Redux/auth/AuthActions';
+import {jwtDecode} from 'jwt-decode'
+
 
 const Form = ({ setPost, post }) => {
     const dispatch = useDispatch();
     const categories = useSelector(state => state.ongsAndCategories.categories);
     const [errorPost, setErrorPost] = useState(false);
-    const { isAuthenticated } = useSelector(state => state.auth);
+    const { isAuthenticated, userProfile} = useSelector(state => state.auth);
     const navigate = useNavigate();
     const { register, formState: { errors }, handleSubmit, reset, control } = useForm();
-
+    
     //Obtener la fecha actual
     const fecha = new Date().toLocaleDateString()
     const partes = fecha.split('/');
@@ -31,6 +34,22 @@ const Form = ({ setPost, post }) => {
 
     // Array de timeouts para limpiarlos en el useEffect
     const timeouts = []; 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token || !isAuthenticated) {
+            // Si no hay token o el estado no está autenticado, redirigir a login
+            navigate('/login');
+        } else {
+            const decodedToken = jwtDecode(token); // Decodificar el token y obtener el id del usuario
+            console.log(decodedToken.id)
+            dispatch(getProfile(decodedToken.id))
+                .then(() => {
+            
+                 }).catch((error) => {
+                    console.log(error.response.data);
+                 })
+        }
+    }, [dispatch, isAuthenticated, navigate])
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -49,10 +68,11 @@ const Form = ({ setPost, post }) => {
             ...data,
             image: urlImage,  //agregar la url de la imagen
             creationDate: fechaConvertida,
+            organization: userProfile.organization,
             
            
         };
-
+        console.log(updatedPost)
         dispatch(createPost(updatedPost))
             .then(() => {
 

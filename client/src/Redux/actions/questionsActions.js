@@ -6,7 +6,7 @@ GET_QUESTION_DETAIL,
 CLEAR_QUESTION_DETAIL,
 UPDATE_QUESTION,
 GET_QUESTIONS_FILTERED,
-} from "../action-types";
+} from "../action types/questionsActionTypes.js";
 
 import axios from "axios";
 import { configureHeaders } from "../auth/configureHeaders .js";

@@ -19,13 +19,13 @@ const authRegisterHandler = async (req, res) => {
         password,
         organization
     } = req.body;
-
-    console.log(organization)
+    //console.log(name)
+    //console.log(`soy la ong ${organization}`)
 
     try {
         const userExist = await User.findOne({ where: { email: email } });
         const organizationSearch = await Organization.findOne({ where: { nombre: organization } });
-        console.log(organizationSearch)
+        //console.log(organizationSearch)
         if(organizationSearch === null){
             throw new Error("No se encontro la organizacion en la BD")
         }

@@ -93,3 +93,10 @@ export const getQuestionsFiltered = (filters) => {
         }
     }
 }
+
+export const setQuestionsFilters = (filters) => {
+    return {
+        type: SET_QUESTIONS_FILTERS,
+        payload: filters
+    }
+}

@@ -5,7 +5,6 @@ const CreateCommentHandler = async({thread,userId,commentId})=>{
     if (!newComment) {
       throw new Error("No se pudo crear el comentario");
     }
-  
     //global.io.emit(`question_${answerId}`);
   
     return newComment;

@@ -6,7 +6,7 @@ const CreateAnswer = async ({ answer, userId, questionId }) => {
     throw new Error("No se pudo crear la answer");
   }
 
-  global.io.emit(`question_${questionId}`);
+  global.io.emit(`question_${questionId}`);//!
 
   return newAnswer;
 };

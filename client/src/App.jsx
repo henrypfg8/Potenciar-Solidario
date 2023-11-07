@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "./Redux/actions/postsActions";
 import { getCategories, getForumCategories } from "./Redux/actions/categoriesActions";
 import { getOngs } from "./Redux/actions/ongsActions";
-//
+
 import "./App.css";
-//
+
 import Forum from "./components/Forum/Forum";
 import Header from "./components/Header/Header";
 import Home from "./views/HomeView/Home";
@@ -16,12 +16,12 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import SearchBar from "./components/SearchBar/SearchBar";
 import PostDetailView from "./views/PostDetailView/PostDetailView";
-//
 import Admin from "./views/admin/Admin";
 import ProfileView from "./views/ProfileView/ProfileView";
 import DrawerProfile from "./components/Profile/DrawerProfile";
 import QuestionCreateView from "./views/QuestionCreateView/QuestionCreateView";
 import QuestionView from "./views/QuestionView/QuestionView";
+import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -39,21 +39,21 @@ function App() {
 
   const token = localStorage.getItem('token');
 
-useEffect(() => {
-  root.addEventListener("scroll", scrollHandler);
-  
-  //si el token cambia o existe se vuelven a cargar los datos
-  if (token) {
-    dispatch(getPosts());
-    dispatch(getOngs());
-    dispatch(getCategories());
-    dispatch(getForumCategories());
-  }
+  useEffect(() => {
+    root.addEventListener("scroll", scrollHandler);
 
-  return () => {
-    root.removeEventListener("scroll", scrollHandler);
-  };
-}, [token]);
+    //si el token cambia o existe se vuelven a cargar los datos
+    if (token) {
+      dispatch(getPosts());
+      dispatch(getOngs());
+      dispatch(getCategories());
+      dispatch(getForumCategories());
+    }
+
+    return () => {
+      root.removeEventListener("scroll", scrollHandler);
+    };
+  }, [token]);
 
   return (
     <div className="App">
@@ -72,8 +72,7 @@ useEffect(() => {
         <Route path="/foro" element={<Forum />} />
 
         <Route path="/foro/crear" element={<QuestionCreateView />} />
-        <Route path="/foro/:id" element={<QuestionView/>} />
-
+        <Route path="/foro/:id" element={<QuestionDetail />} />
         {/* auth */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

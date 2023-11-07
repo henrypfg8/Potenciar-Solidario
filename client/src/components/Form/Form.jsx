@@ -248,6 +248,9 @@ const Form = ({ setPost, post }) => {
                                     }}
                                     value={field.value}
                                     defaultCountry='AR'
+                                    international
+                                    countryCallingCodeEditable={false}
+                                    limitMaxLength={true}
                                 />
                             )
                         }}

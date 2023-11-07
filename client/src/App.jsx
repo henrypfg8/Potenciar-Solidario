@@ -22,6 +22,7 @@ import DrawerProfile from "./components/Profile/DrawerProfile";
 import QuestionCreateView from "./views/QuestionCreateView/QuestionCreateView";
 import QuestionView from "./views/QuestionView/QuestionView";
 import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
+import UserPostsView from "./views/UserPostsView/UserPostsView";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -78,6 +79,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/profile" element={<ProfileView />} />
+        <Route path="/profile/posts" element={<UserPostsView/>}/>
       </Routes>
     </div>
   );

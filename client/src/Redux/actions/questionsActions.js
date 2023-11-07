@@ -6,6 +6,7 @@ GET_QUESTION_DETAIL,
 CLEAR_QUESTION_DETAIL,
 UPDATE_QUESTION,
 GET_QUESTIONS_FILTERED,
+SET_QUESTIONS_FILTERS,
 } from "../action-types";
 
 import axios from "axios";
@@ -91,5 +92,12 @@ export const getQuestionsFiltered = (filters) => {
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error");
         }
+    }
+}
+
+export const setQuestionsFilters = (filters) => {
+    return {
+        type: SET_QUESTIONS_FILTERS,
+        payload: filters
     }
 }

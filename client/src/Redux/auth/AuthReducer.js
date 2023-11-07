@@ -12,6 +12,7 @@ const initialState = {
     loading: true,
     errorRegister: null,
     errorLogin: null,
+    deleteSuccess: false,   
 }
 
 
@@ -72,6 +73,7 @@ const authReducer = (state = initialState, action) => {
                 token: null,
                 isAuthenticated: false,
                 isAdmin: false,
+                deleteSuccess: true,
                 
             }        
         case types.ERROR_REGISTER:
@@ -85,6 +87,12 @@ const authReducer = (state = initialState, action) => {
                     ...state,
                     errorLogin: action.payload,
                 }
+
+        case types.CLEAN_DELETE_SUCCESS:
+            return {
+                ...state,
+                deleteSuccess: false,
+            }
          default : {
                 return {...state};
          }

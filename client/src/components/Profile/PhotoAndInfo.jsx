@@ -1,19 +1,16 @@
 import { useState } from 'react'
 import proptypes from 'prop-types'
-import { deleteProfile } from '../../Redux/auth/AuthActions';
-import { useNavigate } from 'react-router-dom';
+import { deleteProfile, deleteSuccess, delteSuccessClean} from '../../Redux/auth/AuthActions';
 import { Modal, Button, Avatar, } from 'antd';
-import { useDispatch } from 'react-redux'
+import { useDispatch,  } from 'react-redux'
 import { UserOutlined, } from '@ant-design/icons';
-import Swiper from '../Form/Swiper';
 import { updateProfile } from '../../Redux/auth/AuthActions';
 import { uploadImageCloudinary } from '../Form/cloudinary';
 
 
-const PhotoAndInfo = ({ userProfile }) => {
+const PhotoAndInfo = ({ userProfile,}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [deleteSuccess, setDeleteSuccess] = useState(false);
-    const navigate = useNavigate();
+   
     const dispatch = useDispatch();
 
     // Mensaje de confirmación para eliminar la cuenta
@@ -33,17 +30,15 @@ const PhotoAndInfo = ({ userProfile }) => {
     const handleDeleteAccount = () => {
         dispatch(deleteProfile(userProfile.id))
             .then(() => {
-                setDeleteSuccess(true);
-                navigate('/register')
-
+                dispatch(deleteSuccess())
                 setTimeout(() => {
-                    setDeleteSuccess(false);
-
-                }, 3000)
+                    dispatch(delteSuccessClean())
+                }, [3000])
             })
             .catch(error => {
                 console.log(error.response.data)
-                setDeleteSuccess(false);
+                dispatch(delteSuccessClean())
+               
             })
     }
 
@@ -67,8 +62,8 @@ const PhotoAndInfo = ({ userProfile }) => {
 
     return (
         <div className='profile__container--info'>
-            {deleteSuccess && <Swiper frase='Tu cuenta ha sido borrado, correctamente, Hasta pronto' tipo='success' color='#005692' />}
-
+          
+            
             <div>
                 <div className='profile__avatar'>
                     {userProfile.profile_picture ?
@@ -121,6 +116,7 @@ const PhotoAndInfo = ({ userProfile }) => {
 }
 
 PhotoAndInfo.propTypes = {
-    userProfile: proptypes.object.isRequired
+    userProfile: proptypes.object.isRequired,
+ 
 }
 export default PhotoAndInfo

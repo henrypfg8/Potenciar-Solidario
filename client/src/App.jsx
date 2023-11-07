@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "./Redux/actions/postsActions";
 import { getCategories, getForumCategories } from "./Redux/actions/categoriesActions";
 import { getOngs } from "./Redux/actions/ongsActions";
-//
+
 import "./App.css";
-//
+
 import Forum from "./components/Forum/Forum";
 import Header from "./components/Header/Header";
 import Home from "./views/HomeView/Home";
@@ -16,12 +16,11 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import SearchBar from "./components/SearchBar/SearchBar";
 import PostDetailView from "./views/PostDetailView/PostDetailView";
-//
 import Admin from "./views/admin/Admin";
 import ProfileView from "./views/ProfileView/ProfileView";
 import DrawerProfile from "./components/Profile/DrawerProfile";
 import QuestionCreateView from "./views/QuestionCreateView/QuestionCreateView";
-// import QuestionView from "./views/QuestionView/QuestionView";
+import QuestionView from "./views/QuestionView/QuestionView";
 import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
 
 function App() {
@@ -31,7 +30,6 @@ function App() {
   const dispatch = useDispatch();
   //Manejo de Header segun el scroll:
   const [isScrolled, setIsScrolled] = useState(false);
-
   const root = document.querySelector("#root");
 
   function scrollHandler() {
@@ -39,11 +37,13 @@ function App() {
     else setIsScrolled(false);
   }
 
+  const token = localStorage.getItem('token');
+
   useEffect(() => {
     root.addEventListener("scroll", scrollHandler);
 
-    // si las rutas son /login o /register no se ejecutan los dispatch
-    if (pathname !== "/login" && pathname !== "/register") {
+    //si el token cambia o existe se vuelven a cargar los datos
+    if (token) {
       dispatch(getPosts());
       dispatch(getOngs());
       dispatch(getCategories());
@@ -53,7 +53,7 @@ function App() {
     return () => {
       root.removeEventListener("scroll", scrollHandler);
     };
-  }, []);
+  }, [token]);
 
   return (
     <div className="App">
@@ -72,8 +72,7 @@ function App() {
         <Route path="/foro" element={<Forum />} />
 
         <Route path="/foro/crear" element={<QuestionCreateView />} />
-        <Route path="/foro/:id" element={<QuestionDetail/>} />
-
+        <Route path="/foro/:id" element={<QuestionDetail />} />
         {/* auth */}
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />

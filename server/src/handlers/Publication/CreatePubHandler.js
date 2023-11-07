@@ -27,6 +27,9 @@ const createPublicationHandler = async (req, res) => {
     try {
         console.log(category)
         const categorySearch = await Category.findOne({ where: { name: category } });
+        if(categorySearch === null){
+            throw new Error("No se encontro la categoria en la BD")
+        }
         console.log(categorySearch)
         let categoryId = null;
         if(categorySearch){

@@ -34,6 +34,7 @@ const ProfileView = () => {
  
 
     if (!userProfile) return null;
+    console.log(userProfile)
     return (
         <>
       

@@ -11,7 +11,6 @@ import proptypes from 'prop-types'
 
 const Form = ({ setPost, post }) => {
     const dispatch = useDispatch();
-    const ongs = useSelector(state => state.ongsAndCategories.ongs);
     const categories = useSelector(state => state.ongsAndCategories.categories);
     const [errorPost, setErrorPost] = useState(false);
     const { isAuthenticated } = useSelector(state => state.auth);
@@ -25,7 +24,7 @@ const Form = ({ setPost, post }) => {
 
     //Convertir el array de categorias en un array de objetos para el select
     const options = categories.map(cat => ({ value: cat.name, label: cat.name }));
-    const options2 = ongs.map(ong => ({ value: ong.nombre, label: ong.nombre }));
+  
 
     const [imgFile, setImgFile] = useState(null);
     const [success, setSuccess] = useState(false);
@@ -255,29 +254,6 @@ const Form = ({ setPost, post }) => {
                     />
                 </div>
                 {/* End form field */}
-                <div className='form__field'>
-                    <label htmlFor="organization">Organización</label>
-                    {errors?.organization?.type === 'required' && <p className='form__alert'>La organización es obligatoria</p>}
-                    <Controller
-                        name="organization"
-                        control={control}
-                        rules={{ required: 'La organización es obligatoria' }} // Reglas de validación con mensaje de error
-                        render={({ field, fieldState: { error } }) => (
-                            // console.log(error),
-                            <Select
-                                name='organization'
-                                {...field}
-                                options={options2}
-                                onChange={(e) => {
-                                    // Actualiza el valor del formulario
-                                    field.onChange(e.value);
-                                    setPost({...post, organization: e.value})
-                                }}
-                                value={options.find(option => option.value === field.value)}
-                            />
-                        )}
-                    />
-                </div>
                 <div className='form__field'>
                     <label htmlFor="registrationLink">Enlace de para inscribirse </label>
                     {errors?.registrationLink?.type === 'maxLength' && <p className='form__alert'>El enlace No debe tener más de 100 caracteres</p>}

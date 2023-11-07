@@ -1,6 +1,6 @@
 const { DeleteCommentC } = require("../../controllers/Comments/DeleteCommentC");
 
-const DeleteCommentH = async (req, res) => {
+const DeleteCommentHandler = async (req, res) => {
     const {id} = req.params;
     try {
         const comment = await DeleteCommentC(id)
@@ -12,5 +12,5 @@ const DeleteCommentH = async (req, res) => {
     }
 }
 module.exports = {
-    DeleteCommentH
+    DeleteCommentHandler
 }

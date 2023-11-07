@@ -252,9 +252,6 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
 
                                         }}
                                         value={ongOptions.find(option => option.value === field.value)}
-                                        defaultInputValue={userProfile.organization}
-                                        defaultValue={userProfile.organization}
-
 
                                     />
                                 }}

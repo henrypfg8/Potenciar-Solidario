@@ -60,10 +60,13 @@ const {
 User.hasMany(Publication, { foreignKey: "userID" });
 User.hasMany(Question, { foreignKey: "userId" });
 User.hasMany(Answer, { foreignKey: "userId" });
+User.hasMany(Review, { foreignKey: "userId" });
 Publication.belongsTo(User, { foreignKey: "userID" });
 Publication.belongsTo(Category, { foreignKey: "categoryId" });
+Publication.hasMany(Review, { foreignKey: "publicationId" });
 Category.hasMany(Publication, { foreignKey: "categoryId" });
 Category.hasMany(Question, { foreignKey: "categoryId" });
+Review.belongsTo(Publication, { foreignKey: "publicationId" });
 
 Question.belongsTo(User, { foreignKey: "userId" });
 Question.hasMany(Answer, { foreignKey: "questionId" });
@@ -82,6 +85,7 @@ ForoCategories.hasMany(Question, { foreignKey: "categoryId" })
 Like.belongsTo(Publication, { foreignKey: "publicationId" });
 Like.belongsTo(User, { foreignKey: "userId" });
 Publication.hasMany(Like, { foreignKey: "publicationId" });
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

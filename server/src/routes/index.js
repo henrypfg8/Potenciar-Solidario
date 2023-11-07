@@ -50,6 +50,11 @@ const { HandlerPostLike } = require("../handlers/Publication/PostLike.js");
 const {CreateCommentHandler} = require('../handlers/Comments/CreateCommentH.js')
 const {DeleteCommentHandler} = require('../handlers/Comments/DeleteCommentH.js');
 const {UpdateCommentHandler} = require('../handlers/Comments/PutCommentH.js')
+
+//HANDLERS DE REVIEWS
+const {UpdateReviewHandler} = require('../handlers/Reviews/UpdateReviewH.js')
+const {CreateReviewHandler} = require('../handlers/Reviews/CreateReviewH.js')
+const {DeleteReviewHandler} = require('../handlers/Reviews/DeleteReviewH.js')
 const router = Router();
 
 router.get("/posts/busqueda", searchPublication);
@@ -108,8 +113,8 @@ router.put("/answers/comments/:id",UpdateCommentHandler)
 router.delete("/answers/comments/:id",DeleteCommentHandler)
 
 //Rutas de REVIEWS.
-router.post("/posts/reviews")
-router.put("/posts/reviews/:id")
-router.delete("/posts/reviews/:id")
+router.post("/posts/reviews",CreateReviewHandler)
+router.put("/posts/reviews/:id",UpdateReviewHandler)
+router.delete("/posts/reviews/:id",DeleteReviewHandler)
 
 module.exports = router;

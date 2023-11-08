@@ -1,5 +1,4 @@
-// const { User } = require("./db");
-const { Publication, Like,User } = require("../../db");
+const { Publication, Like, User } = require("../../db");
 
 
 const getPublications = async (id) => {

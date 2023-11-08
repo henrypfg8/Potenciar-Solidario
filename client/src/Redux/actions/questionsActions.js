@@ -9,7 +9,6 @@ GET_QUESTIONS_FILTERED,
 SET_QUESTIONS_FILTERS
 } from "../action types/questionsActionTypes.js";
 
-
 import axios from "axios";
 import { configureHeaders } from "../auth/configureHeaders .js";
 

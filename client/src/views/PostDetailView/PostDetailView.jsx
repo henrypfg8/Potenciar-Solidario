@@ -40,9 +40,10 @@ const Detail = () => {
 
   return (
     <div className={Styles.DetailView}>
-      <div className={Styles.Image}>
-        {image && <img src={image} alt="Imagen" />}
+      {image && <div className={Styles.Image}>
+        <img src={image} alt="Imagen" />
       </div>
+      }
       <div className={Styles.Detail}>
         <h1>{title}</h1>
         <h2>{category}</h2>
@@ -60,13 +61,10 @@ const Detail = () => {
         {url && <p>URL para saber más: {url}</p>}
         <h3>Fecha de alta</h3>
         <time dateTime={creationDate}>
-           {creationDate}
+          {creationDate}
         </time>
 
       </div>
-
-
-
     </div>
   );
 };

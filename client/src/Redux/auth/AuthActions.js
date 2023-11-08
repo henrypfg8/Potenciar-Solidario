@@ -20,19 +20,24 @@ const registerUser = user => {
 };
 
 
-const getProfile =  id => {
+const getProfile =  (id, token) => {
     return async dispatch => {
         try {
-           
-            const { data } = await axios(`http://localhost:19789/users/${id}`,config);
-            //console.log(data.id) // si aparece la data
+        
+            const { data } = await axios.get(`http://localhost:19789/users/${id}`,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            
+            });
+            console.log(data, 'desde el action')
             dispatch({ type: types.GET_PROFILE, payload: data });
-            return Promise.resolve(data);
+          
         }
         catch (error) {
             console.log(error.response.data);
             dispatch({ type: types.ERROR_REGISTER, payload: error.response.data })
-            return Promise.reject(error);
+           
        
         }
     }

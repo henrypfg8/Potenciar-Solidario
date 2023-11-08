@@ -142,7 +142,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                                 name='phone'
                                 control={control}
                                 rules={{ required: true, maxLength: 15 }}
-                                //defaultValue={userProfile.phone}
+                                defaultValue={userProfile.phone}
                                 render={({ field, fieldState: { error } }) => {
                                     return (
                                         <PhoneInput
@@ -212,7 +212,9 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                         <label className='profile__label' htmlFor="geographical_area_residence">Area de localización</label>
                         <input className='profile__input' type="text"
                             id='geographical_area_residence'
-                            defaultValue={userProfile.geographical_area_residence} />
+                            defaultValue={userProfile.geographical_area_residence}
+                            {...register('geographical_area_residence', { required: false })} /> 
+                            
                     </div>
                     {/* Campo para el DNI */}
                     <div className='profile__field'>

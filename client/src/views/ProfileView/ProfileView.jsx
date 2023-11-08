@@ -13,28 +13,30 @@ const ProfileView = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [success, setSuccess] = useState(false)
-    
+    const token = localStorage.getItem('token');
+    // console.log(token)
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token || !isAuthenticated) {
-            // Si no hay token o el estado no está autenticado, redirigir a login
-            navigate('/login');
-        } else {
-            const decodedToken = jwtDecode(token); // Decodificar el token y obtener el id del usuario
-            console.log(decodedToken.id)
-            dispatch(getProfile(decodedToken.id))
-                .then(() => {
-            
-                 }).catch((error) => {
-                    console.log(error.response.data);
-                 })
-        }
-    }, [dispatch, isAuthenticated, navigate])
+       
+       if(!token || !isAuthenticated){
+           navigate('/login')
+
+       }
+       else{
+        const decoded = jwtDecode(token);
+        dispatch(getProfile(decoded.id, token)).then(() =>{
+            console.log(userProfile)
+        })
+        .catch(error => {
+            console.log(error.response.data, 'hubo un error')
+        })
+
+       }
+    }, [isAuthenticated, token])
 
  
 
     if (!userProfile) return null;
-    console.log(userProfile)
+  
     return (
         <>
       

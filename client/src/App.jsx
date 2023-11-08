@@ -73,7 +73,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/formulario" element={<ContainerForm />} />
+        <Route path="/formulario/:id?" element={<ContainerForm />} />
         <Route path="/detalle/:id" element={<PostDetailView />} />
 
         <Route path="/foro" element={<Forum />} />

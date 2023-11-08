@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { createPost, } from '../../Redux/actions/postsActions'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swiper from './Swiper';
 import { useEffect, useState } from 'react';
 import { uploadImageCloudinary } from './cloudinary';
@@ -10,16 +10,66 @@ import PhoneInput from 'react-phone-number-input'
 import proptypes from 'prop-types'
 import { getProfile } from '../../Redux/auth/AuthActions';
 import {jwtDecode} from 'jwt-decode'
+import { configureHeaders } from '../../Redux/auth/configureHeaders ';
+import axios from 'axios';
 
 
 const Form = ({ setPost, post }) => {
     const dispatch = useDispatch();
-    const categories = useSelector(state => state.ongsAndCategories.categories);
     const [errorPost, setErrorPost] = useState(false);
+    //Obtener el estado de autenticación
     const { isAuthenticated, userProfile} = useSelector(state => state.auth);
-    const navigate = useNavigate();
-    const { register, formState: { errors }, handleSubmit, reset, control } = useForm();
+    const categories = useSelector(state => state.ongsAndCategories.categories);
     
+    //usar el hook form
+    const { register, formState: { errors }, handleSubmit, reset, control, setValue, getValues } = useForm();
+    const valuesPost = getValues();
+    //Obtener el token
+    const token = localStorage.getItem('token');
+
+    const navigate = useNavigate();
+    //Obtener el id de la publicación
+    const { id } = useParams();
+    useEffect(() =>{
+        const getPost = async () => {
+            if(id){
+                    const config = configureHeaders();
+                    try{
+                        const {data} = await axios(`http://localhost:19789/posts/${id}`,config );
+                        setValue('title', data.title)
+                        setValue('category', data.category)
+                        setValue('description', data.description)
+                        setValue('startDate', data.startDate)
+                        setValue('endDate', data.endDate)
+                        setValue('contact', data.contact)
+                        setValue('registrationLink', data.registrationLink)
+                        setValue('url', data.url)
+                        setValue('imagePreview', data.image)
+                        setPost({
+                            ...post,
+                            title: data.title,
+                            category: data.category,
+                            description: data.description,
+                            startDate: data.startDate,
+                            endDate: data.endDate,
+                            image: data.image,
+                            creationDate: data.creationDate,
+                            imagePreview: data.image,
+                            contact: data.contact,
+                            status: data.status,
+                            organization: data.organization,
+                            registrationLink: data.registrationLink,
+                            url: data.url,
+                        })
+                    }
+                    catch(error){  
+                        console.log(error.response)
+                     }
+                return
+            }
+        }
+        getPost()
+    }, [id])
     //Obtener la fecha actual
     const fecha = new Date().toLocaleDateString()
     const partes = fecha.split('/');
@@ -35,30 +85,13 @@ const Form = ({ setPost, post }) => {
     // Array de timeouts para limpiarlos en el useEffect
     const timeouts = []; 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token || !isAuthenticated) {
-            // Si no hay token o el estado no está autenticado, redirigir a login
-            navigate('/login');
-        } else {
-            const decodedToken = jwtDecode(token); // Decodificar el token y obtener el id del usuario
-            console.log(decodedToken.id)
-            dispatch(getProfile(decodedToken.id))
-                .then(() => {
-            
-                 }).catch((error) => {
-                    console.log(error.response.data);
-                 })
-        }
-    }, [dispatch, isAuthenticated, navigate])
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
         if (!token || !isAuthenticated) {
             // Si no hay token o el estado no está autenticado, redirigir a login
             navigate('/login');
             return
-        }
-    }, [isAuthenticated, navigate])
+        } 
+    }, [ isAuthenticated, token])
+
 
     const onSubmit = async data => { // Enviar el formulario de la publicación
 
@@ -72,7 +105,7 @@ const Form = ({ setPost, post }) => {
             
            
         };
-        console.log(updatedPost)
+       
         dispatch(createPost(updatedPost))
             .then(() => {
 
@@ -163,6 +196,7 @@ const Form = ({ setPost, post }) => {
                     {errors?.title?.type === 'minLength' && <p className='form__alert'>El titulo debe tener al menos 5 caracteres</p>}
                     {errors?.title?.type === 'required' && <p className='form__alert'>El titulo es obligatorio</p>}
                     <input type="text" id='title' placeholder='titulo'
+                        defaultValue={valuesPost.title}
                         {...register('title', { required: true, minLength: 5, maxLength: 50 })}
                     />
                 </div>
@@ -171,6 +205,7 @@ const Form = ({ setPost, post }) => {
                     <label htmlFor="category">Categoria</label>
                     {errors.category && <p className='form__alert'>La categoria es obligatoria</p>}
                     <Controller
+                        defaultValue={valuesPost.category}
                         name="category"
                         control={control}
                         rules={{ required: 'La categoria es obligatoria' }} // Reglas de validación con mensaje de error
@@ -185,6 +220,8 @@ const Form = ({ setPost, post }) => {
                                     field.onChange(e.value);
                                     setPost({...post, category: e.value})
                                 }}
+                                defaultValue={valuesPost.category}
+                            
                                 value={options.find(option => option.value === field.value)}
                             />
                         )}
@@ -198,6 +235,7 @@ const Form = ({ setPost, post }) => {
                     {errors?.description?.type === 'minLength' && <p className='form__alert'>La descripcion debe tener al menos 20 caracteres</p>}
                     {errors?.description?.type === 'required' && <p className='form__alert'>La descripcion es obligatorio</p>}
                     <textarea id="description" cols="30" rows="10" placeholder='descripcion'
+                        defaultValue={valuesPost.description}
                         {...register('description', { required: true, minLength: 20, maxLength: 1000 })}
                     ></textarea>
                 </div>
@@ -209,8 +247,9 @@ const Form = ({ setPost, post }) => {
                     {errors?.startDate?.type === 'pattern' && <p className='form__alert'>Debe ser una fecha valida</p>}
 
                     <input type="date" id='startDate' placeholder='fecha'
+                        
                         name='startDate'
-                        defaultValue={fechaConvertida}
+                        defaultValue={post.startDate}
                         {...register('startDate', {
                             required: true, min: fechaConvertida, pattern: {
                                 value: /^\d{4}-\d{2}-\d{2}$/,
@@ -226,6 +265,7 @@ const Form = ({ setPost, post }) => {
                     {errors?.endDate?.type === 'required' && <p className='form__alert'>La fecha de fin es obligatorio</p>}
                     {errors?.endDate?.type === 'min' && <p className='form__alert'>La fecha de fin debe ser mayor a la fecha actual</p>}
                     <input type="date" id='endDate' placeholder='fecha'
+                        defaultValue={post.endDate}
                         {...register('endDate', {
                             required: true, min: fechaConvertida, pattern: {
                                 value: /^\d{4}-\d{2}-\d{2}$/,
@@ -239,6 +279,7 @@ const Form = ({ setPost, post }) => {
                 <div className='form__field'>
                     <label htmlFor="image">Selecciona un imagen</label>
                     <input type="file"
+                      
                         name="image"
                         id="image"
                         accept='image/*'
@@ -253,6 +294,8 @@ const Form = ({ setPost, post }) => {
                         name='contact'
                         control={control}
                         rules={{ required: true }}
+                        defaultValue={post.contact}
+                        
                         render={({ field, fieldState: { error } }) => {
                             return (
                                 <PhoneInput
@@ -271,6 +314,7 @@ const Form = ({ setPost, post }) => {
                                     international
                                     countryCallingCodeEditable={false}
                                     limitMaxLength={true}
+                                    
                                 />
                             )
                         }}
@@ -283,6 +327,7 @@ const Form = ({ setPost, post }) => {
                     {errors?.registrationLink?.type === 'minLength' && <p className='form__alert'>El enlace debe tener al menos 5 caracteres</p>}
                     {errors?.registrationLink?.type === 'pattern' && <p className='form__alert'>Debe ser un enlace valido</p>}
                     <input type="text" id='registrationLink' name='registrationLink' placeholder='Enlace de para inscribirse'
+                        defaultValue={post.registrationLink}
                         {...register('registrationLink', {
                             required: false, minLength: 5, maxLength: 100, pattern: {
                                 value: /^(http|https):\/\/[^ "]+$/,
@@ -298,6 +343,7 @@ const Form = ({ setPost, post }) => {
                     {errors?.url?.type === 'minLength' && <p className='form__alert'>El enlace debe tener al menos 5 caracteres</p>}
                     {errors?.url?.type === 'pattern' && <p className='form__alert'>Debe ser un enlace valido</p>}
                     <input type="text" id='url' placeholder='url para mas informacion'
+                        defaultValue={post.url}
                         {...register('url', {
                             required: false, minLength: 5, maxLength: 100, pattern: {
                                 value: /^(http|https):\/\/[^ "]+$/,

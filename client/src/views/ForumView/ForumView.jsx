@@ -56,7 +56,7 @@ function ForumView({questions}) {
                                             {question.Answers.length === 1 && <p><strong>{question.Answers.length}</strong> respuesta</p>}
                                             {question.Answers.length > 1 && <p><strong>{question.Answers.length}</strong> respuestas</p>}
                                         <p>@{question.User.name}</p>
-                                        <p>Creada el dia{question?.createdAt?.split("T")[0]}</p>
+                                        <p>Creada el: {question?.createdAt?.split("T")[0]}</p>
                                         </footer>
                                 </div>
                             )

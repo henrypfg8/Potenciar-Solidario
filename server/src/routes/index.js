@@ -56,6 +56,9 @@ const {UpdateCommentHandler} = require('../handlers/Comments/PutCommentH.js')
 const {UpdateReviewHandler} = require('../handlers/Reviews/UpdateReviewH.js')
 const {CreateReviewHandler} = require('../handlers/Reviews/CreateReviewH.js')
 const {DeleteReviewHandler} = require('../handlers/Reviews/DeleteReviewH.js')
+
+const {forgotPassword} = require('../handlers/Authentication/forgotPassword.js')
+const {resetPassword} = require('../handlers/Authentication/resetpassword.js')
 const router = Router();
 
 router.get("/posts/busqueda", searchPublication);
@@ -118,5 +121,9 @@ router.delete("/answers/comments/:id",DeleteCommentHandler)
 router.post("/posts/reviews",CreateReviewHandler)
 router.put("/posts/reviews/:id",UpdateReviewHandler)
 router.delete("/posts/reviews/:id",DeleteReviewHandler)
+
+//rutas reseteo de contraseña
+router.put("/forgotpassword",forgotPassword)
+router.put("/resetpassword",resetPassword)
 
 module.exports = router;

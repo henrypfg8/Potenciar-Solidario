@@ -11,10 +11,11 @@ import {
   //   GET_POSTS_BY_ONGS,
   GET_POSTS_FILTERED,
   SET_POSTS_FILTERS,
-  LIKE,
   CREATE_POST_REVIEW,
   DELETE_POST_REVIEW,
   UPDATE_POST_REVIEW,
+  SET_SEARCH_VALUE,
+  LIKE
 } from "../action types/postsActionTypes.js";
 
 import axios from "axios";
@@ -169,6 +170,13 @@ export const setPostsFilters = (postsFilters) => {
     payload: postsFilters,
   };
 };
+
+export const setSearchValue = (searchValue) => {
+  return {
+    type: SET_SEARCH_VALUE,
+    payload: searchValue
+  }
+}
 
 export const like = (idUser, idPublication) => {
   return async function (dispatch) {

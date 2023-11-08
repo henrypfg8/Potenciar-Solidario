@@ -10,6 +10,7 @@ import {
   SEARCH_POSTS,
   GET_POSTS_FILTERED,
   SET_POSTS_FILTERS,
+  SET_SEARCH_VALUE,
   LIKE,
   CREATE_POST_REVIEW,
   DELETE_POST_REVIEW,
@@ -24,6 +25,7 @@ const initialState = {
     fromDate: '',
     untilDate: ''
   },
+  searchValue: '',
   // allPosts: [],
   postDetail: [],
   liked: [],
@@ -100,6 +102,12 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         postsFilters: action.payload
+      }
+
+    case SET_SEARCH_VALUE:
+      return {
+        ...state,
+        searchValue: action.payload
       }
 
     case LIKE:

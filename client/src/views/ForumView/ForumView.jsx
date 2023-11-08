@@ -36,7 +36,7 @@ function ForumView({ questions }) {
                             <h1>Foro general</h1>
                             <div className={style.div}>
 
-                                {getQuestion?.sort((a, b) => a - b).map(question => {
+                                {getQuestion?.sort((a, b) => b.id - a.id).map(question => {
                                     return (
                                         <div key={question.id} className={style.contain}>
 

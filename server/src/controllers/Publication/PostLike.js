@@ -11,10 +11,12 @@ const PostLike = async ({ idUser, idPublication}) => {
 
  const publication = await Publication.findOne({
   where: {id : idPublication}
+  
  });
 
  if(publication.likes >= 0) {
   publication.likes = publication.likes + 1 
+
   await publication.save();
  }
  

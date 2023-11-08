@@ -25,7 +25,7 @@ function ForumView({ questions }) {
                         <LeftBar />
                         <div>
                             <h1>
-                                No hay ninguna preguntas
+                                No hay ninguna pregunta
                             </h1>
                         </div>
                     </div>
@@ -36,7 +36,7 @@ function ForumView({ questions }) {
                             <h1>Foro general</h1>
                             <div className={style.div}>
 
-                                {getQuestion?.sort((a, b) => a.question - b.question).map(question => {
+                                {getQuestion?.sort((a, b) => a - b).map(question => {
                                     return (
                                         <div key={question.id} className={style.contain}>
 

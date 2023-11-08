@@ -69,13 +69,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      creationDate: {
-        type: DataTypes.DATEONLY,
-        allowNull: true,
-        validate: {
-          isDate: true,
-        },
-      },
     },
     { timestamps: false }
   );

@@ -40,22 +40,35 @@ const Detail = () => {
 
   return (
     <div className={Styles.DetailView}>
-      {image && <div className={Styles.Image}>
-        <img src={image} alt="Imagen" />
-      </div>
+        
+      
+    
+      <div className={Styles.contain}>
+      {
+        image && <img src={image} alt="Imagen" />
       }
+        <div className={Styles.title}>
+      <h1>{title}</h1>
+        <a>{category}</a>
+      <p>{description}</p>
+        </div>
+
+      </div>
+
       <div className={Styles.Detail}>
-        <h1>{title}</h1>
-        <h2>{category}</h2>
-        <h3>Descripción: </h3>
-        <p>{description}</p>
+        <div>
+
+        <h2 className={Styles.title2}>Informacion sobre la publicación</h2>
+        </div>
         <h3>ONG: </h3>
         <p>{organization}</p>
         <h3>Fecha de inicio: </h3>
         <p>{startDate}</p>
-        {endDate && <p><h3>Fecha de fin:</h3>{endDate}</p>}
+        {endDate && <h3>Fecha de fin:</h3>}
+        {endDate && <p>{endDate}</p>}
+
         {registrationLink && <h3>Link para inscribirse:</h3>}
-        <p>{registrationLink}</p>
+        {registrationLink && <p>{registrationLink}</p>}
         <h3>Contacto: </h3>
         <p>{contact}</p>
         {url && <p>URL para saber más: {url}</p>}
@@ -63,8 +76,8 @@ const Detail = () => {
         <time dateTime={creationDate}>
           {creationDate}
         </time>
-
       </div>
+
     </div>
   );
 };

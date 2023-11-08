@@ -14,7 +14,8 @@ function ForumView({questions}) {
             setGetQuestion(questions)
         }
     },[questions])
-    console.log(questions);
+
+    
     return (
         <div style={{minHeight:'100vh'}}>
             {

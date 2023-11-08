@@ -49,7 +49,7 @@ const Post = (props) => {
   
   const postOptionsHandler = (e) => {
     e.preventDefault();
-    setIsOptionsOpen(!isOptionsOpen, console.log(isOptionsOpen));
+    setIsOptionsOpen(!isOptionsOpen);
   };
 
   /////////////////////////////////////////////////
@@ -105,7 +105,7 @@ const Post = (props) => {
           onClick={postOptionsHandler}
         >
           <PostOptions_Icon className={Styles.BottomBar__optionsIcon} />
-          {isOptionsOpen && <Post_Options />}
+          {isOptionsOpen && <Post_Options id={id} />}
         </div>
       </div>
     </Link>

@@ -10,7 +10,11 @@ import {
   UPDATE_QUESTION,
   GET_QUESTIONS_FILTERED,
   SET_QUESTIONS_FILTERS
+<<<<<<< Updated upstream
 } from "../action-types";
+=======
+} from "../action types/questionsActionTypes.js";
+>>>>>>> Stashed changes
 
 const initialState = {
   questions: [],

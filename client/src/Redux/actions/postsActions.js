@@ -11,6 +11,7 @@ import {
   //   GET_POSTS_BY_ONGS,
   GET_POSTS_FILTERED,
   SET_POSTS_FILTERS,
+  SET_SEARCH_VALUE,
   LIKE
 } from "../action-types";
 
@@ -166,6 +167,13 @@ export const setPostsFilters = (postsFilters) => {
     payload: postsFilters,
   };
 };
+
+export const setSearchValue = (searchValue) => {
+  return {
+    type: SET_SEARCH_VALUE,
+    payload: searchValue
+  }
+}
 
 export const like = (idUser, idPublication) => {
   return async function (dispatch) {

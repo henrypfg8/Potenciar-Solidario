@@ -6,8 +6,13 @@ GET_QUESTION_DETAIL,
 CLEAR_QUESTION_DETAIL,
 UPDATE_QUESTION,
 GET_QUESTIONS_FILTERED,
+<<<<<<< Updated upstream
 SET_QUESTIONS_FILTERS,
 } from "../action-types";
+=======
+SET_QUESTIONS_FILTERS
+} from "../action types/questionsActionTypes.js";
+>>>>>>> Stashed changes
 
 import axios from "axios";
 import { configureHeaders } from "../auth/configureHeaders .js";

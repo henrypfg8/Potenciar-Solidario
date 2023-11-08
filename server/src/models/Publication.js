@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
               throw new Error("El titulo debe contener texto válido"); //!
             }
           },
-          len: [5, 50],
+          len: [5, 200],
         },
       },
       description: {

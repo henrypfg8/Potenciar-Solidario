@@ -33,7 +33,7 @@ module.exports = (sequelize) => {
             msg: "El texto no puede estar vacío",
           },
           len: {
-            args: [10, 300],
+            args: [5, 1000],
             msg: "Debe tener entre 10 y 300 caracteres",
           },
         },

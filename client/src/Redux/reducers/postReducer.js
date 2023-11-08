@@ -10,7 +10,7 @@ import {
   SEARCH_POSTS,
   GET_POSTS_FILTERED,
   SET_POSTS_FILTERS,
-<<<<<<< Updated upstream
+  SET_SEARCH_VALUE,
   LIKE,
 } from "../action types/postsActionTypes.js";
 

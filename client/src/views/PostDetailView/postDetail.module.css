@@ -29,6 +29,7 @@
     flex-direction: column;
     padding: 0.4rem;
     width: 60vw;
+    /* color:#FFF; */
 }
 .title h1{
     font-size: 2rem;

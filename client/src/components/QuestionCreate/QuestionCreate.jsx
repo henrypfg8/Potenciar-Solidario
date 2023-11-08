@@ -12,7 +12,6 @@ import { jwtDecode } from "jwt-decode";
 export function useQuestionCreate() {
     const dispatch = useDispatch()
     const categories = useSelector(state => state.ongsAndCategories.forumCategories)
-    console.log(categories);
     const categoryOptions = [{ label: "Selecciona una categoría", value: false }, ...categories.map(cat => ({ label: cat.name, value: cat.id }))];
     const [userId, setUserId] = useState('')
     const { isAuthenticated, token } = useSelector(state => state.auth)
@@ -69,25 +68,23 @@ export function useQuestionCreate() {
             userId,
             [event.target.name]: event.target.value
         })
-        if (firstSubmit) {
             setErrores(validationQuestion({
                 ...question,
                 userId,
                 [event.target.name]: event.target.value
             }))
-        }
+        
     }
     const handleCategoryChange = (selectedOption) => {
         setQuetions({
             ...question,
             categoryId: selectedOption.value
         })
-        if (firstSubmit) {
             setErrores(validationQuestion({
                 ...question,
                 categoryId: selectedOption.value
             }))
-        }
+        
     }
     const colourStyles = {
         control: styles => ({
@@ -96,45 +93,44 @@ export function useQuestionCreate() {
             boxShadow: errores.categoryId || errores.categoryId === null ? '0 0 0 1px red' : '0 0 0 1px rgb(73, 255, 73)',
         }),
     };
+    useEffect(()=>{
+
+        if(Object.keys(errores).length > 0) {
+         setDisableButton(true)
+        }else{
+            setDisableButton(false)
+        }
+    },[handleChange])
+    console.log(disableButton);
     const submitQuestion = async (event) => {
         event.preventDefault()
         setDisableButton(true)
-        setFirstSubmit(true)
         const errores = validationQuestion(question);
         setErrores(errores);
         try {
-            // if (Object.keys(errores).length > 0) {
-            //     Swal.fire({
-            //         icon: 'error',
-            //         title: 'Intente de nuevo',
-            //         text: 'Debe rellenar todos los campos!',
-            //     }).then(() => {
-            //         setDisableButton(false) 
-            //     })
-            // } else {
-            dispatch(createQuestion(question)).then(() => {
-                dispatch(getQuestions())
-                Swal.fire({
-                    icon: 'succes',
-                    title: 'Pregunta creada con exito!',
-                }).then(() => {
-                    setDisableButton(false)
-                    navigate('/foro')
-                })
 
-            }).catch(() => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Intente de nuevo',
-                    text: 'Debe rellenar todos los campos!',
-                }).then(() => {
-                    setDisableButton(false)
-                })
+               dispatch(createQuestion(question)).then(() => {
+                   dispatch(getQuestions())
+                   Swal.fire({
+                       icon: 'success',
+                       title: 'Pregunta creada con exito!',
+                   }).then(() => {
+                       setDisableButton(false)
+                       navigate('/foro')
+                   })
+   
+               }).catch(() => {
+                   Swal.fire({
+                       icon: 'error',
+                       title: 'Intente de nuevo',
+                       text: 'Intente contactar a soporte para este error!',
+                   }).then(() => {
+                       setDisableButton(false)
+                   })
+   
+               })
+           
 
-            })
-
-
-            // }
         } catch (error) {
             throw new Error(error.message)
         }

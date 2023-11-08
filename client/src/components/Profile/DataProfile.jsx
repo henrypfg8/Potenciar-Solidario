@@ -26,6 +26,7 @@ const DataProfile = ({ userProfile,success, setSuccess }) => {
         <p className='profile__h3'>Aréa de localización: <span className='profile__span'>{userProfile?.geographical_area_residence}</span></p>
 
         <p className='profile__h3'>Número del DNI: <span className='profile__span'>{userProfile?.DNI}</span></p>
+        <p className='profile__h3'>Organización: <span className='profile__span'>{userProfile?.organization}</span></p>
  
       </div>
       <div>

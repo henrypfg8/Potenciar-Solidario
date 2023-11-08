@@ -13,7 +13,7 @@ import {
   SET_POSTS_FILTERS,
   SET_SEARCH_VALUE,
   LIKE
-} from "../action-types";
+} from "../action types/postsActionTypes.js";
 
 import axios from "axios";
 import unorm from 'unorm';

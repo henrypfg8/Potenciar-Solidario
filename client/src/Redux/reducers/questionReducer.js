@@ -9,12 +9,7 @@ import {
   CLEAR_QUESTION_DETAIL,
   UPDATE_QUESTION,
   GET_QUESTIONS_FILTERED,
-  SET_QUESTIONS_FILTERS
-<<<<<<< Updated upstream
-} from "../action-types";
-=======
 } from "../action types/questionsActionTypes.js";
->>>>>>> Stashed changes
 
 const initialState = {
   questions: [],
@@ -54,14 +49,11 @@ const questionReducer = (state = initialState, action) => {
       if (state.questionDetail) {
         const answersActual = state.questionDetail?.Answers;
 
-        console.log(answersActual, "el gordo actual");
         const answersNuevo = action.payload?.Answers;
 
         const nuevasNotificaciones = answersNuevo?.filter(
           (el) => !answersActual?.some((el2) => el2.id == el.id)
         );
-
-        console.log(nuevasNotificaciones, "nuevasnotificaciones");
 
         nuevasNotificaciones?.forEach((nuevaNotif) =>
           toast(

@@ -16,12 +16,12 @@ const io = new Server(httpServer);
 global.io = io;
 
 io.on("connection", (socket) => {
-  console.log("Un usuario se conecto por WebSockets");
+  let username = 'anonymous'
   socket.on("message", (body) => {
-    console.log("Evento recibido:", body);
+    socket.username = username
     socket.broadcast.emit('message', {
       body,
-      from: socket.id.slice(2)
+      from: socket.username
     })
     // Manejar el evento de websocket
   });
@@ -48,7 +48,7 @@ server.use((_req, res, next) => {
 //--------Proteccion de rutas-----------------
  //middleware para proteccion de rutas
  server.use((req, res, next) => {
-  if (req.originalUrl === "/login" || req.originalUrl === "/register" || req.originalUrl === "/authGoogle") {
+  if (req.originalUrl === "/login" || req.originalUrl === "/register" || req.originalUrl === "/authGoogle" || req.originalUrl === "/ongs" ) {
     next(); // Si la ruta es /login, /register o /authGoogle, no se necesita autenticación
   } else {
     authHandler(req, res, (error) => {

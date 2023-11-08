@@ -164,7 +164,7 @@
 }
 
 .question button{
-    display: block;
+    display: flex;
     margin: 1rem;
     padding: 0.5rem 1rem;
     padding: 0.5rem 1rem;
@@ -198,6 +198,7 @@
 .div1{
     border-bottom: 1px solid rgba(126, 126, 126, 0.212);
     width: 100vw;
+    max-width: 70vw;
     margin: 1rem;
     padding: 1rem;
     display: flex;

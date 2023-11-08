@@ -1,18 +1,16 @@
+
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { getProfile } from '../../Redux/auth/AuthActions';
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from 'jwt-decode'
-import DataProfile from '../../components/Profile/DataProfile';
-import PhotoAndInfo from '../../components/Profile/PhotoAndInfo';
-import './Profile.css'
 
-const ProfileView = () => {
-    const { isAuthenticated, userProfile } = useSelector(state => state.auth);
-  
+const UserPostsView = () => {
+    const { isAuthenticated,userProfile } = useSelector(state => state.auth);
+    const [posts, setPosts] = useState([])
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [success, setSuccess] = useState(false)
+  
     
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -24,30 +22,23 @@ const ProfileView = () => {
             console.log(decodedToken.id)
             dispatch(getProfile(decodedToken.id))
                 .then(() => {
-            
+                    setPosts(userProfile.Posts)
                  }).catch((error) => {
                     console.log(error.response.data);
                  })
         }
-    }, [dispatch, isAuthenticated, navigate])
-
- 
-
-    if (!userProfile) return null;
-    console.log(userProfile)
-    return (
-        <>
-      
-            <div className='profile__container'>
-                <PhotoAndInfo userProfile={userProfile}
-                 success={success}
-                 setSuccess={setSuccess} />
-                <DataProfile userProfile={userProfile}
-                    success={success}
-                    setSuccess={setSuccess} />
+    }, [dispatch, isAuthenticated, navigate, userProfile.Posts])
+   
+  return (
+    <div>
+        {!posts ? <h1>Aún no tienes publicaciones</h1> : posts?.map(post => {
+            return <div key={post.id}>
+                <h1>{post.title}</h1>
+                <p>{post.description}</p>
             </div>
-        </>
-    )
+        })}
+    </div>
+  )
 }
 
-export default ProfileView
+export default UserPostsView

@@ -42,19 +42,18 @@ function ForumView({questions}) {
                                         <NavLink to={`/foro/${question.id}`}>
                                             <h1>{question.title}</h1>
                                         </NavLink>
-                                        <h4>@{question.User.name}</h4>
                                         <p>{question.text}</p>
+                                    </div>
+                                        {/* <NavLink to={`/foro/${question.id}`}>
+                                        <button>Ver más<Open /></button>
+                                        </NavLink> */}
                                         <div
                                             className={style.anwers}>
     
                                             {question.Answers.length === 1 && <p><strong>{question.Answers.length}</strong> respuesta</p>}
                                             {question.Answers.length > 1 && <p><strong>{question.Answers.length}</strong> respuestas</p>}
+                                        <h4>@{question.User.name}</h4>
                                         </div>
-                                    </div>
-                                    <NavLink to={`/foro/${question.id}`}>
-    
-                                    <button>Ver más<Open /></button>
-                                    </NavLink>
                                 </div>
                             )
                         })}

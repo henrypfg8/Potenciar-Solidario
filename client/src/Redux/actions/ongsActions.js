@@ -1,6 +1,6 @@
 import {
 GET_ONGS,
-} from "../action-types"
+} from "../action types/ongAndCategoriesActionTypes.js"
 
 import axios from "axios";
 import { configureHeaders } from "../auth/configureHeaders .js";

@@ -12,12 +12,7 @@ import {
   SET_POSTS_FILTERS,
 <<<<<<< Updated upstream
   LIKE,
-} from "../action-types";
-=======
-  SET_SEARCH_VALUE,
-  LIKE
 } from "../action types/postsActionTypes.js";
->>>>>>> Stashed changes
 
 const initialState = {
   posts: [],

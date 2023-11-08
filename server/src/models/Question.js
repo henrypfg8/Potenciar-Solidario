@@ -47,6 +47,13 @@ module.exports = (sequelize) => {
           min: 1,
         },
       },
+      creationDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: true,
+        validate: {
+          isDate: true,
+        },
+      },
     }
   );
 };

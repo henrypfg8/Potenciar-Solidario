@@ -38,6 +38,13 @@ module.exports = (sequelize) => {
           },
         },
       },
+      creationDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: true,
+        validate: {
+          isDate: true,
+        },
+      },
     },
     { timestamps: true }
   );

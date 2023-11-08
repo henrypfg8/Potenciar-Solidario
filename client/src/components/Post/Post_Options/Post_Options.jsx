@@ -34,7 +34,7 @@ export default function Post_Options({ id }) {
         axios.delete(`http://localhost:19789/posts/${id}`, config);
         setTimeout(() => {
           dispatch(getPosts());
-        }, 200);
+        }, 0);
         // Swal.fire({
         //   title: "Publicación Eliminada",
         //   icon: "success",
@@ -44,7 +44,7 @@ export default function Post_Options({ id }) {
         // });
       }
     });
-    
+
   };
 
   ////////////////////////////////////////
@@ -53,11 +53,11 @@ export default function Post_Options({ id }) {
     <div className={Styles.Options}>
       <div className={Styles.Options__option} id={Styles.deleteOption}>
         <p>Eliminar</p>
-        <DeleteIcon className={Styles.Option_icon} onClick={deleteHandler}/>
+        <DeleteIcon className={Styles.Option_icon} onClick={deleteHandler} />
       </div>
       <div className={Styles.Options__option}>
         <p>Modificar</p>
-        <ModifyPost_Icon className={Styles.Option_icon}/>
+        <ModifyPost_Icon className={Styles.Option_icon} />
       </div>
     </div>
   );

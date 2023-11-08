@@ -22,6 +22,13 @@ module.exports = (sequelize) => {
           len: [20, 1000],
         },
       },
+      creationDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: true,
+        validate: {
+          isDate: true,
+        },
+      },
     }
   );
 };

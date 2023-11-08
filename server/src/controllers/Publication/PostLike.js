@@ -15,8 +15,10 @@ const PostLike = async ({ idUser, idPublication}) => {
 
  if(publication.likes >= 0) {
   publication.likes = publication.likes + 1 
+
   await publication.save();
  }
+ 
  
   return like;
 };

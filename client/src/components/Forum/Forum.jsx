@@ -3,18 +3,22 @@ import ForumView from '../../views/ForumView/ForumView';
 import { useDispatch, useSelector } from "react-redux";
 import { clearQuestionDetail, getQuestions } from "../../Redux/actions/questionsActions";
 
-function Forum(){
+function Forum() {
     const questions = useSelector(state => state.questions?.questions)
     const dispatch = useDispatch()
     const questionDetail = useSelector(state => state.questions?.questionDetail)
 
     useEffect(() => {
 
-        if(questionDetail){
+        if (questionDetail) {
             dispatch(clearQuestionDetail())
         }
-    },[])
-  
+    }, [])
+    useEffect(() => {
+        dispatch(getQuestions())
+
+    }, [])
+
     console.log(questions);
     return <ForumView questions={questions} />
 }

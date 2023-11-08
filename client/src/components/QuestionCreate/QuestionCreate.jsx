@@ -15,47 +15,47 @@ export function useQuestionCreate() {
     console.log(categories);
     const categoryOptions = [{ label: "Selecciona una categoría", value: false }, ...categories.map(cat => ({ label: cat.name, value: cat.id }))];
     const [userId, setUserId] = useState('')
-    const {isAuthenticated, token} = useSelector(state => state.auth)
+    const { isAuthenticated, token } = useSelector(state => state.auth)
 
-    
+
     const [errores, setErrores] = useState({
+        title: '',
+        text: '',
+        categoryId: ''
+    })
+    const [question, setQuetions] = useState({
+        userId,
+        title: '',
+        text: '',
+        categoryId: '',
+
+    })
+    const reset = () => {
+        setQuetions({
+            userId,
             title: '',
             text: '',
             categoryId: ''
         })
-        const [question, setQuetions] = useState({
-            userId,
-            title: '',
-            text: '',
-            categoryId: '',
-        
-        })
-        const reset = () =>{
-            setQuetions({
-                userId,
-                title:'',
-                text:'',
-                categoryId:''
-            })
-        }
+    }
     const navigate = useNavigate()
 
 
-    useEffect(()=>{
+    useEffect(() => {
         if (!token || !isAuthenticated) {
             swal("Necesita loguearse para poder realizar una pregunta")
                 .then((value) => {
                     navigate('/login')
                 });
         }
-        if(token){
+        if (token) {
             const decodify = jwtDecode(token)
-            if(decodify){
+            if (decodify) {
                 setUserId(decodify.id)
-                setQuetions(prevState => ({...prevState, userId: decodify.id}))
+                setQuetions(prevState => ({ ...prevState, userId: decodify.id }))
             }
         }
-    },[])
+    }, [])
     useEffect(() => {
         dispatch(getForumCategories())
     }, [])
@@ -103,38 +103,38 @@ export function useQuestionCreate() {
         const errores = validationQuestion(question);
         setErrores(errores);
         try {
-            if (Object.keys(errores).length > 0) {
+            // if (Object.keys(errores).length > 0) {
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Intente de nuevo',
+            //         text: 'Debe rellenar todos los campos!',
+            //     }).then(() => {
+            //         setDisableButton(false) 
+            //     })
+            // } else {
+            dispatch(createQuestion(question)).then(() => {
+                dispatch(getQuestions())
+                Swal.fire({
+                    icon: 'succes',
+                    title: 'Pregunta creada con exito!',
+                }).then(() => {
+                    setDisableButton(false)
+                    navigate('/foro')
+                })
+
+            }).catch(() => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Intente de nuevo',
                     text: 'Debe rellenar todos los campos!',
                 }).then(() => {
-                    setDisableButton(false) 
+                    setDisableButton(false)
                 })
-            } else {
-                dispatch(createQuestion(question)).then(() => {
-                    dispatch(getQuestions())
-                    Swal.fire({
-                        icon: 'succes',
-                        title: 'Pregunta creada con exito!',
-                    }).then(() => {
-                        setDisableButton(false) 
-                        navigate('/foro')
-                    })
-                    
-                }).catch(() => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Intente de nuevo',
-                        text: 'Debe rellenar todos los campos!',
-                    }).then(() => {
-                        setDisableButton(false) 
-                    })
 
-                })
-    
-                
-            }
+            })
+
+
+            // }
         } catch (error) {
             throw new Error(error.message)
         }

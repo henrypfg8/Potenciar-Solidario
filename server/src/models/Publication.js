@@ -52,7 +52,7 @@ module.exports = (sequelize) => {
         allowNull: true,
         validate: {
           isDate: true,
-          isBefore: "2023-12-02", // Permite hasta "2023-12-01"
+          isBefore: "2025-12-02", // Permite hasta "2023-12-01"
         },
       },
       modificationDate: {
@@ -60,7 +60,7 @@ module.exports = (sequelize) => {
         allowNull: true,
         validate: {
           isDate: true,
-          isBefore: "2023-10-01",
+          isBefore: "2025-10-01",
         },
       },
 

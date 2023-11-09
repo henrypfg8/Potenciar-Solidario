@@ -10,7 +10,11 @@ import {
   SEARCH_POSTS,
   GET_POSTS_FILTERED,
   SET_POSTS_FILTERS,
+  SET_SEARCH_VALUE,
   LIKE,
+  CREATE_POST_REVIEW,
+  DELETE_POST_REVIEW,
+  UPDATE_POST_REVIEW,
 } from "../action types/postsActionTypes.js";
 
 const initialState = {
@@ -21,9 +25,11 @@ const initialState = {
     fromDate: '',
     untilDate: ''
   },
+  searchValue: '',
   // allPosts: [],
   postDetail: [],
   liked: [],
+  reviews: [],
 };
 
 const postReducer = (state = initialState, action) => {
@@ -98,11 +104,39 @@ const postReducer = (state = initialState, action) => {
         postsFilters: action.payload
       }
 
+    case SET_SEARCH_VALUE:
+      return {
+        ...state,
+        searchValue: action.payload
+      }
+
     case LIKE:
       return {
         ...state,
         liked: action.payload
       }
+    
+    case CREATE_POST_REVIEW:
+      return {
+        ...state,
+        reviews: [...state.reviews, action.payload],
+      };
+    
+    case DELETE_POST_REVIEW:
+      return {
+        ...state,
+        reviews: state.reviews.filter((review) => review.id !== action.payload),
+      }
+      
+    case UPDATE_POST_REVIEW:
+      const updatedPostReview = action.payload;
+      const updatedPostsReviews = state.reviews.map((review) =>
+        review.id === updatedPostReview.id ? updatedPostReview : review
+      );
+      return {
+        ...state,
+        reviews: updatedPostsReviews,
+      };  
 
     default:
       return { ...state };

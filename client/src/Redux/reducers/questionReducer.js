@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 
-import { toast } from "react-toastify";
+import { notification } from "antd";
 import {
   CREATE_QUESTION,
   DELETE_QUESTION,
@@ -57,19 +57,11 @@ const questionReducer = (state = initialState, action) => {
         );
 
         nuevasNotificaciones?.forEach((nuevaNotif) =>
-          toast(
-            `Nueva respuesta de ${nuevaNotif?.User?.name}: ${nuevaNotif?.answer}`,
-            {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-            }
-          )
+          notification.open({
+            message: `Nueva respuesta de ${nuevaNotif?.User?.name}`,
+            description: nuevaNotif?.answer,
+            onClose: () => console.log("Notification was closed."),
+          })
         );
       }
 

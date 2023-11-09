@@ -2,7 +2,10 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "./Redux/actions/postsActions";
-import { getCategories, getForumCategories } from "./Redux/actions/categoriesActions";
+import {
+  getCategories,
+  getForumCategories,
+} from "./Redux/actions/categoriesActions";
 import { getOngs } from "./Redux/actions/ongsActions";
 
 import "./App.css";
@@ -23,7 +26,7 @@ import QuestionCreateView from "./views/QuestionCreateView/QuestionCreateView";
 import QuestionView from "./views/QuestionView/QuestionView";
 import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
 import UserPostsView from "./views/UserPostsView/UserPostsView";
-import { getQuestions } from "./Redux/actions/questionsActions";
+import BlurredBackground from "./components/BlurHome/BlurredBackground";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -39,54 +42,58 @@ function App() {
     else setIsScrolled(false);
   }
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     root.addEventListener("scroll", scrollHandler);
-
+    
     //si el token cambia o existe se vuelven a cargar los datos
     if (token) {
+      setAuthenticated(true)
       dispatch(getPosts());
       dispatch(getOngs());
       dispatch(getCategories());
       dispatch(getForumCategories());
     }
-
-
+    
     return () => {
       root.removeEventListener("scroll", scrollHandler);
+      setAuthenticated(false)
     };
   }, [token]);
-  useEffect(() => {
-    dispatch(getQuestions())
-    
-}, [])
 
   return (
     <div className="App">
-      <DrawerProfile /> {/* Comentar si es necesario*/}
+      <DrawerProfile />
       <Header isScrolled={isScrolled} />
-
       <PageHeader />
-
-      {pathname === "/" || pathname === "/foro" ? <SearchBar /> : null}
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/formulario/:id?" element={<ContainerForm />} />
-        <Route path="/detalle/:id" element={<PostDetailView />} />
-
-        <Route path="/foro" element={<Forum />} />
-
-        <Route path="/foro/crear" element={<QuestionCreateView />} />
-        <Route path="/foro/:id" element={<QuestionDetail />} />
-        {/* auth */}
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/profile" element={<ProfileView />} />
-        <Route path="/profile/posts" element={<UserPostsView/>}/>
-      </Routes>
+      {authenticated ? (
+        <>
+          {pathname === "/" || pathname === "/foro" ? <SearchBar /> : null}
+          <Routes>
+            {/* Rutas autenticadas */}
+            <Route path="/" element={<Home />} />
+            <Route path="/formulario" element={<ContainerForm />} />
+            <Route path="/detalle/:id" element={<PostDetailView />} />
+            <Route path="/foro" element={<Forum />} />
+            <Route path="/foro/crear" element={<QuestionCreateView />} />
+            <Route path="/foro/:id" element={<QuestionDetail />} />
+            {/* Otras rutas autenticadas */}
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/profile" element={<ProfileView />} />
+            <Route path="/profile/posts" element={<UserPostsView />} />
+          </Routes>
+        </>
+      ) : (
+        <>
+          {pathname === "/login" ? <Login/> : null}
+          {pathname === "/register" ? <Register/> : null}
+          {pathname !== "/register" && pathname !== "/login" && !authenticated ?(
+            <BlurredBackground />
+          ) : null}
+        </>
+      )}
     </div>
   );
 }

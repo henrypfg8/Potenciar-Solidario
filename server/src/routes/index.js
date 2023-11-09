@@ -5,6 +5,7 @@ const { deletePublication } = require("../handlers/Publication/DeletePub");
 const {createPublicationHandler} = require("../handlers/Publication/CreatePubHandler");
 const {HandlerGetPublications,} = require("../handlers/Publication/Publication");
 const { PutPublicationHandler } = require("../handlers/Publication/PutPubH.js");
+const {HandlerRemoveLike} = require("../handlers/Publication/removeLike.js")
 
 //HANDLERS de USUARIOS.
 const { userPostHandlers } = require("../handlers/User/PostUser");
@@ -49,7 +50,15 @@ const { HandlerPostLike } = require("../handlers/Publication/PostLike.js");
 //HANDLERS DE COMMENTS
 const {CreateCommentHandler} = require('../handlers/Comments/CreateCommentH.js')
 const {DeleteCommentHandler} = require('../handlers/Comments/DeleteCommentH.js');
+const {UpdateCommentHandler} = require('../handlers/Comments/PutCommentH.js')
 
+//HANDLERS DE REVIEWS
+const {UpdateReviewHandler} = require('../handlers/Reviews/UpdateReviewH.js')
+const {CreateReviewHandler} = require('../handlers/Reviews/CreateReviewH.js')
+const {DeleteReviewHandler} = require('../handlers/Reviews/DeleteReviewH.js')
+
+const {forgotPassword} = require('../handlers/Authentication/forgotPassword.js')
+const {resetPassword} = require('../handlers/Authentication/resetpassword.js')
 const router = Router();
 
 router.get("/posts/busqueda", searchPublication);
@@ -83,7 +92,8 @@ router.delete("/users/:id", DeleteUserHandler);
 router.get("/posts", HandlerGetPublications);
 router.get("/posts/:id", HandlerGetPublications);
 router.post("/posts", createPublicationHandler);
-router.post("/posts/like", HandlerPostLike);
+router.post("/posts/like", authHandler,HandlerPostLike);
+router.delete("/posts/like",authHandler, HandlerRemoveLike);
 router.put("/posts/:id", PutPublicationHandler);
 router.delete("/posts/:id", deletePublication);
 
@@ -104,8 +114,16 @@ router.post("/authGoogle", authGoogleHandler);
 
 //Rutas de COMENTARIOS.
 router.post("/answers/comments",CreateCommentHandler)
-router.put("/answers/comments/:id")
+router.put("/answers/comments/:id",UpdateCommentHandler)
 router.delete("/answers/comments/:id",DeleteCommentHandler)
 
+//Rutas de REVIEWS.
+router.post("/posts/reviews",CreateReviewHandler)
+router.put("/posts/reviews/:id",UpdateReviewHandler)
+router.delete("/posts/reviews/:id",DeleteReviewHandler)
+
+//rutas reseteo de contraseña
+router.put("/forgotpassword",forgotPassword)
+router.put("/resetpassword",resetPassword)
 
 module.exports = router;

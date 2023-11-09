@@ -5,6 +5,7 @@ import { useQuestionCreate } from '../../components/QuestionCreate/QuestionCreat
 function QuestionCreateView() {
     const { disableButton, firstSubmit, question, categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion } = useQuestionCreate();
 // console.log(question);
+console.log(errores);
     return (
         <div className={style.contain}>
             <form action="" onChange={handleChange} className={style.form}>
@@ -15,14 +16,15 @@ function QuestionCreateView() {
                     </div>
                     {
                         errores.title ?
-                            <input type="text" name="title" placeholder="Asunto" style={{ boxShadow: firstSubmit ? '0 0 0 1px red': '', border: firstSubmit ? 'red 1px solid' : ''}} /> :
-                            <input type="text" name="title" placeholder="Asunto" style={{ boxShadow: firstSubmit ? '0 0 0 1px rgb(73, 255, 73)' : '', border: firstSubmit ? '1px rgb(73, 255, 73) solid' : '' }} />
+                            <input type="text" name="title" placeholder="Asunto" style={{ boxShadow: errores.title ? '0 0 0 1px red': '', border:errores.title? 'red 1px solid' : ''}} />
+                            :
+                            <input type="text" name="title" placeholder="Asunto" style={{ boxShadow: !errores.title ? '0 0 0 1px rgb(73, 255, 73)' : '', border: !errores.title ? '1px rgb(73, 255, 73) solid' : '' }} />
                     }
                 </div>
                 <div className={style.div}>
                     <label>Categoria <strong style={{color: 'red'}}>*</strong></label>
                     <div className={style.errores}>
-                        {errores.categories && <p>{errores.categories}</p>}
+                        {errores.categoryId && <p>{errores.categoryId}</p>}
                     </div>
                     <Select
                         options={categoryOptions}
@@ -30,7 +32,7 @@ function QuestionCreateView() {
                         isSearchable={true}
                         name="categories"
                         onChange={handleCategoryChange}
-                        styles={firstSubmit ? colourStyles : ''}
+                        styles={colourStyles}
                         value={question  && categoryOptions.find(option => option.value === question.categories)}
                     />
                 </div>
@@ -41,8 +43,8 @@ function QuestionCreateView() {
                     </div>
                     {
                         errores.text ?
-                            <textarea type="text" cols="30" rows="8" name="text" placeholder="Descripcion" style={{ boxShadow: firstSubmit ? '0 0 0 1px red' : '', border: firstSubmit ? 'red 1px solid' : '' }} /> :
-                            <textarea type="text" cols="30" rows="8" name="text" placeholder="Descripcion" style={{ boxShadow:  firstSubmit ? '0 0 0 1px rgb(73, 255, 73)': '', border: firstSubmit ? '1px rgb(73, 255, 73) solid' : ''}}/>
+                            <textarea type="text" cols="30" rows="8" name="text" placeholder="Descripcion" style={{ boxShadow: errores.text? '0 0 0 1px red' : '', border: errores.text ? 'red 1px solid' : '' }} /> :
+                            <textarea type="text" cols="30" rows="8" name="text" placeholder="Descripcion" style={{ boxShadow:  !errores.text? '0 0 0 1px rgb(73, 255, 73)': '', border: !errores.text ? '1px rgb(73, 255, 73) solid' : ''}}/>
                     }
                 </div>
                 {

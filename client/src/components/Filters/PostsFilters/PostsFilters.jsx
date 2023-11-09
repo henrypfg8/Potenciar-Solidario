@@ -8,18 +8,23 @@ import { useEffect, useState } from "react";
 import {
   getPostsFiltered,
   setPostsFilters,
+  searchPosts,
 } from "../../../Redux/actions/postsActions";
 //
 import Posts_DateFilters from "./Posts_DateFilters/Posts_DateFilters";
 //
 import { format } from "date-fns";
+import { configureHeaders } from "../../../Redux/auth/configureHeaders ";
+import axios from "axios";
 
 export default function PostFilters() {
   const dispatch = useDispatch();
-
+  const config = configureHeaders();
+  //
   const ongs = useSelector((state) => state.ongsAndCategories.ongs);
   const categories = useSelector((state) => state.ongsAndCategories.categories);
-
+  const searchValue = useSelector((state) => state.posts.searchValue);
+  //
   const categoryOptions = categories.map((cat) => ({
     label: cat.name,
     value: cat.name,
@@ -53,21 +58,52 @@ export default function PostFilters() {
   });
   const handleFilters = (e) => {
     const { name, value } = e;
-    dispatch(getPostsFiltered({...filters, [name]: value}));
-    dispatch(setPostsFilters({...filters, [name]: value}));
-    setFiltersLOCAL({...filters, [name]: value});
+    setFiltersLOCAL({ ...filters, [name]: value });
+    dispatch(setPostsFilters({ ...filters, [name]: value }));
+    if (searchValue !== "") {
+      const filtersToApply = { ...filters, [name]: value };
+      const { category, ong, fromDate, untilDate } = filtersToApply;
+      axios
+        .get(
+          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
+          config
+        )
+        .then(({ data }) => dispatch(searchPosts(data, searchValue)));
+    } else {
+      dispatch(getPostsFiltered({ ...filters, [name]: value }));
+    }
   };
   const handleFromDate = (date) => {
     const fromDate = format(date, "yyyy-MM-dd");
     setFiltersLOCAL({ ...filters, fromDate: fromDate });
     dispatch(setPostsFilters({ ...filters, fromDate: fromDate }));
-    dispatch(getPostsFiltered({ ...filters, fromDate: fromDate }));
+    if (searchValue !== "") {
+      const { category, ong, untilDate } = { ...filters };
+      axios
+        .get(
+          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
+          config
+        )
+        .then(({ data }) => dispatch(searchPosts(data, searchValue)));
+    } else {
+      dispatch(getPostsFiltered({ ...filters, fromDate: fromDate }));
+    }
   };
   const handleUntilDate = (date) => {
     const untilDate = format(date, "yyyy-MM-dd");
     setFiltersLOCAL({ ...filters, untilDate: untilDate });
     dispatch(setPostsFilters({ ...filters, untilDate: untilDate }));
-    dispatch(getPostsFiltered({ ...filters, untilDate: untilDate }));
+    if (searchValue !== "") {
+      const { category, ong, fromDate } = { ...filters };
+      axios
+        .get(
+          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
+          config
+        )
+        .then(({ data }) => dispatch(searchPosts(data, searchValue)));
+    } else {
+      dispatch(getPostsFiltered({ ...filters, untilDate: untilDate }));
+    }
   };
   //
 
@@ -95,11 +131,11 @@ export default function PostFilters() {
         menuPlacement="top"
         onChange={handleFilters}
       />
-      <Select
+      {/* <Select
         className={Styles.select}
         menuPlacement="top"
         placeholder="Usuarios (todavia no estan)"
-      />
+      /> */}
 
       <Posts_DateFilters
         handleFromDate={handleFromDate}

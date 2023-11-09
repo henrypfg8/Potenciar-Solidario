@@ -115,7 +115,7 @@ const Register = () => {
         {success && (<p className='auth__sucesss'>Cuenta creada con éxito, Ahora inicia sesión </p>)}
         {/* campo para el nombre */}
         <div>
-          <label className='auth__label' htmlFor="name">nombre</label>
+          <label className='auth__label' htmlFor="name">nombre <span style={{color: 'red'}}>*</span></label>
           {errors?.name?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.name?.type === 'minLength' && <p className='auth__error'>Tu nombre debe ser minímo de 2 caracterés</p>}
           {errors?.name?.type === 'maxLength' && <p className='auth__error'>Tu nombre debe ser máximo de 50 caracterés</p>}
@@ -128,7 +128,7 @@ const Register = () => {
 
         {/* campo para el apellido */}
         <div>
-          <label className='auth__label' htmlFor="lastname">apellido</label>
+          <label className='auth__label' htmlFor="lastname">apellido <span style={{color: 'red'}}>*</span></label>
           {errors?.lastname?.type === 'required' && <p className='auth__error'> Tu apellido es obligatorio</p>}
           {errors?.lastname?.type === 'maxLength' && <p className='auth__error'>Tu apellido debe ser máximo de 50 caracterés</p>}
           <input className='auth__input'
@@ -140,7 +140,7 @@ const Register = () => {
 
         {/* campo para el correo */}
         <div>
-          <label className='auth__label' htmlFor="email">correo</label>
+          <label className='auth__label' htmlFor="email">correo <span style={{color: 'red'}}>*</span></label>
           {errors?.email?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.email?.type === 'minLength' && <p className='auth__error'>Tu correo debe ser minímo de 3 caracterés</p>}
           {errors?.email?.type === 'maxLength' && <p className='auth__error'>Tu correo debe ser máximo de 40 caracterés</p>}
@@ -159,7 +159,7 @@ const Register = () => {
 
         {/* campo para la contraseña */}
         <div>
-          <label className='auth__label' htmlFor="password">Escribe tu contraseña</label>
+          <label className='auth__label' htmlFor="password">Escribe tu contraseña <span style={{color: 'red'}}>*</span></label>
           {errors?.password?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.password?.type === 'minLength' && <p className='auth__error'>Tu contraseña debe ser minímo de 6 caracterés</p>}
           {errors?.password?.type === 'maxLength' && <p className='auth__error'>Tu contraseña debe ser máximo de 50 caracterés</p>}
@@ -175,7 +175,7 @@ const Register = () => {
 
         {/* campo para la fecha de nacimiento */}
         <div>
-          <label className='auth__label' htmlFor="birth_date">Fecha de nacimiento</label>
+          <label className='auth__label' htmlFor="birth_date">Fecha de nacimiento <span style={{color: 'red'}}>*</span></label>
           {errors?.birth_date?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.birth_date?.type === 'validate' && <p className='auth__error'>Debe tener al menos 18 años</p>}
           <input className='auth__input'
@@ -188,7 +188,7 @@ const Register = () => {
 
         {/* Campo para el telefono */}
         <div>
-          <label className='auth__label' htmlFor="phone">Número de telefono</label>
+          <label className='auth__label' htmlFor="phone">Número de telefono <span style={{color: 'red'}}>*</span></label>
           {errors?.phone?.type === 'required' && <p className='auth__error'>El número de telefono es obligatorio</p>}
           {errors?.phone?.type === 'maxLength' && <p className='auth__error'>Tu número de telefono debe ser máximo de 15 digitos</p>}
           <Controller
@@ -220,7 +220,7 @@ const Register = () => {
         </div>
         {/*Campo para seleccionar ONG*/}
         <div>
-          <label className="auth__label" htmlFor="profile_picture"> ONG a la que pertenece</label>
+          <label className="auth__label" htmlFor="profile_picture"> ONG a la que pertenece <span style={{color: 'red'}}>*</span></label>
           {errors?.organization?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.organization?.type === 'minLength' && <p className='auth__error'>Tu ONG debe ser minímo de 2 caracterés</p>}
           <Controller
@@ -247,7 +247,7 @@ const Register = () => {
         </div>
         {/* Campo para el DNI */}
         <div>
-          <label className='auth__label' htmlFor="DNI">DNI</label>
+          <label className='auth__label' htmlFor="DNI">DNI <span style={{color: 'red'}}>*</span></label>
           {errors?.DNI?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.DNI?.type === 'minLength' && <p className='auth__error'>Tu DNI debe ser minímo de 5 caracterés</p>}
           {errors?.DNI?.type === 'maxLength' && <p className='auth__error'>Tu DNI debe ser máximo de 8 caracterés</p>}
@@ -278,7 +278,7 @@ const Register = () => {
 
         {/* Campo de  lugar de residencia*/}
         <div>
-          <label className='auth__label' htmlFor='habitual_location_of_residence'>Lugar de residencia</label>
+          <label className='auth__label' htmlFor='habitual_location_of_residence'>Lugar de residencia <span style={{color: 'red'}}>*</span></label>
           {errors?.habitual_location_of_residence?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           <Controller
             name="habitual_location_of_residence"
@@ -303,7 +303,7 @@ const Register = () => {
 
         {/* Campo de  area de localizacion */}
         <div>
-          <label className='auth__label' htmlFor="geographical_area_residence">area de Localización</label>
+          <label className='auth__label' htmlFor="geographical_area_residence">Area de Localización</label>
           {errors?.geographical_area_residence?.type === 'maxLength' && <p className='auth__error'>Tu area de localización debe ser máximo de 50 caracterés</p>}
           <input className='auth__input'
             type="text" {...register('geographical_area_residence', { maxLength: 50 })}  // Opcional

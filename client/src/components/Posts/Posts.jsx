@@ -7,16 +7,13 @@ import { useState, useEffect } from 'react';
 //
 
 
+
 export default function Posts () {
 
+  
+  
+
   const posts = useSelector(state => state.posts.posts);
-  const [ postsLocal, setPostsLocal ] = useState(posts);
-
-  useEffect(() => {
-    setPostsLocal(posts);
-    
-  }, [posts])
-
   return (
     <div className={Styles.Posts}>
 
@@ -24,16 +21,19 @@ export default function Posts () {
 
 
       <div className={Styles.Cards}>
-        {postsLocal?.map(({ id, title, organization, category, description, image, startDate }) => (
+        {posts?.map(post => (
           <Post 
-            key={id}
-            id={id}
-            title={title}
-            organization={organization}
-            category={category}
-            description={description}
-            image={image}
-            startDate={startDate}
+            key={post.id}
+            id={post?.id}
+            title={post?.title}
+            organization={post?.organization}
+            category={post?.category}
+            description={post?.description}
+            image={post?.image}
+            startDate={post?.startDate}
+            userID={post?.userID}
+            likes={post?.likes}
+            userLikes={post?.Likes}
           />
         ))}
       </div>

@@ -15,7 +15,8 @@ import {
   DELETE_POST_REVIEW,
   UPDATE_POST_REVIEW,
   SET_SEARCH_VALUE,
-  LIKE
+  LIKE,
+  DISLIKE,
 } from "../action types/postsActionTypes.js";
 
 import axios from "axios";
@@ -54,6 +55,7 @@ export const deletePost = (id) => {
     try {
       const config = configureHeaders()
       const response = await axios.delete(`http://localhost:19789/posts/${id}`,config);
+
       dispatch({ type: DELETE_POST, payload: response.data });
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
@@ -178,17 +180,31 @@ export const setSearchValue = (searchValue) => {
   }
 }
 
-export const like = (idUser, idPublication) => {
+export const like = (idPublication) => {
   return async function (dispatch) {
   try {
     const config = configureHeaders()
-    const response = await axios.post(`http://localhost:19789/like`, idUser, idPublication, config)
+    const response = await axios.post(`http://localhost:19789/posts/like`, {idPublication}, config);
+    console.log('el like', response.data)
     dispatch({ type: LIKE, payload: response.data})
   } catch (error) {
     console.log(error, "por favor contactar a soporte por este error");
   }
   };
 };
+
+export const disLike = (idPublication) => {
+  return async function (dispatch) {
+    try {
+      const config = configureHeaders();
+      const response = await axios.delete(`http://localhost:19789/posts/like`,{idPublication}, config);
+      console.log('el dislike', response)
+      dispatch({ type: DISLIKE, payload: response.data})
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 export const createPostReview = (review) => {
   return async function (dispatch) {

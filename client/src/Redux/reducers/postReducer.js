@@ -12,6 +12,7 @@ import {
   SET_POSTS_FILTERS,
   SET_SEARCH_VALUE,
   LIKE,
+  DISLIKE,
   CREATE_POST_REVIEW,
   DELETE_POST_REVIEW,
   UPDATE_POST_REVIEW,
@@ -20,15 +21,15 @@ import {
 const initialState = {
   posts: [],
   postsFilters: {
-    category: '',
-    ong: '',
-    fromDate: '',
-    untilDate: ''
+    category: "",
+    ong: "",
+    fromDate: "",
+    untilDate: "",
   },
-  searchValue: '',
+  searchValue: "",
   // allPosts: [],
   postDetail: [],
-  liked: [],
+  // liked: [],
   reviews: [],
 };
 
@@ -89,45 +90,58 @@ const postReducer = (state = initialState, action) => {
     case SEARCH_POSTS:
       return {
         ...state,
-        posts: action.payload
-      }
+        posts: action.payload,
+      };
 
     case GET_POSTS_FILTERED:
       return {
         ...state,
-        posts: action.payload
-      }
+        posts: action.payload,
+      };
 
     case SET_POSTS_FILTERS:
       return {
         ...state,
-        postsFilters: action.payload
-      }
+        postsFilters: action.payload,
+      };
 
     case SET_SEARCH_VALUE:
       return {
         ...state,
-        searchValue: action.payload
-      }
+        searchValue: action.payload,
+      };
 
     case LIKE:
+      console.log('caso like en reducer:', action.payload)
       return {
         ...state,
-        liked: action.payload
+        posts: state?.posts?.map((post) => {
+          if (post.id === action.payload.publicationId) {
+            post.likes++; 
+            post.Likes.push(action.payload);
+          }
+          return post;
+        }),
+      };
+    case DISLIKE: 
+      console.log('cso dislike en el reducer', action.payload)
+      return {
+        ...state,
+        //todavia no funciona el endpoint de delete like
       }
-    
+
     case CREATE_POST_REVIEW:
       return {
         ...state,
         reviews: [...state.reviews, action.payload],
       };
-    
+
     case DELETE_POST_REVIEW:
       return {
         ...state,
         reviews: state.reviews.filter((review) => review.id !== action.payload),
-      }
-      
+      };
+
     case UPDATE_POST_REVIEW:
       const updatedPostReview = action.payload;
       const updatedPostsReviews = state.reviews.map((review) =>
@@ -136,7 +150,7 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         reviews: updatedPostsReviews,
-      };  
+      };
 
     default:
       return { ...state };

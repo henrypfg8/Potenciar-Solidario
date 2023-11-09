@@ -12,10 +12,12 @@ import Select from "react-select";
 import "./auth.css";
 import { validateAge } from "../../helpers/ValidateAge";
 import { getOngs } from "../../Redux/actions/ongsActions";
+import Spinner from "./spinner/Spinner";
 
 const Register = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false)
   const [errorRegister, setErrorRegister] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -63,7 +65,7 @@ const Register = () => {
 
   const onSubmit = async (user) => {
     // Función para registrar el usuario
-
+    setLoading(true)
     const data = new FormData();
     data.append("file", user.profile_picture[0]);
     data.append("upload_preset", "photo_users");
@@ -73,7 +75,9 @@ const Register = () => {
 
     dispatch(registerUser(user)) //Hacer el dispatch de la acción para registrar el usuario
       .then(() => {
+        setLoading(false)
         setSuccess(true);
+
         setErrorRegister(false);
 
         const successTimeout = setTimeout(() => {
@@ -106,7 +110,8 @@ const Register = () => {
 
   return (
     <div className='auth__container' >
-
+      {loading && <Spinner />}
+    
       {/* {error && errorRegister  && <Success frase='No se pudo crear tu cuenta' color='#DD0C0C' tipo='error' />} */}
       {success && <Swiper frase='Cuenta creada con éxito, Ahora inicia sesión' color='#005692' tipo='success' />}
       {errorRegister && <Swiper frase='El usuario posiblemente ya existe, No se pudo crear tu cuenta' color='#DD0C0C' tipo='error' />}

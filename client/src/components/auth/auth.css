@@ -37,7 +37,7 @@
     justify-content: center; */
   
     border: 1px solid #cbd5e1;
-
+    z-index: 0;
 }
 @media(min-width: 768px){
     .auth__form{

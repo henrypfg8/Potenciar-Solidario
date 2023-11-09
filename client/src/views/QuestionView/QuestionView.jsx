@@ -18,6 +18,7 @@ function QuestionView({ question }) {
   const { isAuthenticated, token } = useSelector((state) => state.auth);
   const [view, setView] = useState({});
   const navigate = useNavigate();
+  const [disable, setDisable] = useState(false)
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [errores, setErrores] = useState({
@@ -34,22 +35,13 @@ function QuestionView({ question }) {
     setMessage(event.target.value);
   };
 
-  const handleAnswers = (event) => {
-    setErrores(validation({
-      ...answer,
-      answer: event.target.value
-    }))
-    setAnswer({
-      ...answer,
-      answer: event.target.value,
-      userId: userId,
-      questionId: question.id,
-    });
-  };
   const answersSubmit = (answer) => {
     if (Object.keys(errores).length === 0) {
       dispatch(createAnswer(answer)).then(() => {
         dispatch(getQuestionDetail(question.id))
+        setAnswer({
+        answer: "",
+      })
         swal({
           icon: 'success',
           text: "Respuesta creada con exito"
@@ -61,7 +53,7 @@ function QuestionView({ question }) {
           })
         })
       })
-
+      
     }
   };
   const handleSubmit = (message) => {
@@ -80,16 +72,16 @@ function QuestionView({ question }) {
         (value) => {
           navigate("/login");
         }
-      );
-    }
-    if (token) {
-      const decodify = jwtDecode(token);
-      if (decodify) {
-        setUserId(decodify.id);
+        );
       }
-    }
-  }, []);
-  const receiveMessage = (message) =>
+      if (token) {
+        const decodify = jwtDecode(token);
+        if (decodify) {
+          setUserId(decodify.id);
+        }
+      }
+    }, [isAuthenticated, navigate, token]);
+    const receiveMessage = (message) =>
     setMessages((state) => [...state, message]);
 
   useEffect(() => {
@@ -105,16 +97,35 @@ function QuestionView({ question }) {
       [id]: !prevState[id],
     }));
   };
+  const handleAnswers = (event) => {
+    setErrores(validation({
+      ...answer,
+      answer: event.target.value
+    }))
+    setAnswer({
+      ...answer,
+      answer: event.target.value,
+      userId: userId,
+      questionId: question.id,
+    });
+  };
   useEffect(() => {
     socket.on("message", (message) => {
       console.log(message);
     });
   }, []);
+  useEffect(() => {
+    if( errores.answer){
+      setDisable(true)
 
+    }else{
+      setDisable(false)
+    }
+
+  },[handleAnswers, errores.answer])
+  
   const dateQuestion = question?.createdAt?.split("T")[0];
 
-  // console.log(dateQuestion);
-  // console.log(question);
   return (
     <div>
       {question ? (
@@ -203,14 +214,24 @@ function QuestionView({ question }) {
                 {errores.answer && <p>{errores.answer}</p>}
               </div>
 
-
-              <textarea style={{ resize: 'none' }} type="text" name='answer' rows="8" onChange={handleAnswers} />
+              <textarea style={{ resize: 'none' }} type="text" name='answer' rows="8" value={answer.answer} onChange={handleAnswers} />
+              {
+                disable ?
               <button
-                disabled={answer?.answer?.length < 20}
+                disabled
+                className={style.buttonDisable}
                 onClick={() => answersSubmit(answer)}
               >
                 Responder
               </button>
+              :
+
+              <button
+                onClick={() => answersSubmit(answer)}
+              >
+                Responder
+              </button>
+              }
             </div>
           </div>
         </div>

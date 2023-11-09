@@ -36,8 +36,7 @@
   }
 }
 .sidebar{
-    height: 80vh;
-    background: var(--blue_color);
+ 
     display: none; 
 
 }
@@ -45,6 +44,10 @@
     .sidebar{
         display: flex;
         flex-direction: column;
+        height: 90vh;
+     
+        background: var(--blue_color);
+        z-index: 1;
     }
 }
 .sidebar__container{
@@ -53,6 +56,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .sidebar__none {
     display: none;
 }
@@ -75,7 +79,7 @@
     }
 }
 .dashboard{
-    height: 70vh;
+    height: 80vh;
     overflow-y: scroll;
     position: relative;
 }
@@ -181,14 +185,23 @@
   .drawer.open {
     left: 0;
   }
-  .search__container{
-    width: 100%;
+
+
+
+   .sidebar__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
   }
-  .search__input{
+ .search__input{
     width: 90%;
     padding: 0.5rem;
     border: none;
     border-radius: 4px;
     margin: 0.5rem auto;
     display: block;
-  }
+    background: #d4d9e0
+  } 
+      

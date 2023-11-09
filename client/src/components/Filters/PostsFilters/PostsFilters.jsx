@@ -9,6 +9,8 @@ import {
   getPostsFiltered,
   setPostsFilters,
   searchPosts,
+  setLoading,
+  hideLoading
 } from "../../../Redux/actions/postsActions";
 //
 import Posts_DateFilters from "./Posts_DateFilters/Posts_DateFilters";
@@ -16,6 +18,8 @@ import Posts_DateFilters from "./Posts_DateFilters/Posts_DateFilters";
 import { format } from "date-fns";
 import { configureHeaders } from "../../../Redux/auth/configureHeaders ";
 import axios from "axios";
+
+
 
 export default function PostFilters() {
   const dispatch = useDispatch();
@@ -56,9 +60,11 @@ export default function PostFilters() {
     fromDate: "",
     untilDate: "",
   });
+  //manejador de filtros de categoria y ong
   const handleFilters = (e) => {
     const { name, value } = e;
     setFiltersLOCAL({ ...filters, [name]: value });
+    dispatch(setLoading());
     dispatch(setPostsFilters({ ...filters, [name]: value }));
     if (searchValue !== "") {
       const filtersToApply = { ...filters, [name]: value };
@@ -68,15 +74,17 @@ export default function PostFilters() {
           `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
           config
         )
-        .then(({ data }) => dispatch(searchPosts(data, searchValue)));
+        .then(({ data }) => dispatch(searchPosts(data, searchValue))).then(() => dispatch(hideLoading()))
     } else {
-      dispatch(getPostsFiltered({ ...filters, [name]: value }));
+      dispatch(getPostsFiltered({ ...filters, [name]: value })).then(() => dispatch(hideLoading())); 
     }
   };
   const handleFromDate = (date) => {
     const fromDate = format(date, "yyyy-MM-dd");
     setFiltersLOCAL({ ...filters, fromDate: fromDate });
     dispatch(setPostsFilters({ ...filters, fromDate: fromDate }));
+    dispatch(setLoading());
+
     if (searchValue !== "") {
       const { category, ong, untilDate } = { ...filters };
       axios
@@ -84,15 +92,17 @@ export default function PostFilters() {
           `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
           config
         )
-        .then(({ data }) => dispatch(searchPosts(data, searchValue)));
+        .then(({ data }) => dispatch(searchPosts(data, searchValue))).then(() => dispatch(hideLoading()));
     } else {
-      dispatch(getPostsFiltered({ ...filters, fromDate: fromDate }));
+      dispatch(getPostsFiltered({ ...filters, fromDate: fromDate })).then(() => dispatch(hideLoading()));
     }
   };
   const handleUntilDate = (date) => {
     const untilDate = format(date, "yyyy-MM-dd");
     setFiltersLOCAL({ ...filters, untilDate: untilDate });
     dispatch(setPostsFilters({ ...filters, untilDate: untilDate }));
+    dispatch(setLoading());
+
     if (searchValue !== "") {
       const { category, ong, fromDate } = { ...filters };
       axios
@@ -100,9 +110,9 @@ export default function PostFilters() {
           `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
           config
         )
-        .then(({ data }) => dispatch(searchPosts(data, searchValue)));
+        .then(({ data }) => dispatch(searchPosts(data, searchValue))).then(() => dispatch(hideLoading()));
     } else {
-      dispatch(getPostsFiltered({ ...filters, untilDate: untilDate }));
+      dispatch(getPostsFiltered({ ...filters, untilDate: untilDate })).then(() => dispatch(hideLoading()));
     }
   };
   //

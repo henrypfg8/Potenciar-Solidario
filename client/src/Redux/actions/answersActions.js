@@ -64,6 +64,7 @@ export const deleteAnswer = (id) => {
 
 export const createAnswerComment = (comment) => {
     return async function (dispatch) {
+        console.log('soy el comentario', comment)
         try {
             console.log(comment)
             const config = configureHeaders()

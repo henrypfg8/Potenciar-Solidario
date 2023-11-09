@@ -27,10 +27,10 @@ const UserPostCard = ({ post, setRefreshData }) => {
     return data
 
   }
+  //funcion para eliminar el post
   const handleOk = async () => {
 
     await handleDeleteById();
-    navigate('/profile/posts')
     setOpen(false);
 
   }
@@ -38,8 +38,10 @@ const UserPostCard = ({ post, setRefreshData }) => {
 
     setOpen(false);
   }
+
+  //funcion para editar el post
   const handleIUpdatePost = (id) => {
-    navigate(`/formulario/${id}`)
+    navigate(`/formulario/${id}`) // redirigir a la ruta de edición
   }
   return (
     <div className={Styles.user__publication__card}>
@@ -96,7 +98,5 @@ UserPostCard.propTypes = {
   setRefreshData: propTypes.func.isRequired
 
 }
-
-
 
 export default UserPostCard

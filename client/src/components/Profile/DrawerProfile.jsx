@@ -47,6 +47,7 @@ const DrawerProfile = () => {
                 <div className='profile__drawer--links' >
                     <NavLink onClick={() => setOpen(false)} to="/profile"> <p className='P__navLink'>Ver Perfil</p></NavLink>
                     <NavLink onClick={() => setOpen(false)} to='/profile/posts'><p className='P__navLink'>Publicaciones</p></NavLink>
+                    <NavLink onClick={() => setOpen(false)} to='/admin'><p className='P__navLink'>Admin</p></NavLink>
                     <NavLink onClick={() => setOpen(false)} to='/'><p className='P__navLink'>Volver al inicio</p></NavLink>
                     <NavLink onClick={lougout} to='/login'><p className='P__navLink'>Salir de sesión</p></NavLink>
 

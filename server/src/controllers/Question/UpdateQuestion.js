@@ -2,10 +2,13 @@ const { Question } = require("../../db");
 
 const UpdateQuestion = async (id, userData) => {
   try {
-    const updateQ = await Question.findByPk(id);
+    let updateQ = await Question.findByPk(id);
     if (!updateQ) throw new Error("Question no encontrada.");
 
-    updateQ.text = userData.text;
+    // Actualiza las propiedades de updateQ con los valores de userData
+    for (let key in userData) {
+      updateQ[key] = userData[key];
+    }
 
     await updateQ.save();
     
@@ -13,6 +16,7 @@ const UpdateQuestion = async (id, userData) => {
     throw new Error("No se ha podido actualizar la pregunta.");
   }
 };
+
 module.exports = {
   UpdateQuestion,
 };

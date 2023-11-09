@@ -65,6 +65,7 @@ export const deleteAnswer = (id) => {
 export const createAnswerComment = (comment) => {
     return async function (dispatch) {
         try {
+            console.log(comment)
             const config = configureHeaders()
             const response = await axios.post("http://localhost:19789/answers/comments", comment, config);
             dispatch({type: CREATE_ANSWER_COMMENT, payload: response.data})

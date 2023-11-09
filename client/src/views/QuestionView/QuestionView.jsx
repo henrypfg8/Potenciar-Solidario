@@ -73,6 +73,7 @@ function QuestionView({ question }) {
     setMessages([...messages, newMessage]);
     socket.emit("message", message);
   };
+  console.log(token, isAuthenticated);
   useEffect(() => {
     if (!token || !isAuthenticated) {
       swal("Necesita loguearse para poder realizar una pregunta").then(

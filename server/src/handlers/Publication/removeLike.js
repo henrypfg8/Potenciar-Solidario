@@ -2,8 +2,8 @@ const {RemoveLike} = require("../../controllers/Publication/removeLike")
 
 const HandlerRemoveLike = async (req, res) => {
     try {
-      const { idUser, idPublication } = req.body;
-  
+      const { idPublication } = req.body;
+      const idUser = req.userId;
       console.log(idUser, idPublication);
       
       

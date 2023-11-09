@@ -64,6 +64,7 @@ export const deleteAnswer = (id) => {
 
 export const createAnswerComment = (comment) => {
     return async function (dispatch) {
+        console.log('soy el comentario', comment)
         try {
             const config = configureHeaders()
             const response = await axios.post("http://localhost:19789/answers/comments", comment, config);

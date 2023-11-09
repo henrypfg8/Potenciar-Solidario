@@ -2,7 +2,6 @@ const { Question } = require("../../db.js");
 
 const createQuestionHandler = async (req, res) => {
   const { title, text, userId, categoryId } = req.body;
-  console.log(req.body);
   try {
     if (!title || !text) {
       return res

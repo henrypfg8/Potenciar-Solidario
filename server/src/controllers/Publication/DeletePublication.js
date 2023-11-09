@@ -1,12 +1,26 @@
-const { Publication } = require("../../db");
+const { Publication , User } = require("../../db");
+const {deleteNoti} = require('../../handlers/emailNotif/deleteNoti')
 
 const DeletePubCont = async (id) => {
-  const user = await Publication.destroy({ where: { id: id } });
 
-  if (!user) {
-    return { deletedRows: 0, message: "User not found" };
-  }
-  return user;
+  const publication = await Publication.findOne({
+    where: { id: id },
+    include: {model: User} // Incluir el modelo de Usuario para acceder a sus datos
+  });
+  
+    if (!publication) {
+      return { deletedRows: 0, message: "Publication not found" };
+    }
+  
+    await Publication.destroy({ where: { id: id } });
+
+    const user = publication.User
+    console.log("hola soy el console", user)
+    const userEmail = user.email
+
+    deleteNoti(publication.title , userEmail);
+
+    return { deletedRows: 1, message: "Publication deleted" };
 };
 
 module.exports = { DeletePubCont };

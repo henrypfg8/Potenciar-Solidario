@@ -93,7 +93,7 @@ router.get("/posts", HandlerGetPublications);
 router.get("/posts/:id", HandlerGetPublications);
 router.post("/posts",authHandler, createPublicationHandler);
 router.post("/posts/like", authHandler,HandlerPostLike);
-router.delete("/posts/like",authHandler, HandlerRemoveLike);
+router.put("/posts/like",authHandler, HandlerRemoveLike);
 router.put("/posts/:id", PutPublicationHandler);
 router.delete("/posts/:id", deletePublication);
 

@@ -222,13 +222,9 @@ export const disLike = (idPublication) => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
-      const response = await axios.delete(
-        `http://localhost:19789/posts/like`,
-        { idPublication },
-        config
-      );
-      console.log("el dislike", response);
-      dispatch({ type: DISLIKE, payload: response.data });
+      const response = await axios.put(`http://localhost:19789/posts/like`,{idPublication}, config);
+      console.log('el dislike', response)
+      dispatch({ type: DISLIKE, payload: response.data})
     } catch (error) {
       console.log(error);
     }

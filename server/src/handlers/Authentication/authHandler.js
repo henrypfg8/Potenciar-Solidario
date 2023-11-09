@@ -17,7 +17,7 @@ const authHandler = async (req, res, next) => {
         token = authorization.substring(7);
     }
 
-    //console.log(token);
+    console.log(token);
 
     if (!token)
         return res.status(401).json({ error: "token missing or invalid" });

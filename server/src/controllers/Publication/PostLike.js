@@ -1,9 +1,9 @@
 const { Like , Publication} = require("../../db");
 
-const PostLike = async ({ idUser, idPublication}) => {
+const PostLike = async ({ idPublication, userId}) => {
 
   const like = await Like.create({
-   userId: idUser,
+   userId: userId,
    publicationId: idPublication
   });
 

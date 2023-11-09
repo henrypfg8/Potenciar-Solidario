@@ -92,8 +92,8 @@ router.delete("/users/:id", DeleteUserHandler);
 router.get("/posts", HandlerGetPublications);
 router.get("/posts/:id", HandlerGetPublications);
 router.post("/posts", createPublicationHandler);
-router.post("/posts/like", HandlerPostLike);
-router.delete("/posts/like", HandlerRemoveLike);
+router.post("/posts/like", authHandler,HandlerPostLike);
+router.delete("/posts/like",authHandler, HandlerRemoveLike);
 router.put("/posts/:id", PutPublicationHandler);
 router.delete("/posts/:id", deletePublication);
 

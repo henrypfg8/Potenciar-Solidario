@@ -48,7 +48,7 @@ server.use((_req, res, next) => {
 //--------Proteccion de rutas-----------------
  //middleware para proteccion de rutas
  server.use((req, res, next) => {
-  if (req.aoriginalUrl = "/forgotpassword" || req.originalUrl === "/login" || req.originalUrl === "/register" || req.originalUrl === "/authGoogle" || req.originalUrl === "/ongs" || "/resetpassword") {
+  if (req.originalUrl === "/forgotpassword" || req.originalUrl === "/login" || req.originalUrl === "/register" || req.originalUrl === "/authGoogle" || req.originalUrl === "/ongs" || "/resetpassword") {
     next(); // Si la ruta es /login, /register o /authGoogle, no se necesita autenticación
   } else {
     authHandler(req, res, (error) => {

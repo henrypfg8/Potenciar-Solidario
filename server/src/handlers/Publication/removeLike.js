@@ -3,16 +3,16 @@ const {RemoveLike} = require("../../controllers/Publication/removeLike")
 const HandlerRemoveLike = async (req, res) => {
     try {
       const { idPublication } = req.body;
-      const idUser = req.userId;
-      console.log(idUser, idPublication);
+      const userId = req.userId;
+      console.log(userId, idPublication);
       
       
-      if (!idUser || !idPublication) {
+      if (!userId || !idPublication) {
           throw new Error("No se recibieron los parametros necesarios");
         }
   
    
-        const like = await RemoveLike({idPublication, idUser})
+        const like = await RemoveLike({idPublication, userId})
   
     
         return res.status(200).json(like);

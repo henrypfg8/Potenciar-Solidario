@@ -2,7 +2,7 @@ import Styles from "./post.module.css";
 //
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 //
 import CalendarIcon from "../../assets/CalendarIcon";
 import { Like, LikeActive, Comment } from "../../assets/SocialIcons/";
@@ -10,30 +10,21 @@ import { PostOptions_Icon } from "../../assets/PostOptions_Icons";
 import Post_Options from "./Post_Options/Post_Options";
 import { like, disLike } from "../../Redux/actions/postsActions";
 
+import { configureHeaders } from "../../Redux/auth/configureHeaders ";
+import axios from "axios";
+
 //////////////////////////////
 
 const Post = (props) => {
-  
+  const config = configureHeaders();
+
   const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(false);
-  const [ likes, setLikes ] = useState(props.likes);
+  const [likes, setLikes] = useState(props.likes);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
 
   const start_date = props?.startDate?.split("-");
-  const months = {
-    1: "Enero",
-    2: "Febrero",
-    3: "Marzo",
-    4: "Abril",
-    5: "Mayo",
-    6: "Junio",
-    7: "Julio",
-    8: "Agosto",
-    9: "Septiembre",
-    10: "Octubre",
-    11: "Noviembre",
-    12: "Diciembre",
-  };
+
 
   const likeHandler = (e) => {
     e.preventDefault();
@@ -43,11 +34,11 @@ const Post = (props) => {
       const newLikes = likes + 1;
       setLikes(newLikes);
       dispatch(like(props.id));
-    }
-    else {
+    } else {
       setIsLiked(false);
       const newLikes = likes - 1;
       setLikes(newLikes);
+
       dispatch(disLike(props.id));
     }
   };
@@ -56,8 +47,6 @@ const Post = (props) => {
     e.preventDefault();
     setIsOptionsOpen(!isOptionsOpen);
   };
-
-  
 
   /////////////////////////////////////////////////
 
@@ -102,9 +91,7 @@ const Post = (props) => {
               <Like className={Styles.likeIcon} />
             )}
 
-            <p className={Styles.likeNumber}>
-              {likes}
-            </p>
+            <p className={Styles.likeNumber}>{likes}</p>
           </div>
 
           <div className={Styles.SocialIcons__commentContainer}>

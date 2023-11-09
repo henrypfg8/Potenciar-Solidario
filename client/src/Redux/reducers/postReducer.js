@@ -17,7 +17,7 @@ import {
   DELETE_POST_REVIEW,
   UPDATE_POST_REVIEW,
   SET_LOADING,
-  HIDE_LOADING
+  HIDE_LOADING,
 } from "../action types/postsActionTypes.js";
 
 const initialState = {
@@ -33,7 +33,7 @@ const initialState = {
   postDetail: [],
   // liked: [],
   reviews: [],
-  loading: false
+  loading: false,
 };
 
 const postReducer = (state = initialState, action) => {
@@ -115,23 +115,40 @@ const postReducer = (state = initialState, action) => {
       };
 
     case LIKE:
-      console.log('caso like en reducer:', action.payload)
       return {
         ...state,
         posts: state?.posts?.map((post) => {
           if (post.id === action.payload.publicationId) {
-            post.likes++; 
-            post.Likes.push(action.payload);
+            post.likes++;
+            post?.Likes?.push(action.payload);
+            console.log('el posteo', post);
+            console.log('los likes', post.Likes)
           }
           return post;
         }),
       };
-    case DISLIKE: 
-      console.log('cso dislike en el reducer', action.payload)
+    case DISLIKE:
       return {
         ...state,
-        //todavia no funciona el endpoint de delete like
-      }
+        posts: state?.posts?.map((post) => {
+          if (post.id === action.payload.publicationId) {
+            const foundLike = post?.Likes?.find(
+              (like) => like.userId === action.payload.userId
+            );
+            if (foundLike) {
+              console.log(post)
+              post.Likes = post?.Likes?.filter(
+                (like) => like.userId !== action.payload.userId
+              );
+              post.likes--;
+            }
+
+            console.log(post)
+          }
+          
+          return post;
+        }),
+      };
 
     case CREATE_POST_REVIEW:
       return {
@@ -155,17 +172,17 @@ const postReducer = (state = initialState, action) => {
         reviews: updatedPostsReviews,
       };
 
-    case SET_LOADING: 
+    case SET_LOADING:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
 
-    case HIDE_LOADING: 
+    case HIDE_LOADING:
       return {
         ...state,
-        loading: false
-      }
+        loading: false,
+      };
 
     default:
       return { ...state };

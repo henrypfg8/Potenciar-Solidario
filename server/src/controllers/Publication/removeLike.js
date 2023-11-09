@@ -1,14 +1,14 @@
 const { Like ,  Publication} = require("../../db");
 
-const RemoveLike = async ({ idUser, idPublication}) => {
+const RemoveLike = async ({ idPublication,userId}) => {
   const like = await Like.destroy({
 
     where: {
-        userId: idUser ,
+        userId: userId ,
         publicationId: idPublication
     }
   });
-
+  
   if (!like) throw new Error("No se pudo borrar like a la publicacion.");
 
   const publication = await Publication.findOne({

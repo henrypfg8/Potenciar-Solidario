@@ -2,15 +2,15 @@ const {PostLike} = require("../../controllers/Publication/PostLike");
 
 const HandlerPostLike = async (req, res) => {
   try {
-    const { idUser, idPublication } = req.body;
-
+    const { idPublication } = req.body;
+    const idUser = req.userId;
     console.log(idUser, idPublication);
     
     if (!idUser || !idPublication) {
         throw new Error("No se recibieron los parametros necesarios");
       }
 
- 
+      
       const like = await PostLike({idPublication, idUser})
 
   

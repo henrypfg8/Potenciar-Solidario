@@ -20,7 +20,7 @@ const createPublicationHandler = async (req, res) => {
     } = req.body;
 
     const userId = req.userId;
-    //console.log(`este es el user id ${userId}`); 
+    console.log(`este es el user id ${userId}`); 
 
 
 

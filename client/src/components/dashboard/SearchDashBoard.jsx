@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+
 import { useSelector } from 'react-redux';
+import proptypes from 'prop-types'
 
 const SearchDashBoard = ({ search, setSearch, setListSearchPost }) => {
   const { posts } = useSelector(state => state.posts);
@@ -20,4 +21,9 @@ const SearchDashBoard = ({ search, setSearch, setListSearchPost }) => {
   )
 }
 
+SearchDashBoard.propTypes = {
+  search: proptypes.string.isRequired,
+  setSearch: proptypes.func.isRequired,
+  setListSearchPost: proptypes.func.isRequired
+}
 export default SearchDashBoard

@@ -16,6 +16,8 @@ import {
   CREATE_POST_REVIEW,
   DELETE_POST_REVIEW,
   UPDATE_POST_REVIEW,
+  SET_LOADING,
+  HIDE_LOADING
 } from "../action types/postsActionTypes.js";
 
 const initialState = {
@@ -31,6 +33,7 @@ const initialState = {
   postDetail: [],
   // liked: [],
   reviews: [],
+  loading: false
 };
 
 const postReducer = (state = initialState, action) => {
@@ -151,6 +154,18 @@ const postReducer = (state = initialState, action) => {
         ...state,
         reviews: updatedPostsReviews,
       };
+
+    case SET_LOADING: 
+      return {
+        ...state,
+        loading: true
+      };
+
+    case HIDE_LOADING: 
+      return {
+        ...state,
+        loading: false
+      }
 
     default:
       return { ...state };

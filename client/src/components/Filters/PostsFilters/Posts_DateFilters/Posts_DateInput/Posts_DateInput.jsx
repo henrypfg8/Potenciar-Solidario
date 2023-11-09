@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setPostsFilters,
   getPostsFiltered,
+  setLoading,
+  hideLoading
 } from "../../../../../Redux/actions/postsActions";
 
 const Posts_DateInput = ({
@@ -19,6 +21,7 @@ const Posts_DateInput = ({
   fromDate,
   untilDate,
 }) => {
+
 
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -40,12 +43,22 @@ const Posts_DateInput = ({
   const handleReset = (e) => {
     e.preventDefault();
     if (fromDate) {
-      dispatch(getPostsFiltered({ ...filters, fromDate: '' }));
+      dispatch(setLoading());
       dispatch(setPostsFilters({ ...filters, fromDate: '' }));
+      dispatch(getPostsFiltered({ ...filters, fromDate: '' }));
+      
+      setTimeout(() => {
+        dispatch(hideLoading());
+      }, 400)
     }
     if (untilDate) {
-      dispatch(getPostsFiltered({ ...filters, untilDate: '' }));
+      dispatch(setLoading());
       dispatch(setPostsFilters({ ...filters, untilDate: '' }));
+      dispatch(getPostsFiltered({ ...filters, untilDate: '' }));
+
+      setTimeout(() => {
+        dispatch(hideLoading());
+      }, 400)
     }
   };
 
@@ -54,7 +67,7 @@ const Posts_DateInput = ({
       <button
         className={Styles.DateInput__button}
         onClick={handleClick}
-        id={isOpen && Styles.active}
+        id={isOpen ? Styles.active : ''}
       >
         {fromDate
           ? format(fromDate, "dd-MM-yyyy")
@@ -63,10 +76,7 @@ const Posts_DateInput = ({
           : "Seleccione una fecha"}
       </button>
 
-      <div className={Styles.DateInput__Icon}>
-        <CleanDate_Icon className={Styles.icon} onClick={handleReset} />
-      </div>
-
+      
       <div className={Styles.DateInput__datePicker}>
         {isOpen && (
           <DatePicker
@@ -76,6 +86,11 @@ const Posts_DateInput = ({
           />
         )}
       </div>
+
+      <div className={Styles.DateInput__Icon}>
+        <CleanDate_Icon className={Styles.icon} onClick={handleReset} />
+      </div>
+
     </div>
   );
 };

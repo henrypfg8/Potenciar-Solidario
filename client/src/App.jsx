@@ -1,7 +1,11 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getPosts } from "./Redux/actions/postsActions";
+import {
+  getPosts,
+  setLoading,
+  hideLoading,
+} from "./Redux/actions/postsActions";
 import {
   getCategories,
   getForumCategories,
@@ -31,7 +35,6 @@ import BlurredBackground from "./components/BlurHome/BlurredBackground";
 function App() {
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
-  const posts = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
   //Manejo de Header segun el scroll:
   const [isScrolled, setIsScrolled] = useState(false);
@@ -47,21 +50,26 @@ function App() {
 
   useEffect(() => {
     root.addEventListener("scroll", scrollHandler);
-    
+
     //si el token cambia o existe se vuelven a cargar los datos
     if (token) {
-      setAuthenticated(true)
-      dispatch(getPosts());
+      dispatch(setLoading());
+      setAuthenticated(true);
+      dispatch(getPosts()).then(() => dispatch(hideLoading()));
       dispatch(getOngs());
       dispatch(getCategories());
       dispatch(getForumCategories());
     }
-    
+
     return () => {
       root.removeEventListener("scroll", scrollHandler);
-      setAuthenticated(false)
+      setAuthenticated(false);
     };
   }, [token]);
+
+
+
+  ///////////////////////////////////////
 
   return (
     <div className="App">
@@ -87,9 +95,11 @@ function App() {
         </>
       ) : (
         <>
-          {pathname === "/login" ? <Login/> : null}
-          {pathname === "/register" ? <Register/> : null}
-          {pathname !== "/register" && pathname !== "/login" && !authenticated ?(
+          {pathname === "/login" ? <Login /> : null}
+          {pathname === "/register" ? <Register /> : null}
+          {pathname !== "/register" &&
+          pathname !== "/login" &&
+          !authenticated ? (
             <BlurredBackground />
           ) : null}
         </>

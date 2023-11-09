@@ -27,6 +27,7 @@ import QuestionView from "./views/QuestionView/QuestionView";
 import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
 import UserPostsView from "./views/UserPostsView/UserPostsView";
 import BlurredBackground from "./components/BlurHome/BlurredBackground";
+import QuestionEdit from "./components/QuestionEdit/QuestionEdit";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -79,6 +80,7 @@ function App() {
             <Route path="/foro" element={<Forum />} />
             <Route path="/foro/crear" element={<QuestionCreateView />} />
             <Route path="/foro/:id" element={<QuestionDetail />} />
+            <Route path="/foro/edit/:id" element={<QuestionEdit/>}/>
             {/* Otras rutas autenticadas */}
             <Route path="/admin" element={<Admin />} />
             <Route path="/profile" element={<ProfileView />} />

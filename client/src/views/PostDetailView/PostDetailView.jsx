@@ -50,13 +50,9 @@ const Detail = () => {
 
         <div className={Styles.Detail}>
           <div className={Styles.header}>
-            <div>
             <h3>Lionel Messi</h3>
-            </div>
 
-            <div>
             <h3>{organization}</h3>
-            </div>
             </div>
 
 

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import style from "./QuestionDetail.module.css";
 import { useEffect, useState } from "react";
@@ -9,8 +10,9 @@ import swal from "sweetalert";
 import { jwtDecode } from "jwt-decode";
 import { createAnswer } from "../../Redux/actions/answersActions";
 import { useNavigate } from "react-router";
-import { getQuestionDetail } from "../../Redux/actions/questionsActions";
+import { deleteQuestion, getQuestionDetail} from "../../Redux/actions/questionsActions";
 import validation from "./validation";
+import CustomizedMenus from "../../assets/MenuDespegable";
 const socket = io("/");
 
 function QuestionView({ question }) {
@@ -65,7 +67,6 @@ function QuestionView({ question }) {
     setMessages([...messages, newMessage]);
     socket.emit("message", message);
   };
-  console.log(token, isAuthenticated);
   useEffect(() => {
     if (!token || !isAuthenticated) {
       swal("Necesita loguearse para poder realizar una pregunta").then(
@@ -97,18 +98,18 @@ function QuestionView({ question }) {
       [id]: !prevState[id],
     }));
   };
-  const handleAnswers = (event) => {
-    setErrores(validation({
-      ...answer,
-      answer: event.target.value
-    }))
-    setAnswer({
-      ...answer,
-      answer: event.target.value,
-      userId: userId,
-      questionId: question.id,
-    });
-  };
+    const handleAnswers = (event) => {
+      setErrores(validation({
+        ...answer,
+        answer: event.target.value
+      }))
+      setAnswer({
+        ...answer,
+        answer: event.target.value,
+        userId: userId,
+        questionId: question.id,
+      });
+    };
   useEffect(() => {
     socket.on("message", (message) => {
       console.log(message);
@@ -123,8 +124,41 @@ function QuestionView({ question }) {
     }
 
   },[handleAnswers, errores.answer])
-  
+
+  const deleteQuestions = (handleClose) => {
+    handleClose()
+    swal({
+      title: "¿Estás seguro quse sea eliminar está pregunta?",
+      text: "Una vez eliminada por puede ser recuperada!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        dispatch(deleteQuestion(question.id)).then(() => {
+          swal("Tu pregunta ha sido eliminado con exito!", {
+            icon: "success",
+          })
+          navigate('/foro')
+        }).catch(()=>{
+         swal("A ocurrido un error, por favor intente de nuevo o intente llamar a alguien de soporte",
+         {
+          icon: 'error',
+         }) 
+        })
+        
+      } else {
+        swal("Tu pregunta no ha sido eliminada!");
+      }
+    });
+  }
+  const editQuetion = (handleClose) => {
+    handleClose()
+    navigate(`/foro/edit/${question.id}`)
+  }
   const dateQuestion = question?.createdAt?.split("T")[0];
+  console.log(question);
 
   return (
     <div>
@@ -132,6 +166,7 @@ function QuestionView({ question }) {
         <div className={style.container}>
           <div className={style.div1}>
             <h1>{question?.title}</h1>
+            <CustomizedMenus deleteQuestion={deleteQuestions} editQuestion={editQuetion}/>
             <div className={style.date}>
               <a>
                 Fecha de publicacion: <h5>{dateQuestion}</h5>
@@ -235,9 +270,9 @@ function QuestionView({ question }) {
             </div>
           </div>
         </div>
-      ) : (
-        <div>Cargando</div>
-      )}
+      ) : <div className={style.container}>
+        <h1>Cargando</h1>
+        </div>}
     </div>
   );
 }

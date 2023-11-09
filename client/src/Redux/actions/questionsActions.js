@@ -33,14 +33,17 @@ export const createQuestion = (question) => {
 export const deleteQuestion = (id) => {
   return async function (dispatch) {
     try {
+      console.log(id);
       const config = configureHeaders();
       const response = await axios.delete(
         `http://localhost:19789/questions/${id}`,
         config
       );
       dispatch({ type: DELETE_QUESTION, payload: response.data });
+      return Promise.resolve(response)
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
+      return Promise.reject(error.message)
     }
   };
 };
@@ -69,7 +72,6 @@ export const getQuestionDetail = (id) => {
         config
       );
       dispatch({ type: GET_QUESTION_DETAIL, payload: response.data });
-      console.log(response);
       return Promise.resolve(response);
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
@@ -92,8 +94,10 @@ export const updateQuestion = (id, updatedQuestionData) => {
         config
       );
       dispatch({ type: UPDATE_QUESTION, payload: response.data });
+      return Promise.resolve(response)
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
+      return Promise.reject(error)
     }
   };
 };

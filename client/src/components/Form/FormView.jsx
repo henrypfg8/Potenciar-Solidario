@@ -17,7 +17,7 @@ const FormView = ({ post, setPost }) => {
     return (
         <div className='publication__container'>
             <h1 className='publication__title'>{post.title}</h1>
-            {post.imagePreview !== null ? ( // Si hay imagen mostrarla
+            {post.imagePreview  ? ( // Si hay imagen mostrarla
                <div>
                      <img src={`${post.imagePreview}`} className='publication__image' />
                      <button className='publication__btn--delete'

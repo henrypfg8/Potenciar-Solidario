@@ -4,6 +4,7 @@ import FormProfile from './FormProfile'
 
 const DataProfile = ({ userProfile,success, setSuccess }) => {
 
+
   return (
     <div>
       <div  className='profile__h1'>

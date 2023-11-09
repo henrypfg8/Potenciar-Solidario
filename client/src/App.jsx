@@ -29,7 +29,7 @@ import UserPostsView from "./views/UserPostsView/UserPostsView";
 import BlurredBackground from "./components/BlurHome/BlurredBackground";
 import Email from "./components/auth/password/Email";
 import QuestionEdit from "./components/QuestionEdit/QuestionEdit";
-
+import ResetPassword from "./components/auth/password/ResetPassword";
 function App() {
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
@@ -87,6 +87,7 @@ function App() {
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/profile/posts" element={<UserPostsView />} />
             <Route path="/reset-password" element={<Email/>}/>
+            <Route path="/new-password/" element={<ResetPassword/>}/>
           </Routes>
         </>
       ) : (
@@ -94,7 +95,8 @@ function App() {
           {pathname === "/login" ? <Login/> : null}
           {pathname === "/register" ? <Register/> : null}
          { pathname === "/reset-password" ? <Email/> : null}
-          {pathname !== "/register" && pathname !== "/login" && pathname !== "/reset-password"  && !authenticated ?(
+         { pathname === "/new-password/" ? <ResetPassword/> : null}
+          {pathname !== "/register" && pathname !== "/login" && pathname !== "/reset-password" && pathname !== "/new-password/"  && !authenticated ?(
             <BlurredBackground />
           ) : null}
         </>

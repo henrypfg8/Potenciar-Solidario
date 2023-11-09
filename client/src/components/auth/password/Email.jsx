@@ -15,11 +15,7 @@ const Email = () => {
     };
 
 
-
-
-
     const onsubmit =  handleSubmit((data) => {
-        console.log(data)
         handleSendEmail(data);
         setSuccessEmail(true);
         setTimeout(() => {
@@ -34,8 +30,11 @@ const Email = () => {
 
             {successEmail ? 
             
-            <div>
-                <h1>Se ha enviado un correo a tu bandeja de entrada</h1>
+            <div className={Styles.email__container}>
+                <h3>Se ha enviado un correo a tu bandeja de entrada</h3>
+                <button className={Styles.email__button__ok} 
+                    onClick={() => {setSuccessEmail(false)
+                                    navigate('/login')}}>OK</button>
             </div>
              : <div  className={Styles.email__container}>
                 <form method='post' onSubmit={onsubmit} >
@@ -46,7 +45,7 @@ const Email = () => {
                         <input
                             className={Styles.email__input}
                             type='email'
-                            placeholder='Escribe tu correo'
+                            placeholder='Ej. pedro@lopez.com'
                             id='email'
                             {...register('email', {
                                 required: true, pattern: {

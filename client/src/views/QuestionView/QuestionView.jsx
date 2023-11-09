@@ -7,7 +7,7 @@ import io from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import { jwtDecode } from "jwt-decode";
-import { createAnswer } from "../../Redux/actions/answersActions";
+import { createAnswer, createAnswerComment } from "../../Redux/actions/answersActions";
 import { useNavigate } from "react-router";
 import { getQuestionDetail } from "../../Redux/actions/questionsActions";
 import validation from "./validation";
@@ -20,7 +20,12 @@ function QuestionView({ question }) {
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false)
   const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState("");
+  const [comment, setComment] = useState({
+    thread: "",
+    user: "",
+    id: null
+  });
+  console.log(comment)
   const [errores, setErrores] = useState({
     answer: ''
   })
@@ -32,7 +37,8 @@ function QuestionView({ question }) {
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
-    setMessage(event.target.value);
+    setComment({ ...comment, [event.target.name]: event.target.value });
+
   };
 
   const answersSubmit = (answer) => {
@@ -40,8 +46,8 @@ function QuestionView({ question }) {
       dispatch(createAnswer(answer)).then(() => {
         dispatch(getQuestionDetail(question.id))
         setAnswer({
-        answer: "",
-      })
+          answer: "",
+        })
         swal({
           icon: 'success',
           text: "Respuesta creada con exito"
@@ -53,35 +59,36 @@ function QuestionView({ question }) {
           })
         })
       })
-      
     }
   };
   const handleSubmit = (message) => {
-    event.preventDefault();
-    const newMessage = {
-      body: message,
-      from: "me",
-    };
-    setMessages([...messages, newMessage]);
-    socket.emit("message", message);
+    dispatch(createAnswerComment(message))
+      .then((response) => {
+        setMessages([...messages, { body: message, from: "me" }]);
+        socket.emit("message", message);
+      })
+      .catch((error) => {
+        console.error("Error al agregar el comentario", error);
+        // Puedes mostrar un mensaje de error al usuario si falla el envío del comentario
+      });
   };
-  console.log(token, isAuthenticated);
+  //console.log(token, isAuthenticated);
   useEffect(() => {
     if (!token || !isAuthenticated) {
       swal("Necesita loguearse para poder realizar una pregunta").then(
         (value) => {
           navigate("/login");
         }
-        );
+      );
+    }
+    if (token) {
+      const decodify = jwtDecode(token);
+      if (decodify) {
+        setUserId(decodify.id);
       }
-      if (token) {
-        const decodify = jwtDecode(token);
-        if (decodify) {
-          setUserId(decodify.id);
-        }
-      }
-    }, [isAuthenticated, navigate, token]);
-    const receiveMessage = (message) =>
+    }
+  }, [isAuthenticated, navigate, token]);
+  const receiveMessage = (message) =>
     setMessages((state) => [...state, message]);
 
   useEffect(() => {
@@ -111,19 +118,18 @@ function QuestionView({ question }) {
   };
   useEffect(() => {
     socket.on("message", (message) => {
-      console.log(message);
     });
   }, []);
   useEffect(() => {
-    if( errores.answer){
+    if (errores.answer) {
       setDisable(true)
 
-    }else{
+    } else {
       setDisable(false)
     }
 
-  },[handleAnswers, errores.answer])
-  
+  }, [handleAnswers, errores.answer])
+
   const dateQuestion = question?.createdAt?.split("T")[0];
 
   return (
@@ -195,12 +201,14 @@ function QuestionView({ question }) {
                       <p>Comentar</p>
                       <textarea
                         style={{ resize: 'none' }}
+                        name="thread"
                         type="text"
                         cols="6"
                         rows="5"
-                        onChange={() => handleChange(event)}
+                        value={comment.thread}
+                        onChange={(event) => handleChange(event)}
                       />
-                      <button onClick={() => handleSubmit(message)}>
+                      <button onClick={() => handleSubmit(comment)}>
                         Añadir comentario
                       </button>
                     </div>
@@ -217,20 +225,20 @@ function QuestionView({ question }) {
               <textarea style={{ resize: 'none' }} type="text" name='answer' rows="8" value={answer.answer} onChange={handleAnswers} />
               {
                 disable ?
-              <button
-                disabled
-                className={style.buttonDisable}
-                onClick={() => answersSubmit(answer)}
-              >
-                Responder
-              </button>
-              :
+                  <button
+                    disabled
+                    className={style.buttonDisable}
+                    onClick={() => answersSubmit(answer)}
+                  >
+                    Responder
+                  </button>
+                  :
 
-              <button
-                onClick={() => answersSubmit(answer)}
-              >
-                Responder
-              </button>
+                  <button
+                    onClick={() => answersSubmit(answer)}
+                  >
+                    Responder
+                  </button>
               }
             </div>
           </div>

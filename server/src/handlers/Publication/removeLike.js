@@ -15,7 +15,7 @@ const HandlerRemoveLike = async (req, res) => {
         const like = await RemoveLike({idPublication, userId})
   
     
-        return res.status(200).json(like);
+        return res.status(200).json({like, userId});
       
     } catch (error) {
       console.log(error);

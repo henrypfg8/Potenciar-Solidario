@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Modal, } from 'antd';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, set } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from '../../Redux/auth/AuthActions';
 import proptypes from 'prop-types'
@@ -12,7 +12,7 @@ import Swiper from '../Form/Swiper';
 
 const FormProfile = ({ userProfile, setSuccess, success }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { register, formState: { errors }, handleSubmit, control } = useForm();
+    const { register, formState: { errors }, handleSubmit, control, setValue } = useForm();
 
 
     const ongs = useSelector((state) => state.ongsAndCategories.ongs);
@@ -32,6 +32,16 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
     // Función para abrir el modal
     const showModal = () => {
         setIsModalOpen(true);
+        setValue('name', userProfile.name)
+        setValue('lastname', userProfile.lastname)
+        setValue('email', userProfile.email)
+        setValue('birth_date', userProfile.birth_date)
+        setValue('phone', userProfile.phone)
+        setValue('habitual_location_of_residence', userProfile.habitual_location_of_residence)
+        setValue('geographical_area_residence', userProfile.geographical_area_residence)
+        setValue('DNI', userProfile.DNI)
+        setValue('organization', userProfile.organization)
+        setValue('description', userProfile.description)
     };
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -78,7 +88,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                             {errors?.name?.type === 'minLength' && <p className='profile__alert'>El nombre debe tener al menos 2 caracteres</p>}
                             {errors?.name?.type === 'maxLength' && <p className='profile__alert'>El nombre debe tener menos de 50 caracteres</p>}
                             <input className='profile__input' type="text" name="name"
-                                defaultValue={userProfile.name}
+
                                 {...register('name', { required: true, minLength: 2, maxLength: 50 })} />
                         </div>
 
@@ -91,7 +101,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                             {errors?.lastname?.type === 'minLength' && <p className='profile__alert'>El apellido debe tener al menos 2 caracteres</p>}
                             {errors?.lastname?.type === 'maxLength' && <p className='profile__alert'>El apellido debe tener menos de 50 caracteres</p>}
                             <input className='profile__input' type="text" name="lastname"
-                                defaultValue={userProfile.lastname}
+
                                 {...register('lastname', { required: true, minLength: 2, maxLength: 50 })} />
                         </div>
 
@@ -103,7 +113,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                             {errors?.email?.type === 'required' && <p className='profile__alert'>El email es requerido</p>}
                             {errors?.email?.type === 'pattern' && <p className='profile__alert'>El email debe ser valido</p>}
                             <input className='profile__input' type="text" name="email"
-                                defaultValue={userProfile.email}
+
                                 {...register('email', {
                                     required: true, pattern: {
                                         value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
@@ -122,7 +132,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                                 {errors?.birth_date?.type === 'validate' && <p className='profile__alert'>Debes ser mayor de 18 años</p>}
                                 <input className='auth__input'
                                     id='birth_date'
-                                    defaultValue={userProfile.birth_date}
+
                                     type="date"
                                     {...register('birth_date', {
                                         required: true,
@@ -137,16 +147,17 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                         <label className='profile__label' htmlFor="phone">Telefono</label>
                         <div>
                             {errors?.phone?.type === 'required' && <p className='profile__alert'>El telefono es requerido</p>}
+                            {errors?.phone?.type === 'minLength' && <p className='profile__alert'>El telefono debe tener al menos 5 digitos</p>}
                             {errors?.phone?.type === 'maxLength' && <p className='profile__alert'>El telefono debe tener menos de 15 digitos</p>}
                             <Controller
                                 name='phone'
                                 control={control}
-                                rules={{ required: true, maxLength: 15 }}
-                                defaultValue={userProfile.phone}
+                                rules={{ required: true, minLength : 5, maxLength: 15 }}
+
                                 render={({ field, fieldState: { error } }) => {
                                     return (
                                         <PhoneInput
-                               
+
                                             {...field}
                                             className='auth__input'
                                             id='phone'
@@ -160,7 +171,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                                             defaultCountry='AR'
                                             international
                                             countryCallingCodeEditable={false}
-                                           
+
                                         />
                                     )
                                 }}
@@ -173,7 +184,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                         <div>
                             {errors?.description?.type === 'required' && <p className='profile__alert'>La descripcion es requerida</p>}
                             <input className='profile__input' type="text"
-                                defaultValue={userProfile.description}
+
                                 {...register('description', { required: true })} />
                         </div>
                     </div >
@@ -187,7 +198,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                                 name="habitual_location_of_residence"
                                 control={control}
                                 rules={{ required: true }} // Reglas de validación con mensaje de error
-                                defaultValue={userProfile.habitual_location_of_residence}
+
                                 render={({ field, fieldState: { error } }) => (
                                     //console.log(error),
                                     <Select /// Componente de React Select
@@ -212,9 +223,9 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                         <label className='profile__label' htmlFor="geographical_area_residence">Area de localización</label>
                         <input className='profile__input' type="text"
                             id='geographical_area_residence'
-                            defaultValue={userProfile.geographical_area_residence}
-                            {...register('geographical_area_residence', { required: false })} /> 
-                            
+
+                            {...register('geographical_area_residence', { required: false })} />
+
                     </div>
                     {/* Campo para el DNI */}
                     <div className='profile__field'>
@@ -226,7 +237,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
 
                             <input className='profile__input' type="text"
                                 id='DNI'
-                                defaultValue={userProfile.DNI}
+
                                 {...register('DNI', { required: true, minLength: 5, maxLength: 8 })} />
                         </div>
                     </div>
@@ -240,10 +251,9 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                                 name='organization'
                                 rules={{ required: true, minLength: 2, }}
                                 control={control}
-                                defaultValue={userProfile.organization}
                                 render={({ field, fieldState: { error } }) => {
                                     return <Select
-                                    
+
                                         {...field}
                                         className='auth__input'
                                         options={ongOptions}

@@ -69,7 +69,7 @@ const Register = () => {
     data.append("upload_preset", "photo_users");
     const result = await uploadImageCloudinary(data); // Subir la imagen a cloudinary
     user.profile_picture = result;
- 
+
 
     dispatch(registerUser(user)) //Hacer el dispatch de la acción para registrar el usuario
       .then(() => {
@@ -195,11 +195,11 @@ const Register = () => {
             name='phone'
             control={control}
             rules={{ required: true, maxLength: 15 }}
-          
+
             render={({ field, fieldState: { error } }) => {
               return (
                 <PhoneInput
-           
+
                   {...field}
                   className='auth__input'
                   id='phone'
@@ -223,29 +223,27 @@ const Register = () => {
           <label className="auth__label" htmlFor="profile_picture"> ONG a la que pertenece</label>
           {errors?.organization?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.organization?.type === 'minLength' && <p className='auth__error'>Tu ONG debe ser minímo de 2 caracterés</p>}
-            <Controller
-              name='organization'
-              rules={{ required: true, minLength: 2, }}
-              control={control} 
-              render={({field, fieldState : {error}}) => {
-                return <Select
-                  {...field}
-                  className='auth__input'
-                  options={ongOptions}
-                  id='organization'
-                  onChange={(e) => {
-                    // Actualiza el valor del formulario
-                    field.onChange(e.value);
-                    
-                  }}
-                  
-                  value={ongOptions.find(option => option.value === field.value)}
+          <Controller
+            name='organization'
+            rules={{ required: true, minLength: 2, }}
+            control={control}
+            render={({ field, fieldState: { error } }) => {
+              return <Select
+                {...field}
+                className='auth__input'
+                options={ongOptions}
+                id='organization'
+                onChange={(e) => {
+                  // Actualiza el valor del formulario
+                  field.onChange(e.value);
 
+                }}
 
-                />
-              }}
-            
-            />
+                value={ongOptions.find(option => option.value === field.value)}
+              />
+            }}
+
+          />
         </div>
         {/* Campo para el DNI */}
         <div>
@@ -313,16 +311,11 @@ const Register = () => {
         </div>
         <div>
           <label className='auth__label' htmlFor="description">Descripcion</label>
-          {errors?.description?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.description?.type === 'maxLength' && <p className='auth__error'>Tu descripcion debe ser máximo de 100 caracterés</p>}
           <input className='auth__input'
-
-            type="text" {...register('description', { maxLength: 100, required: true })}  // Opcional
+            type="text" {...register('description', { maxLength: 100, })}  // Opcional
             id='description' placeholder='Alguna descripción' />
         </div>
-
-
-
 
         {/* boton para crear cuenta */}
         <button className='auth__btn' type='submit'>Crear cuenta</button>

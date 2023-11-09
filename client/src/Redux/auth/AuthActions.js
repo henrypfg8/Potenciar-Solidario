@@ -30,7 +30,7 @@ const getProfile =  (id, token) => {
                 }
             
             });
-            console.log(data, 'desde el action')
+
             dispatch({ type: types.GET_PROFILE, payload: data });
           
         }

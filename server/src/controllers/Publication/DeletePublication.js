@@ -15,7 +15,7 @@ const DeletePubCont = async (id) => {
     await Publication.destroy({ where: { id: id } });
 
     const user = publication.User
-    console.log("hola soy el console", user)
+   
     const userEmail = user.email
 
     deleteNoti(publication.title , userEmail);

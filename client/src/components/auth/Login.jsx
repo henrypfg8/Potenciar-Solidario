@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import './auth.css';
 import { GoogleLogin } from '@react-oauth/google'
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, } from 'react-router-dom';
+import { NavLink, useNavigate, } from 'react-router-dom';
 import { loginUser, loginWithGoogleAction } from '../../Redux/auth/AuthActions';
 import { useEffect, useState } from 'react';
 import Swiper from '../Form/Swiper';
@@ -94,7 +94,11 @@ const Login = () => {
 
                 <button className='auth__btn' type='submit'>Iniciar Sesión</button>
                 <div className='auth__links'>
-                    <p>¿No tienes Cuenta? <a href="/register">Crear Cuenta</a></p>
+                    <div>
+                        <p>¿No tienes Cuenta? <NavLink to="/register">Crear Cuenta</NavLink></p>
+                        <p>Olvidaste tu contraseña ? <NavLink to='/reset-password'>resetear contraseña</NavLink></p>
+                    </div>
+                
                     <div className='auth__google'>
                         <GoogleLogin
                             onSuccess={async credentialResponse => {
@@ -108,6 +112,7 @@ const Login = () => {
                             useOneTap
                         />
                     </div>
+                   
                 </div>
             </form>
         </div>

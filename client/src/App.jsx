@@ -27,6 +27,7 @@ import QuestionView from "./views/QuestionView/QuestionView";
 import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
 import UserPostsView from "./views/UserPostsView/UserPostsView";
 import BlurredBackground from "./components/BlurHome/BlurredBackground";
+import Email from "./components/auth/password/Email";
 import QuestionEdit from "./components/QuestionEdit/QuestionEdit";
 
 function App() {
@@ -85,13 +86,15 @@ function App() {
             <Route path="/admin" element={<Admin />} />
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/profile/posts" element={<UserPostsView />} />
+            <Route path="/reset-password" element={<Email/>}/>
           </Routes>
         </>
       ) : (
         <>
           {pathname === "/login" ? <Login/> : null}
           {pathname === "/register" ? <Register/> : null}
-          {pathname !== "/register" && pathname !== "/login" && !authenticated ?(
+         { pathname === "/reset-password" ? <Email/> : null}
+          {pathname !== "/register" && pathname !== "/login" && pathname !== "/reset-password"  && !authenticated ?(
             <BlurredBackground />
           ) : null}
         </>

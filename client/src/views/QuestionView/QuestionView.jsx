@@ -51,6 +51,7 @@ function QuestionView({ question }) {
   const dispatch = useDispatch();
 
   const handleChange = (event, id) => {
+    event.preventDefault()
       setComment({
         ...comment,
         thread: event.target.value,

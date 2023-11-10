@@ -82,8 +82,8 @@ function QuestionView({ question }) {
   };
 
 
-  const handleSubmit = (comment, message) => {
-    dispatch(createAnswerComment(comment, message))
+  const handleSubmit = (message) => {
+    dispatch(createAnswerComment(message))
       .then((response) => {
         setComment({thread: "",})
         swal({

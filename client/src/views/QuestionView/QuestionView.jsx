@@ -160,9 +160,7 @@ function QuestionView({ question }) {
          }); 
         });
         
-      } else {
-        swal("Tu pregunta no ha sido eliminada.");
-      }
+      } 
     });
   };
 

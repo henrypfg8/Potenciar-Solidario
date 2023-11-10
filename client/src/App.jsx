@@ -36,6 +36,7 @@ import Email from "./components/auth/password/Email";
 import QuestionEdit from "./components/QuestionEdit/QuestionEdit";
 import ResetPassword from "./components/auth/password/ResetPassword";
 function App() {
+  const users = useSelector(state => state.users);
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ function App() {
       dispatch(getCategories());
       dispatch(getForumCategories());
       dispatch(getUsers());
+      
     }
 
     return () => {

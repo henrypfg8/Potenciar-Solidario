@@ -34,7 +34,7 @@ function QuestionView({ question }) {
   const [comment, setComment] = useState({
     thread: "",
     userId: "",
-    answerId: ""
+    answerId: "" 
   });
   console.log(comment)
 

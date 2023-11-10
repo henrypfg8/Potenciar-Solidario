@@ -60,6 +60,8 @@ export default function PostFilters() {
     fromDate: "",
     untilDate: "",
   });
+  
+  
   //manejador de filtros de categoria y ong
   const handleFilters = (e) => {
     const { name, value } = e;
@@ -132,6 +134,11 @@ export default function PostFilters() {
         isSearchable={true}
         menuPlacement="top"
         onChange={handleFilters}
+        value={{
+          label: filtersLOCAL.category !== '' ? filtersLOCAL.category : "Todas las categorias",
+          name: 'category',
+          value: filtersLOCAL.category
+        }}
       />
       <Select
         className={Styles.select}
@@ -140,6 +147,11 @@ export default function PostFilters() {
         isSearchable={true}
         menuPlacement="top"
         onChange={handleFilters}
+        value={{
+          label: filtersLOCAL.ong !== '' ? filtersLOCAL.ong : "Todas las organizaciones",
+          name: 'ong',
+          value: filtersLOCAL.ong
+        }}
       />
       {/* <Select
         className={Styles.select}

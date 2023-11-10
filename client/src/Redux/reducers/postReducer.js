@@ -18,6 +18,7 @@ import {
   UPDATE_POST_REVIEW,
   SET_LOADING,
   HIDE_LOADING,
+  SET_ORDERINGS,
 } from "../action types/postsActionTypes.js";
 
 const initialState = {
@@ -27,6 +28,10 @@ const initialState = {
     ong: "",
     fromDate: "",
     untilDate: "",
+  },
+  orderBy: {
+    value: "date",
+    direction: "asc",
   },
   searchValue: "",
   // allPosts: [],
@@ -121,8 +126,8 @@ const postReducer = (state = initialState, action) => {
           if (post.id === action.payload.publicationId) {
             post.likes++;
             post?.Likes?.push(action.payload);
-            console.log('el posteo', post);
-            console.log('los likes', post.Likes)
+            console.log("el posteo", post);
+            console.log("los likes", post.Likes);
           }
           return post;
         }),
@@ -136,16 +141,16 @@ const postReducer = (state = initialState, action) => {
               (like) => like.userId === action.payload.userId
             );
             if (foundLike) {
-              console.log(post)
+              console.log(post);
               post.Likes = post?.Likes?.filter(
                 (like) => like.userId !== action.payload.userId
               );
               post.likes--;
             }
 
-            console.log(post)
+            console.log(post);
           }
-          
+
           return post;
         }),
       };
@@ -182,6 +187,12 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      };
+
+    case SET_ORDERINGS:
+      return {
+        ...state,
+        orderBy: action.payload,
       };
 
     default:

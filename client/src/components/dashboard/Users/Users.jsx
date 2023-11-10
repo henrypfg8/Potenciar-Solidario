@@ -16,15 +16,16 @@ const Users = () => {
 
   return (
     <div className={Styles.users__container}>
-      <div>
-        <table>
-          <thead>
+      <div className={Styles.users__flex}>
+        <table className={Styles.users__table}>
+          <thead className={Styles.users__head}>
             <tr>
               <th>Nombre</th>
               <th>Apellido</th>
               <th>Correo</th>
               <th>Naciemineto</th>
               <th>País</th>
+              <th>Telefono</th>
             </tr>
           </thead>
           {users && users?.map(user => {

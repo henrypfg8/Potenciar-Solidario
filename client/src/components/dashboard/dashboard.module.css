@@ -1,21 +1,124 @@
-.sidebar__links {
+.sidebar {
+    display: flex;
+    background: #fff;
+}
+
+@media(min-width: 768px) {
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        height: 90vh;
+        background: var(--blue_color);
+        z-index: 1;
+    }
+}
+
+.sidebar__container {
+    width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-top: 1rem;
+}
+.sidebar__header{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-around;
+    width: 90%;
+    margin: 1rem auto;
+}
+@media(min-width: 768px){
+    .sidebar__header{
+        flex-direction: column;
+        align-items: center;
+    }
+}
+.sidebar__title {
+    text-align: center;
+    margin: 0.5rem auto;
+    color: #000;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+@media(min-width: 768px){
+    .sidebar__title {
+        color: #fff;
+           font-size: 1.4rem;
+           font-weight: 900;
+    }
+}
+
+.sidebar__links {
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin: 1rem auto;
 }
 
 .sidebar__links a {
-    display: block;
-    padding: 0.5rem 0;
+    color: var(--dark_blue_color);
+}
+.bg_noActivo{
+    padding: 0.5rem;
+    border: 1px solid var(--dark_blue_color);
+    border-radius: 5px;
+}
+.bg_activo {
+    background: var(--dark_blue_color);
+    border-radius: 5px; 
+    text-align: center;
+    padding: 0.5rem;
     color: #fff;
+
+}
+a {
+    color: #000;
+}
+.sidebar__links a {
+    display: block;
     text-decoration: none;
     transition: all 0.3s ease;
+   
 }
-.bg_activo{
-    background: var(--dark_blue_color);
-    width: 100%;
-    text-align: center;
-    
+.sidebar__option{
+    color: #000;
+}
+.bg_activo p {
+    color: #fff;
+}
+@media(min-width: 768px) {
+    .sidebar__option{
+        color: #fff;
+    }
+    .sidebar__links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .sidebar__links a {
+        display: block;
+        padding: 0.5rem 0;
+        color: #fff;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .bg_activo {
+        background: var(--dark_blue_color);
+        width: 100%;
+        text-align: center;
+        color: #fff;
+
+    }
+    .bg_noActivo{
+        border: none;
+    }
+
 }

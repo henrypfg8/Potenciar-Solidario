@@ -1,8 +1,20 @@
-import  { useState} from 'react'
+import  { useState, useEffect} from 'react'
 import proptypes from 'prop-types'
+import {useDispatch} from 'react-redux'
+import { deletePost } from '../../Redux/actions/postsActions'
+import { Modal, } from 'antd';
+import { getPosts } from '../../Redux/actions/postsActions';
+
 
 const CardDashboard = ({post}) => {
   const [addPostToList, setAddPostToList] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
+  const [refreshData, setRefreshData] = useState(false); 
+
+  useEffect(() => {
+    dispatch(getPosts())
+}, [refreshData])
 
   const handleCheckboxChange = (e) => {
     if (e.target.checked) {
@@ -14,12 +26,29 @@ const CardDashboard = ({post}) => {
     }
     setAddPostToList(e.target.checked);
   };
+      // Función para abrir el modal
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
 
-  const handleDeleteById = id => {
+    // Función para cerrar el modal
+    const handleClose = () => {
+        setIsModalOpen(false);
+    };
+  const handleDeletePostById = () => {
     // hacer el dispatch de la acción para eliminar el post de la base de datos
+    setRefreshData(true);
+    dispatch(deletePost(post.id))
+      .then(() => {
+        setIsModalOpen(false);
+        setRefreshData(false);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
   }
 
-
+  
   return (
     <div className='dashboard__card'>
        <div>
@@ -35,7 +64,20 @@ const CardDashboard = ({post}) => {
           onChange={handleCheckboxChange}
         />
             <img className='dashboard__trash' src="/images/trash.png" alt="img-trash" 
-              onClick={() => handleDeleteById(post.id)}
+              onClick={showModal}
+              />
+
+              <Modal
+                title="Deseas eliminar este post?"
+                open={isModalOpen}
+                onCancel={handleClose}
+                cancelText="Cancelar"
+                okText="Sí,Eliminar"
+                onOk={() => handleDeletePostById()}
+                cancelButtonProps={{
+                  style: { backgroundColor: '#fff', color: '#005692', border: '1px solid #005692' }
+                }}
+                okButtonProps={{ danger: true }}
               />
         </div>
     </div>

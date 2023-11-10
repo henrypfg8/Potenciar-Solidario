@@ -10,7 +10,8 @@ import {
   setPostsFilters,
   searchPosts,
   setLoading,
-  hideLoading
+  hideLoading,
+  setSelectedFilterOptions
 } from "../../../Redux/actions/postsActions";
 //
 import Posts_DateFilters from "./Posts_DateFilters/Posts_DateFilters";
@@ -27,11 +28,21 @@ export default function PostFilters() {
   //
   const ongs = useSelector((state) => state.ongsAndCategories.ongs);
   const categories = useSelector((state) => state.ongsAndCategories.categories);
-  const searchValue = useSelector((state) => state.posts.searchValue);
+  const users = useSelector(state => state.users.users);
   //
-  const categoryOptions = categories.map((cat) => ({
-    label: cat.name,
-    value: cat.name,
+  const searchValue = useSelector((state) => state.posts.searchValue);
+  const selectedFilterOptions = useSelector(state => state.posts.selectedFilterOptions)
+  const [selectedFilterOptionsLOCAL, setSelectedFilterOptionsLOCAL ] = useState({
+    category: {label: "Todas las categorias", name: "category", value: ''},
+    ong: {label: "Todas las organizaciones", name: "ong", value: ''},
+    user: {label: "Todos los usuarios", name: 'user', value: ''}
+  })
+  
+
+  //
+  const categoryOptions = categories.map(({ name }) => ({
+    label: name,
+    value: name,
     name: "category",
   }));
   categoryOptions.unshift({
@@ -51,7 +62,17 @@ export default function PostFilters() {
     value: "",
     name: "ong",
   });
+  const usersOptions = users.map(({ name, lastname, id }) => ({
+    label: `${name} ${lastname}`,
+    value: id,
+    name: 'user',
 
+  }))
+  usersOptions.unshift({
+    label: "Todos los usuarios",
+    value: "",
+    name: 'user'
+  })
   //
   const filters = useSelector((state) => state.posts.postsFilters);
   const [filtersLOCAL, setFiltersLOCAL] = useState({
@@ -59,21 +80,31 @@ export default function PostFilters() {
     ong: "",
     fromDate: "",
     untilDate: "",
+    user: ""
   });
   
   
   //manejador de filtros de categoria y ong
   const handleFilters = (e) => {
-    const { name, value } = e;
+    const { label, name, value } = e;
+    setSelectedFilterOptionsLOCAL({
+      ...selectedFilterOptionsLOCAL,
+      [name]: {label, name, value}
+    })
+    dispatch(setSelectedFilterOptions({
+      ...selectedFilterOptionsLOCAL,
+      [name]: {label, name, value}
+    }))
+    console.log('el handler', {...selectedFilterOptionsLOCAL, [name]: {label, name, value}})
     setFiltersLOCAL({ ...filters, [name]: value });
     dispatch(setLoading());
     dispatch(setPostsFilters({ ...filters, [name]: value }));
     if (searchValue !== "") {
       const filtersToApply = { ...filters, [name]: value };
-      const { category, ong, fromDate, untilDate } = filtersToApply;
+      const { category, ong, fromDate, untilDate, user } = filtersToApply;
       axios
         .get(
-          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
+          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
           config
         )
         .then(({ data }) => dispatch(searchPosts(data, searchValue))).then(() => dispatch(hideLoading()))
@@ -88,10 +119,10 @@ export default function PostFilters() {
     dispatch(setLoading());
 
     if (searchValue !== "") {
-      const { category, ong, untilDate } = { ...filters };
+      const { category, ong, untilDate, user } = { ...filters };
       axios
         .get(
-          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
+          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
           config
         )
         .then(({ data }) => dispatch(searchPosts(data, searchValue))).then(() => dispatch(hideLoading()));
@@ -106,10 +137,10 @@ export default function PostFilters() {
     dispatch(setLoading());
 
     if (searchValue !== "") {
-      const { category, ong, fromDate } = { ...filters };
+      const { category, ong, fromDate, user } = { ...filters };
       axios
         .get(
-          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
+          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
           config
         )
         .then(({ data }) => dispatch(searchPosts(data, searchValue))).then(() => dispatch(hideLoading()));
@@ -121,7 +152,11 @@ export default function PostFilters() {
 
   useEffect(() => {
     setFiltersLOCAL(filters);
-  }, [filters]);
+    setSelectedFilterOptionsLOCAL(selectedFilterOptions)
+  }, [filters, selectedFilterOptions]);
+ 
+
+  ///////////////////////////////////////////////////////////////
 
   return (
     <div className={Styles.LeftBar__Filters}>
@@ -134,11 +169,7 @@ export default function PostFilters() {
         isSearchable={true}
         menuPlacement="top"
         onChange={handleFilters}
-        value={{
-          label: filtersLOCAL.category !== '' ? filtersLOCAL.category : "Todas las categorias",
-          name: 'category',
-          value: filtersLOCAL.category
-        }}
+        value={selectedFilterOptionsLOCAL.category}
       />
       <Select
         className={Styles.select}
@@ -147,17 +178,17 @@ export default function PostFilters() {
         isSearchable={true}
         menuPlacement="top"
         onChange={handleFilters}
-        value={{
-          label: filtersLOCAL.ong !== '' ? filtersLOCAL.ong : "Todas las organizaciones",
-          name: 'ong',
-          value: filtersLOCAL.ong
-        }}
+        value={selectedFilterOptionsLOCAL.ong}
       />
-      {/* <Select
+      <Select
         className={Styles.select}
+        options={usersOptions}
+        defaultValue={usersOptions[0]}
+        isSearchable={true}
         menuPlacement="top"
-        placeholder="Usuarios (todavia no estan)"
-      /> */}
+        onChange={handleFilters}
+        value={selectedFilterOptionsLOCAL.user}
+      />
 
       <Posts_DateFilters
         handleFromDate={handleFromDate}

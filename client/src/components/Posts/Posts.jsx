@@ -12,6 +12,7 @@ export default function Posts() {
   const posts = useSelector((state) => state.posts.posts);
   const orderBy = useSelector((state) => state.posts.orderBy);
 
+
   function transformarFecha(inputFecha) {
     // Parsea la fecha en el formato "yyyy-MM-dd"
     const fechaParseada = new Date(inputFecha);

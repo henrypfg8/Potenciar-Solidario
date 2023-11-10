@@ -1,9 +1,9 @@
-const { Publication } = require("../../db");
+const { Publication, User } = require("../../db");
 
 const applyFilters = async (req, res) => {
   try {
     
-    const { category, ong, fromDate, untilDate } = req.query;
+    const { category, ong, fromDate, untilDate, user } = req.query;
 
     let allPosts = await Publication.findAll();
 
@@ -21,6 +21,10 @@ const applyFilters = async (req, res) => {
 
     if (untilDate !== "") {
       allPosts = allPosts.filter((post) => post.startDate <= untilDate);
+    }
+
+    if (user !== "") {
+      allPosts = allPosts.filter(post => post.userID === user);
     }
 
     res.status(200).json(allPosts);

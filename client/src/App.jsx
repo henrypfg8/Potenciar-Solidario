@@ -10,6 +10,7 @@ import {
   getCategories,
   getForumCategories,
 } from "./Redux/actions/categoriesActions";
+import { getUsers } from './Redux/actions/usersActions';
 import { getOngs } from "./Redux/actions/ongsActions";
 
 import "./App.css";
@@ -61,6 +62,7 @@ function App() {
       dispatch(getOngs());
       dispatch(getCategories());
       dispatch(getForumCategories());
+      dispatch(getUsers());
     }
 
     return () => {

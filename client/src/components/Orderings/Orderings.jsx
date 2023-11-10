@@ -7,7 +7,11 @@ import { useSelector, useDispatch } from "react-redux";
 //
 import { setOrderings } from "../../Redux/actions/postsActions";
 
+import axios from 'axios';
+import { configureHeaders } from "../../Redux/auth/configureHeaders ";
+
 export default function Orderings() {
+
   const dispatch = useDispatch();
   const orderBy = useSelector((state) => state.posts.orderBy);
   const [orderByLOCAL, setOrderByLOCAL] = useState({

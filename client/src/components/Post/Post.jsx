@@ -99,13 +99,13 @@ const Post = (props) => {
           </div>
         </div>
 
-        <div
+        {/* <div
           className={Styles.BottomBar__OptionsContainer}
           onClick={postOptionsHandler}
         >
           <PostOptions_Icon className={Styles.BottomBar__optionsIcon} />
           {isOptionsOpen && <Post_Options id={id} />}
-        </div>
+        </div> */}
       </div>
     </Link>
   );

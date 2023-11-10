@@ -19,7 +19,8 @@ import {
   DISLIKE,
   SET_LOADING,
   HIDE_LOADING,
-  SET_ORDERINGS
+  SET_ORDERINGS,
+  SET_SELECTED_FILTER_OPTIONS
 } from "../action types/postsActionTypes.js";
 
 import axios from "axios";
@@ -170,12 +171,12 @@ export const clearPostDetail = () => {
 };
 
 export const getPostsFiltered = (filters) => {
-  const { category, ong, fromDate, untilDate } = filters;
+  const { category, ong, fromDate, untilDate, user } = filters;
   return async function (dispatch) {
     try {
       const config = configureHeaders();
       const { data } = await axios.get(
-        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
+        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
         config
       );
       dispatch({
@@ -298,5 +299,12 @@ export const setOrderings = (orderBy) => {
   return {
     type: SET_ORDERINGS,
     payload: orderBy
+  }
+}
+
+export const setSelectedFilterOptions = (selectedFilterOptions) => {
+  return {
+    type: SET_SELECTED_FILTER_OPTIONS,
+    payload: selectedFilterOptions
   }
 }

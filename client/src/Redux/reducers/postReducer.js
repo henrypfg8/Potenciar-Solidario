@@ -19,6 +19,7 @@ import {
   SET_LOADING,
   HIDE_LOADING,
   SET_ORDERINGS,
+  SET_SELECTED_FILTER_OPTIONS
 } from "../action types/postsActionTypes.js";
 
 const initialState = {
@@ -28,11 +29,18 @@ const initialState = {
     ong: "",
     fromDate: "",
     untilDate: "",
+    user: ""
+  },
+  selectedFilterOptions: {
+    category: {label: "Todas las categorias", name: 'category', value: ''},
+    ong: {label: "Todas las organizaciones", name: 'ong', value: ''},
+    user: {label: 'Todos los usuarios', name: "user", value: ''}
   },
   orderBy: {
     value: "date",
     direction: "asc",
   },
+  
   searchValue: "",
   // allPosts: [],
   postDetail: [],
@@ -194,6 +202,12 @@ const postReducer = (state = initialState, action) => {
         ...state,
         orderBy: action.payload,
       };
+
+    case SET_SELECTED_FILTER_OPTIONS: 
+    return {
+      ...state,
+      selectedFilterOptions: action.payload
+    }
 
     default:
       return { ...state };

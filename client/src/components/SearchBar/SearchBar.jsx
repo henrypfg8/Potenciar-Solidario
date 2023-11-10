@@ -36,12 +36,12 @@ export default function SearchBar() {
     if (inputValue === "")
       dispatch(getPostsFiltered(filters)).then(dispatch(hideLoading()));
     else {
-      const { category, ong, fromDate, untilDate } = filters;
+      const { category, ong, fromDate, untilDate, user } = filters;
       let value = inputValue.includes(' ') ? inputValue.split(' ') : inputValue;
 
       let debounceTimeout = undefined;
       axios.get(
-        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
+        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
         config
       ).then(({ data }) => {
         debounceTimeout = setTimeout(() => {

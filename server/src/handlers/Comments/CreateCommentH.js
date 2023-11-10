@@ -1,12 +1,17 @@
 const {CreateComment} = require('../../controllers/Comments/CreateCommentC')
 
-const CreateCommentHandler = async({thread,userId,commentId})=>{
-    const newComment = await CreateComment.create({ thread, userId });
-    if (!newComment) {
-      throw new Error("No se pudo crear el comentario");
-    }
+const CreateCommentHandler = async(req,res)=>{
+  const {thread, userId, answerId} = req.body
+
+  try {
+    if(!thread) throw new Error('Es obligatoria el Thread')
+    const newComment = await CreateComment({ thread, userId, answerId});
+  res.status(201).json(newComment)
+  console.log('soy handlers',newComment)
+  } catch (error) {
+    res.status(404).json({error:error.message})
+  }
+
     //global.io.emit(`question_${answerId}`);
-  
-    return newComment;
 }
 module.exports = { CreateCommentHandler };

@@ -16,6 +16,10 @@ import {
   CREATE_POST_REVIEW,
   DELETE_POST_REVIEW,
   UPDATE_POST_REVIEW,
+  SET_LOADING,
+  HIDE_LOADING,
+  SET_ORDERINGS,
+  SET_SELECTED_FILTER_OPTIONS
 } from "../action types/postsActionTypes.js";
 
 const initialState = {
@@ -25,12 +29,24 @@ const initialState = {
     ong: "",
     fromDate: "",
     untilDate: "",
+    user: ""
   },
+  selectedFilterOptions: {
+    category: {label: "Todas las categorias", name: 'category', value: ''},
+    ong: {label: "Todas las organizaciones", name: 'ong', value: ''},
+    user: {label: 'Todos los usuarios', name: "user", value: ''}
+  },
+  orderBy: {
+    value: "date",
+    direction: "asc",
+  },
+  
   searchValue: "",
   // allPosts: [],
   postDetail: [],
   // liked: [],
   reviews: [],
+  loading: false,
 };
 
 const postReducer = (state = initialState, action) => {
@@ -112,23 +128,40 @@ const postReducer = (state = initialState, action) => {
       };
 
     case LIKE:
-      console.log('caso like en reducer:', action.payload)
       return {
         ...state,
         posts: state?.posts?.map((post) => {
           if (post.id === action.payload.publicationId) {
-            post.likes++; 
-            post.Likes.push(action.payload);
+            post.likes++;
+            post?.Likes?.push(action.payload);
+            console.log("el posteo", post);
+            console.log("los likes", post.Likes);
           }
           return post;
         }),
       };
-    case DISLIKE: 
-      console.log('cso dislike en el reducer', action.payload)
+    case DISLIKE:
       return {
         ...state,
-        //todavia no funciona el endpoint de delete like
-      }
+        posts: state?.posts?.map((post) => {
+          if (post.id === action.payload.publicationId) {
+            const foundLike = post?.Likes?.find(
+              (like) => like.userId === action.payload.userId
+            );
+            if (foundLike) {
+              console.log(post);
+              post.Likes = post?.Likes?.filter(
+                (like) => like.userId !== action.payload.userId
+              );
+              post.likes--;
+            }
+
+            console.log(post);
+          }
+
+          return post;
+        }),
+      };
 
     case CREATE_POST_REVIEW:
       return {
@@ -151,6 +184,30 @@ const postReducer = (state = initialState, action) => {
         ...state,
         reviews: updatedPostsReviews,
       };
+
+    case SET_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case HIDE_LOADING:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case SET_ORDERINGS:
+      return {
+        ...state,
+        orderBy: action.payload,
+      };
+
+    case SET_SELECTED_FILTER_OPTIONS: 
+    return {
+      ...state,
+      selectedFilterOptions: action.payload
+    }
 
     default:
       return { ...state };

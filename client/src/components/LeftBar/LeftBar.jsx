@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 //
 import PostFilters from "../Filters/PostsFilters/PostsFilters";
 import ForumFilters from "../Filters/ForumFilters/ForumFilters";
-
+import Orderings from "../Orderings/Orderings";
 
 export default function LeftBar() {
   const { pathname } = useLocation();
@@ -43,6 +43,8 @@ export default function LeftBar() {
       </div>
 
       {pathname === "/" ? <PostFilters /> : <ForumFilters />}
+
+      {pathname === "/" ? <Orderings /> : null}
     </div>
   );
 }

@@ -14,20 +14,9 @@ module.exports = (sequelize) => {
           min: 1,
         }
       },
-      user: {
-        id: DataTypes.STRING,
-        type: DataTypes.STRING,
-        allowNull:false,
-        validate: {
-          notEmpty: {
-            msg: "El campo de usuario no puede estar vacío",
-          },
-        },
-      },
       thread: {
-        id: DataTypes.STRING,
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
         validate: {
           notEmpty: {
             msg: "El texto no puede estar vacío",
@@ -39,7 +28,7 @@ module.exports = (sequelize) => {
         },
       },
     },
-    { timestamps: false }
+    { timestamps: true }
   );
   
 };

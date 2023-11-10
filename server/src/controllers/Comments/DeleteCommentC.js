@@ -1,9 +1,9 @@
 const { Comment } = require('../../db');
 
-const DeleteCommentC = async (userId) => {
+const DeleteCommentC = async (userData) => {
   try {
-    if (userId) {
-      const deletedRows = await Comment.destroy({ where: { user: userId } });
+    if (userData) {
+      const deletedRows = await Comment.destroy({ where: { id: userData } });
 
       if (deletedRows === 0) {
         throw new Error("No hay comentarios de este usuario.");

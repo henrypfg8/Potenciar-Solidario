@@ -40,43 +40,73 @@ const Detail = () => {
 
   return (
     <div className={Styles.DetailView}>
-        
-      
-    
+
+
+
       <div className={Styles.contain}>
-      {
-        image && <img src={image} alt="Imagen" />
-      }
-        <div className={Styles.title}>
-      <h1>{title}</h1>
-        <a>{category}</a>
-      <p>{description}</p>
+        {
+          image && <img src={image} alt="Imagen" />
+        }
+
+        <div className={Styles.Detail}>
+          <div className={Styles.header}>
+            <h3>Lionel Messi</h3>
+
+            <h3>{organization}</h3>
+            </div>
+
+
+            <div>
+              <h1>{title}</h1>
+              <div className={Styles.header}>
+                <div>
+
+                <h3>
+                  Fecha de publicacion:
+                </h3>
+              <time dateTime={creationDate}>
+                {creationDate}
+              </time>
+                </div>
+              <div>
+
+              <h3>
+                Contacto:
+              </h3>
+            <p>{contact}</p>
+              </div>
+              </div>
+          </div>
+          <p className={Styles.text}>{description}</p>
+
+          <div className={Styles.header}>
+
+          <div className={Styles.date}>
+            <div>
+              <h3>Desde: </h3>
+
+          <p>{startDate}</p>
+          <h3>Hasta: </h3>
+          {endDate && <p>{endDate}</p>}
+            </div>
+          </div>
+          {url && <a href={url}>Mas informacion</a>}
+          {registrationLink && <a href={registrationLink}>Inscribirse</a>}
+          </div>
+          <a>{category}</a>
         </div>
 
       </div>
-
-      <div className={Styles.Detail}>
-        <div>
-
-        <h2 className={Styles.title2}>Informacion sobre la publicación</h2>
-        </div>
-        <h3>ONG: </h3>
-        <p>{organization}</p>
-        <h3>Fecha de inicio: </h3>
-        <p>{startDate}</p>
-        {endDate && <h3>Fecha de fin:</h3>}
-        {endDate && <p>{endDate}</p>}
-
-        {registrationLink && <h3>Link para inscribirse:</h3>}
-        {registrationLink && <p>{registrationLink}</p>}
-        <h3>Contacto: </h3>
-        <p>{contact}</p>
-        {url && <p>URL para saber más: {url}</p>}
-        <h3>Fecha de alta</h3>
-        <time dateTime={creationDate}>
-          {creationDate}
-        </time>
+      <div>
+Comentario1
       </div>
+      <div>
+Comentario2
+      </div>
+      <div>
+Comentario3
+      </div>
+
 
     </div>
   );

@@ -33,9 +33,9 @@ const UserPostsView = () => {
 
     return (
         <div className={Styles.user__pulblications__container}>
-            {userProfile.Publications && (<h1 className={Styles.user__title}>Mis Publicaciones</h1>)}
+            {!userProfile?.Publications?.length ? <h1 className={Styles.user__title}>Aún no tienes publicaciones</h1> :<h1 className={Styles.user__title}>Mis Publicaciones</h1> }
             <div className={Styles.user__pulblications__grid}>
-                {!userProfile.Publications ? <h1>Aún no tienes publicaciones</h1> : userProfile.Publications?.map(post => {
+                { userProfile?.Publications && userProfile.Publications?.map(post => {
                     return (
                         <UserPostCard 
                         refreshData={refreshData}

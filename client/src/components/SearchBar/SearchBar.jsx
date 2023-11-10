@@ -1,42 +1,65 @@
 import Styles from "./searchBar.module.css";
 //
 import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import {
   searchPosts,
   getPostsFiltered,
-  setSearchValue
+  setSearchValue,
+  setLoading,
+  hideLoading,
 } from "../../Redux/actions/postsActions";
 //
 import axios from "axios";
 //
-import { configureHeaders } from '../../Redux/auth/configureHeaders .js';
-
+import { configureHeaders } from "../../Redux/auth/configureHeaders .js";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
+  const config = configureHeaders();
   //
   const posts = useSelector((state) => state.posts.posts);
   const filters = useSelector((state) => state.posts.postsFilters);
-
-  const config = configureHeaders();
-
-
+  const searchValue = useSelector(state => state.posts.searchValue);
+  const [inputValue, setInputValue] = useState('');
+  const loading = useSelector(state => state.posts.loading);
 
   function changeHandler({ target: { value } }) {
-
-    if (value === "") dispatch(getPostsFiltered(filters));
-    else {
-      const { category, ong, fromDate, untilDate } = filters;
-      value = value.trim();
-      if (value.includes(" ")) value = value.split(" ");
-      axios
-        .get(`http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`, config)
-        .then(({ data }) => {
-          dispatch(searchPosts(data, value));
-          dispatch(setSearchValue(value))
-        })
-    }
+    value = value.trim();
+    setInputValue(value);
   }
+
+  useEffect(() => {
+    if (!loading) dispatch(setLoading());
+    dispatch(setSearchValue(inputValue));
+
+    if (inputValue === "")
+      dispatch(getPostsFiltered(filters)).then(dispatch(hideLoading()));
+    else {
+      const { category, ong, fromDate, untilDate, user } = filters;
+      let value = inputValue.includes(' ') ? inputValue.split(' ') : inputValue;
+
+      let debounceTimeout = undefined;
+      axios.get(
+        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
+        config
+      ).then(({ data }) => {
+        debounceTimeout = setTimeout(() => {
+          dispatch(searchPosts(data, value)).then(() => {
+            dispatch(hideLoading())
+          })
+        }, 400)
+      })
+
+      return () => {
+        clearTimeout(debounceTimeout);
+      }
+    }
+  }, [inputValue]);
+
+  useEffect(() => {
+    setInputValue(searchValue);
+  }, [])
 
   return (
     <div className={Styles["SearchBar"]}>
@@ -45,6 +68,7 @@ export default function SearchBar() {
         className={Styles["searchBar__input"]}
         placeholder="Buscar por titulo o descripcion"
         onChange={changeHandler}
+        value={inputValue}
       ></input>
     </div>
   );

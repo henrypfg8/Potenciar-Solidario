@@ -6,14 +6,14 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: 40px;
-    border-left: solid gray 1px;
 }
 
     .Cards {
         width: 100%;
         display: flex;
-        flex-direction: column-reverse;
         align-items: center;
+        height: 100%;
+        flex-direction: column;
     }
 
 @media screen and (max-width:768px) {

@@ -19,6 +19,7 @@ import {
   DISLIKE,
   SET_LOADING,
   HIDE_LOADING,
+  SET_ORDERINGS
 } from "../action types/postsActionTypes.js";
 
 import axios from "axios";
@@ -292,3 +293,10 @@ export const hideLoading = () => {
     type: HIDE_LOADING,
   };
 };
+
+export const setOrderings = (orderBy) => {
+  return {
+    type: SET_ORDERINGS,
+    payload: orderBy
+  }
+}

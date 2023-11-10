@@ -1,7 +1,11 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getPosts } from "./Redux/actions/postsActions";
+import {
+  getPosts,
+  setLoading,
+  hideLoading,
+} from "./Redux/actions/postsActions";
 import {
   getCategories,
   getForumCategories,
@@ -29,11 +33,10 @@ import UserPostsView from "./views/UserPostsView/UserPostsView";
 import BlurredBackground from "./components/BlurHome/BlurredBackground";
 import Email from "./components/auth/password/Email";
 import QuestionEdit from "./components/QuestionEdit/QuestionEdit";
-
+import ResetPassword from "./components/auth/password/ResetPassword";
 function App() {
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
-  const posts = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
   //Manejo de Header segun el scroll:
   const [isScrolled, setIsScrolled] = useState(false);
@@ -49,21 +52,26 @@ function App() {
 
   useEffect(() => {
     root.addEventListener("scroll", scrollHandler);
-    
+
     //si el token cambia o existe se vuelven a cargar los datos
     if (token) {
-      setAuthenticated(true)
-      dispatch(getPosts());
+      dispatch(setLoading());
+      setAuthenticated(true);
+      dispatch(getPosts()).then(() => dispatch(hideLoading()));
       dispatch(getOngs());
       dispatch(getCategories());
       dispatch(getForumCategories());
     }
-    
+
     return () => {
       root.removeEventListener("scroll", scrollHandler);
-      setAuthenticated(false)
+      setAuthenticated(false);
     };
   }, [token]);
+
+
+
+  ///////////////////////////////////////
 
   return (
     <div className="App">
@@ -86,7 +94,7 @@ function App() {
             <Route path="/admin" element={<Admin />} />
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/profile/posts" element={<UserPostsView />} />
-            <Route path="/reset-password" element={<Email/>}/>
+
           </Routes>
         </>
       ) : (
@@ -94,7 +102,8 @@ function App() {
           {pathname === "/login" ? <Login/> : null}
           {pathname === "/register" ? <Register/> : null}
          { pathname === "/reset-password" ? <Email/> : null}
-          {pathname !== "/register" && pathname !== "/login" && pathname !== "/reset-password"  && !authenticated ?(
+         { pathname === "/new-password/" ? <ResetPassword/> : null}
+          {pathname !== "/register" && pathname !== "/login" && pathname !== "/reset-password" && pathname !== "/new-password/"  && !authenticated ?(
             <BlurredBackground />
           ) : null}
         </>

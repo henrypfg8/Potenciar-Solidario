@@ -28,7 +28,7 @@ const forgotPassword = async (req, res) => {
 
         console.log(token)
 
-        let verificationLink = `http://localhost:5173/new-password/${token}`;
+        let verificationLink = `http://localhost:5173/new-password/?token=${token}`;
         emailForgotPassword(user,verificationLink)
 
         return res.status(200).json("Se ha enviado un correo electrónico para restablecer su contraseña");

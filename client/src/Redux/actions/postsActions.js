@@ -210,7 +210,6 @@ export const like = (idPublication) => {
         { idPublication },
         config
       );
-      console.log("el like", response.data);
       dispatch({ type: LIKE, payload: response.data });
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
@@ -222,9 +221,13 @@ export const disLike = (idPublication) => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
-      const response = await axios.put(`http://localhost:19789/posts/like`,{idPublication}, config);
-      console.log('el dislike', response)
-      dispatch({ type: DISLIKE, payload: response.data})
+      const response = await axios.put(
+        `http://localhost:19789/posts/like`,
+        { idPublication },
+        config
+      );
+      response.data.publicationId = idPublication
+      dispatch({ type: DISLIKE, payload: response.data });
     } catch (error) {
       console.log(error);
     }

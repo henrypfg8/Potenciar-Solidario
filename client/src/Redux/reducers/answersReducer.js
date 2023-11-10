@@ -3,26 +3,32 @@ GET_ANSWERS,
 CREATE_ANSWER,
 UPDATE_ANSWER,
 DELETE_ANSWER,
+GET_ANSWER_COMMENT,
 CREATE_ANSWER_COMMENT,
 DELETE_ANSWER_COMMENT,
 UPDATE_ANSWER_COMMENT,
 } from "../action types/answersActionTypes.js";
+import { getAnswers } from "../actions/answersActions.js";
+
+import { notification } from "antd";
 
 const initialState = {
     answers: [],
     allAnswers: [],
-    answerComments: [],
+    answerComments: null,
 }
 
 const answerReducer = (state = initialState, action) => {
 
     switch(action.type) {
         case GET_ANSWERS:
+      
             return {
                 ...state,
                 answers: action.payload,
                 allAnswers: action.payload,
             };
+
         
         case CREATE_ANSWER:
             return {
@@ -70,7 +76,31 @@ const answerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 answerComments: updatedAnswerComments,
-            };    
+            };
+        
+        case GET_ANSWER_COMMENT:
+            if(state.answerComments) {
+            const currentAnswerComments = state?.answerComments?.Comments;
+
+            const newAnswerComments = action.payload?.Comments;
+
+            const newNotifications = newAnswerComments?.filter(
+                (element) => !currentAnswerComments?.some((element2) => element2.id == element.id)
+            );
+
+            newNotifications?.forEach((newNotification) =>
+            notification.open({
+                message: `Nueva respuesta de ${newNotification?.User?.name}`,
+                description: newNotification?.answer,
+                onClose: () => console.log("Notification was closed."),
+                })
+            );
+            }
+
+            return {
+                ...state,
+                answerComments: action.payload,
+            }
             
         default:
             return {...state};

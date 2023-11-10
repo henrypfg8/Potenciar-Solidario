@@ -24,3 +24,5 @@ export const GET_POSTS_BY_DATE = "GET_POSTS_BY_DATE";
 
 export const SET_LOADING = 'SET_LOADING';
 export const HIDE_LOADING = 'HIDE_LOADING';
+
+export const SET_ORDERINGS = "SET_ORDERINGS";

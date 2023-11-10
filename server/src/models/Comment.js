@@ -15,7 +15,6 @@ module.exports = (sequelize) => {
         }
       },
       thread: {
-        id: DataTypes.STRING,
         type: DataTypes.TEXT,
         allowNull: true,
         validate: {

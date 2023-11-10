@@ -8,22 +8,24 @@ const Sidebar = () => {
   const [imageAdmin, setImageAdmin] = useState('')
   const checkIsActive = (path) => {
     return window.location.pathname === path;
-};
+  };
 
   return (
 
     <>
 
-      <div className='sidebar'>
+      <div className={Styles.sidebar}>
 
-        <div className='sidebar__container'>
+        <div className={Styles.sidebar__container}>
+          <div className={Styles.sidebar__header}>
+            <h1 className={Styles.sidebar__title}>Panel de adminisrtración</h1>
+            <Avatar sx={{ width: 80, height: 80 }} />
+          </div>
 
-          <h1 className='sidebar__title'>Panel de adminisrtración</h1>
-          <Avatar sx={{ width: 100, height: 100 }} />
           <div className={Styles.sidebar__links}>
-            <NavLink  className={() => checkIsActive('/admin') ? Styles.bg_activo : ''} to='/admin'>Publicaciones</NavLink>
-            <NavLink  className={() => checkIsActive('/admin/users') ? Styles.bg_activo : ''}to='/admin/users'>Usuarios</NavLink>
-            <NavLink  className={() => checkIsActive('/admin/questions') ? Styles.bg_activo : ''}to='/admin/questions'>Preguntas</NavLink>
+            <NavLink className={() => checkIsActive('/admin') ? Styles.bg_activo : Styles.bg_noActivo} to='/admin'><p className={Styles.sidebar__option}>Publicaciones</p></NavLink>
+            <NavLink className={() => checkIsActive('/admin/users') ? Styles.bg_activo : Styles.bg_noActivo} to='/admin/users'><p className={Styles.sidebar__option}>Usuarios</p></NavLink>
+            <NavLink className={() => checkIsActive('/admin/questions') ? Styles.bg_activo : Styles.bg_noActivo} to='/admin/questions'><p className={Styles.sidebar__option}>Preguntas</p></NavLink>
           </div>
         </div>
 

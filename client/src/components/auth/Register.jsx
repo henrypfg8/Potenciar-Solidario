@@ -87,7 +87,7 @@ const Register = () => {
         timeouts.push(successTimeout);
       })
       .catch((error) => {
-        console.log(error.response.data.message);
+        setLoading(false)
         setErrorRegister(true);
         setSuccess(false);
 

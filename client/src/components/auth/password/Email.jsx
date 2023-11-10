@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { set, useForm, } from 'react-hook-form'
+import { useForm, } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 import Styles from './reset.module.css'
 

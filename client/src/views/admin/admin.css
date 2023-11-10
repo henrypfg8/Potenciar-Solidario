@@ -82,7 +82,13 @@
     height: 80vh;
     overflow-y: scroll;
     position: relative;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
+
+.dashboard::-webkit-scrollbar {
+    display: none;
+  }
 .sidebar__title{
     text-align: center;
     margin:  0.5rem auto;

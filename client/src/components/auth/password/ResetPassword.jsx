@@ -9,6 +9,7 @@ import Swiper from '../../Form/Swiper';
 const ResetPassword = () => {
     const { register, handleSubmit, getValues, formState: { errors } } = useForm();
     const [successPasswordUpdate, setSuccessPasswordUpdate] = useState(false);
+    const [errorPasswordUpdate, setErrorPasswordUpdate] = useState(false);
     const navigate = useNavigate();
     let [searchParams] = useSearchParams();
     const token = searchParams.get('token');
@@ -30,26 +31,37 @@ const ResetPassword = () => {
             })
             .catch(error => {
                 console.log(error.response)
+                setErrorPasswordUpdate(true);
+                setTimeout(() => {
+                    setErrorPasswordUpdate(false);
+                }, [3000])
             })
             return data
         }
         catch(error){
             console.log(error.response)
+            setErrorPasswordUpdate(true);
+            setTimeout(() => {
+                setErrorPasswordUpdate(false);
+            }, [3000])
         }
     }
 
-    const onSubmit = data => {
+    const onSubmit = async data => {
         // Aquí manejas el envío del formulario
-        handleUpdatePassword(data.password);
+        console.log(data.password, 'es undefined?')
+      await  handleUpdatePassword(data.password);
     };
 
     return (
-        <div className={Styles.reset__container}>
+        <div className={Styles.password__container}>
             {successPasswordUpdate && <Swiper frase='Tu Contraseña se actualizo correctamente, Ahora inicia sesión' tipo='success' color='#005692'/>}
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                    <label className={Styles.email__label} htmlFor="password">Escribe tu nueva contraseña</label>
-                    <input className={Styles.email__input}
+            {errorPasswordUpdate && <Swiper frase='Hubo un error al actualizar tu contraseña, intenta nuevamente' tipo='error' color='#ff0000'/>}
+            <form className={Styles.password__container} onSubmit={handleSubmit(onSubmit)}>
+                <div className={Styles.password__field}>
+                    <label className={Styles.password__label} htmlFor="password">Escribe tu nueva contraseña</label>
+                    {errors.password && <p className={Styles.password__error}>{errors.password.message}</p>}
+                    <input className={Styles.password__input}
                         type="password"
                         placeholder='Escribe tu nueva contraseña'
                         id='password'
@@ -69,12 +81,13 @@ const ResetPassword = () => {
                             }
                         })}
                     />
-                    {errors.password && <p>{errors.password.message}</p>}
+                   
                 </div>
-                <div>
-                    <label className={Styles.email__label} htmlFor="password2">Vuelve a escribir tu contraseña</label>
+                <div  className={Styles.password__field}>
+                    <label className={Styles.password__label} htmlFor="password2">Vuelve a escribir tu contraseña</label>
+                    {errors.password2 && <p  className={Styles.password__error}>{errors.password2.message}</p>}
                     <input
-                        className={Styles.email__input}
+                        className={Styles.password__input}
                         type="password"
                         placeholder='Confirma tu nueva contraseña'
                         id='password2'
@@ -88,10 +101,10 @@ const ResetPassword = () => {
                             }
                         })}
                     />
-                    {errors.password2 && <p>{errors.password2.message}</p>}
+                    
                 </div>
 
-                <button className={Styles.password__button__ok} type='submit'>Enviar</button>
+                <button className={Styles.password__button__ok} type='submit'>Restablecer contraseña</button>
             </form>
         </div>
     );

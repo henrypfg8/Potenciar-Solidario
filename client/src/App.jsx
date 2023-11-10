@@ -94,7 +94,7 @@ function App() {
             <Route path="/admin" element={<Admin />} />
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/profile/posts" element={<UserPostsView />} />
-
+            <Route path="/new-password/" element={<ResetPassword/>}/>
           </Routes>
         </>
       ) : (
@@ -103,7 +103,7 @@ function App() {
           {pathname === "/register" ? <Register/> : null}
          { pathname === "/reset-password" ? <Email/> : null}
          { pathname === "/new-password/" ? <ResetPassword/> : null}
-          {pathname !== "/register" && pathname !== "/login" && pathname !== "/reset-password" && pathname !== "/new-password/"  && !authenticated ?(
+          {pathname !== "/register" && pathname !== "/login" && pathname !== "/reset-password" && pathname !== "/new-password"  && !authenticated ?(
             <BlurredBackground />
           ) : null}
         </>

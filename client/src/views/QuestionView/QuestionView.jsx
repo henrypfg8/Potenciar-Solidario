@@ -13,24 +13,32 @@ import { useNavigate } from "react-router";
 import { deleteQuestion, getQuestionDetail} from "../../Redux/actions/questionsActions";
 import validation from "./validation";
 import CustomizedMenus from "../../assets/MenuDespegable";
+
 const socket = io("/");
 
+
 function QuestionView({ question }) {
+  console.log('es pregunta wey', question)
 
   const [userId, setUserId] = useState("");
   const { isAuthenticated, token } = useSelector((state) => state.auth);
-  const {answers} = useSelector((state)=> state)
+  const answers = useSelector(state => state.answers)
+  console.log('euuuu',answers)
   const [view, setView] = useState({});
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false)
   const [messages, setMessages] = useState([]);
 
+  
+  
   const [comment, setComment] = useState({
     thread: "",
     userId: "",
     answerId: ""
   });
   console.log(comment)
+
+
 
   const [errores, setErrores] = useState({
     answer: ''
@@ -42,13 +50,14 @@ function QuestionView({ question }) {
   });
   const dispatch = useDispatch();
 
-  const handleChange = (event) => {
-    setComment({
-    ...comment,
+  const handleChange = (event, id) => {
+      setComment({
+        ...comment,
         thread: event.target.value,
         userId: userId,
-        answerId: answers.id,
-  })
+        answerId: id
+      });
+   
   };
 
   const answersSubmit = (answer) => {
@@ -72,24 +81,27 @@ function QuestionView({ question }) {
     }
   };
 
-  const handleSubmit = (comment) => {
-   
-      dispatch(createAnswerComment(comment))
-        setComment({
-          thread: "",
-        })
+
+  const handleSubmit = (comment, message) => {
+    dispatch(createAnswerComment(comment, message))
+      .then((response) => {
+        setComment({thread: "",})
         swal({
           icon: 'success',
           text: "Respuesta creada con exito"
-        }).catch(() => {
-          swal({
-            icon: 'error',
-            text: `contacte a soporte`
-
-          })
         })
-    
-  
+        setMessages([...messages, { body: message.thread, from: "me" }]);
+        socket.emit("message", message.thread);
+      })
+      .catch((error) => {
+        swal({
+          icon: 'error',
+          text: "contacte a soporte"
+
+        })
+        console.error("Error al agregar el comentario", error);
+        // Puedes mostrar un mensaje de error al usuario si falla el envío del comentario
+      });
   };
   useEffect(() => {
     if (!token || !isAuthenticated) {
@@ -245,7 +257,7 @@ function QuestionView({ question }) {
                         {messages.map((message, index) => {
                           return (
                             <li key={index}>
-                              {message.from}:{message.body}
+                              {message.from}:{message.body.thread}
                             </li>
                           );
                         })}
@@ -258,7 +270,7 @@ function QuestionView({ question }) {
                         cols="6"
                         rows="5"
                         value={comment.thread}
-                        onChange={handleChange}
+                        onChange={(e)=>handleChange(e, respuesta.id)}
                       />
                       <button onClick={() => handleSubmit(comment)}>
                         Añadir comentario

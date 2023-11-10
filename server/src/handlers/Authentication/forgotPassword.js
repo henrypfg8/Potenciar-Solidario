@@ -7,7 +7,7 @@ const { emailForgotPassword } = require("../emailNotif/forgotPasswordHandler");
 //esta funcion envia un mail de restablecimiento de contraseña luego de validar el email
 const forgotPassword = async (req, res) => {
     const { email } = req.body;
-    console.log(email)
+    //console.log(`este es el email ${email}`)
 
     try {
         const user = await User.findOne({ where: { email : email } });

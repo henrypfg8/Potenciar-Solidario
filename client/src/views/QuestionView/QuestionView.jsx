@@ -16,18 +16,22 @@ import CustomizedMenus from "../../assets/MenuDespegable";
 const socket = io("/");
 
 function QuestionView({ question }) {
+
   const [userId, setUserId] = useState("");
   const { isAuthenticated, token } = useSelector((state) => state.auth);
+  const {answers} = useSelector((state)=> state)
   const [view, setView] = useState({});
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false)
   const [messages, setMessages] = useState([]);
+
   const [comment, setComment] = useState({
     thread: "",
-    user: "",
-    id: null
+    userId: "",
+    answerId: ""
   });
   console.log(comment)
+
   const [errores, setErrores] = useState({
     answer: ''
   })
@@ -39,8 +43,12 @@ function QuestionView({ question }) {
   const dispatch = useDispatch();
 
   const handleChange = (event) => {
-    setComment({ ...comment, [event.target.name]: event.target.value });
-
+    setComment({
+    ...comment,
+        thread: event.target.value,
+        userId: userId,
+        answerId: answers.id,
+  })
   };
 
   const answersSubmit = (answer) => {
@@ -63,16 +71,25 @@ function QuestionView({ question }) {
       })
     }
   };
-  const handleSubmit = (message) => {
-    dispatch(createAnswerComment(message))
-      .then((response) => {
-        setMessages([...messages, { body: message, from: "me" }]);
-        socket.emit("message", message);
-      })
-      .catch((error) => {
-        console.error("Error al agregar el comentario", error);
-        // Puedes mostrar un mensaje de error al usuario si falla el envío del comentario
-      });
+
+  const handleSubmit = (comment) => {
+   
+      dispatch(createAnswerComment(comment))
+        setComment({
+          thread: "",
+        })
+        swal({
+          icon: 'success',
+          text: "Respuesta creada con exito"
+        }).catch(() => {
+          swal({
+            icon: 'error',
+            text: `contacte a soporte`
+
+          })
+        })
+    
+  
   };
   useEffect(() => {
     if (!token || !isAuthenticated) {
@@ -164,7 +181,7 @@ function QuestionView({ question }) {
     navigate(`/foro/edit/${question.id}`)
   }
   const dateQuestion = question?.createdAt?.split("T")[0];
-  console.log(question);
+ /*  console.log(question); */
 
   return (
     <div>
@@ -241,7 +258,7 @@ function QuestionView({ question }) {
                         cols="6"
                         rows="5"
                         value={comment.thread}
-                        onChange={(event) => handleChange(event)}
+                        onChange={handleChange}
                       />
                       <button onClick={() => handleSubmit(comment)}>
                         Añadir comentario

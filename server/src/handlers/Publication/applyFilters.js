@@ -1,11 +1,15 @@
-const { Publication, User } = require("../../db");
+const { Publication, User, Like } = require("../../db");
 
 const applyFilters = async (req, res) => {
   try {
     
     const { category, ong, fromDate, untilDate, user } = req.query;
 
-    let allPosts = await Publication.findAll();
+    let allPosts = await Publication.findAll({
+      include: [
+        { model: Like, attributes: ['id','userId'], include: {model: User , attributes: ['name']}}
+      ]
+    });
 
     if (category !== "") {
       allPosts = allPosts.filter((post) => post.category === category);

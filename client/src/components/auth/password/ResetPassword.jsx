@@ -22,21 +22,15 @@ const ResetPassword = () => {
                     Authorization: `Bearer ${token}`
                 }
             })
-            .then(() => {
-                setSuccessPasswordUpdate(true);
-                setTimeout(() => {
-                    setSuccessPasswordUpdate(false);
-                    navigate('/login')
-                }, 3000)
-            })
-            .catch(error => {
-                console.log(error.response)
-                setErrorPasswordUpdate(true);
-                setTimeout(() => {
-                    setErrorPasswordUpdate(false);
-                }, [3000])
-            })
-            return data
+        
+            setSuccessPasswordUpdate(true);
+            setErrorPasswordUpdate(false);
+            setTimeout(() => {
+                setSuccessPasswordUpdate(false);
+                navigate('/login');
+            }, [3000]);
+
+            return data;
         }
         catch(error){
             console.log(error.response)

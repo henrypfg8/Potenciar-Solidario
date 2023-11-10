@@ -37,6 +37,7 @@ import QuestionEdit from "./components/QuestionEdit/QuestionEdit";
 import ResetPassword from "./components/auth/password/ResetPassword";
 import Users from "./components/dashboard/Users/Users";
 import Dashboard from "./components/dashboard/Dashboard";
+import UserQuestions from "./components/dashboard/UserQuestions/UserQuestions";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
@@ -99,9 +100,10 @@ function App() {
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/profile/posts" element={<UserPostsView />} />
             <Route path="/new-password/" element={<ResetPassword />} />
-            <Route path="/admin" element={<Admin />} >
+            <Route path="/admin"   element={<Admin />} >
+              <Route index  element={<Dashboard />} />
               <Route path="users" element={<Users />} />
-              <Route path='dashboard' element={<Dashboard />} />
+              <Route path="questions" element={<UserQuestions />} />
             </Route>
 
           </Routes>

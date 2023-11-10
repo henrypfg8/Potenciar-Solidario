@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useForm, } from 'react-hook-form'
+import { set, useForm, } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 import Styles from './reset.module.css'
 
@@ -13,23 +13,18 @@ const Email = () => {
 
     const handleSendEmail = async (email) => {
         try {
-            const { data } = await axios.put('http://localhost:19789/forgotpassword', email)
-                .then(() => {
-                    setSuccessEmail(true);
-                    setTimeout(() => {
-                        setSuccessEmail(false);
-                        navigate('/login')
-                    }, 9000)
-                })
-                .catch(error => {
-                    console.log(error.response)
-                    setSuccessEmail(false);
-                    setErrorEmail(true);
-                })
+            const { data } = await axios.put('http://localhost:19789/forgotpassword', {email})
+            console.log(data)
+            setErrorEmail(false);
+            setSuccessEmail(true);
+            setTimeout(() => {
+                setSuccessEmail(false);
+                navigate('/login');
+            }, [9000]);	
             return data
         }
         catch (error) {
-            console.log(error.response)
+            console.log(error)
             setSuccessEmail(false);
             setErrorEmail(true);
         }
@@ -38,9 +33,8 @@ const Email = () => {
     };
 
 
-    const onsubmit = handleSubmit((data) => {
-        handleSendEmail(data);
-
+    const onsubmit = handleSubmit((email) => {       
+        handleSendEmail(email.email);
 
     });
 

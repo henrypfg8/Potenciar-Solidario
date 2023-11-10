@@ -1,10 +1,12 @@
+import {useState} from 'react'
 import { useSelector } from 'react-redux'
 import CardDashboard from './CardDashboard'
 import proptypes from 'prop-types'
 import SearchDashBoard from './SearchDashBoard'
-const Dashboard = ({ listSearchPost,search, setSearch, setListSearchPost }) => {
+const Dashboard = ( ) => {
     const { posts } = useSelector(state => state.posts);
-
+    const [search, setSearch] = useState('');
+    const [listSearchPost, setListSearchPost] = useState([]);
 
     const handlePulishPosts = () => { //funcion para publicar los posts 
         console.log('publicando posts');
@@ -47,10 +49,5 @@ const Dashboard = ({ listSearchPost,search, setSearch, setListSearchPost }) => {
     )
 }
 
-Dashboard.propTypes = {
-    listSearchPost: proptypes.array.isRequired,
-    search: proptypes.string.isRequired,
-    setSearch: proptypes.func.isRequired,
-    setListSearchPost: proptypes.func.isRequired
-}
+
 export default Dashboard

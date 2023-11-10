@@ -19,6 +19,8 @@ import {
   DISLIKE,
   SET_LOADING,
   HIDE_LOADING,
+  SET_ORDERINGS,
+  SET_SELECTED_FILTER_OPTIONS
 } from "../action types/postsActionTypes.js";
 
 import axios from "axios";
@@ -169,12 +171,12 @@ export const clearPostDetail = () => {
 };
 
 export const getPostsFiltered = (filters) => {
-  const { category, ong, fromDate, untilDate } = filters;
+  const { category, ong, fromDate, untilDate, user } = filters;
   return async function (dispatch) {
     try {
       const config = configureHeaders();
       const { data } = await axios.get(
-        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}`,
+        `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
         config
       );
       dispatch({
@@ -210,7 +212,6 @@ export const like = (idPublication) => {
         { idPublication },
         config
       );
-      console.log("el like", response.data);
       dispatch({ type: LIKE, payload: response.data });
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
@@ -222,12 +223,12 @@ export const disLike = (idPublication) => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
-      const response = await axios.delete(
+      const response = await axios.put(
         `http://localhost:19789/posts/like`,
         { idPublication },
         config
       );
-      console.log("el dislike", response);
+      response.data.publicationId = idPublication
       dispatch({ type: DISLIKE, payload: response.data });
     } catch (error) {
       console.log(error);
@@ -293,3 +294,17 @@ export const hideLoading = () => {
     type: HIDE_LOADING,
   };
 };
+
+export const setOrderings = (orderBy) => {
+  return {
+    type: SET_ORDERINGS,
+    payload: orderBy
+  }
+}
+
+export const setSelectedFilterOptions = (selectedFilterOptions) => {
+  return {
+    type: SET_SELECTED_FILTER_OPTIONS,
+    payload: selectedFilterOptions
+  }
+}

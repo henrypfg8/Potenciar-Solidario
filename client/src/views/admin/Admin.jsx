@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import Dashboard from '../../components/dashboard/Dashboard';
 import Sidebar from '../../components/dashboard/Sidebar';
 import SearchDashBoard from '../../components/dashboard/SearchDashBoard';
@@ -26,23 +26,12 @@ const Admin = () => {
 
     return (
         <div >
-          
+    
             <div className='admin__container'>
-                {/* <DrawerSideBar/> */} {/*Opcion 2 */}
-                < Sidebar
-     
-
-                />
-                <Dashboard
-                    search={search}
-                    setSearch={setSearch}
-                    listSearchPost={listSearchPost}
-                 
-                    setListSearchPost={setListSearchPost}
-             
-                />
+                < Sidebar/>  
+                <Outlet/> 
             </div>
-
+           
         </div>
     )
 }

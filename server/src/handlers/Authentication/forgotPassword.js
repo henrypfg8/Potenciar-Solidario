@@ -28,7 +28,7 @@ const forgotPassword = async (req, res) => {
 
         console.log(token)
 
-        let verificationLink = `http://localhost:${process.env.DB_PORT}/resetpassword/${token}`;
+        let verificationLink = `http://localhost:5173/new-password/?token=${token}`;
         emailForgotPassword(user,verificationLink)
 
         return res.status(200).json("Se ha enviado un correo electrónico para restablecer su contraseña");
@@ -36,7 +36,6 @@ const forgotPassword = async (req, res) => {
         console.log(error.message);
         return res.status(500).json({ message: error.message });
     }
-
 };
 
 module.exports = {forgotPassword}

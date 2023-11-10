@@ -9,7 +9,7 @@ UPDATE_USER
 
 const initialState = {
     users: [],
-    allUsers: [],
+    //allUsers: [],
     userDetail: [],
 };
 
@@ -34,7 +34,7 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: action.payload,
-                allUsers: action.payload,
+                //allUsers: action.payload,
             };
 
         case GET_USER_DETAIL:

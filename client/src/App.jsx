@@ -1,11 +1,16 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getPosts } from "./Redux/actions/postsActions";
+import {
+  getPosts,
+  setLoading,
+  hideLoading,
+} from "./Redux/actions/postsActions";
 import {
   getCategories,
   getForumCategories,
 } from "./Redux/actions/categoriesActions";
+import { getUsers } from './Redux/actions/usersActions';
 import { getOngs } from "./Redux/actions/ongsActions";
 
 import "./App.css";
@@ -27,12 +32,15 @@ import QuestionView from "./views/QuestionView/QuestionView";
 import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
 import UserPostsView from "./views/UserPostsView/UserPostsView";
 import BlurredBackground from "./components/BlurHome/BlurredBackground";
+import Email from "./components/auth/password/Email";
 import QuestionEdit from "./components/QuestionEdit/QuestionEdit";
+import ResetPassword from "./components/auth/password/ResetPassword";
+import Users from "./components/dashboard/Users/Users";
+import Dashboard from "./components/dashboard/Dashboard";
 
 function App() {
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
-  const posts = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
   //Manejo de Header segun el scroll:
   const [isScrolled, setIsScrolled] = useState(false);
@@ -48,21 +56,27 @@ function App() {
 
   useEffect(() => {
     root.addEventListener("scroll", scrollHandler);
-    
+
     //si el token cambia o existe se vuelven a cargar los datos
     if (token) {
-      setAuthenticated(true)
-      dispatch(getPosts());
+      dispatch(setLoading());
+      setAuthenticated(true);
+      dispatch(getPosts()).then(() => dispatch(hideLoading()));
       dispatch(getOngs());
       dispatch(getCategories());
       dispatch(getForumCategories());
+      dispatch(getUsers());
     }
-    
+
     return () => {
       root.removeEventListener("scroll", scrollHandler);
-      setAuthenticated(false)
+      setAuthenticated(false);
     };
   }, [token]);
+
+
+
+  ///////////////////////////////////////
 
   return (
     <div className="App">
@@ -80,18 +94,25 @@ function App() {
             <Route path="/foro" element={<Forum />} />
             <Route path="/foro/crear" element={<QuestionCreateView />} />
             <Route path="/foro/:id" element={<QuestionDetail />} />
-            <Route path="/foro/edit/:id" element={<QuestionEdit/>}/>
+            <Route path="/foro/edit/:id" element={<QuestionEdit />} />
             {/* Otras rutas autenticadas */}
-            <Route path="/admin" element={<Admin />} />
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/profile/posts" element={<UserPostsView />} />
+            <Route path="/new-password/" element={<ResetPassword />} />
+            <Route path="/admin" element={<Admin />} >
+              <Route path="users" element={<Users />} />
+              <Route path='dashboard' element={<Dashboard />} />
+            </Route>
+
           </Routes>
         </>
       ) : (
         <>
-          {pathname === "/login" ? <Login/> : null}
-          {pathname === "/register" ? <Register/> : null}
-          {pathname !== "/register" && pathname !== "/login" && !authenticated ?(
+          {pathname === "/login" ? <Login /> : null}
+          {pathname === "/register" ? <Register /> : null}
+          {pathname === "/reset-password" ? <Email /> : null}
+          {pathname === "/new-password/" ? <ResetPassword /> : null}
+          {pathname !== "/register" && pathname !== "/login" && pathname !== "/reset-password" && pathname !== "/new-password" && !authenticated ? (
             <BlurredBackground />
           ) : null}
         </>

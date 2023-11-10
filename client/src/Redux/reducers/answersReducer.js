@@ -8,6 +8,7 @@ CREATE_ANSWER_COMMENT,
 DELETE_ANSWER_COMMENT,
 UPDATE_ANSWER_COMMENT,
 } from "../action types/answersActionTypes.js";
+import { getAnswers } from "../actions/answersActions.js";
 
 import { notification } from "antd";
 
@@ -21,11 +22,13 @@ const answerReducer = (state = initialState, action) => {
 
     switch(action.type) {
         case GET_ANSWERS:
+      
             return {
                 ...state,
                 answers: action.payload,
                 allAnswers: action.payload,
             };
+
         
         case CREATE_ANSWER:
             return {

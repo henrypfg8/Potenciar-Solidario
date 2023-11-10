@@ -9,6 +9,8 @@ function QuestionDetail() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const questionDetail = useSelector(state => state.questions?.questionDetail)
+  console.log("question detail", questionDetail);
+ 
 
   const socket = io();
   useEffect(() => {
@@ -23,6 +25,18 @@ function QuestionDetail() {
     };
   }, []);
 
+
+/*   useEffect(() => {
+    dispatch(getQuestionDetail(id));
+
+    socket?.on(`answer_${id}`, () => {
+      dispatch(getQuestionDetail(id));
+    });
+
+    return () => {
+      socket?.removeAllListeners(`answer_${id}`);
+    };
+  }, []); */
   return <QuestionView question={questionDetail} />;
 }
 

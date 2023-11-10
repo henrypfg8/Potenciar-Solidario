@@ -17,6 +17,7 @@ export const getAnswers = () => {
         try {
             const config = configureHeaders()
             const response = await axios.get("http://localhost:19789/answers",config);
+           
             dispatch({type: GET_ANSWERS, payload: response.data});
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error");
@@ -65,7 +66,6 @@ export const deleteAnswer = (id) => {
 
 export const createAnswerComment = (comment) => {
     return async function (dispatch) {
-        console.log('soy el comentario', comment)
         try {
             console.log(comment)
             const config = configureHeaders()

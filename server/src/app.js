@@ -19,6 +19,7 @@ io.on("connection", (socket) => {
   let username = 'anonymous'
   socket.on("message", (body) => {
     socket.username = username
+    io.emit("message", { thread: message });
     socket.broadcast.emit('message', {
       body,
       from: socket.username

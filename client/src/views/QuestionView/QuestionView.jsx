@@ -10,31 +10,27 @@ import swal from "sweetalert";
 import { jwtDecode } from "jwt-decode";
 import { createAnswer, createAnswerComment } from "../../Redux/actions/answersActions";
 import { useNavigate } from "react-router";
-import { deleteQuestion, getQuestionDetail} from "../../Redux/actions/questionsActions";
+import { deleteQuestion, getQuestionDetail } from "../../Redux/actions/questionsActions";
 import validation from "./validation";
 import CustomizedMenus from "../../assets/MenuDespegable";
 const socket = io("/");
 
 function QuestionView({ question }) {
-
   const [userId, setUserId] = useState("");
   const { isAuthenticated, token } = useSelector((state) => state.auth);
-  const {answers} = useSelector((state)=> state)
   const [view, setView] = useState({});
   const navigate = useNavigate();
-  const [disable, setDisable] = useState(false)
+  const [disable, setDisable] = useState(false);
   const [messages, setMessages] = useState([]);
-
   const [comment, setComment] = useState({
     thread: "",
-    userId: "",
-    answerId: ""
+    user: "",
+    id: null
   });
-  console.log(comment)
-
+  console.log(comment);
   const [errores, setErrores] = useState({
     answer: ''
-  })
+  });
   const [answer, setAnswer] = useState({
     answer: "",
     userId: "",
@@ -42,55 +38,50 @@ function QuestionView({ question }) {
   });
   const dispatch = useDispatch();
 
-  const handleChange = (event) => {
-    setComment({
-    ...comment,
+  const handleChange = (event, id) => {
+    event.preventDefault()
+      setComment({
+        ...comment,
         thread: event.target.value,
         userId: userId,
-        answerId: answers.id,
-  })
+        answerId: id
+      });
+   
   };
 
   const answersSubmit = (answer) => {
     if (Object.keys(errores).length === 0) {
       dispatch(createAnswer(answer)).then(() => {
-        dispatch(getQuestionDetail(question.id))
+        dispatch(getQuestionDetail(question.id));
         setAnswer({
           answer: "",
-        })
+        });
         swal({
           icon: 'success',
-          text: "Respuesta creada con exito"
+          text: "Respuesta creada con éxito"
         }).catch(() => {
           swal({
             icon: 'error',
-            text: `contacte a soporte`
-
-          })
-        })
-      })
+            text: `Contacte a soporte`
+          });
+        });
+      });
     }
   };
 
-  const handleSubmit = (comment) => {
-   
-      dispatch(createAnswerComment(comment))
-        setComment({
-          thread: "",
-        })
-        swal({
-          icon: 'success',
-          text: "Respuesta creada con exito"
-        }).catch(() => {
-          swal({
-            icon: 'error',
-            text: `contacte a soporte`
-
-          })
-        })
+  const handleSubmit = (message) => {
+    dispatch(createAnswerComment(message))
+      .then((response) => {
+        setMessages([...messages, { body: message.thread, from: "me" }]);
+        socket.emit("message", message.thread);
+      })
+      .catch((error) => {
+        console.error("Error al agregar el comentario", error);
+        // Puedes mostrar un mensaje de error al usuario si falla el envío del comentario
+      });
     
-  
   };
+
   useEffect(() => {
     if (!token || !isAuthenticated) {
       swal("Necesita loguearse para poder realizar una pregunta").then(
@@ -106,6 +97,7 @@ function QuestionView({ question }) {
       }
     }
   }, [isAuthenticated, navigate, token]);
+
   const receiveMessage = (message) =>
     setMessages((state) => [...state, message]);
 
@@ -116,43 +108,47 @@ function QuestionView({ question }) {
       socket.off("message", receiveMessage);
     };
   }, []);
+
   const handleView = (id) => {
     setView((prevState) => ({
       ...prevState,
       [id]: !prevState[id],
     }));
   };
-    const handleAnswers = (event) => {
-      setErrores(validation({
-        ...answer,
-        answer: event.target.value
-      }))
-      setAnswer({
-        ...answer,
-        answer: event.target.value,
-        userId: userId,
-        questionId: question.id,
-      });
-    };
+
+  const handleAnswers = (event) => {
+    setErrores(validation({
+      ...answer,
+      answer: event.target.value
+    }));
+    setAnswer({
+      ...answer,
+      answer: event.target.value,
+      userId: userId,
+      questionId: question.id,
+    });
+  };
+
   useEffect(() => {
     socket.on("message", (message) => {
     });
   }, []);
+
   useEffect(() => {
     if (errores.answer) {
-      setDisable(true)
+      setDisable(true);
 
     } else {
-      setDisable(false)
+      setDisable(false);
     }
 
-  },[handleAnswers, errores.answer])
+  },[handleAnswers, errores.answer]);
 
   const deleteQuestions = (handleClose) => {
-    handleClose()
+    handleClose();
     swal({
-      title: "¿Estás seguro quse sea eliminar está pregunta?",
-      text: "Una vez eliminada por puede ser recuperada!",
+      title: "¿Estás seguro de que deseas eliminar esta pregunta?",
+      text: "Una vez eliminada, no podrá ser recuperada.",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -160,28 +156,29 @@ function QuestionView({ question }) {
     .then((willDelete) => {
       if (willDelete) {
         dispatch(deleteQuestion(question.id)).then(() => {
-          swal("Tu pregunta ha sido eliminado con exito!", {
+          swal("Tu pregunta ha sido eliminada con éxito!", {
             icon: "success",
-          })
-          navigate('/foro')
-        }).catch(()=>{
-         swal("A ocurrido un error, por favor intente de nuevo o intente llamar a alguien de soporte",
-         {
+          });
+          navigate('/foro');
+        }).catch(() => {
+         swal("Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.", {
           icon: 'error',
-         }) 
-        })
+         }); 
+        });
         
       } else {
-        swal("Tu pregunta no ha sido eliminada!");
+        swal("Tu pregunta no ha sido eliminada.");
       }
     });
-  }
+  };
+
   const editQuetion = (handleClose) => {
-    handleClose()
-    navigate(`/foro/edit/${question.id}`)
-  }
+    handleClose();
+    navigate(`/foro/edit/${question.id}`);
+  };
+
   const dateQuestion = question?.createdAt?.split("T")[0];
- /*  console.log(question); */
+  console.log(question);
 
   return (
     <div>
@@ -192,12 +189,11 @@ function QuestionView({ question }) {
             <CustomizedMenus deleteQuestion={deleteQuestions} editQuestion={editQuetion}/>
             <div className={style.date}>
               <a>
-                Fecha de publicacion: <h5>{dateQuestion}</h5>
+                Fecha de publicación: <h5>{dateQuestion}</h5>
               </a>
             </div>
             <h3>{question?.User?.name}</h3>
             <p>{question?.text}</p>
-
           </div>
 
           <div className={style.contain}>
@@ -258,7 +254,7 @@ function QuestionView({ question }) {
                         cols="6"
                         rows="5"
                         value={comment.thread}
-                        onChange={handleChange}
+                        onChange={(event) => handleChange(event)}
                       />
                       <button onClick={() => handleSubmit(comment)}>
                         Añadir comentario
@@ -270,7 +266,6 @@ function QuestionView({ question }) {
             })}
             <div className={style.question}>
               <div className={style.errores}>
-
                 {errores.answer && <p>{errores.answer}</p>}
               </div>
 

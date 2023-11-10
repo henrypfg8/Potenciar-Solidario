@@ -50,6 +50,8 @@ const UserPostCard = ({ post, setRefreshData }) => {
         open={open}
         onOk={handleOk}
         onCancel={handleCancel}
+        cancelText='Cancelar'
+        okText='Sí,Eliminar'
         okButtonProps={{
           danger: true,
         }}

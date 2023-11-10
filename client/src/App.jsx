@@ -34,6 +34,9 @@ import BlurredBackground from "./components/BlurHome/BlurredBackground";
 import Email from "./components/auth/password/Email";
 import QuestionEdit from "./components/QuestionEdit/QuestionEdit";
 import ResetPassword from "./components/auth/password/ResetPassword";
+import Users from "./components/dashboard/Users/Users";
+import Dashboard from "./components/dashboard/Dashboard";
+
 function App() {
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
@@ -89,21 +92,25 @@ function App() {
             <Route path="/foro" element={<Forum />} />
             <Route path="/foro/crear" element={<QuestionCreateView />} />
             <Route path="/foro/:id" element={<QuestionDetail />} />
-            <Route path="/foro/edit/:id" element={<QuestionEdit/>}/>
+            <Route path="/foro/edit/:id" element={<QuestionEdit />} />
             {/* Otras rutas autenticadas */}
-            <Route path="/admin" element={<Admin />} />
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/profile/posts" element={<UserPostsView />} />
-            <Route path="/new-password/" element={<ResetPassword/>}/>
+            <Route path="/new-password/" element={<ResetPassword />} />
+            <Route path="/admin" element={<Admin />} >
+              <Route path="users" element={<Users />} />
+              <Route path='dashboard' element={<Dashboard />} />
+            </Route>
+
           </Routes>
         </>
       ) : (
         <>
-          {pathname === "/login" ? <Login/> : null}
-          {pathname === "/register" ? <Register/> : null}
-         { pathname === "/reset-password" ? <Email/> : null}
-         { pathname === "/new-password/" ? <ResetPassword/> : null}
-          {pathname !== "/register" && pathname !== "/login" && pathname !== "/reset-password" && pathname !== "/new-password"  && !authenticated ?(
+          {pathname === "/login" ? <Login /> : null}
+          {pathname === "/register" ? <Register /> : null}
+          {pathname === "/reset-password" ? <Email /> : null}
+          {pathname === "/new-password/" ? <ResetPassword /> : null}
+          {pathname !== "/register" && pathname !== "/login" && pathname !== "/reset-password" && pathname !== "/new-password" && !authenticated ? (
             <BlurredBackground />
           ) : null}
         </>

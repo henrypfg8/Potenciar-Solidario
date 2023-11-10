@@ -7,15 +7,15 @@ import Swiper from '../../Form/Swiper';
 
 
 const ResetPassword = () => {
-    const { register, handleSubmit, getValues, formState: { errors } } = useForm();
-    const [successPasswordUpdate, setSuccessPasswordUpdate] = useState(false);
-    const [errorPasswordUpdate, setErrorPasswordUpdate] = useState(false);
+    const { register, handleSubmit, getValues, formState: { errors } } = useForm(); // Configuración del hook form
+    const [successPasswordUpdate, setSuccessPasswordUpdate] = useState(false); // Estado para mostrar el mensaje de éxito
+    const [errorPasswordUpdate, setErrorPasswordUpdate] = useState(false); // Estado para mostrar el mensaje de error
     const navigate = useNavigate();
-    let [searchParams] = useSearchParams();
+    let [searchParams] = useSearchParams(); // Obtener los parámetros de la url
     const token = searchParams.get('token');
 
-
-    const handleUpdatePassword = async (newPassword) => {
+    // Función para actualizar la contraseña
+    const handleUpdatePassword = async newPassword => { 
         try{
             const { data } = await axios.put('http://localhost:19789/resetpassword', { newPassword }, {
                 headers: {
@@ -47,9 +47,8 @@ const ResetPassword = () => {
         }
     }
 
+    // Función para enviar el formulario
     const onSubmit = async data => {
-        // Aquí manejas el envío del formulario
-        console.log(data.password, 'es undefined?')
       await  handleUpdatePassword(data.password);
     };
 

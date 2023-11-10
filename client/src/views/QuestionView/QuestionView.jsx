@@ -24,8 +24,8 @@ function QuestionView({ question }) {
   const [messages, setMessages] = useState([]);
   const [comment, setComment] = useState({
     thread: "",
-    user: "",
-    id: null
+    userId: "",
+    answerId: "" 
   });
   console.log(comment);
   const [errores, setErrores] = useState({

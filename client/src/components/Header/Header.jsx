@@ -35,29 +35,16 @@ export default function Header({ isScrolled }) {
           <Link to="/foro" className={Styles.backButton}>
             VOLVER AL FORO
           </Link>
-        ) : (
-          <Link className={Styles.backButton}>VOLVER AL INICIO</Link>
-        )}
-
-        {/* {pathname.includes("/foro") ? (
-          pathname === "/foro" ? (
-            <Link className={Styles.backButton}>VOLVER AL INICIO</Link>
-          ) : (
-            <Link to="/foro" className={Styles.backButton}>
-              VOLVER AL FORO
-            </Link>
-          )
-        ) : pathname.includes("/detalle") ? (
+        ) : pathname === "/profile" ||
+          pathname === "/profile/posts" ||
+          pathname === "/new-password" ||
+          pathname === "/admin" ? (
           <Link to="/" className={Styles.backButton}>
             VOLVER A LA CARTELERA
           </Link>
-        ) : pathname === "/formulario" ? (
-          <Link to="/" className={Styles.backButton}>
-            VOLVER A LA CARTELERA
-          </Link>
-        ) : (
-          <Link className={Styles.backButton}>VOLVER AL INICIO</Link>
-        )} */}
+        ) : <Link className={Styles.backButton}>
+          VOLVER AL INICIO
+        </Link>}
       </div>
     </div>
   );

@@ -149,7 +149,6 @@ const postReducer = (state = initialState, action) => {
               (like) => like.userId === action.payload.userId
             );
             if (foundLike) {
-              console.log(post);
               post.Likes = post?.Likes?.filter(
                 (like) => like.userId !== action.payload.userId
               );

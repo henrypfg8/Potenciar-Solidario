@@ -6,6 +6,7 @@ DELETE_ANSWER,
 CREATE_ANSWER_COMMENT,
 DELETE_ANSWER_COMMENT,
 UPDATE_ANSWER_COMMENT,
+GET_ANSWER_COMMENT,
 } from "../action types/answersActionTypes.js";
 
 import axios from "axios";
@@ -94,6 +95,18 @@ export const updateAnswerComment = (id, updatedAnswerComment) => {
             const config = configureHeaders()
             const response = await axios.put(`http://localhost:19789/answers/comments/${id}`, updatedAnswerComment, config)
             dispatch({type: UPDATE_ANSWER_COMMENT, payload: response.data})
+        } catch (error) {
+            console.log(error, "por favor contactar a soporte por este error");
+        }
+    }
+}
+
+export const getAnswerComment = () => {
+    return async function (dispatch) {
+        try {
+            const config = configureHeaders()
+            const response = await axios.get("http://localhost:19789/answers/comments", config)
+            dispatch({type: GET_ANSWER_COMMENT, payload: response.data})
         } catch (error) {
             console.log(error, "por favor contactar a soporte por este error");
         }

@@ -73,6 +73,7 @@ function QuestionView({ question }) {
         console.error("Error al agregar el comentario", error);
         // Puedes mostrar un mensaje de error al usuario si falla el envío del comentario
       });
+    
   };
 
   useEffect(() => {

@@ -38,9 +38,15 @@ function QuestionView({ question }) {
   });
   const dispatch = useDispatch();
 
-  const handleChange = (event) => {
-    setComment({ ...comment, [event.target.name]: event.target.value });
-
+  const handleChange = (event, id) => {
+    event.preventDefault()
+      setComment({
+        ...comment,
+        thread: event.target.value,
+        userId: userId,
+        answerId: id
+      });
+   
   };
 
   const answersSubmit = (answer) => {

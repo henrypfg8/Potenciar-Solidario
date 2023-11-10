@@ -145,7 +145,7 @@ const postReducer = (state = initialState, action) => {
         ...state,
         posts: state?.posts?.map((post) => {
           if (post.id === action.payload.publicationId) {
-            const foundLike = post?.Likes?.find(
+            const foundLike = post?.Likes?.some(
               (like) => like.userId === action.payload.userId
             );
             if (foundLike) {

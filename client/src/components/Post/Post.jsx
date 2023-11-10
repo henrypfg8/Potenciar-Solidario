@@ -12,6 +12,7 @@ import { like, disLike } from "../../Redux/actions/postsActions";
 
 import { configureHeaders } from "../../Redux/auth/configureHeaders ";
 import axios from "axios";
+import {jwtDecode} from 'jwt-decode';
 
 //////////////////////////////
 
@@ -25,6 +26,7 @@ const Post = (props) => {
 
   const start_date = props?.startDate?.split("-");
 
+  const token = localStorage.getItem('token');
 
   const likeHandler = (e) => {
     e.preventDefault();
@@ -47,6 +49,12 @@ const Post = (props) => {
     e.preventDefault();
     setIsOptionsOpen(!isOptionsOpen);
   };
+
+  useEffect(() => {
+    if (props.Likes.some(like => like.userId === jwtDecode(token).id)) {
+      setIsLiked(true);
+    }
+  }, [])
 
   /////////////////////////////////////////////////
 

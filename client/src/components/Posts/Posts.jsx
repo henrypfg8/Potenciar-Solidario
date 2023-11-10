@@ -6,12 +6,13 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 //
 import { Oval } from "react-loader-spinner";
+//
+
 
 export default function Posts() {
   const loading = useSelector((state) => state.posts.loading);
   const posts = useSelector((state) => state.posts.posts);
   const orderBy = useSelector((state) => state.posts.orderBy);
-
 
   function transformarFecha(inputFecha) {
     // Parsea la fecha en el formato "yyyy-MM-dd"
@@ -29,6 +30,8 @@ export default function Posts() {
 
     return fechaFormateada;
   }
+
+  console.log(posts)
 
   /////////////////////////////////////
 

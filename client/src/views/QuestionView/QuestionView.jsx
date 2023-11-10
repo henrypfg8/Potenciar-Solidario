@@ -24,8 +24,8 @@ function QuestionView({ question }) {
   const [messages, setMessages] = useState([]);
   const [comment, setComment] = useState({
     thread: "",
-    user: "",
-    id: null
+    userId: "",
+    answerId: "" 
   });
   console.log(comment);
   const [errores, setErrores] = useState({
@@ -38,9 +38,15 @@ function QuestionView({ question }) {
   });
   const dispatch = useDispatch();
 
-  const handleChange = (event) => {
-    setComment({ ...comment, [event.target.name]: event.target.value });
-
+  const handleChange = (event, id) => {
+    event.preventDefault()
+      setComment({
+        ...comment,
+        thread: event.target.value,
+        userId: userId,
+        answerId: id
+      });
+   
   };
 
   const answersSubmit = (answer) => {
@@ -160,9 +166,7 @@ function QuestionView({ question }) {
          }); 
         });
         
-      } else {
-        swal("Tu pregunta no ha sido eliminada.");
-      }
+      } 
     });
   };
 

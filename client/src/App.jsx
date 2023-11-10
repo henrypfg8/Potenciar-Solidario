@@ -40,6 +40,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import UserQuestions from "./components/dashboard/UserQuestions/UserQuestions";
 
 function App() {
+  const users = useSelector(state => state.users);
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -67,6 +68,7 @@ function App() {
       dispatch(getCategories());
       dispatch(getForumCategories());
       dispatch(getUsers());
+      
     }
 
     return () => {

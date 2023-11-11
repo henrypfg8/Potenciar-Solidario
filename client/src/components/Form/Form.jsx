@@ -55,7 +55,7 @@ const Form = ({ setPost, post }) => {
                 //console.log(userProfile)
             })
                 .catch(error => {
-                    console.log(error.response.data, 'hubo un error')
+                    console.log(error.response)
                 })
 
         }

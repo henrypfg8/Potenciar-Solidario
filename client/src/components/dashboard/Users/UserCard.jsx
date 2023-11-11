@@ -28,7 +28,7 @@ const UserCard = ({ user }) => {
         setIsModalOpen(false);
     };
 
-    const handleDeleteUserById = (id) => {
+    const handleDeleteUserById = (id) => { 
         // hacer el dispatch de la acción para eliminar el usuario de la base de datos
         setRefreshData(true)
         dispatch(deleteUser(id))

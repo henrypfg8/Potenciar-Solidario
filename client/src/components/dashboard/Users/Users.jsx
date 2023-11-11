@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect,} from 'react'
 
 import Styles from './users.module.css' 
 import {useDispatch, useSelector} from 'react-redux'

@@ -8,7 +8,7 @@ import { getPosts } from '../../Redux/actions/postsActions';
 
 
 const CardDashboard = ({ post }) => {
-  const [addPostToList, setAddPostToList] = useState(false);
+ 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const [refreshData, setRefreshData] = useState(false);

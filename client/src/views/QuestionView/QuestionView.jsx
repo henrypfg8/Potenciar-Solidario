@@ -25,7 +25,7 @@ function QuestionView({ question }) {
   const [comment, setComment] = useState({
     thread: "",
     userId: "",
-    answerId: "" 
+    answerId: ""
   });
   console.log(comment);
   const [errores, setErrores] = useState({
@@ -40,13 +40,13 @@ function QuestionView({ question }) {
 
   const handleChange = (event, id) => {
     event.preventDefault()
-      setComment({
-        ...comment,
-        thread: event.target.value,
-        userId: userId,
-        answerId: id
-      });
-   
+    setComment({
+      ...comment,
+      thread: event.target.value,
+      userId: userId,
+      answerId: id
+    });
+
   };
 
   const answersSubmit = (answer) => {
@@ -79,7 +79,7 @@ function QuestionView({ question }) {
         console.error("Error al agregar el comentario", error);
         // Puedes mostrar un mensaje de error al usuario si falla el envío del comentario
       });
-    
+
   };
 
   useEffect(() => {
@@ -142,7 +142,7 @@ function QuestionView({ question }) {
       setDisable(false);
     }
 
-  },[handleAnswers, errores.answer]);
+  }, [handleAnswers, errores.answer]);
 
   const deleteQuestions = (handleClose) => {
     handleClose();
@@ -153,21 +153,21 @@ function QuestionView({ question }) {
       buttons: true,
       dangerMode: true,
     })
-    .then((willDelete) => {
-      if (willDelete) {
-        dispatch(deleteQuestion(question.id)).then(() => {
-          swal("Tu pregunta ha sido eliminada con éxito!", {
-            icon: "success",
+      .then((willDelete) => {
+        if (willDelete) {
+          dispatch(deleteQuestion(question.id)).then(() => {
+            swal("Tu pregunta ha sido eliminada con éxito!", {
+              icon: "success",
+            });
+            navigate('/foro');
+          }).catch(() => {
+            swal("Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.", {
+              icon: 'error',
+            });
           });
-          navigate('/foro');
-        }).catch(() => {
-         swal("Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.", {
-          icon: 'error',
-         }); 
-        });
-        
-      } 
-    });
+
+        }
+      });
   };
 
   const editQuetion = (handleClose) => {
@@ -176,15 +176,21 @@ function QuestionView({ question }) {
   };
 
   const dateQuestion = question?.createdAt?.split("T")[0];
-  console.log(question);
+
 
   return (
     <div>
       {question ? (
         <div className={style.container}>
           <div className={style.div1}>
+            {
+              question.userId === userId
+              &&
+              <div className={style.option}>
+                <CustomizedMenus deleteQuestion={deleteQuestions} editQuestion={editQuetion} />
+              </div>
+            }
             <h1>{question?.title}</h1>
-            <CustomizedMenus deleteQuestion={deleteQuestions} editQuestion={editQuetion}/>
             <div className={style.date}>
               <a>
                 Fecha de publicación: <h5>{dateQuestion}</h5>
@@ -268,6 +274,7 @@ function QuestionView({ question }) {
               </div>
 
               <textarea style={{ resize: 'none' }} type="text" name='answer' rows="8" value={answer.answer} onChange={handleAnswers} />
+
               {
                 disable ?
                   <button
@@ -290,8 +297,8 @@ function QuestionView({ question }) {
         </div>
       ) : <div className={style.container}>
         <h1>Cargando</h1>
-        </div>}
-    </div>
+      </div>}
+    </div>  
   );
 }
 

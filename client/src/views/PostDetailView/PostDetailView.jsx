@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { getPostDetail, clearPostDetail } from '../../Redux/actions/postsActions';
+import ImageAvatars from "../../assets/AvatarImage";
 //
 
 
@@ -24,7 +25,8 @@ const Detail = () => {
     registrationLink,
     contact,
     creationDate,
-    url
+    url,
+    User
   } = postDetail;
 
 
@@ -36,7 +38,7 @@ const Detail = () => {
     }
   }, []);
 
-
+console.log(postDetail);
 
   return (
     <div className={Styles.DetailView}>
@@ -50,8 +52,8 @@ const Detail = () => {
 
         <div className={Styles.Detail}>
           <div className={Styles.header}>
-            <h3>Lionel Messi</h3>
-
+            
+            <ImageAvatars image={User?.profile_picture} name={User?.name}/>
             <h3>{organization}</h3>
             </div>
 
@@ -60,7 +62,6 @@ const Detail = () => {
               <h1>{title}</h1>
               <div className={Styles.header}>
                 <div>
-
                 <h3>
                   Fecha de publicacion:
                 </h3>
@@ -90,10 +91,10 @@ const Detail = () => {
           {endDate && <p>{endDate}</p>}
             </div>
           </div>
-          {url && <a href={url}>Mas informacion</a>}
-          {registrationLink && <a href={registrationLink}>Inscribirse</a>}
+          {url && <a href={url} className={Styles.link} target="_blank" rel="noreferrer">Mas informacion</a>}
+          {registrationLink && <a href={registrationLink} className={Styles.link} target="_blank" rel="noreferrer">Inscribirse</a>}
           </div>
-          <a>{category}</a>
+          <a className={Styles.category}>{category}</a>
         </div>
 
       </div>

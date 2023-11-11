@@ -191,6 +191,7 @@ function QuestionView({ question, answers }) {
       {question ? (
         <div className={style.container}>
           <div className={style.div1}>
+            <h1>{question?.title}</h1>
             {
               question.userId === userId
               &&
@@ -198,17 +199,13 @@ function QuestionView({ question, answers }) {
                 <CustomizedMenus deleteQuestion={deleteQuestions} editQuestion={editQuestion} />
               </div>
             }
-            <h1>{question?.title}</h1>
             <div className={style.date}>
+              <ImageAvatars image={question?.User?.profile_picture} name={question?.User?.name}/>
               <a>
                 Fecha de publicacion: <h5>{dateQuestion}</h5>
               </a>
             </div>
-            <div className={style.user}>
-            <ImageAvatars image={question?.User?.profile_picture}/>
-            <h3>{question?.User?.name}</h3>
-            </div>
-            
+           
             <p>{question?.text}</p>
 
           </div>
@@ -313,7 +310,7 @@ function QuestionView({ question, answers }) {
       ) : <div className={style.container}>
         <h1>Cargando</h1>
       </div>}
-    </div>  
+    </div>
   );
 }
 

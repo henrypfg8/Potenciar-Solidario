@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { useSelector } from 'react-redux'
 import CardDashboard from './CardDashboard'
-import proptypes from 'prop-types'
+
 import SearchDashBoard from './SearchDashBoard'
 const Dashboard = ( ) => {
     const { posts } = useSelector(state => state.posts);

@@ -25,7 +25,7 @@
 }
 
 .users__head {
-    background-color: #333;
+    background: var(--blue_color);
     color: white;
     border: 1px solid #ddd;
 }
@@ -156,3 +156,9 @@
     object-fit: cover;
     margin: 0 auto;
 }
+
+
+
+
+
+

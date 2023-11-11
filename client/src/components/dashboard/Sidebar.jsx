@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import { Divider, Avatar } from '@mui/material';
-import { NavLink, Outlet } from 'react-router-dom'
+//import { useState } from 'react'
+import {  Avatar } from '@mui/material';
+import { NavLink,  } from 'react-router-dom'
 import Styles from './dashboard.module.css'
 
 
 const Sidebar = () => {
-  const [imageAdmin, setImageAdmin] = useState('')
+  //const [imageAdmin, setImageAdmin] = useState('')
   const checkIsActive = (path) => {
     return window.location.pathname === path;
   };
@@ -26,6 +26,7 @@ const Sidebar = () => {
             <NavLink className={() => checkIsActive('/admin') ? Styles.bg_activo : Styles.bg_noActivo} to='/admin'><p className={Styles.sidebar__option}>Publicaciones</p></NavLink>
             <NavLink className={() => checkIsActive('/admin/users') ? Styles.bg_activo : Styles.bg_noActivo} to='/admin/users'><p className={Styles.sidebar__option}>Usuarios</p></NavLink>
             <NavLink className={() => checkIsActive('/admin/questions') ? Styles.bg_activo : Styles.bg_noActivo} to='/admin/questions'><p className={Styles.sidebar__option}>Preguntas</p></NavLink>
+            <NavLink className={() => checkIsActive('/admin/coments') ? Styles.bg_activo : Styles.bg_noActivo} to='/admin/coments' ><p className={Styles.sidebar__option}>Comentarios</p></NavLink>
           </div>
         </div>
 

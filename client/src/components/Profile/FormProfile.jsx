@@ -146,13 +146,12 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
 
                         <label className='profile__label' htmlFor="phone">Telefono</label>
                         <div>
-                            {errors?.phone?.type === 'required' && <p className='profile__alert'>El telefono es requerido</p>}
                             {errors?.phone?.type === 'minLength' && <p className='profile__alert'>El telefono debe tener al menos 5 digitos</p>}
                             {errors?.phone?.type === 'maxLength' && <p className='profile__alert'>El telefono debe tener menos de 15 digitos</p>}
                             <Controller
                                 name='phone'
                                 control={control}
-                                rules={{ required: true, minLength : 5, maxLength: 15 }}
+                                rules={{ required:false, maxLength: 15 }}
 
                                 render={({ field, fieldState: { error } }) => {
                                     return (

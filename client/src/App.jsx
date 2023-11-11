@@ -38,7 +38,7 @@ import ResetPassword from "./components/auth/password/ResetPassword";
 import Users from "./components/dashboard/Users/Users";
 import Dashboard from "./components/dashboard/Dashboard";
 import UserQuestions from "./components/dashboard/UserQuestions/UserQuestions";
-
+import UserComent from "./components/dashboard/UsersComents/UserComent";
 function App() {
   const users = useSelector(state => state.users);
   // eslint-disable-next-line no-unused-vars
@@ -106,6 +106,7 @@ function App() {
               <Route index  element={<Dashboard />} />
               <Route path="users" element={<Users />} />
               <Route path="questions" element={<UserQuestions />} />
+              <Route path="coments" element={<UserComent />} />
             </Route>
 
           </Routes>

@@ -6,7 +6,8 @@ const getPublications = async (id) => {
     const idPublication = await Publication.findOne({
       where: { id: id },
       include: [
-        { model: Like, attributes: ['id','userId'],  include: {model: User , attributes: ['name']}}
+        { model: Like, attributes: ['id','userId'],  include: {model: User , attributes: ['name']}},
+        { model: User, attributes: ['name',  'profile_picture']}
       ]
     });
 
@@ -15,7 +16,8 @@ const getPublications = async (id) => {
 
   const AllPublications = await Publication.findAll({
     include: [
-      { model: Like, attributes: ['id','userId'], include: {model: User , attributes: ['name']}}
+      { model: Like, attributes: ['id','userId'], include: {model: User , attributes: ['name']}},
+      { model: User, attributes: ['name',  'profile_picture']}
     ]
   });
 

@@ -181,19 +181,18 @@
 }
 
 .date{
-    display: flex;
+    display:  flex;
     flex-direction: row;
-    margin: 0.5rem;
-    justify-content: space-around;
+    align-items: center;
+    justify-items: self-start;
+    padding: 0.4rem;
+}
+.h5{
+    margin: 0.4rem;
 }
 .response p{
     display: flex;
     flex-direction: row;
-}
-.date h5{
-    display: inline;
-    font-size: 1em;
-    font-family: 'FuenteBold';
 }
 .div1{
     border-bottom: 1px solid rgba(126, 126, 126, 0.212);
@@ -209,14 +208,7 @@
     font-size: 1.2em;
     margin: 10px;
 }
-.user{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.user h3{
-    font-size: 1.4rem;
-}
+
 .buttonDisable{
     display: flex;
     margin: 1rem;
@@ -235,9 +227,12 @@
 .option{
     display: flex;
     flex-direction: column;
+    width: fit-content;
     align-items: end;
     justify-content: end;
     position: relative;
+    left: 40%;
+    margin: 10px;
 }
 @media (max-width: 575.98px){
     .question textarea{

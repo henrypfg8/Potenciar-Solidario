@@ -3,7 +3,7 @@ import Select from "react-select";
 import { useQuestionCreate } from '../../components/QuestionCreate/QuestionCreate';
 
 function QuestionCreateView() {
-    const { disableButton, firstSubmit, question, categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion } = useQuestionCreate();
+    const { disableButton, question, categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion } = useQuestionCreate();
 // console.log(question);
 console.log(errores);
     return (

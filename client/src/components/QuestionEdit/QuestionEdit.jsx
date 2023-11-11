@@ -60,7 +60,7 @@ function QuestionEdit (){
           .then((willDelete) => {
             if (willDelete) {
         dispatch(updateQuestion(id, question)).then(() => {
-                swal("Tu pregunta ha sido eliminado con exito!", {
+                swal("Tu pregunta ha sido modificada con exito!", {
                   icon: "success",
                 })
                 navigate('/foro')
@@ -71,9 +71,7 @@ function QuestionEdit (){
                }) 
               })
               
-            } else {
-              swal("Tu pregunta no ha sido eliminada!");
-            }
+            } 
           });
     }
     console.log(question);

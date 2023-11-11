@@ -13,7 +13,7 @@ import { useNavigate } from "react-router";
 import { deleteQuestion, getQuestionDetail } from "../../Redux/actions/questionsActions";
 import validation from "./validation";
 import CustomizedMenus from "../../assets/MenuDespegable";
-
+import ImageAvatars from "../../assets/AvatarImage";
 const socket = io("/");
 
 function QuestionView({ question, answers }) {
@@ -49,6 +49,7 @@ function QuestionView({ question, answers }) {
       userId: userId,
       answerId: id
     });
+
   };
 
   const answersSubmit = (answer) => {
@@ -93,6 +94,7 @@ function QuestionView({ question, answers }) {
         })
         console.error("Error al agregar el comentario", error);
       });
+
   };
   useEffect(() => {
     if (!token || !isAuthenticated) {
@@ -148,7 +150,8 @@ function QuestionView({ question, answers }) {
     } else {
       setDisable(false)
     }
-  }, [handleAnswers, errores.answer])
+
+  }, [handleAnswers, errores.answer]);
 
   const deleteQuestions = (handleClose) => {
     handleClose()
@@ -159,23 +162,21 @@ function QuestionView({ question, answers }) {
       buttons: true,
       dangerMode: true,
     })
-    .then((willDelete) => {
-      if (willDelete) {
-        dispatch(deleteQuestion(question.id)).then(() => {
-          swal("Tu pregunta ha sido eliminada con éxito!", {
-            icon: "success",
+      .then((willDelete) => {
+        if (willDelete) {
+          dispatch(deleteQuestion(question.id)).then(() => {
+            swal("Tu pregunta ha sido eliminada con éxito!", {
+              icon: "success",
+            });
+            navigate('/foro');
+          }).catch(() => {
+            swal("Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.", {
+              icon: 'error',
+            });
           });
-          navigate('/foro');
-        }).catch(() => {
-         swal("Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.", {
-          icon: 'error',
-         }); 
-        });
-        
-      } else {
-        swal("Tu pregunta no ha sido eliminada.");
-      }
-    });
+
+        }
+      });
   };
 
   const editQuestion = (handleClose) => {
@@ -183,20 +184,31 @@ function QuestionView({ question, answers }) {
     navigate(`/foro/edit/${question.id}`)
   }
   const dateQuestion = question?.createdAt?.split("T")[0];
+  console.log(question);
 
   return (
     <div>
       {question ? (
         <div className={style.container}>
           <div className={style.div1}>
+            {
+              question.userId === userId
+              &&
+              <div className={style.option}>
+                <CustomizedMenus deleteQuestion={deleteQuestions} editQuestion={editQuestion} />
+              </div>
+            }
             <h1>{question?.title}</h1>
-            <CustomizedMenus deleteQuestion={deleteQuestions} editQuestion={editQuestion} />
             <div className={style.date}>
               <a>
                 Fecha de publicacion: <h5>{dateQuestion}</h5>
               </a>
             </div>
+            <div className={style.user}>
+            <ImageAvatars image={question?.User?.profile_picture}/>
             <h3>{question?.User?.name}</h3>
+            </div>
+            
             <p>{question?.text}</p>
 
           </div>
@@ -277,6 +289,7 @@ function QuestionView({ question, answers }) {
               </div>
 
               <textarea style={{ resize: 'none' }} type="text" name='answer' rows="8" value={answer.answer} onChange={handleAnswers} />
+
               {
                 disable ?
                   <button
@@ -300,7 +313,7 @@ function QuestionView({ question, answers }) {
       ) : <div className={style.container}>
         <h1>Cargando</h1>
       </div>}
-    </div>
+    </div>  
   );
 }
 

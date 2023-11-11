@@ -15,7 +15,6 @@ export function useQuestionCreate() {
     const categoryOptions = [{ label: "Selecciona una categoría", value: false }, ...categories.map(cat => ({ label: cat.name, value: cat.id }))];
     const [userId, setUserId] = useState('')
     const { isAuthenticated, token } = useSelector(state => state.auth)
-    const questionDetail = useSelector(state => state.questions?.questionDetail)
 
 
     const [errores, setErrores] = useState({
@@ -28,9 +27,11 @@ export function useQuestionCreate() {
         title: '',
         text: '',
         categoryId: '',
-
+        
     })
     const navigate = useNavigate()
+    const [disableButton, setDisableButton] = useState(false)
+    const [firstSubmit, setFirstSubmit] = useState(false)
 
     useEffect(() => {
         if (!token || !isAuthenticated) {
@@ -51,8 +52,6 @@ export function useQuestionCreate() {
         dispatch(getForumCategories())
     }, [])
 
-    const [disableButton, setDisableButton] = useState(false)
-    const [firstSubmit, setFirstSubmit] = useState(false)
 
     const handleChange = (event) => {
         setQuetions({

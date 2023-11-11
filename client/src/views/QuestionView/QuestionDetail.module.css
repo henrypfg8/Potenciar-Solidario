@@ -209,6 +209,14 @@
     font-size: 1.2em;
     margin: 10px;
 }
+.user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.user h3{
+    font-size: 1.4rem;
+}
 .buttonDisable{
     display: flex;
     margin: 1rem;

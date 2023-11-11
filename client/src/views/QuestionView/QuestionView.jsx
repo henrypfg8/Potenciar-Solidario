@@ -13,6 +13,7 @@ import { useNavigate } from "react-router";
 import { deleteQuestion, getQuestionDetail } from "../../Redux/actions/questionsActions";
 import validation from "./validation";
 import CustomizedMenus from "../../assets/MenuDespegable";
+import ImageAvatars from "../../assets/AvatarImage";
 const socket = io("/");
 
 function QuestionView({ question }) {
@@ -177,6 +178,7 @@ function QuestionView({ question }) {
 
   const dateQuestion = question?.createdAt?.split("T")[0];
 
+  console.log(question);
 
   return (
     <div>
@@ -196,7 +198,11 @@ function QuestionView({ question }) {
                 Fecha de publicación: <h5>{dateQuestion}</h5>
               </a>
             </div>
+            <div className={style.user}>
+            <ImageAvatars image={question?.User?.profile_picture}/>
             <h3>{question?.User?.name}</h3>
+            </div>
+            
             <p>{question?.text}</p>
           </div>
 

@@ -5,8 +5,8 @@ const ControllerGetQuestion = async (id) => {
     const questionById = await Question.findOne({
       where: { id: id },
       include: [
-        { model: Answer , include: {model: User , attributes: ['name']}},
-        {model: User, attributes: ['name']}
+        { model: Answer , include: {model: User , attributes: ['name',  'profile_picture']}},
+        {model: User, attributes: ['name',  'profile_picture']}
       ]
       
     });
@@ -16,8 +16,8 @@ const ControllerGetQuestion = async (id) => {
 
   const questionAll = await Question.findAll({
     include: [
-      { model: Answer , include: {model: User , attributes: ['name']}},
-      {model: User, attributes: ['name']}
+      { model: Answer , include: {model: User , attributes: ['name', 'profile_picture']}},
+      {model: User, attributes: ['name', 'profile_picture']}
     ]
   });
 

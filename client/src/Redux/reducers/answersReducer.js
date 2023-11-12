@@ -63,7 +63,7 @@ const answerReducer = (state = initialState, action) => {
         ),
       };
 
-    case UPDATE_ANSWER_COMMENT:
+    case UPDATE_ANSWER_COMMENT: {
       const updatedAnswerComment = action.payload;
       const updatedAnswerComments = state.answerComments.map((answerComment) =>
         answerComment.id === updatedAnswerComment.id
@@ -74,6 +74,7 @@ const answerReducer = (state = initialState, action) => {
         ...state,
         answerComments: updatedAnswerComments,
       };
+    }
 
     case GET_ANSWER_COMMENT:
       return {

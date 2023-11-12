@@ -76,27 +76,6 @@ const answerReducer = (state = initialState, action) => {
       };
 
     case GET_ANSWER_COMMENT:
-      if (state.answerComments) {
-        const currentAnswerComments = state?.answerComments?.Comments;
-
-        const newAnswerComments = action.payload?.Comments;
-
-        const newNotifications = newAnswerComments?.filter(
-          (element) =>
-            !currentAnswerComments?.some(
-              (element2) => element2.id == element.id
-            )
-        );
-
-        newNotifications?.forEach((newNotification) =>
-          notification.open({
-            message: `Nueva respuesta de ${newNotification?.User?.name}`,
-            description: newNotification?.answer,
-            onClose: () => console.log("Notification was closed."),
-          })
-        );
-      }
-
       return {
         ...state,
         answerComments: action.payload,

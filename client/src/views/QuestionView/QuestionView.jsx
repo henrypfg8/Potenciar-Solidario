@@ -80,10 +80,9 @@ function QuestionView({ question, answers }) {
           icon: 'success',
           text: "Respuesta creada con exito"
         })
-        console.log(question)
         setMessages([...messages, {
           body: message.thread,
-          from: answers?.Comments?.map((el) => el.User?.name)
+          from: answers?.map(answer => answer.Comments?.map(comment => comment.User?.name))
         }]);
         socket.emit("message", message.thread);
       })
@@ -184,8 +183,6 @@ function QuestionView({ question, answers }) {
     navigate(`/foro/edit/${question.id}`)
   }
   const dateQuestion = question?.createdAt?.split("T")[0];
-  console.log(question);
-
   return (
     <div>
       {question ? (
@@ -200,14 +197,22 @@ function QuestionView({ question, answers }) {
               </div>
             }
             <div className={style.date}>
-              <ImageAvatars image={question?.User?.profile_picture} name={question?.User?.name}/>
+              <ImageAvatars image={question?.User?.profile_picture} name={question?.User?.name} />
               <a>
                 Fecha de publicacion: <h5>{dateQuestion}</h5>
               </a>
             </div>
-           
-            <p>{question?.text}</p>
 
+            <p>{question?.text}</p>
+            {answers?.map((answer) =>
+              answer.Comments?.map((comment) => (
+                <div key={comment.id}>
+                  <h3>{comment.User.name}</h3>
+                  <p>{comment.thread}</p>
+                  <p>{new Date(comment.createdAt).toLocaleString()}</p>
+                </div>
+              ))
+            )}
           </div>
 
           <div className={style.contain}>

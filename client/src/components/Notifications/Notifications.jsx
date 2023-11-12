@@ -4,7 +4,7 @@ import { notification } from 'antd';
 
 const Notifications = () => {
     const answerComments = useSelector(state => state.answerComments);
-
+    const audio = new Audio('/sounds/notification.mp3');
     useEffect(() => {
         const currentAnswerComments = answerComments?.Comments;
         const newAnswerComments = answerComments?.Comments;
@@ -21,7 +21,8 @@ const Notifications = () => {
                 message: `Nueva respuesta de ${newNotification?.User?.name}`,
                 description: newNotification?.answer,
                 onClose: () => console.log("Notification was closed."),
-            })
+            }),
+            audio.play()
         );
     }, [answerComments]);
 

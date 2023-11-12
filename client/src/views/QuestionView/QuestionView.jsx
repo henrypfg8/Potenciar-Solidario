@@ -80,6 +80,7 @@ function QuestionView({ question, answers }) {
           icon: 'success',
           text: "Respuesta creada con exito"
         })
+        console.log(question)
         setMessages([...messages, {
           body: message.thread,
           from: answers?.map(answer => answer.Comments?.map(comment => comment.User?.name))
@@ -183,6 +184,8 @@ function QuestionView({ question, answers }) {
     navigate(`/foro/edit/${question.id}`)
   }
   const dateQuestion = question?.createdAt?.split("T")[0];
+  console.log(question);
+
   return (
     <div>
       {question ? (
@@ -213,6 +216,7 @@ function QuestionView({ question, answers }) {
                 </div>
               ))
             )}
+
           </div>
 
           <div className={style.contain}>

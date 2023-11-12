@@ -52,6 +52,7 @@ const {
   Category,
   Organization,
   ForoCategories,
+  PublicationComment,
   Like
 } = sequelize.models;
 
@@ -85,6 +86,12 @@ ForoCategories.hasMany(Question, { foreignKey: "categoryId" })
 Like.belongsTo(Publication, { foreignKey: "publicationId" });
 Like.belongsTo(User, { foreignKey: "userId" });
 Publication.hasMany(Like, { foreignKey: "publicationId" });
+
+// COMENTARIOS DE PUBLICACIONES 
+PublicationComment.belongsTo(Publication, { foreignKey: 'publicationId' });
+PublicationComment.belongsTo(User, { foreignKey: 'userId' });
+Publication.hasMany(PublicationComment, { foreignKey: 'publicationId' });
+User.hasMany(PublicationComment, { foreignKey: 'userId' });
 
 
 module.exports = {

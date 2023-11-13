@@ -20,6 +20,7 @@ import validation from "./validation";
 import CustomizedMenus from "../../assets/MenuDespegable";
 import ImageAvatars from "../../assets/AvatarImage";
 import Notifications from "../../components/Notifications/Notifications";
+import { Oval } from "react-loader-spinner";
 
 function QuestionView({ question, answers }) {
   const [userId, setUserId] = useState("");
@@ -175,8 +176,9 @@ function QuestionView({ question, answers }) {
   };
   const dateQuestion = question?.createdAt?.split("T")[0];
 
+
   return (
-    <div>
+    <div className={style.container}>
       {question ? (
         <div className={style.container}>
           <div className={style.div1}>
@@ -238,19 +240,21 @@ function QuestionView({ question, answers }) {
                   <p>{respuesta.answer}</p>
                   <h4>{respuesta.User.name}</h4>
                   <div>
-                    {respuesta?.Comments?.map((el) => (
-                      <div
-                        key={el.id}
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: 1,
-                        }}
-                      >
-                        <div>{el.User?.name}:</div>
-                        <div>{el.thread}</div>
-                      </div>
-                    ))}
+                    {respuesta?.Comments?.map((el) => {
+                      var date = new Date(el.createdAt);
+                      return (
+                        <div
+                          key={el.id}
+                          className={style.comments}
+                        >
+                          <p>{el.thread} -</p>
+                          <h3>  {el.User?.name}</h3>   
+                          
+                          <a> {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</a>
+                        </div>
+                      );
+                    })}
+
                   </div>
                   {!view[index] ? (
                     <a onClick={() => handleView(index)}>
@@ -313,9 +317,18 @@ function QuestionView({ question, answers }) {
           </div>
         </div>
       ) : (
-        <div className={style.container}>
-          <h1>Cargando</h1>
-        </div>
+        <Oval
+          height={80}
+          width={80}
+          color="#005692"
+          wrapperStyle={{ margin: "auto auto" }}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="oval-loading"
+          secondaryColor="#a4d4ff"
+          strokeWidth={3}
+          strokeWidthSecondary={3}
+        />
       )}
     </div>
   );

@@ -4,6 +4,7 @@ import { Open } from '../../assets/iconsForoHome';
 import LeftBar from '../../components/LeftBar/LeftBar';
 import style from './Foro.module.css';
 import { NavLink } from "react-router-dom";
+import { Oval } from 'react-loader-spinner';
 
 // eslint-disable-next-line react/prop-types
 function ForumView({ questions }) {
@@ -23,11 +24,20 @@ function ForumView({ questions }) {
                     ?
                     <div className={style.containerCenter}>
                         <LeftBar />
-                        <div>
-                            <h1>
-                                No hay ninguna pregunta
-                            </h1>
-                        </div>
+                        
+        <Oval
+          height={80}
+          width={80}
+          color="#005692"
+          wrapperStyle={{ margin: "auto auto" }}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="oval-loading"
+          secondaryColor="#a4d4ff"
+          strokeWidth={3}
+          strokeWidthSecondary={3}
+        />
+      
                     </div>
                     :
                     <div className={style.containerCenter}>

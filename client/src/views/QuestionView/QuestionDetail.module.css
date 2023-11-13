@@ -234,6 +234,25 @@
     left: 40%;
     margin: 10px;
 }
+.comments{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    align-items: center;
+    border-top: 1px solid rgba(68, 68, 68, 0.446);
+    padding: 0.8rem;
+    margin: 0.4rem;
+}
+.comments p{
+    font-size: 0.8rem;
+}
+.comments h3{
+    font-size: 0.8rem;
+}
+.comments a:hover{
+    color: none;
+
+}
 @media (max-width: 575.98px){
     .question textarea{
         width: 70vw;

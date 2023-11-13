@@ -174,8 +174,7 @@ function QuestionView({ question, answers }) {
     handleClose();
     navigate(`/foro/edit/${question.id}`);
   };
-  const dateQuestion = question?.createdAt?.split("T")[0];
-
+  const dateQuestion = new Date (question?.createdAt)
 
   return (
     <div className={style.container}>
@@ -196,8 +195,11 @@ function QuestionView({ question, answers }) {
                 image={question?.User?.profile_picture}
                 name={question?.User?.name}
               />
+              
+                 
+              
               <a>
-                Fecha de publicacion: <h5>{dateQuestion}</h5>
+                Fecha de publicacion:{ <h4>{dateQuestion.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>}
               </a>
             </div>
 
@@ -248,9 +250,8 @@ function QuestionView({ question, answers }) {
                           className={style.comments}
                         >
                           <p>{el.thread} -</p>
-                          <h3>  {el.User?.name}</h3>   
-                          
-                          <a> {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</a>
+                          <h3>{el.User?.name},</h3>   
+                          <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
                         </div>
                       );
                     })}

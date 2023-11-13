@@ -186,6 +186,14 @@
     align-items: center;
     justify-items: self-start;
     padding: 0.4rem;
+
+}
+.date a{
+    display: flex;
+    align-items: center;
+    /* margin: 1rem; */
+    font-size: 0.9rem;
+    
 }
 .h5{
     margin: 0.4rem;
@@ -248,10 +256,13 @@
 }
 .comments h3{
     font-size: 0.8rem;
-}
-.comments a:hover{
-    color: none;
+    color: #042685;
+    margin-left: 0;
 
+}
+.comments h4{
+    font-size: 0.7rem;
+    color: #7d7d7d;
 }
 @media (max-width: 575.98px){
     .question textarea{

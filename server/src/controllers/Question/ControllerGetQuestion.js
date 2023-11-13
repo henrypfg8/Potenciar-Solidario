@@ -7,7 +7,7 @@ const ControllerGetQuestion = async (id) => {
       include: [
         {
           model: Answer, include: [{ model: User, attributes: ['name', 'profile_picture'] }, {
-            model: Comment, include: { model: User, attributes: ['name', 'profile_picture'] }
+          model: Comment, include: { model: User, attributes: ['name', 'profile_picture'] }
           
         }]},
         {model: User, attributes: ['name',  'profile_picture']}, 

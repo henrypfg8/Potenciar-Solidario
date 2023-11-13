@@ -40,6 +40,7 @@ const {authRegisterHandler} = require("../handlers/Authentication/AuthRegisterHa
 const { authLoginHandler } = require("../handlers/Authentication/AuthLogin.js");
 const { authHandler } = require("../handlers/Authentication/authHandler.js"); //middlewere validacion de rutas
 const {authGoogleHandler,} = require("../handlers/Authentication/authGoogleLoginHandler.js");
+const {otpValidate} = require("../handlers/Authentication/validateOtp.js")
 
 //HANDLERS de ORGANIZATION.
 const { handlerOngs } = require("../handlers/Organization/handlerGetOngs");
@@ -135,5 +136,8 @@ router.delete("/posts/reviews/:id",DeleteReviewHandler)
 //rutas reseteo de contraseña
 router.put("/forgotpassword",forgotPassword)
 router.put("/resetpassword",resetPassword)
+
+//validar otp
+router.get("/validateotp",otpValidate)
 
 module.exports = router;

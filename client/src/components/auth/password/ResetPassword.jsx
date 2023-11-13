@@ -2,8 +2,10 @@ import axios from 'axios';
 import Styles from './reset.module.css'
 import { useForm } from 'react-hook-form';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Swiper from '../../Form/Swiper';
+import Spinner from '../spinner/Spinner';
+
 
 
 const ResetPassword = () => {
@@ -13,6 +15,28 @@ const ResetPassword = () => {
     const navigate = useNavigate();
     let [searchParams] = useSearchParams(); // Obtener los parámetros de la url
     const token = searchParams.get('token');
+    const [useToken,setUseToken] = useState(null)
+
+    const verifyToken = async () => {
+        try{
+            const { data } = await axios.get('http://localhost:19789/validateotp', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if(data){
+                setUseToken(true)
+                return console.log("verificado ok")}
+        }
+        catch(error){
+            setUseToken(false)
+            console.log("token usado o expirado")
+        }
+    }
+
+    useEffect(() => {
+        verifyToken()
+    },[token])
 
     // Función para actualizar la contraseña
     const handleUpdatePassword = async newPassword => { 
@@ -47,7 +71,13 @@ const ResetPassword = () => {
     };
 
     return (
-        <div className={Styles.password__container}>
+
+        useToken === null ? (
+            <Spinner/>
+            ) :(
+
+        useToken ? (
+            <div className={Styles.password__container}>
             {successPasswordUpdate && <Swiper frase='Tu Contraseña se actualizo correctamente, Ahora inicia sesión' tipo='success' color='#005692'/>}
             {errorPasswordUpdate && <Swiper frase='Hubo un error al actualizar tu contraseña, intenta nuevamente' tipo='error' color='#ff0000'/>}
             <form className={Styles.password__container} onSubmit={handleSubmit(onSubmit)}>
@@ -100,6 +130,12 @@ const ResetPassword = () => {
                 <button className={Styles.password__button__ok} type='submit'>Restablecer contraseña</button>
             </form>
         </div>
+        ) : (
+            <div>
+                <h1>El link expiro o es invalido porfavor solicite nuevamente restablecimiento de clave</h1>
+            </div>
+        ))
+        
     );
 };
 

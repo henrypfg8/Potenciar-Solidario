@@ -27,7 +27,10 @@ const forgotPassword = async (req, res) => {
         });
 
         //console.log(token)
-
+        const otpFind = await Otp.findOne({ where: { email: email } });
+        if(otpFind){
+            await otpFind.destroy()
+        }
         const otp = await Otp.create({email: email, token: token})
 
         let verificationLink = `http://localhost:5173/new-password/?token=${token}`;

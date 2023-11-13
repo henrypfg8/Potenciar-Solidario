@@ -3,8 +3,12 @@ const jwt = require("jsonwebtoken");
 const otpValidate = async (req, res) => {
 
     try {
-        const { token } = req.query;
-        console.log(token)
+        const { authorization } = req.headers;
+        let token = "";
+        if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
+            token = authorization.substring(7);
+        }
+        
         const user = await Otp.findOne({ where: { token : token } });
         if (!user) {
             return res.status(400).json({
@@ -22,7 +26,6 @@ const otpValidate = async (req, res) => {
             });
         }
         //console.log(token)
-        const cleanToken = await Otp.destroy({ where: { token: token } });
         return res.status(200).json("Validado correctamente");
     } catch (error) {
         console.log(error.message);

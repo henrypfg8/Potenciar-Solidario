@@ -81,6 +81,10 @@
     font-family: 'FuenteBold';
     color: #000000;
 }
+.container label{
+    margin: 1rem;
+    font-size: 1.3rem;
+}
 .texto{
     display: flex;
     flex-direction: column;
@@ -163,7 +167,7 @@
     
 }
 
-.question button{
+.button{
     display: flex;
     margin: 1rem;
     padding: 0.5rem 1rem;

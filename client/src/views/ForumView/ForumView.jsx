@@ -64,7 +64,7 @@ function ForumView({ questions }) {
                                                 {question.Answers.length === 1 && <p><strong>{question.Answers.length}</strong> respuesta</p>}
                                                 {question.Answers.length > 1 && <p><strong>{question.Answers.length}</strong> respuestas</p>}
                                                 <p>@{question.User.name}</p>
-                                                <p>Creada el: {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</p>
+                                                <p>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</p>
                                             </footer>
                                         </div>
                                     )

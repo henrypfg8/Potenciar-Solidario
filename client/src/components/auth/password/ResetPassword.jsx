@@ -5,6 +5,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Swiper from '../../Form/Swiper';
 import Spinner from '../spinner/Spinner';
+import InvalidLink from '../InvalidLink/invalidLink';
 
 
 
@@ -131,9 +132,7 @@ const ResetPassword = () => {
             </form>
         </div>
         ) : (
-            <div>
-                <h1>El link expiro o es invalido porfavor solicite nuevamente restablecimiento de clave</h1>
-            </div>
+            <InvalidLink/>
         ))
         
     );

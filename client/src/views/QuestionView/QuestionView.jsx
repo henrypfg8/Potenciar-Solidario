@@ -14,6 +14,7 @@ import { deleteQuestion, getQuestionDetail } from "../../Redux/actions/questions
 import validation from "./validation";
 import CustomizedMenus from "../../assets/MenuDespegable";
 import ImageAvatars from "../../assets/AvatarImage";
+import Notifications from "../../components/Notifications/Notifications";
 const socket = io("/");
 
 function QuestionView({ question, answers }) {
@@ -56,9 +57,11 @@ function QuestionView({ question, answers }) {
     if (Object.keys(errores).length === 0) {
       dispatch(createAnswer(answer)).then(() => {
         dispatch(getQuestionDetail(question.id))
+
         setAnswer({
           answer: "",
         })
+
         swal({
           icon: 'success',
           text: "Respuesta creada con exito"
@@ -70,6 +73,7 @@ function QuestionView({ question, answers }) {
         })
       })
     }
+    < Notifications />
   };
 
   const handleSubmit = (message) => {
@@ -80,10 +84,9 @@ function QuestionView({ question, answers }) {
           icon: 'success',
           text: "Respuesta creada con exito"
         })
-        console.log(question)
         setMessages([...messages, {
           body: message.thread,
-          from: answers?.Comments?.map((el) => el.User?.name)
+          from: answers?.map(answer => answer.Comments?.map(comment => comment.User?.name))
         }]);
         socket.emit("message", message.thread);
       })
@@ -184,7 +187,6 @@ function QuestionView({ question, answers }) {
     navigate(`/foro/edit/${question.id}`)
   }
   const dateQuestion = question?.createdAt?.split("T")[0];
-  console.log(question);
 
   return (
     <div>
@@ -200,13 +202,22 @@ function QuestionView({ question, answers }) {
               </div>
             }
             <div className={style.date}>
-              <ImageAvatars image={question?.User?.profile_picture} name={question?.User?.name}/>
+              <ImageAvatars image={question?.User?.profile_picture} name={question?.User?.name} />
               <a>
                 Fecha de publicacion: <h5>{dateQuestion}</h5>
               </a>
             </div>
-           
+
             <p>{question?.text}</p>
+            {answers?.map((answer) =>
+              answer.Comments?.map((comment) => (
+                <div key={comment.id}>
+                  <h3>{comment.User.name}</h3>
+                  <p>{comment.thread}</p>
+                  <p>{new Date(comment.createdAt).toLocaleString()}</p>
+                </div>
+              ))
+            )}
 
           </div>
 

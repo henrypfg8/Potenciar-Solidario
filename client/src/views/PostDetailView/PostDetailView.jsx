@@ -32,7 +32,6 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getPostDetail(id));
-
     return () => {
       dispatch(clearPostDetail());
     }
@@ -42,9 +41,6 @@ console.log(postDetail);
 
   return (
     <div className={Styles.DetailView}>
-
-
-
       <div className={Styles.contain}>
         {
           image && <img src={image} alt="Imagen" />
@@ -52,11 +48,10 @@ console.log(postDetail);
 
         <div className={Styles.Detail}>
           <div className={Styles.header}>
-            
+
             <ImageAvatars image={User?.profile_picture} name={User?.name}/>
             <h3>{organization}</h3>
             </div>
-
 
             <div>
               <h1>{title}</h1>
@@ -70,7 +65,6 @@ console.log(postDetail);
               </time>
                 </div>
               <div>
-
               <h3>
                 Contacto:
               </h3>
@@ -79,15 +73,11 @@ console.log(postDetail);
               </div>
           </div>
           <p className={Styles.text}>{description}</p>
-
           <div className={Styles.header}>
-
           <div className={Styles.date}>
             <div>
               <h3>Desde: </h3>
-
-          <p>{startDate}</p>
-          <h3>Hasta: </h3>
+	@@ -90,10 +91,10 @@
           {endDate && <p>{endDate}</p>}
             </div>
           </div>
@@ -107,8 +97,6 @@ Comentario2
       <div>
 Comentario3
       </div>
-
-
     </div>
   );
 };

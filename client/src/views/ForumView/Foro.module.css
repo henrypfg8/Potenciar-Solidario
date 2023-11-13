@@ -134,10 +134,13 @@ body html {
     font-size: 1.4rem;
     padding: 0.5rem;
  }
-}
-.center p{
-    margin-left: 0.9rem;
-    font-size: 0.8rem;
+ .container{
+    margin: auto;
+ }
+ .center p{
+     margin-left: 0.9rem;
+     font-size: 0.8rem;
+ }
 }
 @media (max-width: 768px){
     .containerCenter{

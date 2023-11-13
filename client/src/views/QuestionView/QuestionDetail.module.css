@@ -280,7 +280,13 @@
     .div1{
         max-width: 90vw;
     }
+    .comments{
+        display: flex;
+        flex-direction: column;
+    }
+
 }
+
 
 @media (max-width: 768px){
     .response{

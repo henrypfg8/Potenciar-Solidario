@@ -1,4 +1,4 @@
-const { Publication, Like, User } = require("../../db");
+const { Publication, Like, User , PublicationComment} = require("../../db");
 
 
 const getPublications = async (id) => {
@@ -7,7 +7,8 @@ const getPublications = async (id) => {
       where: { id: id },
       include: [
         { model: Like, attributes: ['id','userId'],  include: {model: User , attributes: ['name']}},
-        { model: User, attributes: ['name',  'profile_picture']}
+        { model: User, attributes: ['name',  'profile_picture']},
+        { model: PublicationComment , include: {model: User , attributes: ['name']}}
       ]
     });
 
@@ -17,7 +18,8 @@ const getPublications = async (id) => {
   const AllPublications = await Publication.findAll({
     include: [
       { model: Like, attributes: ['id','userId'], include: {model: User , attributes: ['name']}},
-      { model: User, attributes: ['name',  'profile_picture']}
+      { model: User, attributes: ['name',  'profile_picture']},
+      { model: PublicationComment}
     ]
   });
 

@@ -18,12 +18,21 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         allowNull: false,
       },
+
+      publicationId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          isInt: true,
+          min: 1,
+        },
+      },
       comment: {
         type : DataTypes.TEXT,
         allowNull: false,
         }
-    },
-    { timestamps: false }
+        },
+    { timestamps: true}
   );
   
 };

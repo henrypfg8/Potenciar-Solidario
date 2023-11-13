@@ -59,6 +59,7 @@ function QuestionView({ question, answers }) {
 
   const answersSubmit = (answer) => {
     if (Object.keys(errores).length === 0) {
+      setDisable(true);
       dispatch(createAnswer(answer)).then(() => {
         dispatch(getQuestionDetail(question.id));
         setAnswer({
@@ -68,15 +69,19 @@ function QuestionView({ question, answers }) {
           icon: "success",
           text: "Respuesta creada con exito",
         }).catch(() => {
+          setDisable(false); 
           swal({
             icon: "error",
             text: `contacte a soporte`,
           });
         });
+      }).catch(() => {
+        setDisable(false); 
       });
     }
     <Notifications />;
   };
+  
 
   const handleSubmit = (message) => {
     dispatch(createAnswerComment(message))
@@ -237,21 +242,30 @@ function QuestionView({ question, answers }) {
             )}
 
             {question.Answers?.map((respuesta, index) => {
+              var date = new Date(respuesta.createdAt);
               return (
                 <div key={index} className={style.response}>
                   <p>{respuesta.answer}</p>
-                  <h4>{respuesta.User.name}</h4>
+                  <h4>{respuesta.User.name} - {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}<h4></h4></h4>
+                  
+                 
                   <div>
-                    {respuesta?.Comments?.map((el) => {
+                    {respuesta?.Comments?.map((el, index) => {
                       var date = new Date(el.createdAt);
                       return (
                         <div
-                          key={el.id}
-                          className={style.comments}
+                        key={el.id}
+                        className={style.comments}
                         >
+                          <h4>{index + 1}</h4>
                           <p>{el.thread} -</p>
                           <h3>{el.User?.name}</h3>   
                           <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
+                          {
+                            userId === question.userId && <div>
+
+                            </div>
+                          }
                         </div>
                       );
                     })}
@@ -293,7 +307,7 @@ function QuestionView({ question, answers }) {
               <div className={style.errores}>
                 {errores.answer && <p>{errores.answer}</p>}
               </div>
-
+              <label htmlFor="">¿Cuál es tu respuesta? </label>
               <textarea
                 style={{ resize: "none" }}
                 type="text"
@@ -303,17 +317,16 @@ function QuestionView({ question, answers }) {
                 onChange={handleAnswers}
               />
 
-              {disable ? (
+              {disable ? 
                 <button
                   disabled
                   className={style.buttonDisable}
-                  onClick={() => answersSubmit(answer)}
                 >
                   Responder
                 </button>
-              ) : (
-                <button onClick={() => answersSubmit(answer)}>Responder</button>
-              )}
+               : 
+                <button className={style.button} onClick={() => answersSubmit(answer)}>Responder</button>
+            }
             </div>
           </div>
         </div>

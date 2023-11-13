@@ -7,6 +7,11 @@ const {HandlerGetPublications,} = require("../handlers/Publication/Publication")
 const { PutPublicationHandler } = require("../handlers/Publication/PutPubH.js");
 const {HandlerRemoveLike} = require("../handlers/Publication/removeLike.js")
 
+// COMMENTS PUBLICATION
+const {CreateHandler} = require('../handlers/PubliComment/Create.js')
+const {DeleteHandler} = require("../handlers/PubliComment/delete.js")
+const {PutHandler} = require("../handlers/PubliComment/Put")
+
 //HANDLERS de USUARIOS.
 const { userPostHandlers } = require("../handlers/User/PostUser");
 const { updateUserHan } = require("../handlers/User/UpdateUser.js");
@@ -96,6 +101,11 @@ router.post("/posts/like", authHandler,HandlerPostLike);
 router.put("/posts/like",authHandler, HandlerRemoveLike);
 router.put("/posts/:id", PutPublicationHandler);
 router.delete("/posts/:id", deletePublication);
+
+//Rutas de comentarios de Publicacion
+router.post('/comment/create', CreateHandler)
+router.delete('/comment/delete/:id', DeleteHandler )
+router.put("/comment/:id" , PutHandler )
 
 //Rutas de PREGUNTAS.
 router.put("/questions/:id", UpdateQuestionH);

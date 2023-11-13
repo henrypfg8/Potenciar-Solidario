@@ -10,11 +10,9 @@ import {
   getCategories,
   getForumCategories,
 } from "./Redux/actions/categoriesActions";
-import { getUsers } from './Redux/actions/usersActions';
+import { getUsers } from "./Redux/actions/usersActions";
 import { getOngs } from "./Redux/actions/ongsActions";
-
 import "./App.css";
-
 import Forum from "./components/Forum/Forum";
 import Header from "./components/Header/Header";
 import Home from "./views/HomeView/Home";
@@ -42,7 +40,7 @@ import PublishPosts from "./components/dashboard/UsersPosts/PublishedPosts/Publi
 import PendingPosts from "./components/dashboard/UsersPosts/PendingPosts/PendingPosts";
 
 function App() {
-  const users = useSelector(state => state.users);
+  const users = useSelector((state) => state.users);
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -70,7 +68,6 @@ function App() {
       dispatch(getCategories());
       dispatch(getForumCategories());
       dispatch(getUsers());
-      
     }
 
     return () => {
@@ -78,8 +75,6 @@ function App() {
       setAuthenticated(false);
     };
   }, [token]);
-
-
 
   ///////////////////////////////////////
 
@@ -104,14 +99,13 @@ function App() {
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/profile/posts" element={<UserPostsView />} />
             <Route path="/new-password/" element={<ResetPassword />} />
-            <Route path="/admin"   element={<Admin />} >
-              <Route index  element={<PendingPosts />} />
+            <Route path="/admin" element={<Admin />}>
+              <Route index element={<Dashboard />} />
               <Route path="users" element={<Users />} />
               <Route path="questions" element={<UserQuestions />} />
               <Route path="coments" element={<UserComent />} />
               <Route path="posts" element={<PublishPosts />} />
             </Route>
-
           </Routes>
         </>
       ) : (
@@ -120,7 +114,11 @@ function App() {
           {pathname === "/register" ? <Register /> : null}
           {pathname === "/reset-password" ? <Email /> : null}
           {pathname === "/new-password/" ? <ResetPassword /> : null}
-          {pathname !== "/register" && pathname !== "/login" && pathname !== "/reset-password" && pathname !== "/new-password" && !authenticated ? (
+          {pathname !== "/register" &&
+          pathname !== "/login" &&
+          pathname !== "/reset-password" &&
+          pathname !== "/new-password" &&
+          !authenticated ? (
             <BlurredBackground />
           ) : null}
         </>

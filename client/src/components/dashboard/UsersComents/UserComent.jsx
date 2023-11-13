@@ -1,7 +1,10 @@
 
+
+
+
 const UserComent = () => {
   return (
-    <div>UserComent</div>
+    <div> No hay comentarios todavia</div>
   )
 }
 

@@ -1,0 +1,19 @@
+.container{
+    height: 80vh;
+    overflow-y: scroll;
+    position: relative;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.container::-webkit-scrollbar{
+    display: none;
+}
+.posts__title{
+    text-align: center;
+    margin: 1rem 0;
+}
+.posts__cards{
+    width: 90%;
+    margin: 0 auto;
+}

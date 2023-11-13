@@ -109,15 +109,6 @@ const Form = ({ setPost, post }) => {
         getPost()
     }, [id])
 
-    //useEffect para verificar si hay token y si el estado está autenticado
-    useEffect(() => {
-        if (!token || !isAuthenticated) {
-            // Si no hay token o el estado no está autenticado, redirigir a login
-            navigate('/login');
-            return
-        }
-    }, [isAuthenticated, token])
-
     //funcion para Actualizar la publicación
     const handleUpdate = async (id, info) => {
         const { data } = await axios.put(`http://localhost:19789/posts/${id}`, { ...info }, {

@@ -1,8 +1,7 @@
 import {  useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, Outlet } from 'react-router-dom';
-
-import Sidebar from '../../components/dashboard/Sidebar';
+import Sidebar from '../../components/dashboard/Sidebar/Sidebar';
 import './admin.css';
 
 const Admin = () => {

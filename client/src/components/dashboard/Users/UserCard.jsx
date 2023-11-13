@@ -8,13 +8,17 @@ import { UserOutlined, } from '@ant-design/icons';
 
 
 const UserCard = ({ user }) => {
+
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [refreshData, setRefreshData] = useState(false)
+    const [refreshData, setRefreshData] = useState(false);
+
     const dispatch = useDispatch()
 
 
     useEffect(() => {
+
         dispatch(getUsers())
+
     }, [refreshData])
 
     // Función para abrir el modal
@@ -43,7 +47,8 @@ const UserCard = ({ user }) => {
             })
 
 
-    }
+    };
+
 
     return (
         <>

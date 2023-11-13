@@ -1,0 +1,143 @@
+.dashboard{
+    height: 80vh;
+    overflow-y: scroll;
+    position: relative;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.dashboard__btn:hover{
+    background: #06213d;
+    cursor: pointer;
+}
+.dashboard::-webkit-scrollbar {
+    display: none;
+  }
+
+
+.dashboard__divCards{
+    width: 90%;
+    margin: 0 auto;
+
+}
+.dashboard__btn{
+   
+    background: var(--dark_blue_color);
+    color: #fff;
+    font-weight: 900;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    bottom: 1rem;
+    width: 90%;
+    text-align: center;
+    position: fixed; 
+    right: 0;
+    left: 0;
+    margin: auto;
+
+}
+@media(min-width: 768px){
+    .dashboard__btn{
+        width: 50%;
+        right: inherit;
+        left: inherit;
+    
+    }
+    .dashboard__div{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+.dashboard__card{
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    width:100%;
+    margin:  2rem auto;
+    height: 100%;
+}
+.dashboard__p{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    width: 90%;
+}
+.dashboard__img{
+    width: 100px;
+}
+.dashboard__info{
+    width: 90%;
+    margin-left: 1rem;
+
+}
+.dashboard__selected{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 1rem;
+}
+.dashboard__trash{
+    width: 30px;
+}
+.dashboard__check{
+    width: 15px;
+    height: 15px;
+
+}
+
+.dashboard__trash_icon{
+    color: black; 
+    transition: color 0.3s; 
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    justify-content: center;
+}
+.dashboard__trash_icon:hover {
+    color: red;
+}
+.dashboard__btn__delete{
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background: #ff0000;
+    width: 100px;
+    display: block;
+
+
+ 
+}
+.dashboard__btn__delete:hover{
+    background: #d10505;
+    cursor: pointer;
+
+
+}
+
+.dashboard__publish{
+    width: 100px;
+   background: var(--blue_color);
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+.dashboard__publish:hover{
+    background: #06213d;
+    cursor: pointer;
+
+}

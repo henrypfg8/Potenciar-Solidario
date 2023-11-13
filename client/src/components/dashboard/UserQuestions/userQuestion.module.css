@@ -20,6 +20,9 @@ body{
     }
 }
 .question__card {
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     margin-bottom: 1rem;
@@ -136,6 +139,7 @@ body{
     right: 0rem;
     z-index: 1000;
     padding: 1rem;
+    border: solid 1px #ddd;
 
 }
 .question__asks::-webkit-scrollbar {
@@ -182,6 +186,7 @@ body{
     margin-top: 1rem;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border: solid 1px #ddd;
 
   }
   .answer__user{

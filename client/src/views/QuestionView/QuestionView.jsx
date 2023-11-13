@@ -20,6 +20,7 @@ import validation from "./validation";
 import CustomizedMenus from "../../assets/MenuDespegable";
 import ImageAvatars from "../../assets/AvatarImage";
 import Notifications from "../../components/Notifications/Notifications";
+import { Oval } from "react-loader-spinner";
 
 function QuestionView({ question, answers }) {
   const [userId, setUserId] = useState("");
@@ -58,6 +59,7 @@ function QuestionView({ question, answers }) {
 
   const answersSubmit = (answer) => {
     if (Object.keys(errores).length === 0) {
+      setDisable(true);
       dispatch(createAnswer(answer)).then(() => {
         dispatch(getQuestionDetail(question.id));
         setAnswer({
@@ -67,15 +69,19 @@ function QuestionView({ question, answers }) {
           icon: "success",
           text: "Respuesta creada con exito",
         }).catch(() => {
+          setDisable(false); 
           swal({
             icon: "error",
             text: `contacte a soporte`,
           });
         });
+      }).catch(() => {
+        setDisable(false); 
       });
     }
     <Notifications />;
   };
+  
 
   const handleSubmit = (message) => {
     dispatch(createAnswerComment(message))
@@ -173,10 +179,10 @@ function QuestionView({ question, answers }) {
     handleClose();
     navigate(`/foro/edit/${question.id}`);
   };
-  const dateQuestion = question?.createdAt?.split("T")[0];
+  const dateQuestion = new Date (question?.createdAt)
 
   return (
-    <div>
+    <div className={style.container}>
       {question ? (
         <div className={style.container}>
           <div className={style.div1}>
@@ -194,8 +200,11 @@ function QuestionView({ question, answers }) {
                 image={question?.User?.profile_picture}
                 name={question?.User?.name}
               />
+              
+                 
+              
               <a>
-                Fecha de publicacion: <h5>{dateQuestion}</h5>
+                Fecha de publicacion:{ <h4>{dateQuestion.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>}
               </a>
             </div>
 
@@ -233,24 +242,34 @@ function QuestionView({ question, answers }) {
             )}
 
             {question.Answers?.map((respuesta, index) => {
+              var date = new Date(respuesta.createdAt);
               return (
                 <div key={index} className={style.response}>
                   <p>{respuesta.answer}</p>
-                  <h4>{respuesta.User.name}</h4>
+                  <h4>{respuesta.User.name} - {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}<h4></h4></h4>
+                  
+                 
                   <div>
-                    {respuesta?.Comments?.map((el) => (
-                      <div
+                    {respuesta?.Comments?.map((el, index) => {
+                      var date = new Date(el.createdAt);
+                      return (
+                        <div
                         key={el.id}
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: 1,
-                        }}
-                      >
-                        <div>{el.User?.name}:</div>
-                        <div>{el.thread}</div>
-                      </div>
-                    ))}
+                        className={style.comments}
+                        >
+                          <h4>{index + 1}</h4>
+                          <p>{el.thread} -</p>
+                          <h3>{el.User?.name}</h3>   
+                          <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
+                          {
+                            userId === question.userId && <div>
+
+                            </div>
+                          }
+                        </div>
+                      );
+                    })}
+
                   </div>
                   {!view[index] ? (
                     <a onClick={() => handleView(index)}>
@@ -288,7 +307,7 @@ function QuestionView({ question, answers }) {
               <div className={style.errores}>
                 {errores.answer && <p>{errores.answer}</p>}
               </div>
-
+              <label htmlFor="">¿Cuál es tu respuesta? </label>
               <textarea
                 style={{ resize: "none" }}
                 type="text"
@@ -298,24 +317,32 @@ function QuestionView({ question, answers }) {
                 onChange={handleAnswers}
               />
 
-              {disable ? (
+              {disable ? 
                 <button
                   disabled
                   className={style.buttonDisable}
-                  onClick={() => answersSubmit(answer)}
                 >
                   Responder
                 </button>
-              ) : (
-                <button onClick={() => answersSubmit(answer)}>Responder</button>
-              )}
+               : 
+                <button className={style.button} onClick={() => answersSubmit(answer)}>Responder</button>
+            }
             </div>
           </div>
         </div>
       ) : (
-        <div className={style.container}>
-          <h1>Cargando</h1>
-        </div>
+        <Oval
+          height={80}
+          width={80}
+          color="#005692"
+          wrapperStyle={{ margin: "auto auto" }}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="oval-loading"
+          secondaryColor="#a4d4ff"
+          strokeWidth={3}
+          strokeWidthSecondary={3}
+        />
       )}
     </div>
   );

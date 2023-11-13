@@ -1,4 +1,4 @@
-const { User } = require("../../db");
+const { User, Otp } = require("../../db");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
@@ -26,7 +26,12 @@ const forgotPassword = async (req, res) => {
             expiresIn: "1h",
         });
 
-        console.log(token)
+        //console.log(token)
+        const otpFind = await Otp.findOne({ where: { email: email } });
+        if(otpFind){
+            await otpFind.destroy()
+        }
+        const otp = await Otp.create({email: email, token: token})
 
         let verificationLink = `http://localhost:5173/new-password/?token=${token}`;
         emailForgotPassword(user,verificationLink)

@@ -38,6 +38,7 @@ import UserQuestions from "./components/dashboard/UserQuestions/UserQuestions";
 import UserComent from "./components/dashboard/UsersComents/UserComent";
 import PublishPosts from "./components/dashboard/UsersPosts/PublishedPosts/PublishPosts";
 import PendingPosts from "./components/dashboard/UsersPosts/PendingPosts/PendingPosts";
+import { getQuestions } from "./Redux/actions/questionsActions";
 
 function App() {
   const users = useSelector((state) => state.users);
@@ -64,6 +65,7 @@ function App() {
       dispatch(setLoading());
       setAuthenticated(true);
       dispatch(getPosts()).then(() => dispatch(hideLoading()));
+      dispatch(getQuestions()).then(() => dispatch(hideLoading()))
       dispatch(getOngs());
       dispatch(getCategories());
       dispatch(getForumCategories());
@@ -114,10 +116,11 @@ function App() {
           {pathname === "/register" ? <Register /> : null}
           {pathname === "/reset-password" ? <Email /> : null}
           {pathname === "/new-password/" ? <ResetPassword /> : null}
+
           {pathname !== "/register" &&
           pathname !== "/login" &&
           pathname !== "/reset-password" &&
-          pathname !== "/new-password" &&
+          pathname !== "/new-password/" &&
           !authenticated ? (
             <BlurredBackground />
           ) : null}

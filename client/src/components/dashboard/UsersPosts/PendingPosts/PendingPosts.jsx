@@ -21,6 +21,7 @@ const PendingPosts = ( ) => {
         return post.status !== '1';
     
     });
+    console.log(postsPending)
     const [listSearchPost, setListSearchPost] = useState([]);
 
 

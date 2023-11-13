@@ -4,36 +4,39 @@ import style from "./QuestionDetail.module.css";
 import { useEffect, useState } from "react";
 import { FlechaAbajoIcon } from "../../assets/FlechaParaAbajoIcon";
 import { FlechaParaArriba } from "../../assets/FlechaParaArribaIcon";
-import io from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import { jwtDecode } from "jwt-decode";
-import { createAnswer, createAnswerComment } from "../../Redux/actions/answersActions";
+import {
+  createAnswer,
+  createAnswerComment,
+} from "../../Redux/actions/answersActions";
 import { useNavigate } from "react-router";
-import { deleteQuestion, getQuestionDetail } from "../../Redux/actions/questionsActions";
+import {
+  deleteQuestion,
+  getQuestionDetail,
+} from "../../Redux/actions/questionsActions";
 import validation from "./validation";
 import CustomizedMenus from "../../assets/MenuDespegable";
 import ImageAvatars from "../../assets/AvatarImage";
-const socket = io("/");
 
 function QuestionView({ question, answers }) {
-
   const [userId, setUserId] = useState("");
   const { isAuthenticated, token } = useSelector((state) => state.auth);
 
   const [view, setView] = useState({});
   const navigate = useNavigate();
-  const [disable, setDisable] = useState(false)
+  const [disable, setDisable] = useState(false);
   const [messages, setMessages] = useState([]);
   const [comment, setComment] = useState({
     thread: "",
     userId: "",
-    answerId: ""
+    answerId: "",
   });
 
   const [errores, setErrores] = useState({
-    answer: ''
-  })
+    answer: "",
+  });
   const [answer, setAnswer] = useState({
     answer: "",
     userId: "",
@@ -42,59 +45,53 @@ function QuestionView({ question, answers }) {
   const dispatch = useDispatch();
 
   const handleChange = (event, id) => {
-    event.preventDefault()
+    event.preventDefault();
     setComment({
       ...comment,
       thread: event.target.value,
       userId: userId,
-      answerId: id
+      answerId: id,
+      questionId: question.id,
     });
-
   };
 
   const answersSubmit = (answer) => {
     if (Object.keys(errores).length === 0) {
       dispatch(createAnswer(answer)).then(() => {
-        dispatch(getQuestionDetail(question.id))
+        dispatch(getQuestionDetail(question.id));
         setAnswer({
           answer: "",
-        })
+        });
         swal({
-          icon: 'success',
-          text: "Respuesta creada con exito"
+          icon: "success",
+          text: "Respuesta creada con exito",
         }).catch(() => {
           swal({
-            icon: 'error',
-            text: `contacte a soporte`
-          })
-        })
-      })
+            icon: "error",
+            text: `contacte a soporte`,
+          });
+        });
+      });
     }
   };
 
   const handleSubmit = (message) => {
     dispatch(createAnswerComment(message))
       .then((response) => {
-        setComment({ thread: "", })
+        setComment({ thread: "" });
         swal({
-          icon: 'success',
-          text: "Respuesta creada con exito"
-        })
-        console.log(question)
-        setMessages([...messages, {
-          body: message.thread,
-          from: answers?.map(answer => answer.Comments?.map(comment => comment.User?.name))
-        }]);
-        socket.emit("message", message.thread);
+          icon: "success",
+          text: "Respuesta creada con exito",
+        });
+        console.log(question);
+        dispatch(getQuestionDetail(question.id));
       })
       .catch((error) => {
         swal({
-          icon: 'error',
-          text: "contacte a soporte"
-        })
-        console.error("Error al agregar el comentario", error);
+          icon: "error",
+          text: "contacte a soporte",
+        });
       });
-
   };
   useEffect(() => {
     if (!token || !isAuthenticated) {
@@ -111,16 +108,7 @@ function QuestionView({ question, answers }) {
       }
     }
   }, [isAuthenticated, navigate, token]);
-  const receiveMessage = (message) =>
-    setMessages((state) => [...state, message]);
 
-  useEffect(() => {
-    socket.on("message", receiveMessage);
-
-    return () => {
-      socket.off("message", receiveMessage);
-    };
-  }, []);
   const handleView = (id) => {
     setView((prevState) => ({
       ...prevState,
@@ -128,10 +116,12 @@ function QuestionView({ question, answers }) {
     }));
   };
   const handleAnswers = (event) => {
-    setErrores(validation({
-      ...answer,
-      answer: event.target.value
-    }))
+    setErrores(
+      validation({
+        ...answer,
+        answer: event.target.value,
+      })
+    );
     setAnswer({
       ...answer,
       answer: event.target.value,
@@ -139,50 +129,48 @@ function QuestionView({ question, answers }) {
       questionId: question.id,
     });
   };
-  useEffect(() => {
-    socket.on("message", (message) => {
-      setMessages((state) => [...state, { body: message, from: "other" }]);//!
-    });
-  }, []);
+
   useEffect(() => {
     if (errores.answer) {
-      setDisable(true)
+      setDisable(true);
     } else {
-      setDisable(false)
+      setDisable(false);
     }
-
   }, [handleAnswers, errores.answer]);
 
   const deleteQuestions = (handleClose) => {
-    handleClose()
+    handleClose();
     swal({
       title: "¿Estás seguro quse sea eliminar está pregunta?",
       text: "Una vez eliminada por puede ser recuperada!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
-    })
-      .then((willDelete) => {
-        if (willDelete) {
-          dispatch(deleteQuestion(question.id)).then(() => {
+    }).then((willDelete) => {
+      if (willDelete) {
+        dispatch(deleteQuestion(question.id))
+          .then(() => {
             swal("Tu pregunta ha sido eliminada con éxito!", {
               icon: "success",
             });
-            navigate('/foro');
-          }).catch(() => {
-            swal("Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.", {
-              icon: 'error',
-            });
+            navigate("/foro");
+          })
+          .catch(() => {
+            swal(
+              "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
+              {
+                icon: "error",
+              }
+            );
           });
-
-        }
-      });
+      }
+    });
   };
 
   const editQuestion = (handleClose) => {
-    handleClose()
-    navigate(`/foro/edit/${question.id}`)
-  }
+    handleClose();
+    navigate(`/foro/edit/${question.id}`);
+  };
   const dateQuestion = question?.createdAt?.split("T")[0];
   console.log(question);
 
@@ -192,15 +180,19 @@ function QuestionView({ question, answers }) {
         <div className={style.container}>
           <div className={style.div1}>
             <h1>{question?.title}</h1>
-            {
-              question.userId === userId
-              &&
+            {question.userId === userId && (
               <div className={style.option}>
-                <CustomizedMenus deleteQuestion={deleteQuestions} editQuestion={editQuestion} />
+                <CustomizedMenus
+                  deleteQuestion={deleteQuestions}
+                  editQuestion={editQuestion}
+                />
               </div>
-            }
+            )}
             <div className={style.date}>
-              <ImageAvatars image={question?.User?.profile_picture} name={question?.User?.name} />
+              <ImageAvatars
+                image={question?.User?.profile_picture}
+                name={question?.User?.name}
+              />
               <a>
                 Fecha de publicacion: <h5>{dateQuestion}</h5>
               </a>
@@ -216,7 +208,6 @@ function QuestionView({ question, answers }) {
                 </div>
               ))
             )}
-
           </div>
 
           <div className={style.contain}>
@@ -245,7 +236,21 @@ function QuestionView({ question, answers }) {
                 <div key={index} className={style.response}>
                   <p>{respuesta.answer}</p>
                   <h4>{respuesta.User.name}</h4>
-
+                  <div>
+                    {respuesta?.Comments?.map((el) => (
+                      <div
+                        key={el.id}
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 1,
+                        }}
+                      >
+                        <div>{el.User?.name}:</div>
+                        <div>{el.thread}</div>
+                      </div>
+                    ))}
+                  </div>
                   {!view[index] ? (
                     <a onClick={() => handleView(index)}>
                       Añadir comentario
@@ -260,19 +265,9 @@ function QuestionView({ question, answers }) {
 
                   {view[index] && (
                     <div className={style.comment}>
-                      <ul>
-                        {messages.map((message, index) => {
-                          return (
-
-                            <li key={index}>
-                              {message.from}:{message.body}
-                            </li>
-                          );
-                        })}
-                      </ul>
                       <p>Comentar</p>
                       <textarea
-                        style={{ resize: 'none' }}
+                        style={{ resize: "none" }}
                         name="thread"
                         type="text"
                         cols="6"
@@ -290,35 +285,37 @@ function QuestionView({ question, answers }) {
             })}
             <div className={style.question}>
               <div className={style.errores}>
-
                 {errores.answer && <p>{errores.answer}</p>}
               </div>
 
-              <textarea style={{ resize: 'none' }} type="text" name='answer' rows="8" value={answer.answer} onChange={handleAnswers} />
+              <textarea
+                style={{ resize: "none" }}
+                type="text"
+                name="answer"
+                rows="8"
+                value={answer.answer}
+                onChange={handleAnswers}
+              />
 
-              {
-                disable ?
-                  <button
-                    disabled
-                    className={style.buttonDisable}
-                    onClick={() => answersSubmit(answer)}
-                  >
-                    Responder
-                  </button>
-                  :
-
-                  <button
-                    onClick={() => answersSubmit(answer)}
-                  >
-                    Responder
-                  </button>
-              }
+              {disable ? (
+                <button
+                  disabled
+                  className={style.buttonDisable}
+                  onClick={() => answersSubmit(answer)}
+                >
+                  Responder
+                </button>
+              ) : (
+                <button onClick={() => answersSubmit(answer)}>Responder</button>
+              )}
             </div>
           </div>
         </div>
-      ) : <div className={style.container}>
-        <h1>Cargando</h1>
-      </div>}
+      ) : (
+        <div className={style.container}>
+          <h1>Cargando</h1>
+        </div>
+      )}
     </div>
   );
 }

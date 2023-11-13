@@ -4,17 +4,18 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuestionDetail } from "../../Redux/actions/questionsActions";
 import { io } from "socket.io-client";
-import { getAnswers } from "../../Redux/actions/answersActions";
 
 function QuestionDetail() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const questionDetail = useSelector(state => state.questions?.questionDetail)
-  const answers = useSelector(state => state.answers?.answers)
+  const questionDetail = useSelector(
+    (state) => state.questions?.questionDetail
+  );
+  const answers = useSelector((state) => state.answers?.answers);
   const socket = io();
+
   useEffect(() => {
     dispatch(getQuestionDetail(id));
-    dispatch(getAnswers);
     socket?.on(`question_${id}`, () => {
       dispatch(getQuestionDetail(id));
     });
@@ -23,7 +24,6 @@ function QuestionDetail() {
       socket?.removeAllListeners(`question_${id}`);
     };
   }, []);
-
 
   /*   useEffect(() => {
       dispatch(getQuestionDetail(id));

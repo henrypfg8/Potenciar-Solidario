@@ -1,0 +1,10 @@
+.ant-notification-notice-message {
+    color: #005692 !important;
+}
+
+.ant-notification-notice-icon {
+    color: red !important;
+}
+.ant-notification-notice-description{
+    font-size:2rem;
+}

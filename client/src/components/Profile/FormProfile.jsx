@@ -10,6 +10,8 @@ import { getCodeList } from 'country-list';
 import { validateAge } from '../../helpers/ValidateAge';
 import Swiper from '../Form/Swiper';
 
+
+
 const FormProfile = ({ userProfile, setSuccess, success }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { register, formState: { errors }, handleSubmit, control, setValue } = useForm();
@@ -30,7 +32,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
         { value: country, label: country }
     ))
     // Función para abrir el modal
-    const showModal = () => {
+    const showModal = async () => {
         setIsModalOpen(true);
         setValue('name', userProfile.name)
         setValue('lastname', userProfile.lastname)
@@ -152,7 +154,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                                 name='phone'
                                 control={control}
                                 rules={{ required:false, maxLength: 15 }}
-
+                                defaultValue={userProfile.phone}
                                 render={({ field, fieldState: { error } }) => {
                                     return (
                                         <PhoneInput
@@ -226,50 +228,7 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                             {...register('geographical_area_residence', { required: false })} />
 
                     </div>
-                    {/* Campo para el DNI */}
-                    <div className='profile__field'>
-                        <label className='profile__label' htmlFor="DNI">DNI</label>
-                        <div>
-                            {errors?.DNI?.type === 'required' && <p className='profile__alert'>El DNI es requerido</p>}
-                            {errors?.DNI?.type === 'minLength' && <p className='profile__alert'>El DNI debe tener al menos 5 caracteres</p>}
-                            {errors?.DNI?.type === 'maxLength' && <p className='profile__alert'>El DNI debe tener menos de 8 caracteres</p>}
-
-                            <input className='profile__input' type="text"
-                                id='DNI'
-
-                                {...register('DNI', { required: true, minLength: 5, maxLength: 8 })} />
-                        </div>
-                    </div>
-                    {/* Campo para el DNI */}
-                    <div className='profile__field'>
-                        <label className='profile__label' htmlFor="DNI">Organización</label>
-                        <div>
-                            {errors?.organization?.type === 'required' && <p className='profile__alert'>La organización es requerida</p>}
-                            {errors?.organization?.type === 'minLength' && <p className='profile__alert'>La organización debe tener al menos 2 caracteres</p>}
-                            <Controller
-                                name='organization'
-                                rules={{ required: true, minLength: 2, }}
-                                control={control}
-                                render={({ field, fieldState: { error } }) => {
-                                    return <Select
-
-                                        {...field}
-                                        className='auth__input'
-                                        options={ongOptions}
-                                        id='organization'
-                                        onChange={(e) => {
-                                            // Actualiza el valor del formulario
-                                            field.onChange(e.value);
-
-                                        }}
-                                        value={ongOptions.find(option => option.value === field.value)}
-
-                                    />
-                                }}
-
-                            />
-                        </div>
-                    </div>
+          
                     <button className='profile__btn' type='submit'>Guardar Cambios</button>
                 </form>
             </Modal>

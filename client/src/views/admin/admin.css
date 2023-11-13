@@ -21,6 +21,7 @@
 
 .admin__container {
     display: grid;
+    width: 100%;
   
 }
 @media(min-width: 768px){
@@ -39,20 +40,6 @@
 
 
 
-.drawer {
-    position: fixed;
-    top: 0;
-    left: -250px;
-    width: 250px;
-    height: 100%;
-    background-color: #333;
-    color: white;
-    transition: left 0.3s;
-  }
-  
-  .drawer.open {
-    left: 0;
-  }
 
 
 

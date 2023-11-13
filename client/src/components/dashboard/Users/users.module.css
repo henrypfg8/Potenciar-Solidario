@@ -1,10 +1,16 @@
 .users__container {
-    width: 90%;
-    margin: 2rem auto;
-    height: 80vh;
-    overflow-x: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    width: 95%;
+}
+
+@media(min-width: 768px){
+    .users__container {
+        width: 90%;
+        margin: 2rem auto;
+        height: 80vh;
+        overflow-x: scroll;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
 }
 .users__container::-webkit-scrollbar {
     display: none;

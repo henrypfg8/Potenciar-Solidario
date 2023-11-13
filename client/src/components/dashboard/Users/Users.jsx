@@ -23,7 +23,7 @@ const Users = () => {
         <table className={Styles.users__table}>
           <thead className={Styles.users__head}>
             <tr  className={Styles.users__tr}>
-            <th className={Styles.users__td}>Foto</th>
+              <th></th>
               <th className={Styles.users__td}>Nombre</th>
               <th className={Styles.users__td}>Apellido</th>
               <th className={Styles.users__td}>Correo</th>

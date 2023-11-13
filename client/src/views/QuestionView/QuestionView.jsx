@@ -250,7 +250,7 @@ function QuestionView({ question, answers }) {
                           className={style.comments}
                         >
                           <p>{el.thread} -</p>
-                          <h3>{el.User?.name},</h3>   
+                          <h3>{el.User?.name}</h3>   
                           <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
                         </div>
                       );

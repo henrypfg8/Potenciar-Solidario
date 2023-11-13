@@ -7,6 +7,9 @@ try {
     throw new Error("La answer, userId y questionId son obligatorios");
   }
   const Answer = await CreateAnswer({ answer, userId, questionId });
+
+  global.io.emit(`question_${questionId}`);
+  
   res.status(201).json(Answer);
 } catch (error) {
   console.log(error)

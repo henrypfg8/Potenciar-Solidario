@@ -43,16 +43,13 @@ module.exports = (sequelize) => {
         allowNull: false,
         validate: {
           isDate: true,
-          isAfter: "2023-09-30", // Permite desde "2023-10-01" en adelante
-    
         },
       },
       endDate: {
         type: DataTypes.DATEONLY,
         allowNull: true,
         validate: {
-          isDate: true,
-          isBefore: "2025-12-02", // Permite hasta "2023-12-01"
+        isDate: true,
         },
       },
       modificationDate: {
@@ -72,7 +69,7 @@ module.exports = (sequelize) => {
         },
       },
       status: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: true,
       },
       organization: {
@@ -96,9 +93,7 @@ module.exports = (sequelize) => {
       registrationLink: {
         type: DataTypes.STRING,
         allowNull: true,
-        // validate: {
-        //   isUrl: true,
-        // },
+   
       },
 
       contact: {

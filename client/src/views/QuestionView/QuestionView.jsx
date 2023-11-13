@@ -83,7 +83,7 @@ function QuestionView({ question, answers }) {
         setComment({ thread: "" });
         swal({
           icon: "success",
-          text: "Respuesta creada con exito",
+          text: "Comentario creada con éxito",
         });
         console.log(question);
         dispatch(getQuestionDetail(question.id));

@@ -37,7 +37,8 @@ import Users from "./components/dashboard/Users/Users";
 import UserQuestions from "./components/dashboard/UserQuestions/UserQuestions";
 import UserComent from "./components/dashboard/UsersComents/UserComent";
 import PublishPosts from "./components/dashboard/UsersPosts/PublishedPosts/PublishPosts";
-// import PendingPosts from "./components/dashboard/UsersPosts/PendingPosts/PendingPosts";
+import PendingPosts from "./components/dashboard/UsersPosts/PendingPosts/PendingPosts";
+import { getQuestions } from "./Redux/actions/questionsActions";
 
 function App() {
   const users = useSelector((state) => state.users);
@@ -64,6 +65,7 @@ function App() {
       dispatch(setLoading());
       setAuthenticated(true);
       dispatch(getPosts()).then(() => dispatch(hideLoading()));
+      dispatch(getQuestions()).then(() => dispatch(hideLoading()))
       dispatch(getOngs());
       dispatch(getCategories());
       dispatch(getForumCategories());
@@ -100,7 +102,7 @@ function App() {
             <Route path="/profile/posts" element={<UserPostsView />} />
             <Route path="/new-password/" element={<ResetPassword />} />
             <Route path="/admin" element={<Admin />}>
-              {/* <Route index element={<Dashboard />} /> */}
+              <Route index element={<PendingPosts />} />
               <Route path="users" element={<Users />} />
               <Route path="questions" element={<UserQuestions />} />
               <Route path="coments" element={<UserComent />} />

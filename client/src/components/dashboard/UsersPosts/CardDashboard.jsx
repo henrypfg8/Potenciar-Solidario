@@ -3,13 +3,16 @@ import proptypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { deletePost } from '../../../Redux/actions/postsActions'
 import { Modal, } from 'antd';
-
 import { getPosts } from '../../../Redux/actions/postsActions';
 import Styles from './dashboard.module.css';
 import { configureHeaders } from '../../../Redux/auth/configureHeaders ';
 import axios from 'axios';
 
-const CardDashboard = ({ post, setRefreshData, refreshData }) => {
+
+
+
+
+const CardDashboard = ({ post, setRefreshData, refreshData, isCheked, onCheckboxChange}) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChekedModal, setIsChekedModal] = useState(false);
@@ -25,9 +28,7 @@ const CardDashboard = ({ post, setRefreshData, refreshData }) => {
 
   }, [refreshData])
 
-  const handleOpenModalCheked = () => {
-    setIsChekedModal(true);
-  }
+
   const handleCloseModalCheked = () => {
     setIsChekedModal(false);
   }
@@ -82,12 +83,17 @@ const CardDashboard = ({ post, setRefreshData, refreshData }) => {
         <p className={Styles.dashboard__p}>{post.description}</p>
       </div>
       <div className={Styles.dashboard__selected}>
-        <button className={Styles.dashboard__publish} onClick={handleOpenModalCheked}>{post.status === '1' ? 'sacar' : 'publicar'}</button>
+      <input
+        type="checkbox"
+        checked={isCheked}
+        onChange={() => onCheckboxChange(post)}
+      />
+        {/* <button className={Styles.dashboard__publish} onClick={handleOpenModalCheked}>{post.status === '1' ? 'sacar' : 'publicar'}</button> */}
         <button
           onClick={showModal}
           className={Styles.dashboard__btn__delete}>
-            Eliminar
-          {/* <i className={`fa fa-trash ${Styles.dashboard__trash_icon}`} aria-hidden="true"></i> */}
+           
+          <i className={`fa fa-trash ${Styles.dashboard__trash_icon}`} aria-hidden="true"></i>
         </button>
         <Modal
             title="Deseas eliminar este post?"
@@ -121,7 +127,9 @@ const CardDashboard = ({ post, setRefreshData, refreshData }) => {
 CardDashboard.propTypes = {
   post: proptypes.object.isRequired,
   setRefreshData: proptypes.func.isRequired,
-  refreshData: proptypes.bool.isRequired
+  refreshData: proptypes.bool.isRequired,
+  isCheked: proptypes.bool,
+  onCheckboxChange : proptypes.func
 
 }
 

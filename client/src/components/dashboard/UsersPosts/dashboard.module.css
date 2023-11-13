@@ -9,6 +9,11 @@
     background: #06213d;
     cursor: pointer;
 }
+.dashboard__btn2:hover{
+    background: #ad0404;
+    cursor: pointer;
+
+}
 .dashboard::-webkit-scrollbar {
     display: none;
   }
@@ -19,6 +24,17 @@
     margin: 0 auto;
 
 }
+.dashboard__buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: fixed;
+
+    gap: 1rem;
+    bottom: 1rem;
+}
+
 .dashboard__btn{
    
     background: var(--dark_blue_color);
@@ -27,18 +43,29 @@
     padding: 0.5rem;
     border: none;
     border-radius: 4px;
-    bottom: 1rem;
-    width: 90%;
     text-align: center;
-    position: fixed; 
-    right: 0;
-    left: 0;
-    margin: auto;
+    width: 90%;
 
+}
+.dashboard__btn2{
+    background: #d10404;
+    color: #fff;
+    font-weight: 900;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    width: 90%;
 }
 @media(min-width: 768px){
     .dashboard__btn{
-        width: 50%;
+        width: 30%;
+        right: inherit;
+        left: inherit;
+    
+    }
+    .dashboard__btn2{
+        width: 30%;
         right: inherit;
         left: inherit;
     
@@ -128,6 +155,7 @@
     display: flex;
     align-items: center;
     height: 100%;
+    
 
     justify-content: center;
 }
@@ -135,11 +163,11 @@
     color: red;
 }
 .dashboard__btn__delete{
-    color: #fff;
+    color: #ff0000;
     border: none;
     padding: 0.5rem;
     border-radius: 4px;
-    background: #ff0000;
+    background: #fff;
    
     display: block;
 
@@ -147,7 +175,6 @@
  
 }
 .dashboard__btn__delete:hover{
-    background: #d10505;
     cursor: pointer;
 
 
@@ -173,4 +200,26 @@
  
     }
 
+}
+.button__flexDiv{
+    display: flex;
+    width: 90%;
+    margin: 1rem auto 0 auto;
+    justify-content: flex-end;
+}
+
+.button__selected{
+    border: solid 1px #ddd;	
+    padding: 0.5rem;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+
+    
+}
+.dashboard__post{
+    text-align: center;
+    margin: 1rem auto ;
+    font-weight: 900;
+    font-size: 1.3rem;
 }

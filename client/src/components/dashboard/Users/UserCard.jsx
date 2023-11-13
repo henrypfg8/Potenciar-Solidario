@@ -69,7 +69,7 @@ const UserCard = ({ user }) => {
                             <i className={`fa fa-trash ${Styles.users__trash_icon}`} aria-hidden="true"></i>
                         </button>
                         <Modal
-                            title="Deseas eliminar este usuario? Ya no podrás recuperarlo"
+                            title={`Deseas eliminar a ${user.name}? Ya no podrás recuperarlo`}
                             open={isModalOpen}
                             onCancel={handleClose}
                             cancelText="Cancelar"

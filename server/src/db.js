@@ -11,7 +11,8 @@ const sequelize = new Sequelize({
   password: DB_PASSWORD,
   port: DB_PORT,
   database: DB_NAME,
-  dialect: "mysql",
+  dialect: "mysql", 
+  logging:false
 });
 
 const basename = path.basename(__filename);

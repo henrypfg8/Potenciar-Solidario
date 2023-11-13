@@ -116,10 +116,11 @@ function App() {
           {pathname === "/register" ? <Register /> : null}
           {pathname === "/reset-password" ? <Email /> : null}
           {pathname === "/new-password/" ? <ResetPassword /> : null}
+
           {pathname !== "/register" &&
           pathname !== "/login" &&
           pathname !== "/reset-password" &&
-          pathname !== "/new-password" &&
+          pathname !== "/new-password/" &&
           !authenticated ? (
             <BlurredBackground />
           ) : null}

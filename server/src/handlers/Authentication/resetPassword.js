@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { User } = require("../../db");
+const { User,Otp } = require("../../db");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const {resetSuccess} = require("../emailNotif/resetSuccess");
@@ -34,6 +34,7 @@ const resetPassword = async (req, res) => {
                 user.password = hashPassword;
                 await user.save()
                 resetSuccess(user.email)
+                const cleanToken = await Otp.destroy({ where: { token: token } });
                 return res.status(200).json({message: "Contraseña actualizada"})
             }
         } catch (error) {

@@ -186,6 +186,14 @@
     align-items: center;
     justify-items: self-start;
     padding: 0.4rem;
+
+}
+.date a{
+    display: flex;
+    align-items: center;
+    /* margin: 1rem; */
+    font-size: 0.9rem;
+    
 }
 .h5{
     margin: 0.4rem;
@@ -234,6 +242,27 @@
     left: 40%;
     margin: 10px;
 }
+.comments{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-top: 1px solid rgba(68, 68, 68, 0.446);
+    padding: 0.8rem;
+    margin: 0.4rem;
+}
+.comments p{
+    font-size: 0.8rem;
+}
+.comments h3{
+    font-size: 0.8rem;
+    color: #042685;
+    margin-left: 0;
+
+}
+.comments h4{
+    font-size: 0.7rem;
+    color: #7d7d7d;
+}
 @media (max-width: 575.98px){
     .question textarea{
         width: 70vw;
@@ -251,7 +280,13 @@
     .div1{
         max-width: 90vw;
     }
+    .comments{
+        display: flex;
+        flex-direction: column;
+    }
+
 }
+
 
 @media (max-width: 768px){
     .response{

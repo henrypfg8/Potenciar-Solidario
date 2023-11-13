@@ -4,6 +4,7 @@ import { Open } from '../../assets/iconsForoHome';
 import LeftBar from '../../components/LeftBar/LeftBar';
 import style from './Foro.module.css';
 import { NavLink } from "react-router-dom";
+import { Oval } from 'react-loader-spinner';
 
 // eslint-disable-next-line react/prop-types
 function ForumView({ questions }) {
@@ -23,20 +24,30 @@ function ForumView({ questions }) {
                     ?
                     <div className={style.containerCenter}>
                         <LeftBar />
-                        <div>
-                            <h1>
-                                No hay ninguna pregunta
-                            </h1>
-                        </div>
+                        
+        <Oval
+          height={80}
+          width={80}
+          color="#005692"
+          wrapperStyle={{ margin: "auto auto" }}
+          wrapperClass=""
+          visible={true}
+          ariaLabel="oval-loading"
+          secondaryColor="#a4d4ff"
+          strokeWidth={3}
+          strokeWidthSecondary={3}
+        />
+      
                     </div>
                     :
                     <div className={style.containerCenter}>
                         <LeftBar />
                         <div className={style.container}>
-                            <h1>Foro general</h1>
+                            <h1 className={style.titleCenter}>Foro general</h1>
                             <div className={style.div}>
 
                                 {getQuestion?.sort((a, b) => b.id - a.id).map(question => {
+                                    let date = new Date(question.createdAt)
                                     return (
                                         <div key={question.id} className={style.contain}>
 
@@ -47,16 +58,13 @@ function ForumView({ questions }) {
                                                 <p>{question.text}</p>
                                             </div>
                                             <br style={{ border: '1px red solid' }} />
-                                            {/* <NavLink to={`/foro/${question.id}`}>
-                                        <button>Ver más<Open /></button>
-                                        </NavLink> */}
                                             <footer
                                                 className={style.anwers}>
 
                                                 {question.Answers.length === 1 && <p><strong>{question.Answers.length}</strong> respuesta</p>}
                                                 {question.Answers.length > 1 && <p><strong>{question.Answers.length}</strong> respuestas</p>}
                                                 <p>@{question.User.name}</p>
-                                                <p>Creada el: {question?.createdAt?.split("T")[0]}</p>
+                                                <p>Creada el: {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</p>
                                             </footer>
                                         </div>
                                     )

@@ -26,7 +26,7 @@ import Admin from "./views/admin/Admin";
 import ProfileView from "./views/ProfileView/ProfileView";
 import DrawerProfile from "./components/Profile/DrawerProfile";
 import QuestionCreateView from "./views/QuestionCreateView/QuestionCreateView";
-import QuestionView from "./views/QuestionView/QuestionView";
+// import QuestionView from "./views/QuestionView/QuestionView";
 import QuestionDetail from "./components/QuestionsDetail/QuestionDetail";
 import UserPostsView from "./views/UserPostsView/UserPostsView";
 import BlurredBackground from "./components/BlurHome/BlurredBackground";
@@ -37,7 +37,7 @@ import Users from "./components/dashboard/Users/Users";
 import UserQuestions from "./components/dashboard/UserQuestions/UserQuestions";
 import UserComent from "./components/dashboard/UsersComents/UserComent";
 import PublishPosts from "./components/dashboard/UsersPosts/PublishedPosts/PublishPosts";
-import PendingPosts from "./components/dashboard/UsersPosts/PendingPosts/PendingPosts";
+// import PendingPosts from "./components/dashboard/UsersPosts/PendingPosts/PendingPosts";
 
 function App() {
   const users = useSelector((state) => state.users);
@@ -100,7 +100,7 @@ function App() {
             <Route path="/profile/posts" element={<UserPostsView />} />
             <Route path="/new-password/" element={<ResetPassword />} />
             <Route path="/admin" element={<Admin />}>
-              <Route index element={<Dashboard />} />
+              {/* <Route index element={<Dashboard />} /> */}
               <Route path="users" element={<Users />} />
               <Route path="questions" element={<UserQuestions />} />
               <Route path="coments" element={<UserComent />} />

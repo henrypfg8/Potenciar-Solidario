@@ -10,6 +10,7 @@ const {HandlerRemoveLike} = require("../handlers/Publication/removeLike.js")
 // COMMENTS PUBLICATION
 const {CreateHandler} = require('../handlers/PubliComment/Create.js')
 const {DeleteHandler} = require("../handlers/PubliComment/delete.js")
+const {PutHandler} = require("../handlers/PubliComment/Put")
 
 //HANDLERS de USUARIOS.
 const { userPostHandlers } = require("../handlers/User/PostUser");
@@ -104,6 +105,7 @@ router.delete("/posts/:id", deletePublication);
 //Rutas de comentarios de Publicacion
 router.post('/comment/create', CreateHandler)
 router.delete('/comment/delete/:id', DeleteHandler )
+router.put("/comment/:id" , PutHandler )
 
 //Rutas de PREGUNTAS.
 router.put("/questions/:id", UpdateQuestionH);

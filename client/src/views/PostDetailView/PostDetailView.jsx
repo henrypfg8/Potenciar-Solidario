@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Styles from "./postDetail.module.css";
 //
 import axios from "axios";
@@ -44,33 +45,33 @@ const Detail = () => {
     User,
   } = postDetail;
 
-const [ reviews, setReviews ] = useState({
-  comment: "",
-  userId: "",
-  publicationId: "",
-})
-const [commentList, setCommentList] = useState([])
+  const [reviews, setReviews] = useState({
+    comment: "",
+    userId: "",
+    publicationId: "",
+  });
 
+  console.log("soy el reviews", reviews);
 
-const [ userId, setUserId ] = useState("");
+  const [userId, setUserId] = useState("");
 
-const { isAuthenticated, token } = useSelector((state) => state.auth);
+  const { isAuthenticated, token } = useSelector((state) => state.auth);
 
-useEffect(() => {
-  if (!token || !isAuthenticated) {
-    swal("Necesita loguearse para poder realizar un comentario").then(
-      (value) => {
-        navigate("/login");
-      }
-    );
-  }
-  if (token) {
-    const decodify = jwtDecode(token);
-    if (decodify) {
-      setUserId(decodify.id);
+  useEffect(() => {
+    if (!token || !isAuthenticated) {
+      swal("Necesita loguearse para poder realizar un comentario").then(
+        (value) => {
+          navigate("/login");
+        }
+      );
     }
-  }
-}, [isAuthenticated, navigate, token]);
+    if (token) {
+      const decodify = jwtDecode(token);
+      if (decodify) {
+        setUserId(decodify.id);
+      }
+    }
+  }, [isAuthenticated, navigate, token]);
 
   useEffect(() => {
     dispatch(getPostDetail(id));
@@ -86,30 +87,26 @@ useEffect(() => {
       comment: event.target.value,
       userId: userId,
       publicationId: id,
-    })
-  }
+    });
+  };
 
   const handleSubmit = (comment) => {
     dispatch(createPostReview(comment))
-    .then(() => {
-      const newCommentList = [...commentList, comment]; // Agrega el comentario a la lista de comentarios
-      setCommentList(newCommentList);
-      setReviews({ comment: "" });
-      swal({
-        icon: "success",
-        text: "Reseña creada con éxito",
+      .then((response) => {
+        dispatch(getPostDetail(id))
+        setReviews({ comment: "" });
+        swal({
+          icon: "success",
+          text: "Reseña creada con éxito",
+        });
+      })
+      .catch((error) => {
+        swal({
+          icon: "error",
+          text: "contacte a soporte",
+        });
       });
-    })
-    .catch(() => {
-      swal({
-        icon: "error",
-        text: "contacte a soporte",
-      });
-    });
-  }
-  console.log(postDetail);
-
- 
+  };
   return (
     <div className={Styles.DetailView}>
       {
@@ -175,37 +172,32 @@ useEffect(() => {
           </div>
           <a className={Styles.category}>{category}</a>
         </div>
-    
-    </div>
-    <div className={Styles.container}>
+      </div>
+      <div className={Styles.containerR}>
+        {postDetail?.PublicationComments?.map((element, index) => {
+           var date = new Date(element.createdAt);
+          return (
+            <div className={Styles.reseñas} key={index}>
+              <h1 className={Styles.name}>{element?.User?.name}</h1>
+              <p className={Styles.p}>{element?.comment}</p>{" "}
+              <h4 className={Styles.dateee}>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
+            </div>
+          );
+        })}
+      </div>
+      <div className={Styles.textareaContainer}>
+        <p className={Styles.p}>Comentar</p>
+        <textarea
+         className={Styles.textarea}
+          name="comment"
+          type="text"
+          value={reviews.comment}
+          onChange={(event) => handleChange(event, id)}
+        />
 
-      {postDetail?.PublicationComments?.map((element, index)=>{
-        return(<div key={index} className={Styles.comment}><ImageAvatars name={element.User?.name} image={element.User?.profile_picture} /><p>{element.comment}</p> </div>)
-      })
-}
-      {commentList.map((comment, index) => (
-        <div key={index} >
-      <p>Comentario {index + 1}:</p>
-      <p>{comment.comment}</p>
-    </div>
-  ))}
-    </div>
-     
-      <div>
-        <p>Comentar</p>
-        <textarea 
-        style={{resize: "none"}}
-        name="review"
-        type="text"
-        value={reviews.comment}
-        onChange={(event) => handleChange(event, id)} />
-
-        <button onClick={() => handleSubmit(reviews)}>
+        <button className={Styles.button} onClick={() => handleSubmit(reviews)}>
           Añadir reseña
         </button>
-       
-      
-        
       </div>
     </div>
     :

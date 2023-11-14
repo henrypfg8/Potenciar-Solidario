@@ -52,7 +52,7 @@ console.log(isAdmin)
 console.log(userProfile)
 console.log()
 
-  // eslint-disable-next-line no-unused-vars
+
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   //Manejo de Header segun el scroll:
@@ -140,7 +140,7 @@ console.log()
           pathname !== "/login" &&
           pathname !== "/reset-password" &&
           pathname !== "/new-password/" &&
-          pathname !== "/admin/*" &&
+   
           !authenticated ? (
             <BlurredBackground />
           ) : null}

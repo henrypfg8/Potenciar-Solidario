@@ -8,7 +8,7 @@ import { uploadImageCloudinary } from '../../Form/cloudinary';
 import { updateProfile } from '../../../Redux/auth/AuthActions';
 import { useEffect,  } from 'react';
 import {jwtDecode} from 'jwt-decode'
-
+import { UserOutlined, } from '@ant-design/icons';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ const Sidebar = () => {
           <div className={Styles.sidebar__header}>
             <h1 className={Styles.sidebar__title}>Panel de adminisrtración</h1>
             <div className={Styles.sidebar__photoFlex}>
-             {userProfile?.profile_picture && userProfile?.admin ?<Avatar src={userProfile?.admin && userProfile?.profile_picture} size={80}/>:  <Avatar size={80} /> }
+             {userProfile?.profile_picture && userProfile?.admin ?<Avatar src={userProfile?.admin && userProfile?.profile_picture} size={80}/>:  <Avatar icon={<UserOutlined/>} size={80} /> }
               <label  className={Styles.button__photo} htmlFor="image">{userProfile?.profile_picture && userProfile?.admin? 'Cambiar de foto' : 'Agregar foto'}</label>
               <input type="file" id='image' style={{display : 'none'}} onChange={handleUpdatePhotoProfile}/>
             </div>

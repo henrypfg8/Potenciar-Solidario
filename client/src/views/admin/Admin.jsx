@@ -15,7 +15,7 @@ const Admin = () => {
     console.log()
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (!token || !isAuthenticated || !userProfile.admin ) {
+        if (!token || !isAuthenticated  ) {
             // Si no hay token o el estado no está autenticado, redirigir a login
             navigate('/login');
             return
@@ -31,7 +31,7 @@ const Admin = () => {
           
             return
         } 
-        console.log('soy admin')
+        
     }, [dispatch, isAuthenticated, navigate]);
  
 console.log(pathname)

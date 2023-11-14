@@ -67,7 +67,7 @@ const UserCard = ({ user }) => {
         dispatch(updateProfile(id, {...user, active : user.active ? false : true}))
             .then (() => {
                 setRefreshData(false);
-               
+              
                 setIsModaBlockOpnen(false)
             })
     }

@@ -246,8 +246,10 @@ export const createPostReview = (comment) => {
         config
       );
       dispatch({ type: CREATE_POST_REVIEW, payload: response.data });
+      return Promise.resolve(response)
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
+      return Promise.reject(error)
     }
   };
 };

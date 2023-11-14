@@ -32,7 +32,6 @@
 .textarea{
     height: 100px;
     resize: none;
-    
 }
 .button{
     padding: 0.5rem 1rem;
@@ -124,14 +123,16 @@
     transform: scale(1.05);
 }
 .comment{
-    margin: 0.7rem;
+    display: flex;
+    margin: 0.6rem;
     padding: 0.6rem;
     border: 1px #30306d solid;
-    min-width: 80vw;
+    min-width: 85vw;
     max-width: 85vw;
     background-color: rgba(135, 135, 135, 0.1);
     border-radius: 5px;
     box-shadow: 1px 3px rgba(0, 0, 0, 0.3);
+    align-items: center;
 }
 .comment p{
     margin: 1rem;
@@ -165,6 +166,7 @@
     width: 50vw;
     word-wrap: break-word;
     word-break: break-word;
+    line-break: auto;
 }
 .button:hover{
     background: #095184bb;
@@ -179,3 +181,10 @@
     margin-left: 180px;
     align-items: center;
 }}
+ .organization{
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}

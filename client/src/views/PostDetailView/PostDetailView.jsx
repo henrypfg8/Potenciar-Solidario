@@ -27,7 +27,7 @@ import swal from "sweetalert";
 
 const Detail = () => {
   const postDetail = useSelector((state) => state.posts.postDetail);
-  console.log('ondaaaaaaa',postDetail)
+  console.log('ondaaaaaaa', postDetail)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -112,105 +112,113 @@ const Detail = () => {
     <div className={Styles.DetailView}>
       {
         !Array.isArray(postDetail)
-        ? 
-        <div className={Styles.DetailView}>
-      <div className={Styles.contain}>
-        {image && <img src={image} alt="Imagen" />}
-        <div className={Styles.Detail}>
-          <div className={Styles.header}>
-            <ImageAvatars image={User?.profile_picture} name={User?.name} />
-            <h3>{organization}</h3>
-          </div>
-          <div>
-            <h1>{title}</h1>
-            <div className={Styles.header}>
-              <div>
-                <h3>Fecha de publicacion:</h3>
-                <time dateTime={creationDate}>{creationDate}</time>
+          ?
+          <div className={Styles.DetailView}>
+            <div className={Styles.contain}>
+              {image && <img src={image} alt="Imagen" />}
+              <div className={Styles.Detail}>
+                <div className={Styles.header}>
+                  <ImageAvatars image={User?.profile_picture} name={User?.name} />
+                  <h3>{organization}</h3>
+                </div>
+                <div>
+                  <h1>{title}</h1>
+                  <div className={Styles.header}>
+                    <div>
+                      <h3>Fecha de publicacion:</h3>
+                      <time dateTime={creationDate}>{creationDate}</time>
+                    </div>
+                    <div>
+                      <h3>Contacto:</h3>
+                      <p>{contact}</p>
+                    </div>
+                  </div>
+                </div>
+                <p className={Styles.text}>{description}</p>
+                <div className={Styles.header}>
+                  <div className={Styles.date}>
+                    <div>
+                      <h3>Desde: </h3>
+                      <p>
+                        {startDate}
+                      </p>
+                      {endDate && <p>{endDate}</p>}
+                    </div>
+                  </div>
+                  {url && (
+                    <a
+                      href={url}
+                      className={Styles.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Mas informacion
+                    </a>
+                  )}
+                  {registrationLink && (
+                    <a
+                      href={registrationLink}
+                      className={Styles.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Inscribirse
+                    </a>
+                  )}
+                </div>
+                <a className={Styles.category}>{category}</a>
               </div>
-              <div>
-                <h3>Contacto:</h3>
-                <p>{contact}</p>
-              </div>
+
+            </div>
+            <div className={Styles.container}>
+              {postDetail?.PublicationComments?.map((element, index) => {
+                let date = new Date(element.createdAt);
+                return (<div key={index} className={Styles.comment}>
+                  <div className={Styles.avatar}>
+                    <ImageAvatars name={element?.User?.name} image={element?.User?.profile_picture} />
+                    <h3>ONG: {element?.User?.organization}</h3>
+                  </div>
+                  <div className={Styles.organization}>
+
+                    <p>{element?.comment}</p>
+                    <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
+                  </div>
+                </div>
+                )
+              })
+              }
+
+            </div>
+
+            <div className={Styles.textareaContainer}>
+              <p className={Styles.p}>Comentar</p>
+              <textarea
+                className={Styles.textarea}
+                name="comment"
+                type="text"
+                value={reviews.comment}
+                onChange={(event) => handleChange(event, id)}
+              />
+              <button className={Styles.button} onClick={() => handleSubmit(reviews)}>
+                Añadir reseña
+              </button>
             </div>
           </div>
-          <p className={Styles.text}>{description}</p>
-          <div className={Styles.header}>
-            <div className={Styles.date}>
-              <div>
-                <h3>Desde: </h3>
-                <p>
-                {startDate}
-                </p>
-                {endDate && <p>{endDate}</p>}
-              </div>
-            </div>
-            {url && (
-              <a
-                href={url}
-                className={Styles.link}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Mas informacion
-              </a>
-            )}
-            {registrationLink && (
-              <a
-                href={registrationLink}
-                className={Styles.link}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Inscribirse
-              </a>
-            )}
-          </div>
-          <a className={Styles.category}>{category}</a>
-        </div>
-    
-    </div>
-    <div className={Styles.container}>
-      {postDetail?.PublicationComments?.map((element, index)=>{
-        let date = new Date(element.createdAt);
-        return(<div key={index} className={Styles.comment}><ImageAvatars name={element?.User?.name} image={element?.User?.profile_picture} />
-        <h3>ONG: {element?.User?.organization}</h3>
-        <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
-        <p>{element?.comment}</p> </div>)
-      })
-}
-    
-    </div>
-     
-    <div className={Styles.textareaContainer}>
-        <p className={Styles.p}>Comentar</p>
-        <textarea
-         className={Styles.textarea}
-          name="comment"
-          type="text"
-          value={reviews.comment}
-          onChange={(event) => handleChange(event, id)}
-        />
-        <button className={Styles.button} onClick={() => handleSubmit(reviews)}>
-          Añadir reseña
-        </button>
-      </div>
-    </div>
-    :
-    <Oval
-    height={80}
-    width={80}
-    color="#005692"
-    wrapperStyle={{ margin: "auto auto" }}
-    wrapperClass=""
-    visible={true}
-    ariaLabel="oval-loading"
-    secondaryColor="#a4d4ff"
-    strokeWidth={3}
-    strokeWidthSecondary={3}
-  />
+          :
+          <Oval
+            height={80}
+            width={80}
+            color="#005692"
+            wrapperStyle={{ margin: "auto auto" }}
+            wrapperClass=""
+            visible={true}
+            ariaLabel="oval-loading"
+            secondaryColor="#a4d4ff"
+            strokeWidth={3}
+            strokeWidthSecondary={3}
+          />
       }
-      </div>
+    </div>
   );
 };
 export default Detail;

@@ -1,4 +1,5 @@
 const { User } = require("../../db");
+const {userBanNoti} = require("../../handlers/emailNotif/UserBan");
 
 const updateUser = async (id, userData) => {
   try {
@@ -21,6 +22,8 @@ const updateUser = async (id, userData) => {
     user.password = userData.password;
     user.organization = userData.organization;
     user.active = userData.active;
+
+    if(user.active === false) userBanNoti (user.email)
 
     await user.save();
     

@@ -8,6 +8,16 @@ body{
 }
 
 @media(min-width: 768px){
+    .question__container {
+     height: 80vh;
+     overflow-y: scroll;
+     scrollbar-width: none;
+     -ms-overflow-style: none;
+    }
+    .question__container::-webkit-scrollbar {
+        display: none;
+      }
+    
     
 }
 .question__grid{

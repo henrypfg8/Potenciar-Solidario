@@ -15,7 +15,8 @@ const updateUserHan = async (req, res) => {
     geographical_area_residence,
     admin,
     password,
-    organization
+    organization,
+    active
   } = req.body;
   try {
 
@@ -32,7 +33,8 @@ const updateUserHan = async (req, res) => {
         geographical_area_residence,
         admin,
         password,
-        organization
+        organization,
+        active
     })
     if (!user) return res.status(401).json({msg: "No se ha podido actualizar el usuario"})
         

@@ -6,11 +6,11 @@ const ControllerGetQuestion = async (id) => {
       where: { id: id },
       include: [
         {
-          model: Answer, include: [{ model: User, attributes: ['name', 'profile_picture'] }, {
-          model: Comment, include: { model: User, attributes: ['name', 'profile_picture'] }
+          model: Answer, include: [{ model: User, attributes: ['name', 'profile_picture', 'id'] }, {
+          model: Comment, include: { model: User, attributes: ['name', 'profile_picture', 'id'] }
           
         }]},
-        {model: User, attributes: ['name',  'profile_picture']}, 
+        {model: User, attributes: ['name',  'profile_picture', 'id']}, 
       ]
       
     });

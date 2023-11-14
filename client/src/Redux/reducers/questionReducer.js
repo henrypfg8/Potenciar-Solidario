@@ -11,8 +11,8 @@ import {
   GET_QUESTIONS_FILTERED,
   SET_QUESTIONS_FILTERS,
   SET_QUESTIONS_ORDERINGS,
-  SET_SELECTED_FILTER_OPTION,
-  SET_SELECTED_ORDERING_OPTION
+  SET_SELECTED_FILTER_OPTIONS,
+  SET_SELECTED_ORDERING_OPTION,
 } from "../action types/questionsActionTypes.js";
 
 const initialState = {
@@ -22,17 +22,18 @@ const initialState = {
     fromDate: "",
     untilDate: "",
   },
-  selectedFilterOption: {
-    label: 'Todas las categorias',
-    value: 0,
-    name: 'category'
+  selectedFilterOptions: {
+    category: { label: "Todas las categorias", value: 0, name: "category" },
+    user: { label: "Todos los usuarios", value: "", name: "user" },
   },
   questionsOrderings: {
-    value: 'date',
-    direction: 'asc'
+    value: "date",
+    direction: "asc",
   },
   selectedOrderingOption: {
-    name: 'value', value: 'date', label: 'Fecha de creación'
+    name: "value",
+    value: "date",
+    label: "Fecha de creación",
   },
   allQuestions: [],
   questionDetail: null,
@@ -112,26 +113,26 @@ const questionReducer = (state = initialState, action) => {
         ...state,
         questionsFilters: action.payload,
       };
-    
+
     case SET_QUESTIONS_ORDERINGS: {
       return {
         ...state,
-        questionsOrderings: action.payload
-      }
+        questionsOrderings: action.payload,
+      };
     }
 
-    case SET_SELECTED_FILTER_OPTION: {
+    case SET_SELECTED_FILTER_OPTIONS: {
       return {
         ...state,
-        selectedFilterOption: action.payload
-      }
+        selectedFilterOptions: action.payload,
+      };
     }
 
-    case SET_SELECTED_ORDERING_OPTION: 
+    case SET_SELECTED_ORDERING_OPTION:
       return {
         ...state,
-        selectedOrderingOption: action.payload
-      }
+        selectedOrderingOption: action.payload,
+      };
 
     default:
       return { ...state };

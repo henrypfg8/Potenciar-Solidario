@@ -12,6 +12,7 @@ import NoPosts_Icon from "../../assets/NoPosts_Icon";
 export default function Posts() {
   const loading = useSelector((state) => state.posts.loading);
   const posts = useSelector((state) => state.posts.posts);
+
   const orderBy = useSelector((state) => state.posts.orderBy);
 
   function transformarFecha(inputFecha) {
@@ -37,7 +38,7 @@ export default function Posts() {
     <div className={Styles.Posts}>
       <h1 style={{ marginTop: "10px" }}>Publicaciones de la cartelera</h1>
 
-      {posts?.length === 0 && !loading || !posts && !loading ? (
+      {(posts?.length === 0 && !loading) || (!posts && !loading) ? (
         <div className={Styles.Posts__NoPosts}>
           <NoPosts_Icon className={Styles.NoPosts__icon} />
           <h3 className={Styles.NoPosts__Text}>
@@ -111,6 +112,44 @@ export default function Posts() {
                   ?.sort((a, b) =>
                     a.title.toLowerCase() > b.title.toLowerCase() ? -1 : 1
                   )
+                  .map((post) => (
+                    <Post
+                      key={post.id}
+                      id={post?.id}
+                      title={post?.title}
+                      organization={post?.organization}
+                      category={post?.category}
+                      description={post?.description}
+                      image={post?.image}
+                      startDate={transformarFecha(post?.startDate)}
+                      userID={post?.userID}
+                      likes={post?.likes}
+                      Likes={post?.Likes}
+                    />
+                  ))
+              )
+            ) : orderBy.value === "creationDate" ? (
+              orderBy.direction === "asc" ? (
+                posts
+                  ?.sort((a, b) => (a.creationDate < b.creationDate ? 1 : -1))
+                  .map((post) => (
+                    <Post
+                      key={post.id}
+                      id={post?.id}
+                      title={post?.title}
+                      organization={post?.organization}
+                      category={post?.category}
+                      description={post?.description}
+                      image={post?.image}
+                      startDate={transformarFecha(post?.startDate)}
+                      userID={post?.userID}
+                      likes={post?.likes}
+                      Likes={post?.Likes}
+                    />
+                  ))
+              ) : (
+                posts
+                  ?.sort((a, b) => (a.creationDate < b.creationDate ? -1 : 1))
                   .map((post) => (
                     <Post
                       key={post.id}

@@ -19,12 +19,13 @@ import {
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router";
 import { element } from "prop-types";
+import { Oval } from "react-loader-spinner";
+import swal from "sweetalert";
 
 //
 
 const Detail = () => {
   const postDetail = useSelector((state) => state.posts.postDetail);
-  console.log("por si o por no?", postDetail);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -43,14 +44,12 @@ const Detail = () => {
     User,
   } = postDetail;
 
-  const [reviews, setReviews] = useState({
-    comment: "",
-    userId: "",
-    publicationId: "",
-  });
-  const [commentList, setCommentList] = useState([]);
-
-  console.log("soy el reviews", reviews);
+const [ reviews, setReviews ] = useState({
+  comment: "",
+  userId: "",
+  publicationId: "",
+})
+const [commentList, setCommentList] = useState([])
 
   const [userId, setUserId] = useState("");
 
@@ -91,26 +90,35 @@ const Detail = () => {
 
   const handleSubmit = (comment) => {
     dispatch(createPostReview(comment))
-      .then((response) => {
-        const newCommentList = [...commentList, comment]; // Agrega el comentario a la lista de comentarios
-        setCommentList(newCommentList);
-        setReviews({ comment: "" });
-        swal({
-          icon: "success",
-          text: "Reseña creada con éxito",
-        });
-      })
-      .catch((error) => {
-        swal({
-          icon: "error",
-          text: "contacte a soporte",
-        });
+    .then(() => {
+      const newCommentList = [...commentList, comment]; // Agrega el comentario a la lista de comentarios
+      setCommentList(newCommentList);
+      setReviews({ comment: "" });
+      swal({
+        icon: "success",
+        text: "Reseña creada con éxito",
       });
-  };
+    })
+    .catch(() => {
+      swal({
+        icon: "error",
+        text: "contacte a soporte",
+      });
+    });
+  }
+  console.log(postDetail);
 
+ 
   return (
     <div className={Styles.DetailView}>
+      {
+        !Array.isArray(postDetail)
+        ? 
+        <div className={Styles.DetailView}>
+
+
       <div className={Styles.contain}>
+
         {image && <img src={image} alt="Imagen" />}
 
         <div className={Styles.Detail}>
@@ -137,7 +145,9 @@ const Detail = () => {
             <div className={Styles.date}>
               <div>
                 <h3>Desde: </h3>
-                @@ -90,10 +91,10 @@
+                <p>
+                {startDate}
+                </p>
                 {endDate && <p>{endDate}</p>}
               </div>
             </div>
@@ -164,39 +174,51 @@ const Detail = () => {
           </div>
           <a className={Styles.category}>{category}</a>
         </div>
-      </div>
-      <div className={Styles.containerR}>
-        {postDetail?.PublicationComments?.map((element, index) => {
-          return (
-            <div className={Styles.reseñas} key={index}>
-              <h1 className={Styles.name}>{element.User.name}</h1>
-              <p className={Styles.p}>{element.comment}</p>{" "}
-            </div>
-          );
-        })}
-      </div>
-      {commentList.map((comment, index) => (
-        <div key={index}>
-          <p>Comentario {index + 1}:</p>
-          <p>{comment.comment}</p>
-        </div>
-      ))}
+    
+    </div>
+    <div className={Styles.container}>
 
-      <div className={Styles.textareaContainer}>
-        <p className={Styles.p}>Comentar</p>
-        <textarea
-         className={Styles.textarea}
-          name="comment"
-          type="text"
-          value={reviews.comment}
-          onChange={(event) => handleChange(event, id)}
-        />
+      {postDetail?.PublicationComments?.map((element, index)=>{
+        return(<div key={index} className={Styles.comment}><ImageAvatars name={element.User?.name} image={element.User?.profile_picture} /><p>{element.comment}</p> </div>)
+      })
+}
+      {commentList.map((comment, index) => (
+        <div key={index} >
+      <p>Comentario {index + 1}:</p>
+      <p>{comment.comment}</p>
+    </div>
+  ))}
+    </div>
+     
+      <div>
+        <p>Comentar</p>
+        <textarea 
+        style={{resize: "none"}}
+        name="review"
+        type="text"
+        value={reviews.comment}
+        onChange={(event) => handleChange(event, id)} />
 
         <button className={Styles.button} onClick={() => handleSubmit(reviews)}>
           Añadir reseña
         </button>
       </div>
     </div>
+    :
+    <Oval
+    height={80}
+    width={80}
+    color="#005692"
+    wrapperStyle={{ margin: "auto auto" }}
+    wrapperClass=""
+    visible={true}
+    ariaLabel="oval-loading"
+    secondaryColor="#a4d4ff"
+    strokeWidth={3}
+    strokeWidthSecondary={3}
+  />
+      }
+      </div>
   );
 };
 export default Detail;

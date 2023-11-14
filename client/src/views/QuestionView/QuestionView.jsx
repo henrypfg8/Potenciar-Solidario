@@ -10,6 +10,7 @@ import { jwtDecode } from "jwt-decode";
 import {
   createAnswer,
   createAnswerComment,
+  deleteAnswer,
 } from "../../Redux/actions/answersActions";
 import { useNavigate } from "react-router";
 import {
@@ -179,6 +180,34 @@ function QuestionView({ question, answers }) {
     handleClose();
     navigate(`/foro/edit/${question.id}`);
   };
+
+  const deleteAnswers = (index) => {
+    swal({
+      title: "¿Desea eliminar esta respuesta?",
+      text: "! Una vez eliminada no se puede revertir !",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        console.log(index);
+        deleteAnswer(index).then(() => {
+          swal("Tu respuesta ha sido eliminada con exito!", {
+            icon: "success",
+          });
+
+        })  .catch(() => {
+          swal(
+            "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
+            {
+              icon: "error",
+            }
+          );
+        })
+      }
+    });
+  }
   const dateQuestion = new Date (question?.createdAt)
 
   return (
@@ -243,12 +272,20 @@ function QuestionView({ question, answers }) {
 
             {question.Answers?.map((respuesta, index) => {
               var date = new Date(respuesta.createdAt);
+              console.log(respuesta);
               return (
                 <div key={index} className={style.response}>
                   <p>{respuesta.answer}</p>
                   <h4>{respuesta.User.name} - {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}<h4></h4></h4>
                   
                  
+                    {
+                      userId === respuesta.userId && 
+                      <div className={style.edit}>
+                        <a onClick={() => deleteAnswers(respuesta.id)}>Eliminar Pregunta</a>
+                        <a href="">Editar Pregunta</a>
+                      </div>
+                    }
                   <div>
                     {respuesta?.Comments?.map((el, index) => {
                       var date = new Date(el.createdAt);
@@ -261,11 +298,6 @@ function QuestionView({ question, answers }) {
                           <p>{el.thread} -</p>
                           <h3>{el.User?.name}</h3>   
                           <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
-                          {
-                            userId === question.userId && <div>
-
-                            </div>
-                          }
                         </div>
                       );
                     })}

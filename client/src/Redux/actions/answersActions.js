@@ -71,8 +71,12 @@ export const deleteAnswer = (id) => {
         config
       );
       dispatch({ type: DELETE_ANSWER, payload: response.data });
+      console.log(response);
+      return Promise.resolve(response)
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
+      console.log(error);
+      return Promise.reject(error)
     }
   };
 };

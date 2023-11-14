@@ -71,10 +71,10 @@ Category.hasMany(Question, { foreignKey: "categoryId" });
 Review.belongsTo(Publication, { foreignKey: "publicationId" });
 
 Question.belongsTo(User, { foreignKey: "userId" });
-Question.hasMany(Answer, { foreignKey: "questionId" });
+Question.hasMany(Answer, { onDelete: 'CASCADE', foreignKey: "questionId" });
 Answer.belongsTo(User, { foreignKey: "userId" });
 Answer.belongsTo(Question, { foreignKey: "questionId" });
-Answer.hasMany(Comment, { foreignKey: "answerId" });
+Answer.hasMany(Comment, { onDelete: 'CASCADE', foreignKey: "answerId" });
 Comment.belongsTo(Answer, { foreignKey: "answerId" });
 Comment.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Comment, { foreignKey: "userId" });

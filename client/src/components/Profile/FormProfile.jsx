@@ -39,10 +39,10 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
+   
     // Función para actualizar los datos del perfil
     const onSubmit = handleSubmit((data) => { // Función para actualizar los datos del perfil
-        dispatch(updateProfile(userProfile.id, { ...data, password: userProfile.password }))
+        dispatch(updateProfile(userProfile.id, { ...data, password: userProfile.password,  }))
             .then(() => {
                 setIsModalOpen(false);
                 setSuccess(true);

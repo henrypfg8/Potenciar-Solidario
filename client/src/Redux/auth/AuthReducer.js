@@ -30,7 +30,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 token: action.payload.jwt,
                 isAuthenticated: true,
-                // isAdmin: action.payload.user.isAdmin,
+                isAdmin: action.payload.user.admin ? true : false,
                 loading: false,
             }
         case types.LOGOUT:
@@ -49,6 +49,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 token: action.payload.jwt,
                 isAuthenticated: true,
+      
                 loading: false,
                 deleteSuccess: false,
             }

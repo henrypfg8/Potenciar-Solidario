@@ -10,7 +10,7 @@
     .sidebar {
         display: flex;
         flex-direction: column;
-        height: 90vh;
+       
         background: var(--blue_color);
         z-index: 1;
     }

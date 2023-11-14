@@ -8,7 +8,7 @@ UPDATE_QUESTION,
 GET_QUESTIONS_FILTERED,
 SET_QUESTIONS_FILTERS,
 SET_QUESTIONS_ORDERINGS,
-SET_SELECTED_FILTER_OPTION,
+SET_SELECTED_FILTER_OPTIONS,
 SET_SELECTED_ORDERING_OPTION
 } from "../action types/questionsActionTypes.js";
 
@@ -106,22 +106,19 @@ export const updateQuestion = (id, updatedQuestionData) => {
 };
 
 export const getQuestionsFiltered = (filters) => {
-  let category = filters.category;
+  const category = filters.category;
   let fromDate = filters.fromDate;
   let untilDate = filters.untilDate;
+  const user = filters.user;
 
   if (fromDate !== '') fromDate = new Date(fromDate).toISOString();
   if (untilDate !== '') untilDate = new Date(untilDate).toISOString();
   
-  // let category = filters.category;
-  // let fromDate = new Date(filters.fromDate)
-  // let untilDate = new Date(filters.untilDate)
-
   return async function (dispatch) {
     try {
       const config = configureHeaders();
       const { data } = await axios.get(
-        `http://localhost:19789/questionFilters?category=${category}&fromDate=${fromDate}&untilDate=${untilDate}`,
+        `http://localhost:19789/questionFilters?category=${category}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
         config
       );
       dispatch({ type: GET_QUESTIONS_FILTERED, payload: data });
@@ -145,9 +142,9 @@ export const setQuestionsOrderings = (orderBy) => {
   }
 }
 
-export const setSelectedFilterOption = (selectedFilterOption) => {
+export const setSelectedFilterOptions = (selectedFilterOption) => {
   return {
-    type: SET_SELECTED_FILTER_OPTION,
+    type: SET_SELECTED_FILTER_OPTIONS,
     payload: selectedFilterOption
   }
 }

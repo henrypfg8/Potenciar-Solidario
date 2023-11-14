@@ -3,12 +3,13 @@ const { Question, User, Answer } = require("../../db");
 const applyFiltersToQuestions = async (req, res) => {
     try {
        
-        const {category, fromDate, untilDate} = req.query;
+        const {category, fromDate, untilDate, user} = req.query;
+        console.log(user)
         
         let allQuestions = await Question.findAll({
             include: [
                 { model: Answer , include: {model: User , attributes: ['name', 'profile_picture']}},
-                {model: User, attributes: ['name', 'profile_picture']}
+                {model: User, attributes: ['name', 'profile_picture', 'id']}
             ]
         });
 
@@ -34,6 +35,11 @@ const applyFiltersToQuestions = async (req, res) => {
                 createdAt.setUTCSeconds(0);
                 return new Date(createdAt) <= until
             });
+        }
+
+        if (user !== "") {
+            allQuestions = allQuestions.filter(question => question.User.id === user);
+            
         }
       
         res.status(200).json(allQuestions);

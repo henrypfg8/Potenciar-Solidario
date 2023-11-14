@@ -31,6 +31,7 @@ const Users = () => {
               <th className={Styles.users__td}>País</th>
               <th className={Styles.users__td}>Telefono</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           {users && users?.map(user => {

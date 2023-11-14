@@ -5,13 +5,18 @@ import { Modal, Avatar } from 'antd'
 import { useEffect, useState } from 'react';
 import { getUsers, deleteUser } from '../../../Redux/actions/usersActions';
 import { UserOutlined, } from '@ant-design/icons';
-
+import { configureHeaders } from '../../../Redux/auth/configureHeaders ';
+import { updateProfile } from '../../../Redux/auth/AuthActions';
+import { useNavigate } from 'react-router-dom';
 
 const UserCard = ({ user }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [refreshData, setRefreshData] = useState(false);
-
+    const config = configureHeaders()
+    //Modal para cofirmar y blocquer el usuario
+    const [isModalBlockOpen, setIsModaBlockOpnen] = useState(false)
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
 
@@ -45,11 +50,27 @@ const UserCard = ({ user }) => {
                 setRefreshData(false)
 
             })
-
-
     };
 
+    //Modales para bloquear usuario
 
+    const showModalBlock = () => {
+        setIsModaBlockOpnen(true)
+    }
+
+    const hanldeCloseModalBlock = () => {
+        setIsModaBlockOpnen(false)
+    }
+    //Funcion para bloquear/desbloquear usuario por peticion put
+    const handleUpdateUserBlock = id => {
+        setRefreshData(true);
+        dispatch(updateProfile(id, {...user, active : user.active ? false : true}))
+            .then (() => {
+                setRefreshData(false);
+               
+                setIsModaBlockOpnen(false)
+            })
+    }
     return (
         <>
             
@@ -81,6 +102,24 @@ const UserCard = ({ user }) => {
                             okButtonProps={{ danger: true }}
                         />
                        
+                    </td>
+                    <td>
+                        <button onClick={showModalBlock} className={Styles.user__btn_block}>
+                            <img  className={Styles.users__icon__block} src={user.active ? "/images/desbloqueado.png" : "/images/bloquear.png"} alt="img-block" />
+                        </button>
+                        <Modal
+                            title={user.active ? `Deseas bloquear a ${user.name}. Ya no podrá ingresar a la pagina` :`Deseas desbloquear a ${user.name}`}
+                            open={isModalBlockOpen}
+                            onCancel={hanldeCloseModalBlock}
+                            onOk={() => handleUpdateUserBlock(user.id)}
+                            cancelText='cancelar'
+                            okText={user.active ? 'Sí, bloquear' : 'Sí, desbloquear'}
+                            cancelButtonProps={{
+                                style: { backgroundColor: '#fff', color: '#005692', border: '1px solid #005692' }
+                            }}
+                            okButtonProps={{ danger: true }}
+
+                        />
                     </td>
                 </tr>
             </tbody>

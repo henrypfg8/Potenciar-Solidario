@@ -26,11 +26,13 @@ const authReducer = (state = initialState, action) => {
             }
         case types.LOGIN:
           localStorage.setItem('token', action.payload.jwt);
+            console.log(action.payload)
+
             return {
                 ...state,
                 token: action.payload.jwt,
                 isAuthenticated: true,
-                isAdmin: action.payload.user.admin ? true : false,
+                isAdmin: state.userProfile.admin ,
                 loading: false,
             }
         case types.LOGOUT:
@@ -49,7 +51,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 token: action.payload.jwt,
                 isAuthenticated: true,
-      
+                isAdmin: state.userProfile.admin ,
                 loading: false,
                 deleteSuccess: false,
             }
@@ -58,6 +60,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 userProfile: action.payload,
                 loading: false,
+                isAdmin: state.userProfile.admin ,
             } 
         case types.UPDATE_PROFILE:
             return {

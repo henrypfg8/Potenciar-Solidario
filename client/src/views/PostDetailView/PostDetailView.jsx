@@ -27,6 +27,7 @@ import swal from "sweetalert";
 
 const Detail = () => {
   const postDetail = useSelector((state) => state.posts.postDetail);
+  console.log('ondaaaaaaa',postDetail)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -171,7 +172,10 @@ const Detail = () => {
     </div>
     <div className={Styles.container}>
       {postDetail?.PublicationComments?.map((element, index)=>{
-        return(<div key={index} className={Styles.comment}><ImageAvatars name={element.User?.name} image={element.User?.profile_picture} /><p>{element.comment}</p> </div>)
+        let date = new Date(element.createdAt);
+        return(<div key={index} className={Styles.comment}><ImageAvatars name={element.User?.name} image={element.User?.profile_picture} />
+        <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
+        <p>{element.comment}</p> </div>)
       })
 }
     

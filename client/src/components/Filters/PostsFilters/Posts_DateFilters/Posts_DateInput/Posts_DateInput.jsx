@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 //
 import DatePicker from "react-datepicker";
@@ -12,7 +12,7 @@ import {
   setPostsFilters,
   getPostsFiltered,
   setLoading,
-  hideLoading
+  hideLoading,
 } from "../../../../../Redux/actions/postsActions";
 
 const Posts_DateInput = ({
@@ -21,10 +21,9 @@ const Posts_DateInput = ({
   fromDate,
   untilDate,
 }) => {
-
-
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const datePickerRef = useRef(null);
 
   const filters = useSelector((state) => state.posts.postsFilters);
 
@@ -37,37 +36,40 @@ const Posts_DateInput = ({
     if (handleFromDate) handleFromDate(e);
     else handleUntilDate(e);
 
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
 
   const handleReset = (e) => {
     e.preventDefault();
     if (fromDate) {
       dispatch(setLoading());
-      dispatch(setPostsFilters({ ...filters, fromDate: '' }));
-      dispatch(getPostsFiltered({ ...filters, fromDate: '' }));
-      
-      setTimeout(() => {
-        dispatch(hideLoading());
-      }, 400)
-    }
-    if (untilDate) {
-      dispatch(setLoading());
-      dispatch(setPostsFilters({ ...filters, untilDate: '' }));
-      dispatch(getPostsFiltered({ ...filters, untilDate: '' }));
+      dispatch(setPostsFilters({ ...filters, fromDate: "" }));
+      dispatch(getPostsFiltered({ ...filters, fromDate: "" }));
 
       setTimeout(() => {
         dispatch(hideLoading());
-      }, 400)
+      }, 400);
+    }
+    if (untilDate) {
+      dispatch(setLoading());
+      dispatch(setPostsFilters({ ...filters, untilDate: "" }));
+      dispatch(getPostsFiltered({ ...filters, untilDate: "" }));
+
+      setTimeout(() => {
+        dispatch(hideLoading());
+      }, 400);
     }
   };
+
+
+  /////////////////////////////////////////
 
   return (
     <div className={Styles.DateInput}>
       <button
         className={Styles.DateInput__button}
         onClick={handleClick}
-        id={isOpen ? Styles.active : ''}
+        id={isOpen ? Styles.active : ""}
       >
         {fromDate
           ? format(fromDate, "dd-MM-yyyy")
@@ -76,21 +78,21 @@ const Posts_DateInput = ({
           : "Seleccione una fecha"}
       </button>
 
-      
-      <div className={Styles.DateInput__datePicker}>
+      <div className={Styles.DateInput__datePicker} ref={datePickerRef}>
         {isOpen && (
-          <DatePicker
-            selected={fromDate || untilDate}
-            onChange={handleChange}
-            inline
-          />
+          <div>
+            <DatePicker
+              selected={fromDate || untilDate}
+              onChange={handleChange}
+              inline
+            />
+          </div>
         )}
       </div>
 
       <div className={Styles.DateInput__Icon}>
         <CleanDate_Icon className={Styles.icon} onClick={handleReset} />
       </div>
-
     </div>
   );
 };

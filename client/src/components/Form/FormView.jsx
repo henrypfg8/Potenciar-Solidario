@@ -11,7 +11,6 @@ const FormView = ({ post, setPost }) => {
             ...post,
             image: '',
             imagePreview: null
-        
         })
     }
     return (

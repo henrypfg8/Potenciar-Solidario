@@ -37,7 +37,7 @@ export default function Posts() {
     <div className={Styles.Posts}>
       <h1 style={{ marginTop: "10px" }}>Publicaciones de la cartelera</h1>
 
-      {posts?.length === 0 || !posts ? (
+      {posts?.length === 0 && !loading || !posts && !loading ? (
         <div className={Styles.Posts__NoPosts}>
           <NoPosts_Icon className={Styles.NoPosts__icon} />
           <h3 className={Styles.NoPosts__Text}>

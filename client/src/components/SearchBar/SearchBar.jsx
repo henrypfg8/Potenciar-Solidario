@@ -66,7 +66,7 @@ export default function SearchBar() {
       <input
         type="text"
         className={Styles["searchBar__input"]}
-        placeholder="Buscar por titulo o descripcion"
+        placeholder="Buscar por titulo, descripción y organización."
         onChange={changeHandler}
         value={inputValue}
       ></input>

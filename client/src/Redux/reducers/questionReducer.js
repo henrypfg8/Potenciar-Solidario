@@ -10,6 +10,7 @@ import {
   UPDATE_QUESTION,
   GET_QUESTIONS_FILTERED,
   SET_QUESTIONS_FILTERS,
+  SET_QUESTIONS_ORDERINGS
 } from "../action types/questionsActionTypes.js";
 
 const initialState = {
@@ -18,6 +19,10 @@ const initialState = {
     category: "",
     fromDate: "",
     untilDate: "",
+  },
+  questionsOrderings: {
+    value: 'date',
+    direction: 'asc'
   },
   allQuestions: [],
   questionDetail: null,

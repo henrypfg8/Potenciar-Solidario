@@ -1,15 +1,14 @@
-import Styles from "./orderings.module.css";
+import Styles from "./postsOrderings.module.css";
 //
 import Select from "react-select";
 //
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //
-import { setOrderings } from "../../Redux/actions/postsActions";
+import { setOrderings, setSelectedOrderingsOption } from "../../../Redux/actions/postsActions";
 
-import axios from 'axios';
-import { configureHeaders } from "../../Redux/auth/configureHeaders ";
 
+//falta arreglar bug -> no cambia el estado global
 export default function Orderings() {
 
   const dispatch = useDispatch();
@@ -18,10 +17,13 @@ export default function Orderings() {
     value: "title",
     direction: "asc",
   });
-
+  const selectedOrderingsOption = useSelector(state => state.posts.selectedOrderingsOption)
+  const [ selectedOption, setSelectedOption ] = useState({
+    label: 'Fecha de inicio', value: 'date', name: 'value'
+  })
   const options = [
     {
-      label: "Fecha",
+      label: "Fecha de inicio",
       name: "value",
       value: "date",
     },
@@ -32,19 +34,30 @@ export default function Orderings() {
     },
   ];
 
+  //console.log('el estado global desde el componente', selectedOrderingsOption);
+
   const changeHandler = (e) => {
-    const { name, value } = e.target ? e.target : e;
+    const { name, value, label } = e.target ? e.target : e;
     dispatch(
-      setOrderings({
+      setOrderings ({
         ...orderByLOCAL,
         [name]: value,
       })
     );
+    if (!e.target) {
+      dispatch(setSelectedOrderingsOption({label, name, value}));
+      setSelectedOption({label, name, value});
+    }
+    
   };
 
   useEffect(() => {
     setOrderByLOCAL(orderBy);
-  }, [orderBy]);
+  }, [orderBy])
+
+  useEffect(() => {
+    setSelectedOption(selectedOrderingsOption);
+  }, [selectedOrderingsOption])
 
   return (
     <div className={Styles.Orderings}>
@@ -56,12 +69,14 @@ export default function Orderings() {
         defaultValue={options[0]}
         menuPlacement="top"
         onChange={changeHandler}
+        value={selectedOption}
       />
 
       <div className={Styles.Orderings__radioInputs}>
         <div className={Styles.RadioInputs__Option}>
           <label className={Styles.label}>Ascendente</label>
           <input
+            className={Styles.input}
             type="radio"
             name="direction"
             value="asc"
@@ -72,6 +87,7 @@ export default function Orderings() {
         <div className={Styles.RadioInputs__Option}>
           <label className={Styles.label}>Descendente</label>
           <input
+            className={Styles.input}
             type="radio"
             name="direction"
             value="desc"

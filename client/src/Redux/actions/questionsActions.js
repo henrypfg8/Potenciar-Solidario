@@ -6,7 +6,8 @@ GET_QUESTION_DETAIL,
 CLEAR_QUESTION_DETAIL,
 UPDATE_QUESTION,
 GET_QUESTIONS_FILTERED,
-SET_QUESTIONS_FILTERS
+SET_QUESTIONS_FILTERS,
+SET_QUESTIONS_ORDERINGS
 } from "../action types/questionsActionTypes.js";
 
 import axios from "axios";
@@ -124,3 +125,10 @@ export const setQuestionsFilters = (filters) => {
     payload: filters,
   };
 };
+
+export const setQuestionsOrderings = (orderBy) => {
+  return {
+    type: SET_QUESTIONS_ORDERINGS,
+    payload: orderBy
+  }
+}

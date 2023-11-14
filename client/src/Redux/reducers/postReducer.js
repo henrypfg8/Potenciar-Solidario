@@ -19,7 +19,8 @@ import {
   SET_LOADING,
   HIDE_LOADING,
   SET_ORDERINGS,
-  SET_SELECTED_FILTER_OPTIONS
+  SET_SELECTED_FILTER_OPTIONS,
+  SET_SELECTED_ORDERINGS_OPTION
 } from "../action types/postsActionTypes.js";
 
 const initialState = {
@@ -39,6 +40,9 @@ const initialState = {
   orderBy: {
     value: "date",
     direction: "asc",
+  },
+  selectedOrderingsOption: {
+    label: 'Fecha de inicio', name: 'value', value: 'date'
   },
   
   searchValue: "",
@@ -206,6 +210,13 @@ const postReducer = (state = initialState, action) => {
     return {
       ...state,
       selectedFilterOptions: action.payload
+    }
+
+    case SET_SELECTED_ORDERINGS_OPTION: 
+    console.log(action.payload)
+    return {
+      ...state,
+      selectedOrderingsOptions: action.payload
     }
 
     default:

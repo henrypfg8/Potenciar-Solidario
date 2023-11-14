@@ -51,7 +51,7 @@ const Post = (props) => {
   };
 
   useEffect(() => {
-    if (props.Likes.some(like => like.userId === jwtDecode(token).id)) {
+    if (props?.Likes?.some(like => like.userId === jwtDecode(token).id)) {
       setIsLiked(true);
     }
   }, [])

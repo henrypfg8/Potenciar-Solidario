@@ -95,7 +95,6 @@ export default function PostFilters() {
       ...selectedFilterOptionsLOCAL,
       [name]: {label, name, value}
     }))
-    console.log('el handler', {...selectedFilterOptionsLOCAL, [name]: {label, name, value}})
     setFiltersLOCAL({ ...filters, [name]: value });
     dispatch(setLoading());
     dispatch(setPostsFilters({ ...filters, [name]: value }));

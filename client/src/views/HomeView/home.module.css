@@ -1,14 +1,16 @@
 .HomeView {
-    min-height: 95vh;
-    max-height: 120vh;
+    max-height: 86vh;
+    min-height: 86vh;
     display: flex; 
 }
     
 
 
-@media screen and (max-width: 768px) {
+
+@media screen and (max-width: 992px) {
     .HomeView {
         flex-direction: column;
+        min-height: 115vh;
     }
 }
 

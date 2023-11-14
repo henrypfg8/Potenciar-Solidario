@@ -114,8 +114,8 @@ router.put("/questions/:id", UpdateQuestionH);
 router.delete("/questions/:id", DeleteQuestionHandler);
 router.get("/questions", getQuestion);
 router.get("/questions/:id", getQuestion);
+router.get("/questionFilters?", applyFiltersToQuestions);
 router.post("/questions", createQuestionHandler);
-router.post("/questions?", applyFiltersToQuestions);
 
 //Rutas de RESPUESTAS.
 router.get("/answers", GetAnswerH)

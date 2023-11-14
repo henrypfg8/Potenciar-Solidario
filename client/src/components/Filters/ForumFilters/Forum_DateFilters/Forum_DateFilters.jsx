@@ -24,7 +24,7 @@ export default function Forum_DateFilters({
       <p>Hasta:</p>
       <Forum_DateInput
         untilDate={
-          untilDate !== "" ? parse(fromDate, "yyyy-MM-dd", new Date()) : null
+          untilDate !== "" ? parse(untilDate, "yyyy-MM-dd", new Date()) : null
         }
         handleUntilDate={handleUntilDate}
       />

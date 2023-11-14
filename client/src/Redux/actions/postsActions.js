@@ -20,7 +20,8 @@ import {
   SET_LOADING,
   HIDE_LOADING,
   SET_ORDERINGS,
-  SET_SELECTED_FILTER_OPTIONS
+  SET_SELECTED_FILTER_OPTIONS,
+  SET_SELECTED_ORDERINGS_OPTION
 } from "../action types/postsActionTypes.js";
 
 import axios from "axios";
@@ -308,5 +309,13 @@ export const setSelectedFilterOptions = (selectedFilterOptions) => {
   return {
     type: SET_SELECTED_FILTER_OPTIONS,
     payload: selectedFilterOptions
+  }
+}
+
+export const setSelectedOrderingsOption = (selectedOrderingOption) => {
+  console.log(selectedOrderingOption)
+  return {
+    type: SET_SELECTED_ORDERINGS_OPTION,
+    payload: selectedOrderingOption
   }
 }

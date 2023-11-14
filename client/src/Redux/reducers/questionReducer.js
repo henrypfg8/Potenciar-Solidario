@@ -10,14 +10,29 @@ import {
   UPDATE_QUESTION,
   GET_QUESTIONS_FILTERED,
   SET_QUESTIONS_FILTERS,
+  SET_QUESTIONS_ORDERINGS,
+  SET_SELECTED_FILTER_OPTION,
+  SET_SELECTED_ORDERING_OPTION
 } from "../action types/questionsActionTypes.js";
 
 const initialState = {
   questions: [],
   questionsFilters: {
-    category: "",
+    category: 0,
     fromDate: "",
     untilDate: "",
+  },
+  selectedFilterOption: {
+    label: 'Todas las categorias',
+    value: 0,
+    name: 'category'
+  },
+  questionsOrderings: {
+    value: 'date',
+    direction: 'asc'
+  },
+  selectedOrderingOption: {
+    name: 'value', value: 'date', label: 'Fecha de creación'
   },
   allQuestions: [],
   questionDetail: null,
@@ -97,6 +112,26 @@ const questionReducer = (state = initialState, action) => {
         ...state,
         questionsFilters: action.payload,
       };
+    
+    case SET_QUESTIONS_ORDERINGS: {
+      return {
+        ...state,
+        questionsOrderings: action.payload
+      }
+    }
+
+    case SET_SELECTED_FILTER_OPTION: {
+      return {
+        ...state,
+        selectedFilterOption: action.payload
+      }
+    }
+
+    case SET_SELECTED_ORDERING_OPTION: 
+      return {
+        ...state,
+        selectedOrderingOption: action.payload
+      }
 
     default:
       return { ...state };

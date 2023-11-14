@@ -1,27 +1,30 @@
-import Styles from "./orderings.module.css";
+import Styles from "./forumOrderings.module.css";
 //
 import Select from "react-select";
 //
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //
-import { setOrderings } from "../../Redux/actions/postsActions";
+import { setQuestionsOrderings, setSelectedOrderingOption } from '../../../Redux/actions/questionsActions/';
 
-import axios from 'axios';
-import { configureHeaders } from "../../Redux/auth/configureHeaders ";
 
-export default function Orderings() {
+export default function () {
 
   const dispatch = useDispatch();
-  const orderBy = useSelector((state) => state.posts.orderBy);
+  const questionsOrderings = useSelector((state) => state.questions.questionsOrderings);
   const [orderByLOCAL, setOrderByLOCAL] = useState({
     value: "title",
     direction: "asc",
   });
+  const selectedOrderingOption = useSelector(state => state.questions.selectedOrderingOption);
+  const [selectedOptionLOCAL, setSelectedOptionLOCAL] = useState({
+    name:'value', value: 'date', label: "Fecha de creación"
+  })
+
 
   const options = [
     {
-      label: "Fecha",
+      label: "Fecha de creación",
       name: "value",
       value: "date",
     },
@@ -33,18 +36,24 @@ export default function Orderings() {
   ];
 
   const changeHandler = (e) => {
-    const { name, value } = e.target ? e.target : e;
+    const { name, value, label } = e.target ? e.target : e;
     dispatch(
-      setOrderings({
+      setQuestionsOrderings({
         ...orderByLOCAL,
         [name]: value,
       })
     );
+    if (!e.target) dispatch(setSelectedOrderingOption({label, name, value}));
   };
 
   useEffect(() => {
-    setOrderByLOCAL(orderBy);
-  }, [orderBy]);
+    setOrderByLOCAL(questionsOrderings);
+  }, [questionsOrderings]);
+  useEffect(() => {
+    setSelectedOptionLOCAL(selectedOrderingOption)
+  }, [selectedOrderingOption])
+
+  ///////////////////////////
 
   return (
     <div className={Styles.Orderings}>
@@ -56,12 +65,14 @@ export default function Orderings() {
         defaultValue={options[0]}
         menuPlacement="top"
         onChange={changeHandler}
+        value={selectedOptionLOCAL}
       />
 
       <div className={Styles.Orderings__radioInputs}>
         <div className={Styles.RadioInputs__Option}>
           <label className={Styles.label}>Ascendente</label>
           <input
+            className={Styles.input}
             type="radio"
             name="direction"
             value="asc"
@@ -72,6 +83,7 @@ export default function Orderings() {
         <div className={Styles.RadioInputs__Option}>
           <label className={Styles.label}>Descendente</label>
           <input
+            className={Styles.input}
             type="radio"
             name="direction"
             value="desc"

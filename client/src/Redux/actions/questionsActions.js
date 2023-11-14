@@ -6,11 +6,15 @@ GET_QUESTION_DETAIL,
 CLEAR_QUESTION_DETAIL,
 UPDATE_QUESTION,
 GET_QUESTIONS_FILTERED,
-SET_QUESTIONS_FILTERS
+SET_QUESTIONS_FILTERS,
+SET_QUESTIONS_ORDERINGS,
+SET_SELECTED_FILTER_OPTION,
+SET_SELECTED_ORDERING_OPTION
 } from "../action types/questionsActionTypes.js";
 
 import axios from "axios";
 import { configureHeaders } from "../auth/configureHeaders .js";
+
 
 export const createQuestion = (question) => {
   return async function (dispatch) {
@@ -102,12 +106,22 @@ export const updateQuestion = (id, updatedQuestionData) => {
 };
 
 export const getQuestionsFiltered = (filters) => {
-  const { category, fromDate, untilDate } = filters;
+  let category = filters.category;
+  let fromDate = filters.fromDate;
+  let untilDate = filters.untilDate;
+
+  if (fromDate !== '') fromDate = new Date(fromDate).toISOString();
+  if (untilDate !== '') untilDate = new Date(untilDate).toISOString();
+  
+  // let category = filters.category;
+  // let fromDate = new Date(filters.fromDate)
+  // let untilDate = new Date(filters.untilDate)
+
   return async function (dispatch) {
     try {
       const config = configureHeaders();
       const { data } = await axios.get(
-        `http://localhost:19789/questions?category=${category}&fromDate=${fromDate}&untilDate=${untilDate}`,
+        `http://localhost:19789/questionFilters?category=${category}&fromDate=${fromDate}&untilDate=${untilDate}`,
         config
       );
       dispatch({ type: GET_QUESTIONS_FILTERED, payload: data });
@@ -123,3 +137,24 @@ export const setQuestionsFilters = (filters) => {
     payload: filters,
   };
 };
+
+export const setQuestionsOrderings = (orderBy) => {
+  return {
+    type: SET_QUESTIONS_ORDERINGS,
+    payload: orderBy
+  }
+}
+
+export const setSelectedFilterOption = (selectedFilterOption) => {
+  return {
+    type: SET_SELECTED_FILTER_OPTION,
+    payload: selectedFilterOption
+  }
+}
+
+export const setSelectedOrderingOption = (selectedOrderingOption) => {
+  return {
+    type: SET_SELECTED_ORDERING_OPTION,
+    payload: selectedOrderingOption
+  }
+}

@@ -42,6 +42,9 @@ import { getQuestions } from "./Redux/actions/questionsActions";
 
 function App() {
   const users = useSelector((state) => state.users);
+
+  const {isAdmin} = useSelector((state) => state.auth);
+  console.log(isAdmin)
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
   const dispatch = useDispatch();

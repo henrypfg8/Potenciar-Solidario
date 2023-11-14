@@ -26,7 +26,7 @@ import { Oval } from "react-loader-spinner";
 function QuestionView({ question, answers }) {
   const [userId, setUserId] = useState("");
   const { isAuthenticated, token } = useSelector((state) => state.auth);
-
+  const dispatch = useDispatch();
   const [view, setView] = useState({});
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false);
@@ -45,7 +45,6 @@ function QuestionView({ question, answers }) {
     userId: "",
     questionId: "",
   });
-  const dispatch = useDispatch();
 
   const handleChange = (event, id) => {
     event.preventDefault();
@@ -190,21 +189,9 @@ function QuestionView({ question, answers }) {
       dangerMode: true,
     })
     .then((willDelete) => {
+    console.log(index);
       if (willDelete) {
-        console.log(index);
-        deleteAnswer(index).then(() => {
-          swal("Tu respuesta ha sido eliminada con exito!", {
-            icon: "success",
-          });
-
-        })  .catch(() => {
-          swal(
-            "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
-            {
-              icon: "error",
-            }
-          );
-        })
+        dispatch(deleteAnswer(index))
       }
     });
   }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Modal, } from 'antd';
-import { useForm, Controller, set } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useForm, Controller,} from 'react-hook-form';
+import { useDispatch,} from 'react-redux';
 import { updateProfile } from '../../Redux/auth/AuthActions';
 import proptypes from 'prop-types'
 import PhoneInput from 'react-phone-number-input';
@@ -16,15 +16,6 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { register, formState: { errors }, handleSubmit, control, setValue } = useForm();
 
-
-    const ongs = useSelector((state) => state.ongsAndCategories.ongs);
-    const ongOptions = Array.from(new Set(ongs.map((ong) => ong.nombre))).map(
-        (nombre) => ({
-            label: nombre,
-            value: nombre,
-            name: "ong",
-        })
-    );
     const dispatch = useDispatch();
     // Opciones para el select de paises
     const countries = Object.values(getCodeList());
@@ -154,7 +145,6 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                                 name='phone'
                                 control={control}
                                 rules={{ required:false, maxLength: 15 }}
-                                defaultValue={userProfile.phone}
                                 render={({ field, fieldState: { error } }) => {
                                     return (
                                         <PhoneInput
@@ -183,10 +173,9 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                     <div className='profile__field'>
                         <label className='profile__label' htmlFor="description">Descripcion</label>
                         <div>
-                            {errors?.description?.type === 'required' && <p className='profile__alert'>La descripcion es requerida</p>}
                             <input className='profile__input' type="text"
 
-                                {...register('description', { required: true })} />
+                                {...register('description', { required:false })} />
                         </div>
                     </div >
 

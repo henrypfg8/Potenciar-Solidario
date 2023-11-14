@@ -2,6 +2,7 @@
     display: flex;
     background: #fff;
     width: 100%;
+    position: relative;
    
 }
 
@@ -131,3 +132,22 @@ a {
     }
 
 }
+
+.button__photo{
+    background: var(--dark_blue_color);
+    border: none;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 1rem auto 0 auto;
+
+
+}
+.sidebar__photoFlex{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+

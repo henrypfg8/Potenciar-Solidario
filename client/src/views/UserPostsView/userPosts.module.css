@@ -21,7 +21,9 @@
 @media(min-width: 768px){
     .user__pulblications__grid{
         grid-template-columns: repeat(2, 1fr);
-      column-gap: 1.5rem;
+        column-gap: 1.5rem;
+        width: 100%;
+        margin: 0 auto;
     }
 }
 @media(min-width: 1300px){
@@ -69,15 +71,22 @@
 
 }
 .user__publication__card{
-    padding: 1rem;
+    padding: 0.5rem;
     box-shadow: -20px -9px 15px -4px rgba(0,0,0,0.1);
     height: 400px;
     margin: 2rem auto;
+    border: 1px solid #ddd;
    
 }
 @media(min-width: 990px){
     .user__publication__card{
-        height: 450px;
+        height: 400px;
+        width: 300px;
+    }
+}
+@media(min-width: 1500px){
+    .user__publication__card{
+      
         width: 350px;
     }
 }

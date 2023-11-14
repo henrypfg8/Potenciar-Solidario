@@ -16,17 +16,11 @@ const io = new Server(httpServer);
 global.io = io;
 
 io.on("connection", (socket) => {
-  let username = 'anonymous'
-  socket.on("message", (body) => {
-    socket.username = username
-    io.emit("message", { thread: message });
-    socket.broadcast.emit('message', {
-      body,
-      from: socket.username
-    })
-    // Manejar el evento de websocket
-  });
+  console.log('Nuevo usuario conectado por websocket')
 });
+io.on("disconnect", () => {
+  console.log('Usuario desconectado de websocket')
+})
 server.use(cors());
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));

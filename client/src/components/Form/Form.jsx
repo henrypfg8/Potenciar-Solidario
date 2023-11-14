@@ -55,7 +55,7 @@ const Form = ({ setPost, post }) => {
                 //console.log(userProfile)
             })
                 .catch(error => {
-                    console.log(error.response.data, 'hubo un error')
+                    console.log(error.response)
                 })
 
         }
@@ -108,15 +108,6 @@ const Form = ({ setPost, post }) => {
         }
         getPost()
     }, [id])
-
-    //useEffect para verificar si hay token y si el estado está autenticado
-    useEffect(() => {
-        if (!token || !isAuthenticated) {
-            // Si no hay token o el estado no está autenticado, redirigir a login
-            navigate('/login');
-            return
-        }
-    }, [isAuthenticated, token])
 
     //funcion para Actualizar la publicación
     const handleUpdate = async (id, info) => {

@@ -237,13 +237,13 @@ export const disLike = (idPublication) => {
   };
 };
 
-export const createPostReview = (review) => {
+export const createPostReview = (comment) => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
       const response = await axios.post(
-        "http://localhost:19789/posts/reviews",
-        review,
+        "http://localhost:19789/comment/create",
+        comment,
         config
       );
       dispatch({ type: CREATE_POST_REVIEW, payload: response.data });
@@ -258,7 +258,7 @@ export const deletePostReview = (id) => {
     try {
       const config = configureHeaders();
       const response = await axios.delete(
-        `http://localhost:19789/posts/reviews/${id}`,
+        `http://localhost:19789/comment/delete/${id}`,
         config
       );
       dispatch({ type: DELETE_POST_REVIEW, payload: response.data });
@@ -273,7 +273,7 @@ export const updatePostReview = (id, updatedPostReview) => {
     try {
       const config = configureHeaders();
       const response = await axios.put(
-        `http://localhost:19789/posts/reviews/${id}`,
+        `http://localhost:19789/comment/${id}`,
         updatedPostReview,
         config
       );

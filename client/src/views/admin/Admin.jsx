@@ -5,7 +5,7 @@ import Sidebar from '../../components/dashboard/Sidebar/Sidebar';
 import './admin.css';
 
 const Admin = () => {
-    const { isAuthenticated, } = useSelector(state => state.auth);
+    const { isAuthenticated} = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
  
@@ -23,7 +23,7 @@ const Admin = () => {
         <div >
     
             <div className='admin__container'>
-                < Sidebar/>  
+                < Sidebar />  
                 <Outlet/> 
             </div>
            

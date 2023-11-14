@@ -5,6 +5,8 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { Modal } from 'antd'
 import axios from 'axios'
 
+
+
 const UserPostCard = ({ post, setRefreshData }) => {
   const [open, setOpen] = useState(false);
   const token = localStorage.getItem('token');
@@ -66,7 +68,9 @@ const UserPostCard = ({ post, setRefreshData }) => {
       />
       <h2 className={Styles.user__publication__h2}>{post.title}</h2>
       <div className={Styles.user__image__div}>
-        <img className={Styles.user__image} src={post.image} alt="imagen del post" />
+        {post?.image ? (        <img className={Styles.user__image} src={post.image} alt="imagen del post" />) : (
+          <img src='/images/no-image.png'className={Styles.user__image} />
+        )}
         <div className={Styles.user__publication__info}>
     
           <h2>{post.category}</h2>

@@ -176,13 +176,16 @@ const Detail = () => {
                 return (<div key={index} className={Styles.comment}>
                   <div className={Styles.avatar}>
                     <ImageAvatars name={element?.User?.name} image={element?.User?.profile_picture} />
-                    <h3>ONG: {element?.User?.organization}</h3>
+
                   </div>
+
                   <div className={Styles.organization}>
 
                     <p>{element?.comment}</p>
+
                     <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
                   </div>
+                  <h3>ONG: {element?.User?.organization}</h3>
                 </div>
                 )
               })

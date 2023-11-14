@@ -24,7 +24,7 @@ import { element } from "prop-types";
 
 const Detail = () => {
   const postDetail = useSelector((state) => state.posts.postDetail);
-  console.log('por si o por no?', postDetail)
+  console.log("por si o por no?", postDetail);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -43,35 +43,34 @@ const Detail = () => {
     User,
   } = postDetail;
 
-const [ reviews, setReviews ] = useState({
-  comment: "",
-  userId: "",
-  publicationId: "",
-})
-const [commentList, setCommentList] = useState([]);
+  const [reviews, setReviews] = useState({
+    comment: "",
+    userId: "",
+    publicationId: "",
+  });
+  const [commentList, setCommentList] = useState([]);
 
-console.log("soy el reviews" , reviews)
+  console.log("soy el reviews", reviews);
 
+  const [userId, setUserId] = useState("");
 
-const [ userId, setUserId ] = useState("");
+  const { isAuthenticated, token } = useSelector((state) => state.auth);
 
-const { isAuthenticated, token } = useSelector((state) => state.auth);
-
-useEffect(() => {
-  if (!token || !isAuthenticated) {
-    swal("Necesita loguearse para poder realizar un comentario").then(
-      (value) => {
-        navigate("/login");
-      }
-    );
-  }
-  if (token) {
-    const decodify = jwtDecode(token);
-    if (decodify) {
-      setUserId(decodify.id);
+  useEffect(() => {
+    if (!token || !isAuthenticated) {
+      swal("Necesita loguearse para poder realizar un comentario").then(
+        (value) => {
+          navigate("/login");
+        }
+      );
     }
-  }
-}, [isAuthenticated, navigate, token]);
+    if (token) {
+      const decodify = jwtDecode(token);
+      if (decodify) {
+        setUserId(decodify.id);
+      }
+    }
+  }, [isAuthenticated, navigate, token]);
 
   useEffect(() => {
     dispatch(getPostDetail(id));
@@ -87,29 +86,27 @@ useEffect(() => {
       comment: event.target.value,
       userId: userId,
       publicationId: id,
-    })
-  }
+    });
+  };
 
   const handleSubmit = (comment) => {
     dispatch(createPostReview(comment))
-    .then((response) => {
-      const newCommentList = [...commentList, comment]; // Agrega el comentario a la lista de comentarios
-      setCommentList(newCommentList);
-      setReviews({ comment: "" });
-      swal({
-        icon: "success",
-        text: "Reseña creada con éxito",
+      .then((response) => {
+        const newCommentList = [...commentList, comment]; // Agrega el comentario a la lista de comentarios
+        setCommentList(newCommentList);
+        setReviews({ comment: "" });
+        swal({
+          icon: "success",
+          text: "Reseña creada con éxito",
+        });
+      })
+      .catch((error) => {
+        swal({
+          icon: "error",
+          text: "contacte a soporte",
+        });
       });
-    })
-    .catch((error) => {
-      swal({
-        icon: "error",
-        text: "contacte a soporte",
-      });
-    });
-  }
-
- 
+  };
 
   return (
     <div className={Styles.DetailView}>
@@ -167,33 +164,37 @@ useEffect(() => {
           </div>
           <a className={Styles.category}>{category}</a>
         </div>
-        <div>{postDetail?.PublicationComments?.map((element, index)=>{
-          return(<div key={index}><h1>{element.User.name}</h1><p>{element.comment}</p> </div>)
-        })
-}</div>
+      </div>
+      <div className={Styles.containerR}>
+        {postDetail?.PublicationComments?.map((element, index) => {
+          return (
+            <div className={Styles.reseñas} key={index}>
+              <h1 className={Styles.name}>{element.User.name}</h1>
+              <p className={Styles.p}>{element.comment}</p>{" "}
+            </div>
+          );
+        })}
       </div>
       {commentList.map((comment, index) => (
-    <div key={index}>
-      <p>Comentario {index + 1}:</p>
-      <p>{comment.comment}</p>
-    </div>
-  ))}
-     
-      <div>
-        <p>Comentar</p>
-        <textarea 
-        style={{resize: "none"}}
-        name="review"
-        type="text"
-        value={reviews.comment}
-        onChange={(event) => handleChange(event, id)} />
+        <div key={index}>
+          <p>Comentario {index + 1}:</p>
+          <p>{comment.comment}</p>
+        </div>
+      ))}
 
-        <button onClick={() => handleSubmit(reviews)}>
+      <div className={Styles.textareaContainer}>
+        <p className={Styles.p}>Comentar</p>
+        <textarea
+         className={Styles.textarea}
+          name="comment"
+          type="text"
+          value={reviews.comment}
+          onChange={(event) => handleChange(event, id)}
+        />
+
+        <button className={Styles.button} onClick={() => handleSubmit(reviews)}>
           Añadir reseña
         </button>
-       
-      
-        
       </div>
     </div>
   );

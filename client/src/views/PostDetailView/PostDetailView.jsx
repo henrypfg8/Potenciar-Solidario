@@ -173,9 +173,10 @@ const Detail = () => {
     <div className={Styles.container}>
       {postDetail?.PublicationComments?.map((element, index)=>{
         let date = new Date(element.createdAt);
-        return(<div key={index} className={Styles.comment}><ImageAvatars name={element.User?.name} image={element.User?.profile_picture} />
+        return(<div key={index} className={Styles.comment}><ImageAvatars name={element?.User?.name} image={element?.User?.profile_picture} />
+        <h3>ONG: {element?.User?.organization}</h3>
         <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
-        <p>{element.comment}</p> </div>)
+        <p>{element?.comment}</p> </div>)
       })
 }
     

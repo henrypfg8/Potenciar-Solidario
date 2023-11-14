@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const reactivationAccount = (email) => {
+const reactivationAccount = (userEmail) => {
     let mensajeHTML = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="und">
      <head>
@@ -191,7 +191,7 @@ const reactivationAccount = (email) => {
     
     transporter.sendMail({
         from: '"Tu cuenta fue reactivada" <henrypfg8@gmail.com>', // address
-        to: email, // list of receivers
+        to: userEmail, // list of receivers
         subject: `Cuenta reactivada`, // Subject line
         text: "", // plain text body
         html: mensajeHTML, // html body

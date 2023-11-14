@@ -23,24 +23,23 @@ const updateUser = async (id, userData) => {
     user.admin = userData.admin;
     user.password = userData.password;
     user.organization = userData.organization;
+
+    const userActivePrevious = userData.active
+
     user.active = userData.active;
 
     await user.save();
 
-    let ban = 0;
+    if(userActivePrevious !== user.active){
 
-    if (user.active === false) {
+      if(user.active === false){
 
-      if (ban === 0) {
-        userBanNoti(user.email); 
-        ban += 1;
+        userBanNoti(user.email)
+
+      }else {
+        reactivationAccount(user.email)
       }
-    } else {
-
-      if (ban === 1) {
-        reactivationAccount(user.email); 
-        ban -= 1;
-      }
+      
     }
 
     return user;

@@ -41,6 +41,7 @@ const { authLoginHandler } = require("../handlers/Authentication/AuthLogin.js");
 const { authHandler } = require("../handlers/Authentication/authHandler.js"); //middlewere validacion de rutas
 const {authGoogleHandler,} = require("../handlers/Authentication/authGoogleLoginHandler.js");
 const {otpValidate} = require("../handlers/Authentication/validateOtp.js")
+const {checkRoleAuth} = require("../handlers/Authentication/checkRoleAuth.js")
 
 //HANDLERS de ORGANIZATION.
 const { handlerOngs } = require("../handlers/Organization/handlerGetOngs");
@@ -139,5 +140,8 @@ router.put("/resetpassword",resetPassword)
 
 //validar otp
 router.get("/validateotp",otpValidate)
+
+//roles
+router.get("/admin", checkRoleAuth)
 
 module.exports = router;

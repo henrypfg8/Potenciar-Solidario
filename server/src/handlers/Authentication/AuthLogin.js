@@ -22,7 +22,7 @@ const authLoginHandler = async (req, res) => {
         }
 
         if(!userExist.active){
-            return res.status(400).json({ message: "Usuario inactivo" });
+            return res.status(400).json({ message: "Tu cuenta ha sido suspendida" });
         }
 
         const passwordValid = await bcrypt.compare(

@@ -24,9 +24,9 @@ const updateUser = async (id, userData) => {
     user.password = userData.password;
     user.organization = userData.organization;
 
-    const userActivePrevious = userData.active
+    const userActivePrevious = user.active
 
-    user.active = userData.active;
+    user.active = userData.active; 
 
     await user.save();
 

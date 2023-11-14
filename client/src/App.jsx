@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation , useNavigate} from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -39,12 +39,19 @@ import UserComent from "./components/dashboard/UsersComents/UserComent";
 import PublishPosts from "./components/dashboard/UsersPosts/PublishedPosts/PublishPosts";
 import PendingPosts from "./components/dashboard/UsersPosts/PendingPosts/PendingPosts";
 import { getQuestions } from "./Redux/actions/questionsActions";
+import { getProfile } from "./Redux/auth/AuthActions";
+import {jwtDecode} from 'jwt-decode'
+
 
 function App() {
   const users = useSelector((state) => state.users);
 
-  const {isAdmin} = useSelector((state) => state.auth);
-  console.log(isAdmin)
+  const {isAdmin, userProfile} = useSelector((state) => state.auth);
+
+console.log(isAdmin)
+console.log(userProfile)
+console.log()
+
   // eslint-disable-next-line no-unused-vars
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -62,15 +69,19 @@ function App() {
 
   useEffect(() => {
     root.addEventListener("scroll", scrollHandler);
-
+   
+ 
     //si el token cambia o existe se vuelven a cargar los datos
     if (token) {
+        const decoded = jwtDecode(token);
+
       dispatch(setLoading());
       setAuthenticated(true);
       dispatch(getPosts()).then(() => dispatch(hideLoading()));
       dispatch(getQuestions()).then(() => dispatch(hideLoading()))
       dispatch(getOngs());
       dispatch(getCategories());
+      dispatch(getProfile(decoded?.id, token))
       dispatch(getForumCategories());
       dispatch(getUsers());
     }
@@ -100,17 +111,22 @@ function App() {
             <Route path="/foro/crear" element={<QuestionCreateView />} />
             <Route path="/foro/:id" element={<QuestionDetail />} />
             <Route path="/foro/edit/:id" element={<QuestionEdit />} />
+          
             {/* Otras rutas autenticadas */}
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/profile/posts" element={<UserPostsView />} />
             <Route path="/new-password/" element={<ResetPassword />} />
-            <Route path="/admin" element={<Admin />}>
-              <Route index element={<PendingPosts />} />
-              <Route path="users" element={<Users />} />
-              <Route path="questions" element={<UserQuestions />} />
-              <Route path="coments" element={<UserComent />} />
-              <Route path="posts" element={<PublishPosts />} />
-            </Route>
+            {userProfile.admin ||isAdmin ? (
+                   <Route path='/admin' element={<Admin />}>
+                      <Route index element={<PendingPosts />} />
+                      <Route path="users" element={<Users />} />
+                      <Route path="questions" element={<UserQuestions />} />
+                      <Route path="coments" element={<UserComent />} />
+                      <Route path="posts" element={<PublishPosts />} />
+                  </Route>
+            ) : () => {
+              
+            }}
           </Routes>
         </>
       ) : (
@@ -124,6 +140,7 @@ function App() {
           pathname !== "/login" &&
           pathname !== "/reset-password" &&
           pathname !== "/new-password/" &&
+          pathname !== "/admin/*" &&
           !authenticated ? (
             <BlurredBackground />
           ) : null}

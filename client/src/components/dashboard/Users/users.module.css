@@ -135,7 +135,18 @@
     cursor: pointer;
 
 }
+.users__icon__block{
+    width: 15px;
+}
+.user__btn_block{
+    border: none;
+    padding: 1.5rem 1rem;
+}
+.user__btn_block:hover{
+    background: #ddd;
+    cursor: pointer;
 
+}
 .modal__container{
 
     position: fixed;

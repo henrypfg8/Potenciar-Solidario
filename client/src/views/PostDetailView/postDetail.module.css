@@ -7,7 +7,8 @@
     flex-direction: column;
     align-items: center;  
     justify-content: center;
-    
+    min-height: 100vh;
+   
 }
 .contain img{
    width: 40vw;
@@ -21,6 +22,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
 }
 .Detail{
     display: flex;
@@ -30,6 +32,7 @@
     border: 1px rgba(0, 0, 0, 0.191) solid;
     box-shadow: -1px 1px 8px rgba(209, 206, 206, 0.363);
     justify-content: center;
+    height: fit-content;
 }
 .Detail h1{
     font-size: 2rem;
@@ -93,4 +96,45 @@
     opacity: 1;
     transition: 0.2s;
     transform: scale(1.05);
+}
+.comment{
+    margin: 0.7rem;
+    padding: 0.6rem;
+    border: 1px red solid;
+    min-width: 80vw;
+    background-color: rgba(135, 135, 135, 0.171);
+}
+.comment p{
+    margin: 1rem;
+    font-size: 1rem;
+}
+@media (max-width: 768px){
+.contain{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+.contain img{
+    width: 100%;
+}
+.Detail{
+    width: fit-content;
+}
+.Detail a{
+    font-size: 0.8rem;
+}
+.Detail p{
+    font-size: 0.8rem;
+}
+.Detail h1{
+    font-size: 1.5rem;
+}
+.Detail h3{
+    font-size: 1rem;
+}
+.comment{
+    width: 50vw;
+    word-wrap: break-word;
+    word-break: break-word;
+}
 }

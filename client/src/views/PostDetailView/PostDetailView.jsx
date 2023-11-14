@@ -19,12 +19,13 @@ import {
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router";
 import { element } from "prop-types";
+import { Oval } from "react-loader-spinner";
+import swal from "sweetalert";
 
 //
 
 const Detail = () => {
   const postDetail = useSelector((state) => state.posts.postDetail);
-  console.log('por si o por no?', postDetail)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -48,9 +49,7 @@ const [ reviews, setReviews ] = useState({
   userId: "",
   publicationId: "",
 })
-const [commentList, setCommentList] = useState([]);
-
-console.log("soy el reviews" , reviews)
+const [commentList, setCommentList] = useState([])
 
 
 const [ userId, setUserId ] = useState("");
@@ -92,7 +91,7 @@ useEffect(() => {
 
   const handleSubmit = (comment) => {
     dispatch(createPostReview(comment))
-    .then((response) => {
+    .then(() => {
       const newCommentList = [...commentList, comment]; // Agrega el comentario a la lista de comentarios
       setCommentList(newCommentList);
       setReviews({ comment: "" });
@@ -101,19 +100,26 @@ useEffect(() => {
         text: "Reseña creada con éxito",
       });
     })
-    .catch((error) => {
+    .catch(() => {
       swal({
         icon: "error",
         text: "contacte a soporte",
       });
     });
   }
+  console.log(postDetail);
 
  
-
   return (
     <div className={Styles.DetailView}>
+      {
+        !Array.isArray(postDetail)
+        ? 
+        <div className={Styles.DetailView}>
+
+
       <div className={Styles.contain}>
+
         {image && <img src={image} alt="Imagen" />}
 
         <div className={Styles.Detail}>
@@ -140,7 +146,9 @@ useEffect(() => {
             <div className={Styles.date}>
               <div>
                 <h3>Desde: </h3>
-                @@ -90,10 +91,10 @@
+                <p>
+                {startDate}
+                </p>
                 {endDate && <p>{endDate}</p>}
               </div>
             </div>
@@ -167,17 +175,21 @@ useEffect(() => {
           </div>
           <a className={Styles.category}>{category}</a>
         </div>
-        <div>{postDetail?.PublicationComments?.map((element, index)=>{
-          return(<div key={index}><h1>{element.User.name}</h1><p>{element.comment}</p> </div>)
-        })
-}</div>
-      </div>
+    
+    </div>
+    <div className={Styles.container}>
+
+      {postDetail?.PublicationComments?.map((element, index)=>{
+        return(<div key={index} className={Styles.comment}><ImageAvatars name={element.User?.name} image={element.User?.profile_picture} /><p>{element.comment}</p> </div>)
+      })
+}
       {commentList.map((comment, index) => (
-    <div key={index}>
+        <div key={index} >
       <p>Comentario {index + 1}:</p>
       <p>{comment.comment}</p>
     </div>
   ))}
+    </div>
      
       <div>
         <p>Comentar</p>
@@ -196,6 +208,21 @@ useEffect(() => {
         
       </div>
     </div>
+    :
+    <Oval
+    height={80}
+    width={80}
+    color="#005692"
+    wrapperStyle={{ margin: "auto auto" }}
+    wrapperClass=""
+    visible={true}
+    ariaLabel="oval-loading"
+    secondaryColor="#a4d4ff"
+    strokeWidth={3}
+    strokeWidthSecondary={3}
+  />
+      }
+      </div>
   );
 };
 export default Detail;

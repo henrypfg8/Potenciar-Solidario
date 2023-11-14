@@ -24,7 +24,10 @@ const PendingPosts = () => {
     const [isModalOpenPublish, setIsModalOpenPublish] = useState(false);
     const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
     //filtrar los posts que no estan publicados
-    const postsPending = posts.filter((post) => { return post.status !== '1'; });
+
+
+ 
+    const postsPending = posts.filter((post) => { return post.status !== true; });
 
     useEffect(() => {
         

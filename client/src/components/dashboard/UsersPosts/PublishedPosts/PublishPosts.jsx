@@ -19,6 +19,8 @@ const PublishPosts = () => {
 
   const [isModalOpenLeftPublish, setIsModalOpenLeftPublish] = useState(false);
   const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
+
+  
   const postsApproved = posts.filter(post => post.status === '1' || post.status === true);
 
   useEffect(() => {

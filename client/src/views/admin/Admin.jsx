@@ -2,7 +2,6 @@ import {  useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, Outlet } from 'react-router-dom';
 import Sidebar from '../../components/dashboard/Sidebar/Sidebar';
-import { useLocation } from 'react-router-dom';
 import './admin.css';
 
 const Admin = () => {
@@ -10,9 +9,8 @@ const Admin = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
-    const {pathname} = useLocation();
     
-    console.log()
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token || !isAuthenticated  ) {
@@ -34,7 +32,7 @@ const Admin = () => {
         
     }, [dispatch, isAuthenticated, navigate]);
  
-console.log(pathname)
+
     return (
         <div >
     

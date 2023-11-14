@@ -48,10 +48,6 @@ function App() {
 
   const {isAdmin, userProfile} = useSelector((state) => state.auth);
 
-console.log(isAdmin)
-console.log(userProfile)
-console.log()
-
 
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -116,6 +112,7 @@ console.log()
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/profile/posts" element={<UserPostsView />} />
             <Route path="/new-password/" element={<ResetPassword />} />
+            <Route path="/"/>
             {userProfile.admin ||isAdmin ? (
                    <Route path='/admin' element={<Admin />}>
                       <Route index element={<PendingPosts />} />

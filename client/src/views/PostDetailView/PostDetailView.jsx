@@ -48,7 +48,6 @@ const Detail = () => {
     userId: "",
     publicationId: "",
   });
-  const [commentList, setCommentList] = useState([]);
 
   console.log("soy el reviews", reviews);
 
@@ -92,8 +91,7 @@ const Detail = () => {
   const handleSubmit = (comment) => {
     dispatch(createPostReview(comment))
       .then((response) => {
-        const newCommentList = [...commentList, comment]; // Agrega el comentario a la lista de comentarios
-        setCommentList(newCommentList);
+        dispatch(getPostDetail(id))
         setReviews({ comment: "" });
         swal({
           icon: "success",
@@ -107,7 +105,6 @@ const Detail = () => {
         });
       });
   };
-
   return (
     <div className={Styles.DetailView}>
       <div className={Styles.contain}>
@@ -167,21 +164,16 @@ const Detail = () => {
       </div>
       <div className={Styles.containerR}>
         {postDetail?.PublicationComments?.map((element, index) => {
+           var date = new Date(element.createdAt);
           return (
             <div className={Styles.reseñas} key={index}>
-              <h1 className={Styles.name}>{element.User.name}</h1>
-              <p className={Styles.p}>{element.comment}</p>{" "}
+              <h1 className={Styles.name}>{element?.User?.name}</h1>
+              <p className={Styles.p}>{element?.comment}</p>{" "}
+              <h4 className={Styles.dateee}>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
             </div>
           );
         })}
       </div>
-      {commentList.map((comment, index) => (
-        <div key={index}>
-          <p>Comentario {index + 1}:</p>
-          <p>{comment.comment}</p>
-        </div>
-      ))}
-
       <div className={Styles.textareaContainer}>
         <p className={Styles.p}>Comentar</p>
         <textarea

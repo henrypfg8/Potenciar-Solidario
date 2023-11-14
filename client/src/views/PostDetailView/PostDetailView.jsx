@@ -18,11 +18,13 @@ import {
 
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router";
+import { element } from "prop-types";
 
 //
 
 const Detail = () => {
   const postDetail = useSelector((state) => state.posts.postDetail);
+  console.log('por si o por no?', postDetail)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -42,10 +44,11 @@ const Detail = () => {
   } = postDetail;
 
 const [ reviews, setReviews ] = useState({
-  review: "",
+  comment: "",
   userId: "",
   publicationId: "",
 })
+const [commentList, setCommentList] = useState([]);
 
 console.log("soy el reviews" , reviews)
 
@@ -81,16 +84,18 @@ useEffect(() => {
     event.preventDefault();
     setReviews({
       ...reviews,
-      review: event.target.value,
+      comment: event.target.value,
       userId: userId,
       publicationId: id,
     })
   }
 
-  const handleSubmit = () => {
-    dispatch(createPostReview())
+  const handleSubmit = (comment) => {
+    dispatch(createPostReview(comment))
     .then((response) => {
-      setReviews({ review: "" });
+      const newCommentList = [...commentList, comment]; // Agrega el comentario a la lista de comentarios
+      setCommentList(newCommentList);
+      setReviews({ comment: "" });
       swal({
         icon: "success",
         text: "Reseña creada con éxito",
@@ -162,18 +167,33 @@ useEffect(() => {
           </div>
           <a className={Styles.category}>{category}</a>
         </div>
+        <div>{postDetail?.PublicationComments?.map((element, index)=>{
+          return(<div key={index}><h1>{element.User.name}</h1><p>{element.comment}</p> </div>)
+        })
+}</div>
       </div>
-      <div>Comentario1</div>
-      <div>Comentario2</div>
-      <div>Comentario3</div>
+      {commentList.map((comment, index) => (
+    <div key={index}>
+      <p>Comentario {index + 1}:</p>
+      <p>{comment.comment}</p>
+    </div>
+  ))}
+     
       <div>
         <p>Comentar</p>
-        <textarea style={{resize: "none"}}
+        <textarea 
+        style={{resize: "none"}}
         name="review"
         type="text"
-        value={reviews.review}
+        value={reviews.comment}
         onChange={(event) => handleChange(event, id)} />
-        <button onClick={() => handleSubmit(reviews)}>Añadir reseña</button>
+
+        <button onClick={() => handleSubmit(reviews)}>
+          Añadir reseña
+        </button>
+       
+      
+        
       </div>
     </div>
   );

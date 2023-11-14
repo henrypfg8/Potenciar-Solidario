@@ -1,5 +1,7 @@
 const { User } = require("../../db");
 const {userBanNoti} = require("../../handlers/emailNotif/UserBan");
+const {reactivationAccount} = require("../../handlers/emailNotif/reactivationAccount")
+
 
 const updateUser = async (id, userData) => {
   try {
@@ -23,11 +25,26 @@ const updateUser = async (id, userData) => {
     user.organization = userData.organization;
     user.active = userData.active;
 
-    if(user.active === false) userBanNoti (user.email)
-
     await user.save();
-    
+
+    let ban = 0;
+
+    if (user.active === false) {
+
+      if (ban === 0) {
+        userBanNoti(user.email); 
+        ban += 1;
+      }
+    } else {
+
+      if (ban === 1) {
+        reactivationAccount(user.email); 
+        ban -= 1;
+      }
+    }
+
     return user;
+
   } catch (error) {
     throw new Error("Error actualizar el usuario", error);
   }

@@ -64,15 +64,22 @@ export const updateAnswer = (id, updatedAnswerData) => {
 
 export const deleteAnswer = (id) => {
   return async function (dispatch) {
-    try {
+    console.log('prueba 1')
+    try {5
       const config = configureHeaders();
+      console.log('prueba 2')
       const response = await axios.delete(
         `http://localhost:19789/answers/${id}`,
         config
-      );
-      dispatch({ type: DELETE_ANSWER, payload: response.data });
-    } catch (error) {
+        );
+        console.log('prueba 3')
+        dispatch({ type: DELETE_ANSWER, payload: response.data });
+        console.log('prueba 4')
+        // return Promise.resolve(response)
+      } catch (error) {
+      console.log('prueba 5 ')
       console.log(error, "por favor contactar a soporte por este error");
+      return Promise.reject(error)
     }
   };
 };

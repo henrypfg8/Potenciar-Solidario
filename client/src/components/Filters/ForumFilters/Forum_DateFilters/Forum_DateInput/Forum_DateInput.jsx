@@ -31,7 +31,6 @@ export default function ({ fromDate, untilDate, handleFromDate, handleUntilDate}
   const handleReset = (e) => {
     e.preventDefault();
     if (fromDate) {
-      console.log('el reset')
       dispatch(getQuestionsFiltered({ ...filters, fromDate: "" }));
       dispatch(setQuestionsFilters({ ...filters, fromDate: "" }));
     }

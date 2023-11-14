@@ -46,7 +46,7 @@ export default function Orderings() {
     );
     if (!e.target) {
       dispatch(setSelectedOrderingsOption({label, name, value}));
-      setSelectedOption({label, name, value});
+      console.log('en el handler:', label, name, value);
     }
     
   };
@@ -57,6 +57,7 @@ export default function Orderings() {
 
   useEffect(() => {
     setSelectedOption(selectedOrderingsOption);
+    console.log('el useEffect', selectedOrderingsOption);
   }, [selectedOrderingsOption])
 
   return (

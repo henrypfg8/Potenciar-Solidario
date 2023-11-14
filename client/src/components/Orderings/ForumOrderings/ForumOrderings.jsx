@@ -5,7 +5,7 @@ import Select from "react-select";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 //
-import { setQuestionsOrderings } from '../../../Redux/actions/questionsActions/';
+import { setQuestionsOrderings, setSelectedOrderingOption } from '../../../Redux/actions/questionsActions/';
 
 
 export default function () {
@@ -16,10 +16,15 @@ export default function () {
     value: "title",
     direction: "asc",
   });
+  const selectedOrderingOption = useSelector(state => state.questions.selectedOrderingOption);
+  const [selectedOptionLOCAL, setSelectedOptionLOCAL] = useState({
+    name:'value', value: 'date', label: "Fecha de creación"
+  })
+
 
   const options = [
     {
-      label: "Fecha",
+      label: "Fecha de creación",
       name: "value",
       value: "date",
     },
@@ -31,18 +36,22 @@ export default function () {
   ];
 
   const changeHandler = (e) => {
-    const { name, value } = e.target ? e.target : e;
+    const { name, value, label } = e.target ? e.target : e;
     dispatch(
       setQuestionsOrderings({
         ...orderByLOCAL,
         [name]: value,
       })
     );
+    if (!e.target) dispatch(setSelectedOrderingOption({label, name, value}));
   };
 
   useEffect(() => {
     setOrderByLOCAL(questionsOrderings);
   }, [questionsOrderings]);
+  useEffect(() => {
+    setSelectedOptionLOCAL(selectedOrderingOption)
+  }, [selectedOrderingOption])
 
   ///////////////////////////
 
@@ -56,6 +65,7 @@ export default function () {
         defaultValue={options[0]}
         menuPlacement="top"
         onChange={changeHandler}
+        value={selectedOptionLOCAL}
       />
 
       <div className={Styles.Orderings__radioInputs}>

@@ -21,6 +21,10 @@ const authLoginHandler = async (req, res) => {
                 .json({ message: "error en la utenticacion" });
         }
 
+        if(!userExist.active){
+            return res.status(400).json({ message: "Usuario inactivo" });
+        }
+
         const passwordValid = await bcrypt.compare(
             password,
             userExist.password

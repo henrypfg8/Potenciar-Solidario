@@ -20,6 +20,7 @@ const updateUser = async (id, userData) => {
     user.admin = userData.admin;
     user.password = userData.password;
     user.organization = userData.organization;
+    user.active = userData.active;
 
     await user.save();
     

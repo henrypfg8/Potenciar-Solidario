@@ -33,7 +33,6 @@ export const createQuestion = (question) => {
 export const deleteQuestion = (id) => {
   return async function (dispatch) {
     try {
-      console.log(id);
       const config = configureHeaders();
       const response = await axios.delete(
         `http://localhost:19789/questions/${id}`,

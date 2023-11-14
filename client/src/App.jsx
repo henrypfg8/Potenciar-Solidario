@@ -41,7 +41,7 @@ import PendingPosts from "./components/dashboard/UsersPosts/PendingPosts/Pending
 import { getQuestions } from "./Redux/actions/questionsActions";
 import { getProfile } from "./Redux/auth/AuthActions";
 import {jwtDecode} from 'jwt-decode'
-
+import PageNotFund from "./404/PageNotFund";
 
 function App() {
   const users = useSelector((state) => state.users);
@@ -112,7 +112,7 @@ function App() {
             <Route path="/profile" element={<ProfileView />} />
             <Route path="/profile/posts" element={<UserPostsView />} />
             <Route path="/new-password/" element={<ResetPassword />} />
-            <Route path="/"/>
+            <Route path="/*" element={<PageNotFund/>}/>
             {userProfile.admin ||isAdmin ? (
                    <Route path='/admin' element={<Admin />}>
                       <Route index element={<PendingPosts />} />

@@ -195,3 +195,7 @@ body{
 .answer__user span {
     color: var(--blue_color);
 }
+.answer__text{
+    max-width: 190px;
+    display: block;
+}

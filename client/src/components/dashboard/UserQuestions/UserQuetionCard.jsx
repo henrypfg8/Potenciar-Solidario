@@ -101,8 +101,10 @@ const UserQuetionCard = ({ question, setRefreshData }) => {
             {question.Answers &&
               question.Answers.map((answer) => (
                 <div key={answer.id} className={Styles.answer__card}>
-
-                  <p>{answer.answer}</p>
+                  <div className={Styles.answer__text}>
+                     <p >{answer.answer}</p>
+                  </div>
+                 
                   <p className={Styles.answer__user}>Respondio: <span>{answer.User?.name}</span></p>
                 </div>
               ))}

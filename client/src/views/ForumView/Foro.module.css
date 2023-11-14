@@ -18,9 +18,9 @@ body html {
     display: flex;
     flex-direction: row;
     align-items: center;
-    display: 100vw;
     min-height: 100vh;
     height: 100vh;
+    width: 100vw;
 }
 .container {
     display: flex;
@@ -39,26 +39,26 @@ body html {
     font-family: 'MiFuenteBold';
     font-weight: bold;  
     color: black;
-    margin: 0.4rem;
+    margin: 0.6rem;
    }
+
 .contain:hover{
     transition: 0.3s;
 }
 .contain {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: star;
     justify-content: center;
-    /* padding: 0.9rem; */
     border-left:#0055927b solid 1px ;
-    transition: 0.5s;
-    margin: 0.7rem;
+    transition: 0.5s;   
     border-radius: 10px;
     background: var(--color-cuartiario);
     box-shadow: -1px 1px 8px rgba(55, 172, 255, 0.064);
     width: 50vw;
     min-width: 50vw;
     max-width: 50vw;
+    margin: 0.7rem;
     
 }
 .contain button:hover{
@@ -125,6 +125,21 @@ body html {
 .center p{
     padding: 0.5rem;
     font-size: 1.3rem;
+}
+
+.centerLoading{
+    width:70vw;
+    display: flex;
+    flex-direction: column;
+    align-items:  center;
+    height: 100vh;
+
+}
+.loading{
+    margin: 1.1rem;
+}
+.centerLoading h3{
+    margin: 1.5rem;
 }
 
 @media (max-width: 575.98px) {  

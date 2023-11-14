@@ -104,8 +104,9 @@
 .category{
     margin-bottom: 0px;
     margin-top: 2rem;
-    background: black;
-    color: #fff;
+    background: #ea9642;
+    color: #000000;
+    font-weight: 600;
     padding: 0.4rem;
     border-radius: 10px;
     width: fit-content;
@@ -125,9 +126,12 @@
 .comment{
     margin: 0.7rem;
     padding: 0.6rem;
-    border: 1px red solid;
+    border: 1px #30306d solid;
     min-width: 80vw;
-    background-color: rgba(135, 135, 135, 0.171);
+    max-width: 85vw;
+    background-color: rgba(135, 135, 135, 0.1);
+    border-radius: 5px;
+    box-shadow: 1px 3px rgba(0, 0, 0, 0.3);
 }
 .comment p{
     margin: 1rem;

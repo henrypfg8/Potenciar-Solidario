@@ -24,6 +24,31 @@
     justify-content: space-around;
     align-items: center;
 }
+.textareaContainer{
+    height: 15;
+    width: 30vw;
+    margin-top: 20px;
+}
+.textarea{
+    height: 100px;
+    resize: none;
+    
+}
+.button{
+    padding: 0.5rem 1rem;
+    background-color: #095084;
+    border: #095084;
+    color: #fff;
+    display: block;
+    margin-left: 170px;
+    transition: 0.2s;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.button:hover{
+    background: #095184bb;
+    transition: 0.2s;
+} 
 .Detail{
     display: flex;
     flex-direction: column;

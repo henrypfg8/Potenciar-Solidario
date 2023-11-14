@@ -113,18 +113,13 @@ const Detail = () => {
         !Array.isArray(postDetail)
         ? 
         <div className={Styles.DetailView}>
-
-
       <div className={Styles.contain}>
-
         {image && <img src={image} alt="Imagen" />}
-
         <div className={Styles.Detail}>
           <div className={Styles.header}>
             <ImageAvatars image={User?.profile_picture} name={User?.name} />
             <h3>{organization}</h3>
           </div>
-
           <div>
             <h1>{title}</h1>
             <div className={Styles.header}>
@@ -172,20 +167,17 @@ const Detail = () => {
           </div>
           <a className={Styles.category}>{category}</a>
         </div>
-      </div>
-      <div className={Styles.containerR}>
-        {postDetail?.PublicationComments?.map((element, index) => {
-           var date = new Date(element.createdAt);
-          return (
-            <div className={Styles.reseñas} key={index}>
-              <h1 className={Styles.name}>{element?.User?.name}</h1>
-              <p className={Styles.p}>{element?.comment}</p>{" "}
-              <h4 className={Styles.dateee}>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
-            </div>
-          );
-        })}
-      </div>
-      <div className={Styles.textareaContainer}>
+    
+    </div>
+    <div className={Styles.container}>
+      {postDetail?.PublicationComments?.map((element, index)=>{
+        return(<div key={index} className={Styles.comment}><ImageAvatars name={element.User?.name} image={element.User?.profile_picture} /><p>{element.comment}</p> </div>)
+      })
+}
+    
+    </div>
+     
+    <div className={Styles.textareaContainer}>
         <p className={Styles.p}>Comentar</p>
         <textarea
          className={Styles.textarea}
@@ -194,7 +186,6 @@ const Detail = () => {
           value={reviews.comment}
           onChange={(event) => handleChange(event, id)}
         />
-
         <button className={Styles.button} onClick={() => handleSubmit(reviews)}>
           Añadir reseña
         </button>

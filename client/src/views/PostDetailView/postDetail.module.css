@@ -94,3 +94,63 @@
     transition: 0.2s;
     transform: scale(1.05);
 }
+.containerR{
+   width:1000px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    
+
+}
+.name{
+    display: inline-block;
+    text-align:start;
+    font-family: "FuenteBold";
+} 
+.p{
+    display: inline-block;
+    margin-left: 200px;
+    font-family: "FuenteBold";
+  
+    justify-content: start;
+}
+.reseñas{
+    display: block; /* Cambia a bloque para que aparezca debajo */
+    flex-direction: row;
+    align-items: center;
+    border-top: 1px solid rgba(68, 68, 68, 0.446);
+    padding: 0.8rem;
+    margin: 0.4rem
+   
+   
+}
+.textareaContainer{
+    height: 15;
+    width: 30vw;
+    margin-top: 20px;
+}
+.textarea{
+    height: 100px;
+    resize: none;
+    
+}
+.button{
+    padding: 0.5rem 1rem;
+    background-color: #095084;
+    border: #095084;
+    color: #fff;
+    display: block;
+    margin-left: 170px;
+
+    transition: 0.2s;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.button:hover{
+    background: #095184bb;
+    transition: 0.2s;
+} 
+.p{
+    align-items: center;
+    margin-top: 5px;
+}

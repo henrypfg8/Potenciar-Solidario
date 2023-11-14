@@ -137,4 +137,16 @@
     word-wrap: break-word;
     word-break: break-word;
 }
+.button:hover{
+    background: #095184bb;
+    transition: 0.2s;
+} 
+.p{
+    align-items: center;
+    margin-top: 5px;
 }
+.dateee{
+    display: inline-block;
+    margin-left: 180px;
+    align-items: center;
+}}

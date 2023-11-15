@@ -115,7 +115,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     return () => {
       clearTimeout(timer);
     };
-  }, [dispatch, question.thread, question.id]);
+  }, [dispatch]);
   useEffect(() => {
     if (!token || !isAuthenticated) {
       swal("Necesita loguearse para poder realizar una pregunta").then(

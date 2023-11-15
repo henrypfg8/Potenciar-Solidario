@@ -1,18 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 import proptypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { deletePost } from '../../../Redux/actions/postsActions'
 import { Modal, } from 'antd';
-import { getPosts } from '../../../Redux/actions/postsActions';
 import Styles from './dashboard.module.css';
 import { configureHeaders } from '../../../Redux/auth/configureHeaders ';
 import axios from 'axios';
 
-
-
-
-
-const CardDashboard = ({ post, setRefreshData, refreshData, isCheked, onCheckboxChange}) => {
+const CardDashboard = ({ post, setRefreshData, isCheked, onCheckboxChange}) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChekedModal, setIsChekedModal] = useState(false);
@@ -20,14 +15,6 @@ const CardDashboard = ({ post, setRefreshData, refreshData, isCheked, onCheckbox
   const dispatch = useDispatch();
 
   const config = configureHeaders();
-
-
-  useEffect(() => {
-
-    dispatch(getPosts());
-
-  }, [refreshData])
-
 
   const handleCloseModalCheked = () => {
     setIsChekedModal(false);
@@ -38,7 +25,7 @@ const CardDashboard = ({ post, setRefreshData, refreshData, isCheked, onCheckbox
     try {
       setRefreshData(true);
       const { data } = await axios.put(`http://localhost:19789/posts/${id}`, //actualizar el post
-        { ...post, status: post.status === '1' ? false : true }, config); //cambiar el estado del post
+        { ...post, status: post.status === true ? false : true }, config); //cambiar el estado del post
    
       setIsChekedModal(false);
       setRefreshData(false);
@@ -127,7 +114,6 @@ const CardDashboard = ({ post, setRefreshData, refreshData, isCheked, onCheckbox
 CardDashboard.propTypes = {
   post: proptypes.object.isRequired,
   setRefreshData: proptypes.func.isRequired,
-  refreshData: proptypes.bool.isRequired,
   isCheked: proptypes.bool,
   onCheckboxChange : proptypes.func
 

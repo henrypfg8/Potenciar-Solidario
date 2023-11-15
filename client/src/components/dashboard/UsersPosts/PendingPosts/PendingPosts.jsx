@@ -8,16 +8,19 @@ import axios from 'axios';
 import { configureHeaders } from '../../../../Redux/auth/configureHeaders ';
 import { Modal } from 'antd';
 
+
+
 const PendingPosts = () => {
     const { posts } = useSelector(state => state.posts);
     const dispatch = useDispatch();
-
-    const [search, setSearch] = useState('');
+    //Estados para hacer busquedas
+    const [searchTerm, setSearchTerm] = useState('');
+    const [isSearching, setIsSearching] = useState(false);
 
     const [refreshData, setRefreshData] = useState(false);
     const [errorNoSeleted, setErrorNoSeleted] = useState(false);
 
-    const [listSearchPost, setListSearchPost] = useState([]);
+    
     //guardar los posts seleccionados para publicar
     const [selectedPosts, setSelectedPosts] = useState([]);
 
@@ -28,10 +31,20 @@ const PendingPosts = () => {
 
  
     const postsPending = posts.filter((post) => { return post.status !== true; });
+    //
+      // Filtrar el array basado en el término de búsqueda si isSearching es true
+  const filteredResults = isSearching
+  ? postsPending.filter((item) =>
+    // Reemplaza 'item.name' con la propiedad o valor que deseas buscar
+    item.title.toLowerCase().includes(searchTerm.toLowerCase()) 
+  )
+  : postsPending;
 
+  //UseEffect para traer los posts
     useEffect(() => {
         
         dispatch(getPosts());
+
 
     }, [refreshData])
 
@@ -76,7 +89,7 @@ const PendingPosts = () => {
             const config = configureHeaders(); //configurar los headers
             const updatePromises = selectedPosts.map(post =>
                 axios.put(`http://localhost:19789/posts/${post.id}`,//actualizar el post
-                    { ...post, status: '1' }, //cambiar el estado del post
+                    { ...post, status: true }, //cambiar el estado del post
                     config)
             );
 
@@ -130,10 +143,10 @@ const PendingPosts = () => {
                 </div>
             )}
             <SearchDashBoard
-                search={search}
-                setSearch={setSearch}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
                 postsPending={postsPending}
-                setListSearchPost={setListSearchPost}
+                setIsSearching={setIsSearching}
             />
             {errorNoSeleted && <p className={Styles.dashboard__error}>No se seleccionó ninguna publicación</p>}
 
@@ -142,30 +155,20 @@ const PendingPosts = () => {
 
                 <div className={Styles.dashboard__divCards}>
 
-                    {listSearchPost.length > 0 ? listSearchPost.map((post) => {
-                        return (
-                            <CardDashboard
-                                key={post.id}
-                                post={post}
-                                setRefreshData={setRefreshData}
-                                refreshData={refreshData}
-                                isCheked={selectedPosts.includes(post)}
-                                onCheckboxChange={handleCheckboxChange}
-                            />
-                        )
-                    }) : postsPending.map((post) => {
-                        return (
-                            <CardDashboard
-                                key={post.id}
-                                post={post}
-                                setRefreshData={setRefreshData}
-                                refreshData={refreshData}
-                                isCheked={selectedPosts.includes(post)}
-                                onCheckboxChange={handleCheckboxChange}
-
-                            />
-                        )
-                    })}
+                {filteredResults.length > 0 ? (
+            filteredResults.map(post => (
+              <CardDashboard 
+                key={post.id} 
+                post={post}
+                setRefreshData={setRefreshData}
+                onCheckboxChange={handleCheckboxChange}/>
+            ))
+          ) : (
+            isSearching &&
+            <div className={Styles.div_NoResults}>
+              <p className={Styles.title_NoResults}>No hay resultados</p>
+            </div>
+          )}
                 </div>
                 {selectedPosts.length > 0 && (
                     <div className={Styles.dashboard__buttons}>

@@ -11,8 +11,10 @@ import SearchDashBoard from "../SearchDashBoard";
 const PublishPosts = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector(state => state.posts);
-  const [search, setSearch] = useState('');
-  const [listSearchPost, setListSearchPost] = useState([]);
+
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
 
   const [selectedPosts, setSelectedPosts] = useState([]);
   const [refreshData, setRefreshData] = useState(false);
@@ -22,8 +24,16 @@ const PublishPosts = () => {
   const [isModalOpenLeftPublish, setIsModalOpenLeftPublish] = useState(false);
   const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
 
-  
+
   const postsApproved = posts.filter(post => post.status === '1' || post.status === true);
+  // Filtrar el array basado en el término de búsqueda si isSearching es true
+  const filteredResults = isSearching
+    ? postsApproved.filter((item) =>
+      // Reemplaza 'item.name' con la propiedad o valor que deseas buscar
+      item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    : postsApproved;
+
 
   useEffect(() => {
     dispatch(getPosts())
@@ -124,41 +134,31 @@ const PublishPosts = () => {
         )}
 
 
-          <SearchDashBoard
-            search={search}
-            setSearch={setSearch}
-            postsPending={postsApproved}
-            setListSearchPost={setListSearchPost}
-          />
+        <SearchDashBoard
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          postsPending={postsApproved}
+          setIsSearching={setIsSearching}
+        />
 
         <div className={Styles.dashboard__div}>
 
           <div className={Styles.dashboard__divCards}>
 
-          {listSearchPost.length > 0 ? listSearchPost.map((post) => {
-                        return (
-                            <CardDashboard
-                                key={post.id}
-                                post={post}
-                                setRefreshData={setRefreshData}
-                                refreshData={refreshData}
-                                isCheked={selectedPosts.includes(post)}
-                                onCheckboxChange={handleCheckboxChange}
-                            />
-                        )
-                    }) : postsApproved?.map((post) => {
-                        return (
-                            <CardDashboard
-                                key={post.id}
-                                post={post}
-                                setRefreshData={setRefreshData}
-                                refreshData={refreshData}
-                                isCheked={selectedPosts.includes(post)}
-                                onCheckboxChange={handleCheckboxChange}
-
-                            />
-                        )
-                    })}
+            {filteredResults.length > 0 ? (
+              filteredResults.map(post => (
+                <CardDashboard
+                  key={post.id}
+                  post={post}
+                  setRefreshData={setRefreshData}
+                  onCheckboxChange={handleCheckboxChange} />
+              ))
+            ) : (
+              isSearching &&
+              <div className={Styles.div_NoResults}>
+                <p className={Styles.title_NoResults}>No hay resultados</p>
+              </div>
+            )}
           </div>
           {selectedPosts.length > 0 && (
             <div className={Styles.dashboard__buttons}>

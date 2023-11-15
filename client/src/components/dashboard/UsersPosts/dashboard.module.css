@@ -224,4 +224,17 @@
     font-size: 1.3rem;
 }
 
+.div_NoResults{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
 
+}
+.title_NoResults{
+    text-align: center;
+    display: block;
+    font-weight: 900;
+    font-size: 1.3rem;
+}

@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 //
 import {
   setOrderings,
-  setSelectedOrderingsOption,
+  setSelectedOptions,
 } from "../../../Redux/actions/postsActions";
 
 export default function Orderings() {
@@ -16,17 +16,17 @@ export default function Orderings() {
   const options = [
     {
       label: "Fecha de inicio",
-      name: "value",
+      name: "ordering",
       value: "date",
     },
     {
       label: "Titulo",
-      name: "value",
+      name: "ordering",
       value: "title",
     },
     {
       label: "Fecha de subida",
-      name: "value",
+      name: "ordering",
       value: "creationDate",
     },
   ];
@@ -34,14 +34,14 @@ export default function Orderings() {
   const orderBy = useSelector((state) => state.posts.orderBy);
   const [orderByLOCAL, setOrderByLOCAL] = useState({...orderBy});
   
-  const selectedOrderingsOption = useSelector(state => state.posts.selectedOrderingsOption)
-  const [ selectedOption, setSelectedOption ] = useState({
-    
+  const selectedOptions = useSelector(state => state.posts.selectedOptions);
+  const [ selectedOptionLOCAL, setSelectedOptionLOCAL ] = useState({
+    ...selectedOptions.ordering
   });
-  
+  console.log(selectedOptionLOCAL)
   
 
-  //console.log('el estado global desde el componente', selectedOrderingsOption);
+  //console.log('el estado global desde el componente', selectedOptions);
 
   const changeHandler = (e) => {
     const { name, value, label } = e.target ? e.target : e;
@@ -52,9 +52,7 @@ export default function Orderings() {
       })
     );
     if (!e.target) {
-      dispatch(setSelectedOrderingsOption({ label, name, value }));
-      setSelectedOption({label, name, value})
-      console.log("en el handler:", label, name, value);
+      dispatch(setSelectedOptions({...selectedOptions, [name]: { label, name, value }}));
     }
   };
 
@@ -63,10 +61,14 @@ export default function Orderings() {
   }, [orderBy]);
 
   useEffect(() => {
-    //setSelectedOption({...selectedOrderingsOption});
-    console.log('useEffect - el global', selectedOrderingsOption);
-    console.log('useEffect - el local', selectedOption)
-  }, [selectedOrderingsOption, selectedOption])
+    console.log('useEffect - el global', selectedOptions);
+    console.log('useEffect - el local', selectedOptions);
+    setSelectedOptionLOCAL({...selectedOptions.ordering})
+  }, [selectedOptions])
+
+  useEffect(() => {
+    console.log('avergaston', selectedOptionLOCAL)
+  }, [selectedOptionLOCAL])
 
   return (
     <div className={Styles.Orderings}>
@@ -78,7 +80,7 @@ export default function Orderings() {
         defaultValue={options[0]}
         menuPlacement="top"
         onChange={changeHandler}
-        value={selectedOption}
+        value={selectedOptionLOCAL}
       />
 
       <div className={Styles.Orderings__radioInputs}>

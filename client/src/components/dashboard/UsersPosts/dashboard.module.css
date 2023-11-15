@@ -118,7 +118,7 @@
 
 }
 .dashboard__info p{
-    font-size: 0.5rem;
+    font-size: 0.7rem;
   
   }
   @media(min-width: 768px){
@@ -206,6 +206,7 @@
     width: 90%;
     margin: 1rem auto 0 auto;
     justify-content: flex-end;
+    gap: 1rem;
 }
 
 .button__selected{
@@ -214,6 +215,8 @@
     border-radius: 4px;
     background: #fff;
     cursor: pointer;
+    
+
 
     
 }
@@ -237,4 +240,8 @@
     display: block;
     font-weight: 900;
     font-size: 1.3rem;
+}
+.dashboard__date{
+    color: var(--blue);
+    padding: 0.3rem;
 }

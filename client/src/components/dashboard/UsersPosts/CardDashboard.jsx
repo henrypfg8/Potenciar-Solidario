@@ -59,7 +59,7 @@ const CardDashboard = ({ post, setRefreshData, isCheked, onCheckboxChange}) => {
       });
   }
 
-
+  
   return (
     <div className={Styles.dashboard__card}>
       <div>
@@ -67,6 +67,7 @@ const CardDashboard = ({ post, setRefreshData, isCheked, onCheckboxChange}) => {
       </div>
       <div className={Styles.dashboard__info}>
         <h1>{post.title}</h1>
+        <p className={Styles.dashboard__date}>{post.creationDate}</p>
         <p className={Styles.dashboard__p}>{post.description}</p>
       </div>
       <div className={Styles.dashboard__selected}>

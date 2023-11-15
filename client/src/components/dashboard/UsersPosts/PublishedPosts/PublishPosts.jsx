@@ -151,7 +151,8 @@ const PublishPosts = () => {
                   key={post.id}
                   post={post}
                   setRefreshData={setRefreshData}
-                  onCheckboxChange={handleCheckboxChange} />
+                  onCheckboxChange={handleCheckboxChange}
+                  isCheked={selectedPosts.includes(post)} />
               ))
             ) : (
               isSearching &&

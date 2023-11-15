@@ -1,16 +1,22 @@
 import Styles from './pageNotFound.module.css'
 import { NavLink, useLocation } from 'react-router-dom'
 import Spinner from '../components/auth/spinner/Spinner';
+import { useEffect, useState } from 'react';
 
 
 const PageNotFund = () => {
   const { pathname } = useLocation();
-
-
+  const [isLoading, setIsLoading] = useState(false)
+  useEffect(() => {
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1000)
+  }, [])
   return (
-    <div className={Styles.container}>
-      {Spinner ? <Spinner /> : (
-        <div>
+    <>
+      {isLoading ? <Spinner /> : (
+        <div className={Styles.container}>
           {pathname === '/admin' ? (
             <div className={Styles.divFlex}>
               <h2 className={Styles.title}>No tenes permiso para entrar a esta pagina</h2>
@@ -30,7 +36,7 @@ const PageNotFund = () => {
         </div>
       )
       }
-    </div>
+    </>
   )
 }
 

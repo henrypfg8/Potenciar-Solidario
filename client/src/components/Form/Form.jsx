@@ -130,6 +130,7 @@ const Form = ({ setPost, post }) => {
             image: urlImage,  //agregar la url de la imagen
             creationDate: fechaConvertida,
             organization: userProfile.organization,
+            status : false
         };
         if (id) { // Si hay un id, actualizar la publicación
             await handleUpdate(id, updatedPost)

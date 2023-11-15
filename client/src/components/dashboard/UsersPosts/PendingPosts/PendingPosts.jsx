@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import CardDashboard from '../CardDashboard'
 import SearchDashBoard from '../SearchDashBoard';
@@ -11,16 +11,19 @@ import { Modal } from 'antd';
 
 
 const PendingPosts = () => {
+
     const { posts } = useSelector(state => state.posts);
     const dispatch = useDispatch();
     //Estados para hacer busquedas
     const [searchTerm, setSearchTerm] = useState('');
     const [isSearching, setIsSearching] = useState(false);
 
+    //orden
+    const [sortOrder, setSortOrder] = useState('asc'); 
     const [refreshData, setRefreshData] = useState(false);
     const [errorNoSeleted, setErrorNoSeleted] = useState(false);
 
-    
+
     //guardar los posts seleccionados para publicar
     const [selectedPosts, setSelectedPosts] = useState([]);
 
@@ -29,20 +32,31 @@ const PendingPosts = () => {
     //filtrar los posts que no estan publicados
 
 
- 
+
     const postsPending = posts.filter((post) => { return post.status !== true; });
     //
-      // Filtrar el array basado en el término de búsqueda si isSearching es true
-  const filteredResults = isSearching
-  ? postsPending.filter((item) =>
-    // Reemplaza 'item.name' con la propiedad o valor que deseas buscar
-    item.title.toLowerCase().includes(searchTerm.toLowerCase()) 
-  )
-  : postsPending;
+    // Filtrar el array basado en el término de búsqueda si isSearching es true
 
-  //UseEffect para traer los posts
+    const filteredAndSortedResults = useMemo(() => {
+        let results = isSearching
+          ? postsPending.filter(item =>
+              item.title.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+          : postsPending;
+      
+        // Ordenamiento basado en sortOrder
+        if (sortOrder === 'asc') {
+          results.sort((a, b) => new Date(a.creationDate) - new Date(b.creationDate));
+        } else if (sortOrder === 'desc') {
+          results.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+        }
+      
+        return results;
+      }, [postsPending, isSearching, searchTerm, sortOrder]);
+
+    //UseEffect para traer los posts
     useEffect(() => {
-        
+
         dispatch(getPosts());
 
 
@@ -130,7 +144,14 @@ const PendingPosts = () => {
         catch (error) {
             console.log(error.response)
         }
-    }
+    };
+
+    const onChangeFilterDate = (e) => {
+        // Actualiza el estado 'sortOrder' con el valor seleccionado
+        setSortOrder(e.target.value);
+      };
+
+
     return (
         <div className={Styles.dashboard}>
             {postsPending.length === 0 && <p className={Styles.dashboard__post}>No hay publicaciones pendientes</p>}
@@ -139,6 +160,16 @@ const PendingPosts = () => {
                     <p className={Styles.dashboard__post}>Hay {postsPending.length} publicaciones pendientes</p>
                     <div className={Styles.button__flexDiv}>
                         <button className={Styles.button__selected} onClick={handleSelectAllPost}>  {selectedPosts.length === postsPending.length ? 'Deseleccionar Todo' : 'Seleccionar Todo'}</button>
+
+                        <select style={{
+                            border : 'solid 1px #ddd',
+                            borderRadius : '5px'
+                        }} name="date" id="date" onChange={onChangeFilterDate}>
+                            
+                            <option value="">Ordenar por fecha</option>
+                            <option value="asc">Más Antiguo</option>
+                            <option value="desc">Más Nuevo</option>
+                        </select>
                     </div>
                 </div>
             )}
@@ -155,20 +186,21 @@ const PendingPosts = () => {
 
                 <div className={Styles.dashboard__divCards}>
 
-                {filteredResults.length > 0 ? (
-            filteredResults.map(post => (
-              <CardDashboard 
-                key={post.id} 
-                post={post}
-                setRefreshData={setRefreshData}
-                onCheckboxChange={handleCheckboxChange}/>
-            ))
-          ) : (
-            isSearching &&
-            <div className={Styles.div_NoResults}>
-              <p className={Styles.title_NoResults}>No hay resultados</p>
-            </div>
-          )}
+                    {filteredAndSortedResults.length > 0 ? (
+                        filteredAndSortedResults.map(post => (
+                            <CardDashboard
+                                key={post.id}
+                                post={post}
+                                setRefreshData={setRefreshData}
+                                onCheckboxChange={handleCheckboxChange}
+                                isCheked={selectedPosts.includes(post)} />
+                        ))
+                    ) : (
+                        isSearching &&
+                        <div className={Styles.div_NoResults}>
+                            <p className={Styles.title_NoResults}>No hay resultados</p>
+                        </div>
+                    )}
                 </div>
                 {selectedPosts.length > 0 && (
                     <div className={Styles.dashboard__buttons}>

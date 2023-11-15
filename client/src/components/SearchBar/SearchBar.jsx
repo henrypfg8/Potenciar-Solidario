@@ -25,7 +25,6 @@ export default function SearchBar() {
   const loading = useSelector(state => state.posts.loading);
 
   function changeHandler({ target: { value } }) {
-    value = value.trim();
     setInputValue(value);
   }
 
@@ -37,7 +36,7 @@ export default function SearchBar() {
       dispatch(getPostsFiltered(filters)).then(dispatch(hideLoading()));
     else {
       const { category, ong, fromDate, untilDate, user } = filters;
-      let value = inputValue.includes(' ') ? inputValue.split(' ') : inputValue;
+      let value = inputValue.includes(' ') ? inputValue.split(' ') : inputValue.trim();
 
       let debounceTimeout = undefined;
       axios.get(
@@ -62,10 +61,10 @@ export default function SearchBar() {
   }, [])
 
   return (
-    <div className={Styles["SearchBar"]}>
+    <div className={Styles.SearchBar}>
       <input
         type="text"
-        className={Styles["searchBar__input"]}
+        className={Styles.searchBar__input}
         placeholder="Buscar por titulo, descripción y organización."
         onChange={changeHandler}
         value={inputValue}

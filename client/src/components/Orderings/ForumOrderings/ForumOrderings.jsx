@@ -17,9 +17,7 @@ export default function () {
     direction: "asc",
   });
   const selectedOrderingOption = useSelector(state => state.questions.selectedOrderingOption);
-  const [selectedOptionLOCAL, setSelectedOptionLOCAL] = useState({
-    name:'value', value: 'date', label: "Fecha de creación"
-  })
+  const [selectedOptionLOCAL, setSelectedOptionLOCAL] = useState({...selectedOrderingOption});
 
 
   const options = [

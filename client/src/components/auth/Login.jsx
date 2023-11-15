@@ -12,8 +12,8 @@ const Login = () => {
     const { isAuthenticated,deleteSuccess } = useSelector(state => state.auth);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const [errorLogin, setErrorLogin] = useState(false);
-    const [errorLoginWithGoogle, setErrorLoginWithGoogle] = useState(false);
+    const [errorLogin, setErrorLogin] = useState('');
+    const [errorLoginWithGoogle, setErrorLoginWithGoogle] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -32,13 +32,13 @@ const Login = () => {
         dispatch(loginUser(user.email, user.password))
             .then(() => {
                 navigate('/');
-                setErrorLogin(false);
+                setErrorLogin('');
             })
             .catch((error) => {
-                console.log(error.response.data.message);
-                setErrorLogin(true);
+                setErrorLogin(error.response.data.message);
+                
             })
-
+        setErrorLogin('')
         // Limpiar el formulario
         reset();
     }
@@ -48,15 +48,15 @@ const Login = () => {
         dispatch(loginWithGoogleAction(token)) //Hacer el dispatch de la acción para iniciar sesión con google
             .then((data) => {
                 if (data === undefined || data === null === !data) {
-                    setErrorLoginWithGoogle(true);
+                    setErrorLoginWithGoogle('No cuenta aun no esta registrada');
                     return;
                 }
                 navigate('/');
                 setErrorLoginWithGoogle(false);
             })
             .catch((error) => {
-                console.log(error.response.data.message);
-                setErrorLoginWithGoogle(true);
+                
+                setErrorLoginWithGoogle(error.response.data.message);
             })
 
     }
@@ -67,8 +67,8 @@ const Login = () => {
             <form action="" method='post' onSubmit={handleSubmit(login)} className='auth__form' autoCorrect='off'>
                 {/* campo para el email */}
                 <h1 className='auth__title'>Iniciar Sesión</h1>
-                {errorLogin && <p className='auth__error'>Correo o contraseña incorrectos</p>}
-                {errorLoginWithGoogle && <p className='auth__error'>Tu cuenta aún no esta registrada</p>}
+                {errorLogin && <p className='auth__error'>{errorLogin}</p>}
+                {errorLoginWithGoogle && <p className='auth__error'>{errorLoginWithGoogle}</p>}
                 <div>
                     <label className='auth__label' htmlFor="email">correo</label>
                     {errors.email && <p className='auth__error'>Debe ser un correo valido</p>}

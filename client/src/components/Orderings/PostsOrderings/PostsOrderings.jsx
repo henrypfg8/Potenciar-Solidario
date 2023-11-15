@@ -7,36 +7,41 @@ import { useSelector, useDispatch } from "react-redux";
 //
 import {
   setOrderings,
-  setSelectedOrderingsOption,
+  setSelectedOptions,
 } from "../../../Redux/actions/postsActions";
 
 export default function Orderings() {
   const dispatch = useDispatch();
-  const orderBy = useSelector((state) => state.posts.orderBy);
-  const [orderByLOCAL, setOrderByLOCAL] = useState({...orderBy});
-  //const selectedOrderingsOption = useSelector(state => state.posts.selectedOrderingsOption)
-  // const [ selectedOption, setSelectedOption ] = useState({
-  //   label: 'Fecha de inicio', value: 'date', name: 'value'
-  // })
+
   const options = [
     {
       label: "Fecha de inicio",
-      name: "value",
+      name: "ordering",
       value: "date",
     },
     {
       label: "Titulo",
-      name: "value",
+      name: "ordering",
       value: "title",
     },
     {
       label: "Fecha de subida",
-      name: "value",
+      name: "ordering",
       value: "creationDate",
     },
   ];
 
-  //console.log('el estado global desde el componente', selectedOrderingsOption);
+  const orderBy = useSelector((state) => state.posts.orderBy);
+  const [orderByLOCAL, setOrderByLOCAL] = useState({...orderBy});
+  
+  const selectedOptions = useSelector(state => state.posts.selectedOptions);
+  const [ selectedOptionLOCAL, setSelectedOptionLOCAL ] = useState({
+    ...selectedOptions.ordering
+  });
+  console.log(selectedOptionLOCAL)
+  
+
+  //console.log('el estado global desde el componente', selectedOptions);
 
   const changeHandler = (e) => {
     const { name, value, label } = e.target ? e.target : e;
@@ -47,8 +52,7 @@ export default function Orderings() {
       })
     );
     if (!e.target) {
-      dispatch(setSelectedOrderingsOption({ label, name, value }));
-      console.log("en el handler:", label, name, value);
+      dispatch(setSelectedOptions({...selectedOptions, [name]: { label, name, value }}));
     }
   };
 
@@ -56,10 +60,15 @@ export default function Orderings() {
     setOrderByLOCAL(orderBy);
   }, [orderBy]);
 
-  // useEffect(() => {
-  //   setSelectedOption(selectedOrderingsOption);
-  //   console.log('el useEffect', selectedOrderingsOption);
-  // }, [selectedOrderingsOption])
+  useEffect(() => {
+    console.log('useEffect - el global', selectedOptions);
+    console.log('useEffect - el local', selectedOptions);
+    setSelectedOptionLOCAL({...selectedOptions.ordering})
+  }, [selectedOptions])
+
+  useEffect(() => {
+    console.log('avergaston', selectedOptionLOCAL)
+  }, [selectedOptionLOCAL])
 
   return (
     <div className={Styles.Orderings}>
@@ -71,16 +80,7 @@ export default function Orderings() {
         defaultValue={options[0]}
         menuPlacement="top"
         onChange={changeHandler}
-        value={{
-          value: orderByLOCAL.value,
-          name: "value",
-          label:
-            orderByLOCAL.value === "title"
-              ? "Titulo"
-              : orderByLOCAL.value === "creationDate"
-              ? "Fecha de subida"
-              : "Fecha de inicio",
-        }}
+        value={selectedOptionLOCAL}
       />
 
       <div className={Styles.Orderings__radioInputs}>

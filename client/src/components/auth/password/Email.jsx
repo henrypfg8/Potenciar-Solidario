@@ -14,7 +14,7 @@ const Email = () => {
     const handleSendEmail = async (email) => {
         try {
             const { data } = await axios.put('http://localhost:19789/forgotpassword', {email})
-            console.log(data)
+           
             setErrorEmail(false);
             setSuccessEmail(true);
             setTimeout(() => {

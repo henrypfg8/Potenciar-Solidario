@@ -42,7 +42,6 @@ const initialState = {
     direction: "asc",
   },
   selectedOrderingsOption: {
-    label: 'Fecha de inicio', name: 'value', value: 'date'
   },
   
   searchValue: "",
@@ -209,14 +208,14 @@ const postReducer = (state = initialState, action) => {
     case SET_SELECTED_FILTER_OPTIONS: 
     return {
       ...state,
-      selectedFilterOptions: {...action.payload}
+      selectedFilterOptions: action.payload
     }
 
     case SET_SELECTED_ORDERINGS_OPTION: 
     console.log(action.payload)
     return {
       ...state,
-      selectedOrderingsOptions: {...action.payload}
+      selectedOrderingsOptions: action.payload
     }
 
     default:

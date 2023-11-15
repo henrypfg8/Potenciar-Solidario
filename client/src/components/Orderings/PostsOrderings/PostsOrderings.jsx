@@ -12,12 +12,7 @@ import {
 
 export default function Orderings() {
   const dispatch = useDispatch();
-  const orderBy = useSelector((state) => state.posts.orderBy);
-  const [orderByLOCAL, setOrderByLOCAL] = useState({...orderBy});
-  //const selectedOrderingsOption = useSelector(state => state.posts.selectedOrderingsOption)
-  // const [ selectedOption, setSelectedOption ] = useState({
-  //   label: 'Fecha de inicio', value: 'date', name: 'value'
-  // })
+
   const options = [
     {
       label: "Fecha de inicio",
@@ -36,6 +31,16 @@ export default function Orderings() {
     },
   ];
 
+  const orderBy = useSelector((state) => state.posts.orderBy);
+  const [orderByLOCAL, setOrderByLOCAL] = useState({...orderBy});
+  
+  const selectedOrderingsOption = useSelector(state => state.posts.selectedOrderingsOption)
+  const [ selectedOption, setSelectedOption ] = useState({
+    
+  });
+  
+  
+
   //console.log('el estado global desde el componente', selectedOrderingsOption);
 
   const changeHandler = (e) => {
@@ -48,6 +53,7 @@ export default function Orderings() {
     );
     if (!e.target) {
       dispatch(setSelectedOrderingsOption({ label, name, value }));
+      setSelectedOption({label, name, value})
       console.log("en el handler:", label, name, value);
     }
   };
@@ -56,10 +62,11 @@ export default function Orderings() {
     setOrderByLOCAL(orderBy);
   }, [orderBy]);
 
-  // useEffect(() => {
-  //   setSelectedOption(selectedOrderingsOption);
-  //   console.log('el useEffect', selectedOrderingsOption);
-  // }, [selectedOrderingsOption])
+  useEffect(() => {
+    //setSelectedOption({...selectedOrderingsOption});
+    console.log('useEffect - el global', selectedOrderingsOption);
+    console.log('useEffect - el local', selectedOption)
+  }, [selectedOrderingsOption, selectedOption])
 
   return (
     <div className={Styles.Orderings}>
@@ -71,16 +78,7 @@ export default function Orderings() {
         defaultValue={options[0]}
         menuPlacement="top"
         onChange={changeHandler}
-        value={{
-          value: orderByLOCAL.value,
-          name: "value",
-          label:
-            orderByLOCAL.value === "title"
-              ? "Titulo"
-              : orderByLOCAL.value === "creationDate"
-              ? "Fecha de subida"
-              : "Fecha de inicio",
-        }}
+        value={selectedOption}
       />
 
       <div className={Styles.Orderings__radioInputs}>

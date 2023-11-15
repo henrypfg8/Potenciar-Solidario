@@ -10,11 +10,10 @@ import { jwtDecode } from "jwt-decode";
 import {
   createAnswer,
   createAnswerComment,
-  deleteAnswer,
+  updateAnswer,
 } from "../../Redux/actions/answersActions";
 import { useNavigate } from "react-router";
 import {
-  deleteQuestion,
   getQuestionDetail,
 } from "../../Redux/actions/questionsActions";
 import validation from "./validation";
@@ -23,14 +22,16 @@ import ImageAvatars from "../../assets/AvatarImage";
 import Notifications from "../../components/Notifications/Notifications";
 import { Oval } from "react-loader-spinner";
 
-function QuestionView({ question, answers }) {
+function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
   const [userId, setUserId] = useState("");
   const { isAuthenticated, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [disable, setDisable] = useState(false);
+  const [editingAnswerId, setEditingAnswerId] = useState(null);
+  const [editingAnswer, setEditingAnswer] = useState("");
   const [view, setView] = useState({});
   const navigate = useNavigate();
-  const [disable, setDisable] = useState(false);
-  const [messages, setMessages] = useState([]);
+
   const [comment, setComment] = useState({
     thread: "",
     userId: "",
@@ -40,6 +41,11 @@ function QuestionView({ question, answers }) {
   const [errores, setErrores] = useState({
     answer: "",
   });
+  const handleEditClick = (answerId, answerText) => {
+    setEditingAnswerId(answerId);
+    setEditingAnswer(answerText);
+  };
+  
   const [answer, setAnswer] = useState({
     answer: "",
     userId: "",
@@ -58,8 +64,8 @@ function QuestionView({ question, answers }) {
   };
 
   const answersSubmit = (answer) => {
+    setDisable(true)
     if (Object.keys(errores).length === 0) {
-      setDisable(true);
       dispatch(createAnswer(answer)).then(() => {
         dispatch(getQuestionDetail(question.id));
         setAnswer({
@@ -69,32 +75,30 @@ function QuestionView({ question, answers }) {
           icon: "success",
           text: "Respuesta creada con exito",
         }).catch(() => {
-          setDisable(false); 
+          setDisable(false);
           swal({
             icon: "error",
             text: `contacte a soporte`,
           });
         });
       }).catch(() => {
-        setDisable(false); 
+        setDisable(false);
       });
     }
     <Notifications />;
   };
-  
 
   const handleSubmit = (message) => {
     dispatch(createAnswerComment(message))
-      .then((response) => {
+      .then(() => {
         setComment({ thread: "" });
         swal({
           icon: "success",
           text: "Comentario creado con éxito",
         });
-        console.log(question);
         dispatch(getQuestionDetail(question.id));
       })
-      .catch((error) => {
+      .catch(() => {
         swal({
           icon: "error",
           text: "contacte a soporte",
@@ -104,7 +108,7 @@ function QuestionView({ question, answers }) {
   useEffect(() => {
     if (!token || !isAuthenticated) {
       swal("Necesita loguearse para poder realizar una pregunta").then(
-        (value) => {
+        () => {
           navigate("/login");
         }
       );
@@ -144,58 +148,23 @@ function QuestionView({ question, answers }) {
     } else {
       setDisable(false);
     }
-  }, [handleAnswers, errores.answer]);
+  }, [errores.answer]);
+  
+  const handleAnswerEdit = (event) => {
+   setEditingAnswer(event.target.value)
+  }
 
-  const deleteQuestions = (handleClose) => {
-    handleClose();
-    swal({
-      title: "¿Estás seguro quse sea eliminar está pregunta?",
-      text: "Una vez eliminada por puede ser recuperada!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        dispatch(deleteQuestion(question.id))
-          .then(() => {
-            swal("Tu pregunta ha sido eliminada con éxito!", {
-              icon: "success",
-            });
-            navigate("/foro");
-          })
-          .catch(() => {
-            swal(
-              "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
-              {
-                icon: "error",
-              }
-            );
-          });
-      }
-    });
-  };
+  const handleSubmitEditAnwer = (id) => {
+    dispatch(updateAnswer(id, editingAnswer))
+  }
 
   const editQuestion = (handleClose) => {
     handleClose();
     navigate(`/foro/edit/${question.id}`);
   };
 
-  const deleteAnswers = (index) => {
-    swal({
-      title: "¿Desea eliminar esta respuesta?",
-      text: "! Una vez eliminada no se puede revertir !",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-    console.log(index);
-      if (willDelete) {
-        dispatch(deleteAnswer(index))
-      }
-    });
-  }
-  const dateQuestion = new Date (question?.createdAt)
+
+  const dateQuestion = new Date(question?.createdAt)
 
   return (
     <div className={style.container}>
@@ -216,11 +185,11 @@ function QuestionView({ question, answers }) {
                 image={question?.User?.profile_picture}
                 name={question?.User?.name}
               />
-              
-                 
-              
+
+
+
               <a>
-                Fecha de publicacion:{ <h4>{dateQuestion.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>}
+                Fecha de publicacion:{<h4>{dateQuestion.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>}
               </a>
             </div>
 
@@ -259,31 +228,44 @@ function QuestionView({ question, answers }) {
 
             {question.Answers?.map((respuesta, index) => {
               var date = new Date(respuesta.createdAt);
-              console.log(respuesta);
               return (
                 <div key={index} className={style.response}>
-                  <p>{respuesta.answer}</p>
-                  <h4>{respuesta.User.name} - {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}<h4></h4></h4>
-                  
-                 
-                    {
-                      userId === respuesta.userId && 
-                      <div className={style.edit}>
-                        <a onClick={() => deleteAnswers(respuesta.id)}>Eliminar Pregunta</a>
-                        <a href="">Editar Pregunta</a>
+                  {
+                    editingAnswerId === respuesta.id ?
+                      (
+                        <div>
+                          <input type="text" value={editingAnswer} onChange={handleAnswerEdit} />
+                          <button onClick={() => handleSubmitEditAnwer(respuesta.id)}>Guardar</button>
+                        </div>
+                      )
+                      :
+
+                      <div>
+
+                        <p>{respuesta.answer}</p>
+                        <h4>{respuesta.User.name} - {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}<h4></h4></h4>
                       </div>
-                    }
+
+                  }
+
+                  {
+                    userId === respuesta.userId &&
+                    <div className={style.edit}>
+                      <a onClick={() => deleteAnswers(respuesta.id)}>Eliminar Pregunta</a>
+                      <a onClick={() => handleEditClick(respuesta.id, respuesta.answer)}>Editar Pregunta</a>
+                    </div>
+                  }
                   <div>
                     {respuesta?.Comments?.map((el, index) => {
                       var date = new Date(el.createdAt);
                       return (
                         <div
-                        key={el.id}
-                        className={style.comments}
+                          key={el.id}
+                          className={style.comments}
                         >
                           <h4>{index + 1}</h4>
                           <p>{el.thread} -</p>
-                          <h3>{el.User?.name}</h3>   
+                          <h3>{el.User?.name}</h3>
                           <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
                         </div>
                       );
@@ -336,16 +318,16 @@ function QuestionView({ question, answers }) {
                 onChange={handleAnswers}
               />
 
-              {disable ? 
+              {disable ?
                 <button
                   disabled
                   className={style.buttonDisable}
                 >
                   Responder
                 </button>
-               : 
+                :
                 <button className={style.button} onClick={() => answersSubmit(answer)}>Responder</button>
-            }
+              }
             </div>
           </div>
         </div>

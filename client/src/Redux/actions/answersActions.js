@@ -56,28 +56,25 @@ export const updateAnswer = (id, updatedAnswerData) => {
         config
       );
       dispatch({ type: UPDATE_ANSWER, payload: response.data });
+      return Promise.resolve(response)
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
+      return Promise.reject(error)
     }
   };
 };
 
 export const deleteAnswer = (id) => {
   return async function (dispatch) {
-    console.log('prueba 1')
-    try {5
+    try {
       const config = configureHeaders();
-      console.log('prueba 2')
       const response = await axios.delete(
         `http://localhost:19789/answers/${id}`,
         config
         );
-        console.log('prueba 3')
         dispatch({ type: DELETE_ANSWER, payload: response.data });
-        console.log('prueba 4')
-        // return Promise.resolve(response)
+        return Promise.resolve(response)
       } catch (error) {
-      console.log('prueba 5 ')
       console.log(error, "por favor contactar a soporte por este error");
       return Promise.reject(error)
     }
@@ -126,8 +123,10 @@ export const updateAnswerComment = (id, updatedAnswerComment) => {
         config
       );
       dispatch({ type: UPDATE_ANSWER_COMMENT, payload: response.data });
+      return Promise.resolve(response)
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
+      return Promise.reject(error)
     }
   };
 };

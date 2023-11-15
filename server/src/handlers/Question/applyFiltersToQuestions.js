@@ -4,7 +4,6 @@ const applyFiltersToQuestions = async (req, res) => {
     try {
        
         const {category, fromDate, untilDate, user} = req.query;
-        console.log(user)
         
         let allQuestions = await Question.findAll({
             include: [
@@ -41,7 +40,7 @@ const applyFiltersToQuestions = async (req, res) => {
             allQuestions = allQuestions.filter(question => question.User.id === user);
             
         }
-      
+        
         res.status(200).json(allQuestions);
 
 

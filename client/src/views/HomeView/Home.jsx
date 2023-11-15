@@ -27,8 +27,7 @@ export default function Home() {
 
       <Posts />
 
-        {
-        }
+       
       
     </div>
   );

@@ -21,7 +21,7 @@ import {
   HIDE_LOADING,
   SET_ORDERINGS,
   SET_SELECTED_FILTER_OPTIONS,
-  SET_SELECTED_ORDERINGS_OPTION
+  SET_SELECTED_ORDERINGS_OPTION,
 } from "../action types/postsActionTypes.js";
 
 import axios from "axios";
@@ -229,7 +229,7 @@ export const disLike = (idPublication) => {
         { idPublication },
         config
       );
-      response.data.publicationId = idPublication
+      response.data.publicationId = idPublication;
       dispatch({ type: DISLIKE, payload: response.data });
     } catch (error) {
       console.log(error);
@@ -247,10 +247,10 @@ export const createPostReview = (comment) => {
         config
       );
       dispatch({ type: CREATE_POST_REVIEW, payload: response.data });
-      return Promise.resolve(response)
+      return Promise.resolve(response);
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
   };
 };
@@ -301,21 +301,21 @@ export const hideLoading = () => {
 export const setOrderings = (orderBy) => {
   return {
     type: SET_ORDERINGS,
-    payload: orderBy
-  }
-}
+    payload: orderBy,
+  };
+};
 
 export const setSelectedFilterOptions = (selectedFilterOptions) => {
   return {
     type: SET_SELECTED_FILTER_OPTIONS,
-    payload: selectedFilterOptions
-  }
-}
+    payload: selectedFilterOptions,
+  };
+};
 
 export const setSelectedOrderingsOption = (selectedOrderingOption) => {
-  console.log(selectedOrderingOption)
+  console.log(selectedOrderingOption);
   return {
     type: SET_SELECTED_ORDERINGS_OPTION,
-    payload: selectedOrderingOption
-  }
-}
+    payload: { ...selectedOrderingOption },
+  };
+};

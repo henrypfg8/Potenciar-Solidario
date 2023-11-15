@@ -46,13 +46,13 @@ export const createAnswer = (answer) => {
   };
 };
 
-export const updateAnswer = (id, updatedAnswerData) => {
+export const updateAnswer = (id, answer) => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
       const response = await axios.put(
         `http://localhost:19789/answers/${id}`,
-        updatedAnswerData,
+        answer,
         config
       );
       dispatch({ type: UPDATE_ANSWER, payload: response.data });

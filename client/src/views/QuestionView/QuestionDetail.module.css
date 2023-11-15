@@ -153,6 +153,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    width: fit-content;
 }
 .response a:hover{
     color: #042685;
@@ -274,6 +275,42 @@
 }
 .edit a{
     margin: 0.4rem;
+}
+.editAnwer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.8rem;
+}
+.editAnwer input{
+    padding: 0.6rem;
+    width: 100%;
+    margin: 0.6rem;
+    border: 1px rgba(96, 96, 96, 0.304) solid;
+    height: 4rem;
+    min-height: 4rem;
+    max-height: fit-content;
+    overflow-wrap: break-word;
+}
+.editAnwer button{
+    display: flex;
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #095084;
+    border: #095084;
+    transition: 0.2s;
+    color: #fff;
+    transition: 0.2s;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.editAnwer button:hover{
+ 
+    background: #095184bb;
+    transition: 0.2s;
+
+    
 }
 @media (max-width: 575.98px){
     .question textarea{

@@ -19,7 +19,7 @@ function QuestionDetail() {
   const deleteAnswers = (index) => {
     swal({
       title: "¿Desea eliminar esta respuesta?",
-      text: "! Una vez eliminada no se puede revertir !",
+      text: "!Una vez eliminada no se puede revertir!",
       icon: "warning",
       buttons: true,
       dangerMode: true,

@@ -21,6 +21,8 @@ import CustomizedMenus from "../../assets/MenuDespegable";
 import ImageAvatars from "../../assets/AvatarImage";
 import Notifications from "../../components/Notifications/Notifications";
 import { Oval } from "react-loader-spinner";
+import { MaterialSymbolsEdit } from "../../assets/MaterialSymbolsEdit";
+import { MaterialSymbolsDelete } from "../../assets/MaterialSymbolsDelete";
 
 function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
   const [userId, setUserId] = useState("");
@@ -154,9 +156,28 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
    setEditingAnswer(event.target.value)
   }
 
-  const handleSubmitEditAnwer = (id) => {
-    dispatch(updateAnswer(id, editingAnswer))
-  }
+  const handleSubmitEditAnwer = (id) => {    
+    setDisable(true)    
+    dispatch(updateAnswer(id, {answer: editingAnswer})).then(() => {
+      dispatch(getQuestionDetail(question.id))
+      swal("Tu respuesta ha sido editada con exito!", {
+        icon: "success",
+      });
+      setEditingAnswerId(null)
+      setDisable(false)    
+      
+    }).catch(() => {
+      swal(
+        "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
+        {
+          icon: "error",
+        }
+        );
+        setEditingAnswerId(null)
+        setDisable(false)    
+      })
+      
+}
 
   const editQuestion = (handleClose) => {
     handleClose();
@@ -233,9 +254,16 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                   {
                     editingAnswerId === respuesta.id ?
                       (
-                        <div>
+                        <div className={style.editAnwer}>
                           <input type="text" value={editingAnswer} onChange={handleAnswerEdit} />
-                          <button onClick={() => handleSubmitEditAnwer(respuesta.id)}>Guardar</button>
+                          {
+                            disable 
+                            ?
+                            <button  disabled
+                            className={style.buttonDisable}>Guardar</button>
+                            :
+                            <button onClick={() => handleSubmitEditAnwer(respuesta.id)}>Guardar</button>
+                          }
                         </div>
                       )
                       :
@@ -250,10 +278,11 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
 
                   {
                     userId === respuesta.userId &&
+                    editingAnswerId !== respuesta.id &&
                     <div className={style.edit}>
-                      <a onClick={() => deleteAnswers(respuesta.id)}>Eliminar Pregunta</a>
-                      <a onClick={() => handleEditClick(respuesta.id, respuesta.answer)}>Editar Pregunta</a>
-                    </div>
+                      <a onClick={() => deleteAnswers(respuesta.id)}>Eliminar Respuesta <MaterialSymbolsDelete/></a>
+                      <a onClick={() => handleEditClick(respuesta.id, respuesta.answer)}>Editar Respuesta <MaterialSymbolsEdit/></a>
+                    </div>  
                   }
                   <div>
                     {respuesta?.Comments?.map((el, index) => {

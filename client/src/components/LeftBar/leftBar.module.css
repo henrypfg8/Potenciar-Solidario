@@ -5,6 +5,7 @@
     flex-direction: column;
     align-items: center;
     border-right: solid #526387 1px;
+    box-shadow: 8px 0px 15px -6px rgba(0, 0, 0, 0.75);
 }
 
     .LeftBar__Buttons {
@@ -46,7 +47,7 @@
     
 
     .Filters {
-        border-top: solid #526387 2px;
+        border-top: solid #526387 1px;
         flex: 1;
         width: 100%;
     }

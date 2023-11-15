@@ -48,7 +48,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     setEditingAnswerId(answerId);
     setEditingAnswer(answerText);
   };
-  
+
   const [answer, setAnswer] = useState({
     answer: "",
     userId: "",
@@ -152,21 +152,21 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       setDisable(false);
     }
   }, [errores.answer]);
-  
+
   const handleAnswerEdit = (event) => {
-   setEditingAnswer(event.target.value)
+    setEditingAnswer(event.target.value)
   }
 
-  const handleSubmitEditAnwer = (id) => {    
-    setDisable(true)    
-    dispatch(updateAnswer(id, {answer: editingAnswer})).then(() => {
+  const handleSubmitEditAnwer = (id) => {
+    setDisable(true)
+    dispatch(updateAnswer(id, { answer: editingAnswer })).then(() => {
       dispatch(getQuestionDetail(question.id))
       swal("Tu respuesta ha sido editada con exito!", {
         icon: "success",
       });
       setEditingAnswerId(null)
-      setDisable(false)    
-      
+      setDisable(false)
+
     }).catch(() => {
       swal(
         "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
@@ -285,12 +285,12 @@ const deleteComment = (id) => {
                         <div className={style.editAnwer}>
                           <input type="text" value={editingAnswer} onChange={handleAnswerEdit} />
                           {
-                            disable 
-                            ?
-                            <button  disabled
-                            className={style.buttonDisable}>Guardar</button>
-                            :
-                            <button onClick={() => handleSubmitEditAnwer(respuesta.id)}>Guardar</button>
+                            disable
+                              ?
+                              <button disabled
+                                className={style.buttonDisable}>Guardar</button>
+                              :
+                              <button onClick={() => handleSubmitEditAnwer(respuesta.id)}>Guardar</button>
                           }
                         </div>
                       )
@@ -308,9 +308,9 @@ const deleteComment = (id) => {
                     userId === respuesta.userId &&
                     editingAnswerId !== respuesta.id &&
                     <div className={style.edit}>
-                      <a onClick={() => deleteAnswers(respuesta.id)}>Eliminar Respuesta <MaterialSymbolsDelete/></a>
-                      <a onClick={() => handleEditClick(respuesta.id, respuesta.answer)}>Editar Respuesta <MaterialSymbolsEdit/></a>
-                    </div>  
+                      <a onClick={() => deleteAnswers(respuesta.id)}>Eliminar Respuesta <MaterialSymbolsDelete /></a>
+                      <a onClick={() => handleEditClick(respuesta.id, respuesta.answer)}>Editar Respuesta <MaterialSymbolsEdit /></a>
+                    </div>
                   }
                   <div>
                     {respuesta?.Comments?.map((el, index) => {

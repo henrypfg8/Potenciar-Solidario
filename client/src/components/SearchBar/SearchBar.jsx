@@ -36,7 +36,7 @@ export default function SearchBar() {
       dispatch(getPostsFiltered(filters)).then(dispatch(hideLoading()));
     else {
       const { category, ong, fromDate, untilDate, user } = filters;
-      let value = inputValue.includes(' ') ? inputValue.split(' ') : inputValue.trim();
+      let value = inputValue.trim().includes(' ') ? inputValue.trim().split(' ') : inputValue.trim();
 
       let debounceTimeout = undefined;
       axios.get(

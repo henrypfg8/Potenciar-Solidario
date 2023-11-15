@@ -5,7 +5,7 @@ const CreateCommentHandler = async(req,res)=>{
 
   try {
 
-    if(!thread) throw new Error('Es obligatoria el Thread')
+    //if(!thread) throw new Error('Es obligatoria el Thread')
 
     const newComment = await CreateComment({ thread, userId, answerId,questionId});
 

@@ -19,8 +19,7 @@ import {
   SET_LOADING,
   HIDE_LOADING,
   SET_ORDERINGS,
-  SET_SELECTED_FILTER_OPTIONS,
-  SET_SELECTED_ORDERINGS_OPTION
+  SET_SELECTED_OPTIONS
 } from "../action types/postsActionTypes.js";
 
 const initialState = {
@@ -32,17 +31,17 @@ const initialState = {
     untilDate: "",
     user: ""
   },
-  selectedFilterOptions: {
+  selectedOptions: {
     category: {label: "Todas las categorias", name: 'category', value: ''},
     ong: {label: "Todas las organizaciones", name: 'ong', value: ''},
-    user: {label: 'Todos los usuarios', name: "user", value: ''}
+    user: {label: 'Todos los usuarios', name: "user", value: ''},
+    ordering: {label: "Fecha de subida", name: 'ordering', value: 'creationDate'}
   },
   orderBy: {
-    value: "date",
+    ordering: "creationDate",
     direction: "asc",
   },
-  selectedOrderingsOption: {
-  },
+  
   
   searchValue: "",
   // allPosts: [],
@@ -205,18 +204,11 @@ const postReducer = (state = initialState, action) => {
         orderBy: action.payload,
       };
 
-    case SET_SELECTED_FILTER_OPTIONS: 
-    return {
-      ...state,
-      selectedFilterOptions: action.payload
-    }
-
-    case SET_SELECTED_ORDERINGS_OPTION: 
-    console.log(action.payload)
-    return {
-      ...state,
-      selectedOrderingsOptions: action.payload
-    }
+    case SET_SELECTED_OPTIONS: 
+      return {
+        ...state,
+        selectedOptions: action.payload
+      }
 
     default:
       return { ...state };

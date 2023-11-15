@@ -9,6 +9,25 @@ const UserQuestions = () => {
   const { questions } = useSelector(state => state.questions);
   const [refreshData, setRefreshData] = useState(false)
 
+  //states para la busqueda
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  //Funcion para hacer la busqueda
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    setIsSearching(value.length > 0);
+  };
+
+    // Filtrar el array basado en el término de búsqueda si isSearching es true
+    const filteredResults = isSearching
+    ? questions.filter((item) =>
+      // Reemplaza 'item.name' con la propiedad o valor que deseas buscar
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) 
+    )
+    : questions;
+
+
 
   useEffect(() => {
 
@@ -20,15 +39,32 @@ const UserQuestions = () => {
 
   return (
     <div className={Styles.question__container}>
-
-      <div  className={Styles.question__grid}>
-        {questions && questions?.map(question => (
-          <UserQuetionCard 
-            refreshData={refreshData}
-            setRefreshData={setRefreshData}
-            key={question.id} 
-            question={question} />
-        ))}
+      <div className={Styles.divInput}>
+        <input 
+          className={Styles.inputSearch}
+          type="text"
+          value={searchTerm}
+          onChange={handleSearch}
+          placeholder='buscar por nombre de pregunta'
+         />
+      </div>
+    
+      <div className={Styles.question__grid}>
+      {filteredResults.length > 0 ? (
+            filteredResults.map(question => (
+              <UserQuetionCard 
+                key={question.id} 
+                question={question}
+                setRefreshData={setRefreshData} />
+            ))
+          ) : (
+            isSearching &&
+            <div className={Styles.div_NoResults}>
+              <p className={Styles.title_NoResults}>
+                No hay resultados para esta busqueda
+              </p>
+            </div>
+          )}
       </div>
     </div>
   )

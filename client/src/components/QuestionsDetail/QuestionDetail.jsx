@@ -24,26 +24,26 @@ function QuestionDetail() {
       buttons: true,
       dangerMode: true,
     })
-    .then((willDelete) => {
-    console.log(index);
-      if (willDelete) {
-        dispatch(deleteAnswer(index))
-        .then(() => {
-          dispatch(getQuestionDetail(id))
-          swal("Tu respuesta ha sido eliminada con exito!", {
-            icon: "success",
-          });
+      .then((willDelete) => {
+        console.log(index);
+        if (willDelete) {
+          dispatch(deleteAnswer(index))
+            .then(() => {
+              dispatch(getQuestionDetail(id))
+              swal("Tu respuesta ha sido eliminada con exito!", {
+                icon: "success",
+              });
 
-        }).catch(() => {
-          swal(
-            "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
-            {
-              icon: "error",
-            }
-          );
-        })
-      }
-    });
+            }).catch(() => {
+              swal(
+                "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
+                {
+                  icon: "error",
+                }
+              );
+            })
+        }
+      });
   }
   const deleteQuestions = (handleClose) => {
     handleClose();
@@ -74,13 +74,15 @@ function QuestionDetail() {
     });
   };
   useEffect(() => {
-    dispatch(getQuestionDetail(id));
-    socket?.on(`question_${id}`, () => {
+    const listener = () => {
       dispatch(getQuestionDetail(id));
-    });
+    };
+
+    dispatch(getQuestionDetail(id));
+    socket?.on(`question_${id}`, listener);
 
     return () => {
-      socket?.removeAllListeners(`question_${id}`);
+      socket?.off(`question_${id}`, listener);
     };
   }, []);
 
@@ -95,7 +97,7 @@ function QuestionDetail() {
         socket?.removeAllListeners(`answer_${id}`);
       };
     }, []); */
-  return <QuestionView question={questionDetail} answers={answers} deleteAnswers={deleteAnswers} deleteQuestions={deleteQuestions}/>;
+  return <QuestionView question={questionDetail} answers={answers} deleteAnswers={deleteAnswers} deleteQuestions={deleteQuestions} />;
 }
 
 export default QuestionDetail;

@@ -39,8 +39,12 @@ export default function Posts() {
   if (orderBy.ordering === "creationDate") {
     orderedPosts.sort((a, b) =>
       orderBy.direction === "asc"
-        ? (a.creationDate > b.creationDate ? -1 : 1)
-        : (a.creationDate > b.creationDate ? 1 : -1)
+        ? a.creationDate > b.creationDate
+          ? -1
+          : 1
+        : a.creationDate > b.creationDate
+        ? 1
+        : -1
     );
   } else if (orderBy.ordering === "title") {
     orderedPosts.sort((a, b) =>
@@ -53,6 +57,10 @@ export default function Posts() {
       orderBy.direction === "asc"
         ? a.startDate - b.startDate
         : b.startDate - a.startDate
+    );
+  } else if (orderBy.ordering === "popularity") {
+    orderedPosts.sort((a, b) =>
+      orderBy.direction === "asc" ? b.likes - a.likes : a.likes - b.likes
     );
   }
 

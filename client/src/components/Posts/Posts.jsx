@@ -12,7 +12,6 @@ import NoPosts_Icon from "../../assets/NoPosts_Icon";
 export default function Posts() {
   const loading = useSelector((state) => state.posts.loading);
   const posts = useSelector((state) => state.posts.posts).filter(post => post.status === true); 
-  console.log(posts)
 
   const orderBy = useSelector((state) => state.posts.orderBy);
 
@@ -49,7 +48,7 @@ export default function Posts() {
       ) : (
         <div className={Styles.Cards}>
           {!loading ? (
-            orderBy.value === "date" ? (
+            orderBy.ordering === "date" ? (
               orderBy.direction === "asc" ? (
                 posts
                   ?.sort((a, b) => (a.startDate > b.startDate ? 1 : -1))
@@ -87,7 +86,7 @@ export default function Posts() {
                     />
                   ))
               )
-            ) : orderBy.value === "title" ? (
+            ) : orderBy.ordering === "title" ? (
               orderBy.direction === "asc" ? (
                 posts
                   ?.sort((a, b) =>
@@ -129,7 +128,7 @@ export default function Posts() {
                     />
                   ))
               )
-            ) : orderBy.value === "creationDate" ? (
+            ) : orderBy.ordering === "creationDate" ? (
               orderBy.direction === "asc" ? (
                 posts
                   ?.sort((a, b) => (a.creationDate < b.creationDate ? 1 : -1))

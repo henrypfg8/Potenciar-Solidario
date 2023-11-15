@@ -42,9 +42,13 @@ export default function Header({ isScrolled }) {
           <Link to="/" className={Styles.backButton}>
             VOLVER A LA CARTELERA
           </Link>
-        ) : <Link className={Styles.backButton}>
-          VOLVER AL INICIO
-        </Link>}
+        ) : pathname === "/" ? (
+          <Link className={Styles.backButton}>VOLVER AL INICIO</Link>
+        ) : (
+          <Link to="/" className={Styles.backButton}>
+            VOLVER A LA CARTELERA
+          </Link>
+        )}
       </div>
     </div>
   );

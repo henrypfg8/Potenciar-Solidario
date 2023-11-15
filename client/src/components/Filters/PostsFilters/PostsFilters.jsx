@@ -11,7 +11,7 @@ import {
   searchPosts,
   setLoading,
   hideLoading,
-  setSelectedFilterOptions
+  setSelectedOptions
 } from "../../../Redux/actions/postsActions";
 //
 import Posts_DateFilters from "./Posts_DateFilters/Posts_DateFilters";
@@ -31,8 +31,8 @@ export default function PostFilters() {
   const users = useSelector(state => state.users.users);
   //
   const searchValue = useSelector((state) => state.posts.searchValue);
-  const selectedFilterOptions = useSelector(state => state.posts.selectedFilterOptions)
-  const [selectedFilterOptionsLOCAL, setSelectedFilterOptionsLOCAL ] = useState({
+  const selectedOptions = useSelector(state => state.posts.selectedOptions)
+  const [selectedOptionsLOCAL, setSelectedOptionsLOCAL ] = useState({
     category: {label: "Todas las categorias", name: "category", value: ''},
     ong: {label: "Todas las organizaciones", name: "ong", value: ''},
     user: {label: "Todos los usuarios", name: 'user', value: ''}
@@ -87,12 +87,12 @@ export default function PostFilters() {
   //manejador de filtros de categoria y ong
   const handleFilters = (e) => {
     const { label, name, value } = e;
-    setSelectedFilterOptionsLOCAL({
-      ...selectedFilterOptionsLOCAL,
+    setSelectedOptionsLOCAL({
+      ...selectedOptionsLOCAL,
       [name]: {label, name, value}
     })
-    dispatch(setSelectedFilterOptions({
-      ...selectedFilterOptionsLOCAL,
+    dispatch(setSelectedOptions({
+      ...selectedOptionsLOCAL,
       [name]: {label, name, value}
     }))
     setFiltersLOCAL({ ...filters, [name]: value });
@@ -151,8 +151,8 @@ export default function PostFilters() {
 
   useEffect(() => {
     setFiltersLOCAL(filters);
-    setSelectedFilterOptionsLOCAL(selectedFilterOptions)
-  }, [filters, selectedFilterOptions]);
+    setSelectedOptionsLOCAL(selectedOptions)
+  }, [filters, selectedOptions]);
  
 
   ///////////////////////////////////////////////////////////////
@@ -168,7 +168,7 @@ export default function PostFilters() {
         isSearchable={true}
         menuPlacement="top"
         onChange={handleFilters}
-        value={selectedFilterOptionsLOCAL.category}
+        value={selectedOptionsLOCAL.category}
       />
       <Select
         className={Styles.select}
@@ -177,7 +177,7 @@ export default function PostFilters() {
         isSearchable={true}
         menuPlacement="top"
         onChange={handleFilters}
-        value={selectedFilterOptionsLOCAL.ong}
+        value={selectedOptionsLOCAL.ong}
       />
       <Select
         className={Styles.select}
@@ -186,7 +186,7 @@ export default function PostFilters() {
         isSearchable={true}
         menuPlacement="top"
         onChange={handleFilters}
-        value={selectedFilterOptionsLOCAL.user}
+        value={selectedOptionsLOCAL.user}
       />
 
       <Posts_DateFilters

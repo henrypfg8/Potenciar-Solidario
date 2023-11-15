@@ -94,8 +94,8 @@ const Detail = () => {
   const handleSubmit = (comment) => {
     dispatch(createPostReview(comment))
       .then((response) => {
-        //dispatch(getPostDetail(id), reviews.comment)
-
+        dispatch(getPostDetail(id))
+        setReviews({ comment: "" });
         swal({
           icon: "success",
           text: "Reseña creada con éxito",
@@ -108,17 +108,6 @@ const Detail = () => {
         });
       });
   };
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      dispatch(getPostDetail(id));
-    }, 10000); // 10 seconds delay
-
-    setReviews({ comment: "" });
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [reviews.comment, dispatch, id]);
   return (
     <div className={Styles.DetailView}>
       {

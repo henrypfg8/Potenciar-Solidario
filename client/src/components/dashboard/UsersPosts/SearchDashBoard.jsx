@@ -7,7 +7,7 @@ const SearchDashBoard = ({ search, setSearch, setListSearchPost,postsPending }) 
 
   return (
     <div className='search__container'>
-      <input className='search__input' type="text" placeholder='realiza un a busqueda'
+      <input className='search__input' type="text" placeholder='realiza un a busqueda rapida'
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);

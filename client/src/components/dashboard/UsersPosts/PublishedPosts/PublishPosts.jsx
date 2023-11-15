@@ -6,12 +6,14 @@ import Styles from './published.module.css'
 import axios from 'axios';
 import { configureHeaders } from '../../../../Redux/auth/configureHeaders ';
 import { Modal } from 'antd';
-
+import SearchDashBoard from "../SearchDashBoard";
 
 const PublishPosts = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector(state => state.posts);
-  //const [search, setSearch] = useState('');
+  const [search, setSearch] = useState('');
+  const [listSearchPost, setListSearchPost] = useState([]);
+
   const [selectedPosts, setSelectedPosts] = useState([]);
   const [refreshData, setRefreshData] = useState(false);
 
@@ -122,25 +124,41 @@ const PublishPosts = () => {
         )}
 
 
-
+          <SearchDashBoard
+            search={search}
+            setSearch={setSearch}
+            postsPending={postsApproved}
+            setListSearchPost={setListSearchPost}
+          />
 
         <div className={Styles.dashboard__div}>
 
           <div className={Styles.dashboard__divCards}>
 
-            {postsApproved?.map((post) => {
-              return (
-                <CardDashboard
-                  key={post.id}
-                  post={post}
-                  setRefreshData={setRefreshData}
-                  refreshData={refreshData}
-                  isCheked={selectedPosts.includes(post)}
-                  onCheckboxChange={handleCheckboxChange}
+          {listSearchPost.length > 0 ? listSearchPost.map((post) => {
+                        return (
+                            <CardDashboard
+                                key={post.id}
+                                post={post}
+                                setRefreshData={setRefreshData}
+                                refreshData={refreshData}
+                                isCheked={selectedPosts.includes(post)}
+                                onCheckboxChange={handleCheckboxChange}
+                            />
+                        )
+                    }) : postsApproved?.map((post) => {
+                        return (
+                            <CardDashboard
+                                key={post.id}
+                                post={post}
+                                setRefreshData={setRefreshData}
+                                refreshData={refreshData}
+                                isCheked={selectedPosts.includes(post)}
+                                onCheckboxChange={handleCheckboxChange}
 
-                />
-              )
-            })}
+                            />
+                        )
+                    })}
           </div>
           {selectedPosts.length > 0 && (
             <div className={Styles.dashboard__buttons}>

@@ -124,7 +124,7 @@ body{
 }
 
 .question__date {
-    color:var(--lightblue) 
+    color:var(--darkblue) 
 }
 .question__button{
     border: none;

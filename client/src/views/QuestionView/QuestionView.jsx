@@ -10,6 +10,7 @@ import { jwtDecode } from "jwt-decode";
 import {
   createAnswer,
   createAnswerComment,
+  deleteAnswerComment,
   updateAnswer,
 } from "../../Redux/actions/answersActions";
 import { useNavigate } from "react-router";
@@ -178,7 +179,34 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       })
       
 }
+const deleteComment = (id) => {
 
+  swal({
+    title: "¿Estás seguro quse sea eliminar está pregunta?",
+    text: "Una vez eliminada por puede ser recuperada!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willDelete) => {
+    if (willDelete) {
+      dispatch(deleteAnswerComment(id))
+        .then(() => {
+          swal("Tu comentario ha sido eliminada con éxito!", {
+            icon: "success",
+          });
+          dispatch(getQuestionDetail(question.id))
+        })
+        .catch(() => {
+          swal(
+            "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
+            {
+              icon: "error",
+            }
+          );
+        });
+    }
+  });
+}
   const editQuestion = (handleClose) => {
     handleClose();
     navigate(`/foro/edit/${question.id}`);
@@ -288,15 +316,28 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                     {respuesta?.Comments?.map((el, index) => {
                       var date = new Date(el.createdAt);
                       return (
+                        <div key={el.id} className={style.containComments}>
+                          
                         <div
-                          key={el.id}
+                          
                           className={style.comments}
                         >
                           <h4>{index + 1}</h4>
-                          <p>{el.thread} -</p>
-                          <h3>{el.User?.name}</h3>
-                          <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
-                        </div>
+                          <p>{el.thread}</p>
+                          <div style={{display: 'flex', alignItems:'center'}}>
+                          <ImageAvatars name={el.User?.name}/>
+                          <h4>- {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
+                          </div>
+                          </div>
+                          {
+                    userId === el.userId &&
+                    
+                    <div className={style.edit}>
+                      <a onClick={() => {deleteComment(el.id)}}>Eliminar comentario<MaterialSymbolsDelete/></a>
+                      <a >Editar comentario <MaterialSymbolsEdit/></a>
+                    </div>  
+                  } 
+                  </div>
                       );
                     })}
 
@@ -311,7 +352,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                       Añadir comentario
                       <FlechaParaArriba />
                     </a>
-                  )}
+                    )}
 
                   {view[index] && (
                     <div className={style.comment}>

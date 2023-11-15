@@ -249,11 +249,18 @@
 }
 .comments{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     border-top: 1px solid rgba(68, 68, 68, 0.446);
     padding: 0.8rem;
     margin: 0.4rem;
+    
+    word-wrap: break-word;
+    word-break: break-word;
+}
+.containComments{
+    display: flex;
+    flex-direction: column;
 }
 .comments p{
     font-size: 0.8rem;
@@ -311,7 +318,7 @@
     transition: 0.2s;
 
     
-}
+    }
 @media (max-width: 575.98px){
     .question textarea{
         width: 70vw;

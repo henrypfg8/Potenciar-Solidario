@@ -98,7 +98,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
           icon: "success",
           text: "Comentario creado con éxito",
         });
-        // dispatch(getQuestionDetail(question.id));
+        dispatch(getQuestionDetail(question.id));
       })
       .catch(() => {
         swal({
@@ -107,15 +107,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
         });
       });
   };
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      dispatch(getQuestionDetail(question.id));
-    }, 10000); // 10 seconds delay
-    setComment({ comment: "" });
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [dispatch]);
   useEffect(() => {
     if (!token || !isAuthenticated) {
       swal("Necesita loguearse para poder realizar una pregunta").then(

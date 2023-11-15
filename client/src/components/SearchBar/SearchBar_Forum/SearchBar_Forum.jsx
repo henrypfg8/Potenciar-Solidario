@@ -33,8 +33,8 @@ export default function SearchBar_Forum() {
       dispatch(getQuestionsFiltered(filters));
     } else {
       const { category, fromDate, untilDate, user } = filters;
-      let value = inputValue.includes(" ")
-        ? inputValue.split(" ")
+      let value = inputValue.trim().includes(" ")
+        ? inputValue.trim().split(" ")
         : inputValue.trim();
 
       let debounceTimeout = undefined;

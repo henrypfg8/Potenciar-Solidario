@@ -141,6 +141,8 @@
 .user__btn_block{
     border: none;
     padding: 1.5rem 1rem;
+    background: #fff;
+    margin-right: 0rem;
 }
 .user__btn_block:hover{
     background: #ddd;
@@ -174,6 +176,31 @@
     margin: 0 auto;
 }
 
+.divInput{
+    width: 100%;
+    margin: 0 auto;
+
+}
+.inputSearch{
+    width: 60%;
+    margin: 1rem auto;
+    display: block;
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    border-radius: 5px;
+    background: #e1e3e7;
+}
+.title_NoResults {
+    text-align: center;
+    margin: 1rem 0;
+
+}
+.div_NoResults{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 
 

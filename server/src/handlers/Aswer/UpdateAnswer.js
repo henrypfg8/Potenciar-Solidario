@@ -4,6 +4,7 @@ const UpdateAnswerHandler = async (req, res) => {
   try {
     const { id } = req.params;
     const { answer } = req.body;
+    console.log(answer);
     const updateAnswer = await UpdateAnswer(id, { answer });
 
     if (!updateAnswer) {

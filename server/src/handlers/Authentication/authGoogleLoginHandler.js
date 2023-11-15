@@ -17,6 +17,11 @@ const authGoogleHandler = async (req, res) => {
 
         const userExist = await User.findOne({ where: { email: email } });
 
+        if(!userExist.active){
+            console.log("Tu cuenta se encuentra suspendida")
+            return res.status(400).json({ message: "Tu cuenta se encuentra suspendida" });
+        }
+
         if (userExist) {
             const payload = { id: userExist.id };
             const privateKey = process.env.JWT_PRIVATE_KEY;

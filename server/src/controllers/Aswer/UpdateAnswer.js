@@ -8,6 +8,7 @@ const UpdateAnswer = async (id, userData) => {
     }
     updateAnswer.answer = userData.answer;
     await updateAnswer.save();
+    return updateAnswer;
   } catch (error) {
     throw new Error("No se ha podido actualizar la respuesta");
   }

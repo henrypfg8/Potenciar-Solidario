@@ -9,13 +9,13 @@
 
     .Cards {
         border-top: solid #526387 1px;
-        width: 80%;
         display: flex;
         align-items: center;
         height: 100%;
         flex-direction: column;
         overflow: scroll;
-        padding-bottom: 20px;
+        padding: 20px;
+        padding-top: 0;
     }
 
     .Posts__NoPosts {
@@ -39,8 +39,8 @@
     .Posts {
         width: 100%
     }
-    .Cards { 
-        width: 90%;
+    .Cards {
+        width: 100%;
     }
 }
 

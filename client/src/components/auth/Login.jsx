@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import Swiper from '../Form/Swiper';
 
 const Login = () => {
-
+    const linkStyle = { color: '#127af3'}
     const { isAuthenticated,deleteSuccess } = useSelector(state => state.auth);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -95,8 +95,8 @@ const Login = () => {
                 <button className='auth__btn' type='submit'>Iniciar Sesión</button>
                 <div className='auth__links'>
                     <div>
-                        <p>¿No tienes Cuenta? <NavLink to="/register">Crear Cuenta</NavLink></p>
-                        <p>Olvidaste tu contraseña ? <NavLink to='/reset-password'>resetear contraseña</NavLink></p>
+                        <p>¿No tienes Cuenta? <NavLink to="/register" style={linkStyle}>Crear Cuenta</NavLink></p>
+                        <p>¿Olvidaste tu contraseña ? <NavLink to='/reset-password' style={linkStyle} >Resetear contraseña</NavLink></p>
                     </div>
                 
                     <div className='auth__google'>

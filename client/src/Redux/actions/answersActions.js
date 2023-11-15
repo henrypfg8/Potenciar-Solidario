@@ -107,19 +107,21 @@ export const deleteAnswerComment = (id) => {
         config
       );
       dispatch({ type: DELETE_ANSWER_COMMENT, payload: response.data });
+      return Promise.resolve(response)
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
+      return Promise.reject(error)
     }
   };
 };
 
-export const updateAnswerComment = (id, updatedAnswerComment) => {
+export const updateAnswerComment = (id, thread) => {
   return async function (dispatch) {
     try {
       const config = configureHeaders();
       const response = await axios.put(
         `http://localhost:19789/answers/comments/${id}`,
-        updatedAnswerComment,
+        thread,
         config
       );
       dispatch({ type: UPDATE_ANSWER_COMMENT, payload: response.data });

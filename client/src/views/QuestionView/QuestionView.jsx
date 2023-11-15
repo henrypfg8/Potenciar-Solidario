@@ -10,7 +10,9 @@ import { jwtDecode } from "jwt-decode";
 import {
   createAnswer,
   createAnswerComment,
+  deleteAnswerComment,
   updateAnswer,
+  updateAnswerComment,
 } from "../../Redux/actions/answersActions";
 import { useNavigate } from "react-router";
 import {
@@ -31,6 +33,8 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
   const [disable, setDisable] = useState(false);
   const [editingAnswerId, setEditingAnswerId] = useState(null);
   const [editingAnswer, setEditingAnswer] = useState("");
+  const [editingCommentId, setEditingCommentId] = useState(null)
+  const [editingComment, setEditingComment] = useState('')
   const [view, setView] = useState({});
   const navigate = useNavigate();
 
@@ -43,6 +47,10 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
   const [errores, setErrores] = useState({
     answer: "",
   });
+  const handleEditComment = (commentId, commentText) => {
+    setEditingCommentId(commentId)
+    setEditingComment(commentText)
+  }
   const handleEditClick = (answerId, answerText) => {
     setEditingAnswerId(answerId);
     setEditingAnswer(answerText);
@@ -90,15 +98,19 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     <Notifications />;
   };
 
-  const handleSubmit = (message) => {
+  const handleSubmit = (message, index) => {
     dispatch(createAnswerComment(message))
       .then(() => {
         setComment({ thread: "" });
+        setView((prevState) => ({
+          ...prevState,
+          [index]: !prevState[index],
+        }));
+        dispatch(getQuestionDetail(question.id));
         swal({
           icon: "success",
           text: "Comentario creado con éxito",
         });
-        // dispatch(getQuestionDetail(question.id));
       })
       .catch(() => {
         swal({
@@ -107,15 +119,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
         });
       });
   };
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      dispatch(getQuestionDetail(question.id));
-    }, 10000); // 10 seconds delay
-    setComment({ comment: "" });
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [dispatch, question.thread, question.id]);
   useEffect(() => {
     if (!token || !isAuthenticated) {
       swal("Necesita loguearse para poder realizar una pregunta").then(
@@ -164,6 +167,10 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
   const handleAnswerEdit = (event) => {
     setEditingAnswer(event.target.value)
   }
+  const handleCommentEdit = (event) => {
+    setEditingComment(event.target.value)
+  }
+  console.log(editingComment);
 
   const handleSubmitEditAnwer = (id) => {
     setDisable(true)
@@ -181,13 +188,62 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
         {
           icon: "error",
         }
-      );
-      setEditingAnswerId(null)
+        );
+        setEditingAnswerId(null)
+        setDisable(false)    
+      })
+      
+}
+  const handleSubmitEditComment = (id) => {
+    setDisable(true)
+    dispatch(updateAnswerComment(id, { thread: editingComment})).then(() => {
+      dispatch(getQuestionDetail(question.id))
+      swal("Tu comentario ha sido editada con exito!", {
+        icon: "success",
+      });
+      setEditingCommentId(null)
       setDisable(false)
-    })
 
-  }
+    }).catch(() => {
+      swal(
+        "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
+        {
+          icon: "error",
+        }
+        );
+        setEditingCommentId(null)
+        setDisable(false)    
+      })
+      
+}
+const deleteComment = (id) => {
 
+  swal({
+    title: "¿Estás seguro quse sea eliminar está pregunta?",
+    text: "Una vez eliminada por puede ser recuperada!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willDelete) => {
+    if (willDelete) {
+      dispatch(deleteAnswerComment(id))
+        .then(() => {
+          swal("Tu comentario ha sido eliminada con éxito!", {
+            icon: "success",
+          });
+          dispatch(getQuestionDetail(question.id))
+        })
+        .catch(() => {
+          swal(
+            "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
+            {
+              icon: "error",
+            }
+          );
+        });
+    }
+  });
+}
   const editQuestion = (handleClose) => {
     handleClose();
     navigate(`/foro/edit/${question.id}`);
@@ -278,10 +334,12 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                       :
 
                       <div>
-
                         <p>{respuesta.answer}</p>
-                        <h4>{respuesta.User.name} - {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}<h4></h4></h4>
-                      </div>
+
+                        <div style={{display: 'flex', alignItems:'center', justifyContent:'end', marginTop:'2rem', marginBottom:'1rem'}}>
+                            <ImageAvatars name={respuesta.User?.name} image={respuesta.User?.profile_picture}/>
+                          <h4>- {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
+                          </div></div>
 
                   }
 
@@ -294,18 +352,49 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                     </div>
                   }
                   <div>
-                    {respuesta?.Comments?.map((el, index) => {
+                    {respuesta?.Comments?.map((el) => {
                       var date = new Date(el.createdAt);
+                      console.log(el.User);
                       return (
-                        <div
-                          key={el.id}
-                          className={style.comments}
-                        >
-                          <h4>{index + 1}</h4>
-                          <p>{el.thread} -</p>
-                          <h3>{el.User?.name}</h3>
-                          <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
-                        </div>
+                        <div key={el.id} className={style.containComments}>
+                        {
+                           editingCommentId === el.id ?
+                            (
+                              <div className={style.editAnwer}>
+                                <input type="text" value={editingComment} onChange={handleCommentEdit} />
+                                {
+                                  disable
+                                    ?
+                                    <button disabled
+                                      className={style.buttonDisable}>Guardar</button>
+                                    :
+                                    <button onClick={() => handleSubmitEditComment(el.id)}>Guardar</button>
+                                }
+                              </div>
+                            )
+
+                            :
+                             ( 
+                            <div className={style.comments}>
+                              <div style={{display: 'flex', alignItems:'center'}}>
+                                <ImageAvatars name={el.User?.name} image={el.User?.profile_picture}/>
+                              <h4>- {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
+                              </div>
+                              <p>{el.thread}</p>
+                              </div>
+                             )
+                             
+                             
+                            } 
+                            {
+                      userId === el.userId &&
+                      
+                      <div className={style.edit}>
+                        <a onClick={() => {deleteComment(el.id)}}>Eliminar comentario<MaterialSymbolsDelete/></a>
+                        <a onClick={() => {handleEditComment(el.id, el.thread)}}>Editar comentario <MaterialSymbolsEdit/></a>
+                      </div>  
+                      }
+                      </div>
                       );
                     })}
 
@@ -320,7 +409,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                       Añadir comentario
                       <FlechaParaArriba />
                     </a>
-                  )}
+                    )}
 
                   {view[index] && (
                     <div className={style.comment}>
@@ -334,7 +423,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                         value={comment.thread}
                         onChange={(e) => handleChange(e, respuesta.id)}
                       />
-                      <button onClick={() => handleSubmit(comment)}>
+                      <button onClick={() => handleSubmit(comment, index)}>
                         Añadir comentario
                       </button>
                     </div>

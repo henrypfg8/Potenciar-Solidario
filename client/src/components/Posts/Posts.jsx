@@ -11,7 +11,9 @@ import NoPosts_Icon from "../../assets/NoPosts_Icon";
 
 export default function Posts() {
   const loading = useSelector((state) => state.posts.loading);
-  const posts = useSelector((state) => state.posts.posts).filter(post => post.status === true); 
+  const posts = useSelector((state) => state.posts.posts).filter(
+    (post) => post.status === true
+  );
 
   const orderBy = useSelector((state) => state.posts.orderBy);
 
@@ -32,6 +34,36 @@ export default function Posts() {
     return fechaFormateada;
   }
 
+  let orderedPosts = [...posts];
+
+  if (orderBy.ordering === "creationDate") {
+    orderedPosts.sort((a, b) =>
+      orderBy.direction === "asc"
+        ? a.creationDate > b.creationDate
+          ? -1
+          : 1
+        : a.creationDate > b.creationDate
+        ? 1
+        : -1
+    );
+  } else if (orderBy.ordering === "title") {
+    orderedPosts.sort((a, b) =>
+      orderBy.direction === "asc"
+        ? a.title.localeCompare(b.title)
+        : b.title.localeCompare(a.title)
+    );
+  } else if (orderBy.ordering === "date") {
+    orderedPosts.sort((a, b) =>
+      orderBy.direction === "asc"
+        ? a.startDate - b.startDate
+        : b.startDate - a.startDate
+    );
+  } else if (orderBy.ordering === "popularity") {
+    orderedPosts.sort((a, b) =>
+      orderBy.direction === "asc" ? b.likes - a.likes : a.likes - b.likes
+    );
+  }
+
   /////////////////////////////////////
 
   return (
@@ -47,126 +79,22 @@ export default function Posts() {
         </div>
       ) : (
         <div className={Styles.Cards}>
-          {!loading ? (
-            orderBy.ordering === "date" ? (
-              orderBy.direction === "asc" ? (
-                posts
-                  ?.sort((a, b) => (a.startDate > b.startDate ? 1 : -1))
-                  .map((post) => (
-                    <Post
-                      key={post.id}
-                      id={post?.id}
-                      title={post?.title}
-                      organization={post?.organization}
-                      category={post?.category}
-                      description={post?.description}
-                      image={post?.image}
-                      startDate={transformarFecha(post?.startDate)}
-                      userID={post?.userID}
-                      likes={post?.likes}
-                      Likes={post?.Likes}
-                    />
-                  ))
-              ) : (
-                posts
-                  ?.sort((a, b) => (a.startDate > b.startDate ? -1 : 1))
-                  .map((post) => (
-                    <Post
-                      key={post.id}
-                      id={post?.id}
-                      title={post?.title}
-                      organization={post?.organization}
-                      category={post?.category}
-                      description={post?.description}
-                      image={post?.image}
-                      startDate={transformarFecha(post?.startDate)}
-                      userID={post?.userID}
-                      likes={post?.likes}
-                      Likes={post?.Likes}
-                    />
-                  ))
-              )
-            ) : orderBy.ordering === "title" ? (
-              orderBy.direction === "asc" ? (
-                posts
-                  ?.sort((a, b) =>
-                    a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1
-                  )
-                  .map((post) => (
-                    <Post
-                      key={post.id}
-                      id={post?.id}
-                      title={post?.title}
-                      organization={post?.organization}
-                      category={post?.category}
-                      description={post?.description}
-                      image={post?.image}
-                      startDate={transformarFecha(post?.startDate)}
-                      userID={post?.userID}
-                      likes={post?.likes}
-                      Likes={post?.Likes}
-                    />
-                  ))
-              ) : (
-                posts
-                  ?.sort((a, b) =>
-                    a.title.toLowerCase() > b.title.toLowerCase() ? -1 : 1
-                  )
-                  .map((post) => (
-                    <Post
-                      key={post.id}
-                      id={post?.id}
-                      title={post?.title}
-                      organization={post?.organization}
-                      category={post?.category}
-                      description={post?.description}
-                      image={post?.image}
-                      startDate={transformarFecha(post?.startDate)}
-                      userID={post?.userID}
-                      likes={post?.likes}
-                      Likes={post?.Likes}
-                    />
-                  ))
-              )
-            ) : orderBy.ordering === "creationDate" ? (
-              orderBy.direction === "asc" ? (
-                posts
-                  ?.sort((a, b) => (a.creationDate < b.creationDate ? 1 : -1))
-                  .map((post) => (
-                    <Post
-                      key={post.id}
-                      id={post?.id}
-                      title={post?.title}
-                      organization={post?.organization}
-                      category={post?.category}
-                      description={post?.description}
-                      image={post?.image}
-                      startDate={transformarFecha(post?.startDate)}
-                      userID={post?.userID}
-                      likes={post?.likes}
-                      Likes={post?.Likes}
-                    />
-                  ))
-              ) : (
-                posts
-                  ?.sort((a, b) => (a.creationDate < b.creationDate ? -1 : 1))
-                  .map((post) => (
-                    <Post
-                      key={post.id}
-                      id={post?.id}
-                      title={post?.title}
-                      organization={post?.organization}
-                      category={post?.category}
-                      description={post?.description}
-                      image={post?.image}
-                      startDate={transformarFecha(post?.startDate)}
-                      userID={post?.userID}
-                      likes={post?.likes}
-                      Likes={post?.Likes}
-                    />
-                  ))
-              )
-            ) : null
+          {!loading && orderedPosts.length > 0 ? (
+            orderedPosts.map((post) => (
+              <Post
+                key={post.id}
+                id={post?.id}
+                title={post?.title}
+                organization={post?.organization}
+                category={post?.category}
+                description={post?.description}
+                image={post?.image}
+                startDate={transformarFecha(post?.startDate)}
+                userID={post?.userID}
+                likes={post?.likes}
+                Likes={post?.Likes}
+              />
+            ))
           ) : (
             <Oval
               className={Styles.Loader}

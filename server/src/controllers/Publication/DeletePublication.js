@@ -1,5 +1,6 @@
 const { Publication , User } = require("../../db");
 const {deleteNoti} = require('../../handlers/emailNotif/deleteNoti')
+const {rejectPost} = require("../../handlers/emailNotif/rejectPost");
 
 const DeletePubCont = async (id) => {
 
@@ -14,13 +15,26 @@ const DeletePubCont = async (id) => {
   
     await Publication.destroy({ where: { id: id } });
 
+
     const user = publication.User
    
     const userEmail = user.email
 
-    deleteNoti(publication.title , userEmail);
 
+    if(publication.status){
+      console.log("deleatepost")
+      deleteNoti(publication.title , userEmail);
+      return { deletedRows: 1, message: "Publication deleted" };
+    }
+
+    console.log("rejectpost")
+    rejectPost(publication.title , userEmail);
     return { deletedRows: 1, message: "Publication deleted" };
+    
+
+    
+
+    
 };
 
 module.exports = { DeletePubCont };

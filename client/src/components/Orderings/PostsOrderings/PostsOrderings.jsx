@@ -29,6 +29,11 @@ export default function Orderings() {
       name: "ordering",
       value: "creationDate",
     },
+    {
+      label: "Popularidad",
+      name: 'ordering',
+      value: "popularity"
+    }
   ];
 
   const orderBy = useSelector((state) => state.posts.orderBy);

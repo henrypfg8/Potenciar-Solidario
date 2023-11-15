@@ -12,7 +12,7 @@ require("./db.js");
 const server = express();
 server.name = "API";
 const httpServer = createServer(server);
-const io = new Server(httpServer,{pingInterval: 10000, pingTimeout: 10000});
+const io = new Server(httpServer,{pingInterval: 10000});
 global.io = io;
 
 io.on("connection", (socket) => {

@@ -4,7 +4,7 @@ const UpdateCommentHandler = async (req, res) => {
     try {
       const { id } = req.params;
       const { thread } = req.body;
-      const updateComment = await UpdateComment(id, { thread });
+      const updateComment = await UpdateComment({id,  thread });
   
       if (!updateComment) {
         return res

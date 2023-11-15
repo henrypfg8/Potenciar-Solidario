@@ -8,7 +8,7 @@ export default function ImageAvatars({ image, name }) {
   const initial = name ? name[0]?.toUpperCase() : '';
 
   return (
-    <Stack style={{display:'flex', flexDirection:'row', alignItems:'center', margin: '20px'}}>
+    <Stack style={{display:'flex', flexDirection:'row', alignItems:'center'}}>
       {
         image
           ?

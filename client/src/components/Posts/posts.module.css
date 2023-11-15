@@ -5,15 +5,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 40px;
 }
 
     .Cards {
-        width: 100%;
+        border-top: solid #526387 1px;
+        width: 80%;
         display: flex;
         align-items: center;
         height: 100%;
         flex-direction: column;
+        overflow: scroll;
+        padding-bottom: 20px;
     }
 
     .Posts__NoPosts {
@@ -36,6 +38,9 @@
 @media screen and (max-width:768px) {
     .Posts {
         width: 100%
+    }
+    .Cards { 
+        width: 90%;
     }
 }
 

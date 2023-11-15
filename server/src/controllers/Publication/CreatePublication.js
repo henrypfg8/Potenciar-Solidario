@@ -1,5 +1,5 @@
 const { Publication , User } = require("../../db");
-const {postNoti} = require("../../handlers/emailNotif/postNoti")
+const {pendingApprove} = require("../../handlers/emailNotif/pendingApprove")
 
 
 const CreatePublication = async (userData) => {
@@ -9,7 +9,7 @@ const CreatePublication = async (userData) => {
 
   const user = await User.findOne({ where: {id : newPublication.userID}})
   
-  postNoti(newPublication.title , user.email);
+  pendingApprove(newPublication.title , user.email);
   
   return newPublication;
 };

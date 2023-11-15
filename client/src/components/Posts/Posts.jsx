@@ -11,7 +11,8 @@ import NoPosts_Icon from "../../assets/NoPosts_Icon";
 
 export default function Posts() {
   const loading = useSelector((state) => state.posts.loading);
-  const posts = useSelector((state) => state.posts.posts);
+  const posts = useSelector((state) => state.posts.posts).filter(post => post.status === true); 
+  console.log(posts)
 
   const orderBy = useSelector((state) => state.posts.orderBy);
 

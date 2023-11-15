@@ -107,8 +107,10 @@ export const deleteAnswerComment = (id) => {
         config
       );
       dispatch({ type: DELETE_ANSWER_COMMENT, payload: response.data });
+      return Promise.resolve(response)
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
+      return Promise.reject(error)
     }
   };
 };

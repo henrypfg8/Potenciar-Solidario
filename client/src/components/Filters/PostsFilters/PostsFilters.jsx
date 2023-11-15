@@ -99,8 +99,7 @@ export default function PostFilters() {
     dispatch(setLoading());
     dispatch(setPostsFilters({ ...filters, [name]: value }));
     if (searchValue !== "") {
-      const filtersToApply = { ...filters, [name]: value };
-      const { category, ong, fromDate, untilDate, user } = filtersToApply;
+      const { category, ong, fromDate, untilDate, user} = { ...filters, [name]: value };
       axios
         .get(
           `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,

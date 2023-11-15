@@ -18,7 +18,8 @@ import {jwtDecode} from 'jwt-decode';
 
 const Post = (props) => {
   const config = configureHeaders();
-
+  const [refreshData, setRefreshData] = useState(false);
+  //
   const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(props.likes);
@@ -26,7 +27,7 @@ const Post = (props) => {
 
   const start_date = props?.startDate?.split("-");
 
-  const token = localStorage.getItem('token');
+  const token = jwtDecode(localStorage.getItem('token'));
 
   const likeHandler = (e) => {
     e.preventDefault();
@@ -51,10 +52,11 @@ const Post = (props) => {
   };
 
   useEffect(() => {
-    if (props?.Likes?.some(like => like.userId === jwtDecode(token).id)) {
+    if (props?.Likes?.some(like => like.userId === token.id)) {
       setIsLiked(true);
     }
   }, [])
+  
 
   /////////////////////////////////////////////////
 
@@ -84,7 +86,6 @@ const Post = (props) => {
         <CalendarIcon className={Styles.BottomBar__calendarIcon} />
 
         <p className={Styles.BottomBar__startDate}>
-          {/* {start_date[2]} de {months[start_date[1]]} {start_date[0]} */}
           {props?.startDate}
         </p>
 
@@ -106,14 +107,19 @@ const Post = (props) => {
             <Comment className={Styles.commentIcon} />
           </div>
         </div>
-
-        {/* <div
+            
+        {
+          props?.userID === token.id ? (
+            <div
           className={Styles.BottomBar__OptionsContainer}
           onClick={postOptionsHandler}
         >
           <PostOptions_Icon className={Styles.BottomBar__optionsIcon} />
-          {isOptionsOpen && <Post_Options id={id} />}
-        </div> */}
+          {isOptionsOpen && <Post_Options id={props.id} setRefreshData={setRefreshData}/>}
+        </div>
+          ) : null
+        }
+        
       </div>
     </Link>
   );

@@ -3,62 +3,78 @@ import Styles from "./post_Options.module.css";
 import DeleteIcon from "../../../assets/DeleteIcon";
 import { ModifyPost_Icon } from "../../../assets/PostOptions_Icons";
 //
-import Swal from "sweetalert2";
 //
-import axios from 'axios';
+import axios from "axios";
 //
-import { configureHeaders } from '../../../Redux/auth/configureHeaders ';
+import { configureHeaders } from "../../../Redux/auth/configureHeaders ";
 //
-import { useDispatch } from 'react-redux'
-import { getPosts } from "../../../Redux/actions/postsActions";
+import { useDispatch } from "react-redux";
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
+//
+import { Modal } from 'antd';
 
-
-export default function Post_Options({ id }) {
+export default function Post_Options({ id, setRefreshData }) {
   const config = configureHeaders();
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
   //
-  const deleteHandler = (e) => {
-    console.log('el delete', e)
-    e.preventDefault();
-    Swal.fire({
-      title: "¿Seguro que quieres eliminar la publicación?",
-      icon: "warning",
-      iconColor: "#005692",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Confirmar",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios.delete(`http://localhost:19789/posts/${id}`, config);
-        setTimeout(() => {
-          dispatch(getPosts());
-        }, 0);
-        // Swal.fire({
-        //   title: "Publicación Eliminada",
-        //   icon: "success",
-        //   customClass: {
-        //     confirmButton: "swallowOkButton",
-        //   },
-        // });
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const handleDeleteById = async () => {
+    setRefreshData(true)
+    const { data } = await axios.delete(`http://localhost:19789/posts/${post.id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
       }
     });
-
-  };
-
+    setRefreshData(false)
+    return data
+  }
+  const handleOk = async () => {
+    try {
+      await handleDeleteById(id);
+      setIsOpen(false);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+  useEffect(() => {
+    return () => {
+      console.log(isOpen)
+    }
+  }, [isOpen])
+ 
   ////////////////////////////////////////
 
   return (
     <div className={Styles.Options}>
-      <div className={Styles.Options__option} id={Styles.deleteOption}>
+      <div className={Styles.Options__option} id={Styles.deleteOption} onClick={() => {setIsOpen(true)}}>
         <p>Eliminar</p>
-        <DeleteIcon className={Styles.Option_icon} onClick={deleteHandler} />
+        <DeleteIcon className={Styles.Option_icon}  />
       </div>
-      <div className={Styles.Options__option}>
+      <div className={Styles.Options__option} onClick={() => navigate(`/formulario/${id}`)}>
         <p>Modificar</p>
         <ModifyPost_Icon className={Styles.Option_icon} />
       </div>
+
+      <Modal
+        title="Estas seguro de eliminar esta publicación?"
+        open={isOpen}
+        onOk={handleOk}
+        onCancel={() => setIsOpen(false)}
+        cancelText="Cancelar"
+        okText="Sí,Eliminar"
+        okButtonProps={{
+          danger: true,
+        }}
+        cancelButtonProps={{
+          style: {
+            color: "#005692",
+            borderColor: "#005692",
+          },
+        }}
+      />
     </div>
   );
 }

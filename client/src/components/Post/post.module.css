@@ -64,7 +64,11 @@
         border-top: solid black 1px;
         border-bottom: solid black 1px;
         position: relative;
-        overflow: hidden;
+        display: -webkit-box; 
+        -webkit-box-orient: vertical; 
+        overflow: hidden; 
+        -webkit-line-clamp: 12; 
+        
     }
     .Post__description p {
         margin: 5px;

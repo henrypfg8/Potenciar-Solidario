@@ -6,7 +6,30 @@
     height: 50vh;
 
 }
+.divFlex{
+    width: 100%;
+}
 .title{
     text-align: center;
     color: var(--blue);
+}
+
+.divEnlace {
+    width: 30%;
+    background: var(--blue);
+    margin: 1rem auto;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.enlace{
+    text-align: center;
+    display: block;
+    color: #fff;
+    font-weight: 900;
+    text-transform: uppercase;
+    
+
 }

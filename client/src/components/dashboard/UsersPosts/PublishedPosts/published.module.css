@@ -223,3 +223,8 @@
     font-weight: 900;
     font-size: 1.3rem;
 }
+.comentFlex{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}

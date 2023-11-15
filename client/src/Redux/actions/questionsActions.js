@@ -16,13 +16,13 @@ import {
 
 import axios from "axios";
 import { configureHeaders } from "../auth/configureHeaders .js";
-import { unorm } from 'unorm';
+import unorm from 'unorm';
 
 //funcion que se usa en searchQuestions
 const searchCoincidences = (string, subString) => {
-  const normalizedString = unorm.nfkd(string).replace(/[\u0300-\u036F]/g, "");
+  const normalizedString = unorm?.nfkd(string).replace(/[\u0300-\u036F]/g, "");
   const normalizedSubString = unorm
-    .nfkd(subString)
+    ?.nfkd(subString)
     .replace(/[\u0300-\u036F]/g, "");
 
   const regExp = new RegExp(normalizedSubString, "i");

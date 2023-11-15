@@ -20,7 +20,6 @@ export default function SearchBar_Forum() {
   const filters = useSelector((state) => state.questions.questionsFilters);
   const searchValue = useSelector((state) => state.questions.searchValue);
   const [inputValue, setInputValue] = useState("");
-  console.log(filters);
 
   function changeHandler({ target: { value } }) {
     setInputValue(value);
@@ -33,8 +32,8 @@ export default function SearchBar_Forum() {
       dispatch(getQuestionsFiltered(filters));
     } else {
       const { category, fromDate, untilDate, user } = filters;
-      let value = inputValue.includes(" ")
-        ? inputValue.split(" ")
+      let value = inputValue.trim().includes(" ")
+        ? inputValue.trim().split(" ")
         : inputValue.trim();
 
       let debounceTimeout = undefined;
@@ -64,7 +63,7 @@ export default function SearchBar_Forum() {
       <input
         type="text"
         className={Styles.searchBar__input}
-        placeholder="Buscar por titulo, descripción y organización."
+        placeholder="Buscar por titulo y descripción."
         onChange={changeHandler}
         value={inputValue}
       ></input>

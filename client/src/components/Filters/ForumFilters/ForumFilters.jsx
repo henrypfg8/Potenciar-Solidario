@@ -6,18 +6,23 @@ import { useSelector, useDispatch } from "react-redux";
 import Forum_DateFilters from "./Forum_DateFilters/Forum_DateFilters";
 import { useEffect, useState } from "react";
 //
-import { setQuestionsFilters, getQuestionsFiltered, setSelectedFilterOptions } from '../../../Redux/actions/questionsActions';
+import { setQuestionsFilters, getQuestionsFiltered, setSelectedFilterOptions, searchQuestions } from '../../../Redux/actions/questionsActions';
 //
 import { format } from 'date-fns';
+import { configureHeaders } from "../../../Redux/auth/configureHeaders ";
+import axios from 'axios';
 
 
 export default function ForumFilters() {
   const dispatch = useDispatch();
+  const config = configureHeaders();
+  //
   const forumCategories = useSelector(
     (state) => state.ongsAndCategories.forumCategories
   );
   const users = useSelector(state => state.users.users);
-
+  //
+  const searchValue = useSelector(state => state.questions.searchValue);
   const filters = useSelector((state) => state.questions.questionsFilters);
   const [filtersLOCAL, setFiltersLOCAL] = useState({
     category: 0,
@@ -55,9 +60,18 @@ export default function ForumFilters() {
   const handleFilters = (e) => {
     const { name, value, label } = e;
     dispatch(setQuestionsFilters({...filters, [name]: value}))
-    dispatch(getQuestionsFiltered({...filters, [name]: value}))
     dispatch(setSelectedFilterOptions({...selectedFilterOptions, [name]: {name, label, value}}))
     setFiltersLOCAL({...filters, [name]: value})
+
+    if (searchValue !== '') {
+      const { category, fromDate, untilDate, user } = {...filters, [name]: value};
+      axios.get(`http://localhost:19789/questionFilters?category=${category}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
+      config)
+      .then(({ data }) => dispatch(searchQuestions(data, searchValue)))
+    }
+    else {
+      dispatch(getQuestionsFiltered({...filters, [name]: value}))
+    }
   };
   const handleFromDate = (date) => {
     const fromDate = format(date, 'yyyy-MM-dd');

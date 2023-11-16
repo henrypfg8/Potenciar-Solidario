@@ -50,6 +50,7 @@
         border-top: solid #526387 1px;
         flex: 1;
         width: 100%;
+        user-select: none;
     }
         .Filters__Buttons {
             display: flex;

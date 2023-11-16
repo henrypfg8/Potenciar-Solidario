@@ -63,7 +63,7 @@ export default function SearchBar_Forum() {
       <input
         type="text"
         className={Styles.searchBar__input}
-        placeholder="Buscar por titulo y descripción."
+        placeholder="Buscar por titulo y contenido."
         onChange={changeHandler}
         value={inputValue}
       ></input>

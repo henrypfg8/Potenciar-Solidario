@@ -1,7 +1,7 @@
 
 .Post {
     width: 680px;
-    margin: 10px 10px;
+    margin: 10px 30px;
     background-color: var(--lightblue);
     color: inherit;
     display: flex;
@@ -47,7 +47,7 @@
             justify-content: center;
             margin-bottom: 2px;
             padding-bottom: 2px; 
-            line-height: 0.9em;
+            line-height: 1.1em;
         }
    
             .organizationName {

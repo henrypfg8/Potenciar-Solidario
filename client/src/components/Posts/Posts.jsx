@@ -3,7 +3,6 @@ import Styles from "./posts.module.css";
 import Post from "../Post/Post";
 //
 import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
 //
 import NoPosts_Icon from "../../assets/NoPosts_Icon";
 import Oval_Loader from "../../assets/Oval_Loader";
@@ -11,9 +10,9 @@ import Oval_Loader from "../../assets/Oval_Loader";
 export default function Posts() {
   const loading = useSelector((state) => state.posts.loading);
   const posts = useSelector((state) => state.posts.posts)
-  // .filter(
-  //   (post) => post.status === true
-  // );
+  .filter(
+    (post) => post.status === true
+  );
 
   const orderBy = useSelector((state) => state.posts.orderBy);
 

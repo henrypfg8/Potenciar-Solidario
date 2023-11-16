@@ -30,7 +30,7 @@ const initialState = {
     user: { label: "Todos los usuarios", value: "", name: "user" },
   },
   questionsOrderings: {
-    value: "date",
+    ordering: "date",
     direction: "asc",
   },
   selectedOrderingOption: {

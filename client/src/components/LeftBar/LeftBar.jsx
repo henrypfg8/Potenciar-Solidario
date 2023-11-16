@@ -99,7 +99,7 @@ export default function LeftBar({ responsiveMode }) {
             ) : (
               <PostsOrderings />
             )
-          ) : filtersOrderingsSwitchQUESTIONS && !responsiveMode ? (
+          ) : filtersOrderingsSwitchQUESTIONS ? (
             <ForumFilters />
           ) : (
             <ForumOrderings />

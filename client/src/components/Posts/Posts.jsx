@@ -68,7 +68,7 @@ export default function Posts() {
 
   return (
     <div className={Styles.Posts}>
-      <h1 style={{ marginTop: "10px" }}>Publicaciones de la cartelera</h1>
+      <h1 style={{ marginTop: "10px", textAlign: 'center' }}>Publicaciones de la cartelera</h1>
 
       {(posts?.length === 0 && !loading) || (!posts && !loading) ? (
         <div className={Styles.Posts__NoPosts}>

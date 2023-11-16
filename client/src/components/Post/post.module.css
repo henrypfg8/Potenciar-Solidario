@@ -47,6 +47,7 @@
             justify-content: center;
             margin-bottom: 2px;
             padding-bottom: 2px; 
+            line-height: 0.9em;
         }
    
             .organizationName {

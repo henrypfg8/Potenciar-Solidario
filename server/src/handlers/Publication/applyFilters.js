@@ -7,7 +7,9 @@ const applyFilters = async (req, res) => {
 
     let allPosts = await Publication.findAll({
       include: [
-        { model: Like, attributes: ['id','userId'], include: {model: User , attributes: ['name']}}
+        { model: Like, attributes: ['id','userId'], include: {model: User , attributes: ['name']}},
+        { model: User, attributes: ['name',  'profile_picture']},
+        { model: PublicationComment}
       ]
     });
 

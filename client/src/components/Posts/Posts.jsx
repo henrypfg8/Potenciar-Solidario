@@ -93,6 +93,7 @@ export default function Posts() {
                 userID={post?.userID}
                 likes={post?.likes}
                 Likes={post?.Likes}
+                PublicationComments={post?.PublicationComments}
               />
             ))
           ) : (

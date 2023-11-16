@@ -9,7 +9,7 @@ const CreateCommentHandler = async(req,res)=>{
 
     const newComment = await CreateComment({ thread, userId, answerId,questionId});
 
-    global.io.emit(`question_${questionId}`);
+    global.io.emit(`question_${questionId}`,newComment);
 
     res.status(201).json(newComment)
 

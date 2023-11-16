@@ -15,7 +15,7 @@ function QuestionDetail() {
   );
   const answers = useSelector((state) => state.answers?.answers);
   const navigate = useNavigate();
-  const socket = io();
+  const socket = io('http://localhost:3001');
   const deleteAnswers = (index) => {
     swal({
       title: "¿Desea eliminar esta respuesta?",

@@ -16,7 +16,7 @@ import {
 
 import axios from "axios";
 import { configureHeaders } from "../auth/configureHeaders .js";
-import unorm from 'unorm';
+import unorm from "unorm";
 
 //funcion que se usa en searchQuestions
 const searchCoincidences = (string, subString) => {
@@ -210,6 +210,6 @@ export const searchQuestions = (questions, searchValue) => {
     });
     action.payload = searchedQuestions;
   }
-  
-  return action
+
+  return action;
 };

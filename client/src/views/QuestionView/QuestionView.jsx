@@ -55,7 +55,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
   });
   const [erroresAnswerEdit, setErroresAnswersEdit] = useState({
     editingAnswer: "",
-    
+
   });
   const [erroresComment, setErroresComment] = useState({
     thread: ''
@@ -71,7 +71,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     setEditingAnswerId(answerId);
     setEditingAnswer(answerText);
   };
-  
+
   const [answer, setAnswer] = useState({
     answer: "",
     userId: "",
@@ -117,14 +117,14 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     <Notifications />;
   };
   const handleSubmit = (message, index) => {
-    if(message.thread === ''){
+    if (message.thread === '') {
       swal({
         icon: "error",
         text: "No puedes enviar un comentario vacio",
-      }); 
+      });
       return
     }
-    if(Object.keys(erroresComment).length === 0){
+    if (Object.keys(erroresComment).length === 0) {
 
       dispatch(createAnswerComment(message))
         .then(() => {
@@ -145,14 +145,14 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
             text: "Contacte a soporte",
           });
         });
-      }
-      else{
+    }
+    else {
 
-        swal({
-          icon: "error",
-          text: "No puedes enviar un comentario vacio",
-        }); 
-      }
+      swal({
+        icon: "error",
+        text: "No puedes enviar un comentario vacio",
+      });
+    }
   };
   useEffect(() => {
     if (!token || !isAuthenticated) {
@@ -185,7 +185,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     });
     setErroresAnswers(
       validationAnswer({
-        ...erroresAnswer,  
+        ...erroresAnswer,
         answer: event.target.value,
       })
     );
@@ -197,19 +197,19 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     } else {
       setDisableAnwers(false);
     }
-    if(erroresAnswerEdit.answer){
+    if (erroresAnswerEdit.answer) {
       setDisableAnwersEdit(true)
-    }else{
+    } else {
       setDisableAnwersEdit(false)
     }
-    if(erroresComment.thread){
+    if (erroresComment.thread) {
       setDisableComment(true)
-    }else{
+    } else {
       setDisableComment(false)
     }
-    if(erroresCommentEdit.editingComment){
+    if (erroresCommentEdit.editingComment) {
       setDisableCommentEdit(true)
-    }else{
+    } else {
       setDisableCommentEdit(false)
     }
   }, [erroresAnswer.answer, erroresAnswerEdit.answer, erroresComment.thread, erroresCommentEdit.editingComment]);
@@ -217,7 +217,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     setEditingAnswer(event.target.value)
     setErroresAnswersEdit(
       validationEditAnswer({
-        ...erroresAnswer,  
+        ...erroresAnswer,
         editingAnswer: event.target.value,
       })
     );
@@ -226,11 +226,11 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     setEditingComment(event.target.value)
     setErroresCommentEdit(
       validationEditComment({
-        ...erroresCommentEdit,  
+        ...erroresCommentEdit,
         editingComment: event.target.value,
       })
     );
-    
+
   }
   console.log(erroresCommentEdit);
 
@@ -243,22 +243,22 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       });
       setEditingAnswerId(null)
       setDisableAnwers(false)
-      
+
     }).catch(() => {
       swal(
         "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
         {
           icon: "error",
         }
-        );
-        setEditingAnswerId(null)
-        setDisableAnwers(false)
-      })
-      
-}
-console.log(erroresComment);
+      );
+      setEditingAnswerId(null)
+      setDisableAnwers(false)
+    })
+
+  }
+  console.log(erroresComment);
   const handleSubmitEditComment = (id) => {
-    dispatch(updateAnswerComment(id, { thread: editingComment})).then(() => {
+    dispatch(updateAnswerComment(id, { thread: editingComment })).then(() => {
       dispatch(getQuestionDetail(question.id))
       swal("Tu comentario ha sido editada con exito!", {
         icon: "success",
@@ -271,47 +271,47 @@ console.log(erroresComment);
         {
           icon: "error",
         }
-        );
-        setEditingCommentId(null)
-      })
-      
-}
-const deleteComment = (id) => {
+      );
+      setEditingCommentId(null)
+    })
 
-  swal({
-    title: "¿Estás seguro quse sea eliminar está pregunta?",
-    text: "Una vez eliminada por puede ser recuperada!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  }).then((willDelete) => {
-    if (willDelete) {
-      dispatch(deleteAnswerComment(id))
-        .then(() => {
-          swal("Tu comentario ha sido eliminada con éxito!", {
-            icon: "success",
+  }
+  const deleteComment = (id) => {
+
+    swal({
+      title: "¿Estás seguro quse sea eliminar está pregunta?",
+      text: "Una vez eliminada por puede ser recuperada!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        dispatch(deleteAnswerComment(id))
+          .then(() => {
+            swal("Tu comentario ha sido eliminada con éxito!", {
+              icon: "success",
+            });
+            dispatch(getQuestionDetail(question.id))
+          })
+          .catch(() => {
+            swal(
+              "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
+              {
+                icon: "error",
+              }
+            );
           });
-          dispatch(getQuestionDetail(question.id))
-        })
-        .catch(() => {
-          swal(
-            "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
-            {
-              icon: "error",
-            }
-          );
-        });
-    }
-  });
-}
+      }
+    });
+  }
   const editQuestion = (handleClose) => {
     handleClose();
     navigate(`/foro/edit/${question.id}`);
   };
-  const cancelEditComment= () =>{
+  const cancelEditComment = () => {
     setEditingCommentId(null)
   }
-  const cancelEditAnwer= () =>{
+  const cancelEditAnwer = () => {
     setEditingAnswerId(null)
   }
 
@@ -386,22 +386,22 @@ const deleteComment = (id) => {
                     editingAnswerId === respuesta.id ?
                       (
                         <div className={style.editAnwer}>
-                          
-              <div className={style.errores}>
-                {erroresAnswerEdit && <h3>{erroresAnswerEdit.answer}</h3>}
-              </div>
+
+                          <div className={style.errores}>
+                            {erroresAnswerEdit && <h3>{erroresAnswerEdit.answer}</h3>}
+                          </div>
                           <input type="text" value={editingAnswer} onChange={handleAnswerEdit} />
                           <div className={style.buttonEdit}>
 
                             <button onClick={cancelEditAnwer} className={style.buttonError}>Cancelar</button>
-                          {
-                            disableAnwersEdit
-                            ?
-                            <button disabled
-                            className={style.buttonDisable}>Guardar</button>
-                            :
-                            <button onClick={() => handleSubmitEditAnwer(respuesta.id)} className={style.button}>Guardar</button>
-                          }
+                            {
+                              disableAnwersEdit
+                                ?
+                                <button disabled
+                                  className={style.buttonDisable}>Guardar</button>
+                                :
+                                <button onClick={() => handleSubmitEditAnwer(respuesta.id)} className={style.button}>Guardar</button>
+                            }
                           </div>
                         </div>
                       )
@@ -410,10 +410,10 @@ const deleteComment = (id) => {
                       <div>
                         <p>{respuesta.answer}</p>
 
-                        <div style={{display: 'flex', alignItems:'center', justifyContent:'end', marginTop:'2rem', marginBottom:'1rem'}}>
-                            <ImageAvatars name={respuesta.User?.name} image={respuesta.User?.profile_picture}/>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'end', marginTop: '2rem', marginBottom: '1rem' }}>
+                          <ImageAvatars name={respuesta.User?.name} image={respuesta.User?.profile_picture} />
                           <h4>- {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
-                          </div></div>
+                        </div></div>
 
                   }
 
@@ -430,54 +430,54 @@ const deleteComment = (id) => {
                       var date = new Date(el.createdAt);
                       return (
                         <div key={el.id} className={style.containComments}>
-                        {
-                           editingCommentId === el.id ?
-                            (
-                              <div className={style.editAnwer}>
+                          {
+                            editingCommentId === el.id ?
+                              (
+                                <div className={style.editAnwer}>
                                   <div className={style.errores}>
-                {erroresCommentEdit && <h3>{erroresCommentEdit.editingComment}</h3>}
-              </div>
-                                <input type="text" value={editingComment} onChange={handleCommentEdit} />
-                                
-                                <div className={style.buttonEdit}>
+                                    {erroresCommentEdit && <h3>{erroresCommentEdit.editingComment}</h3>}
+                                  </div>
+                                  <input type="text" value={editingComment} onChange={handleCommentEdit} />
+
+                                  <div className={style.buttonEdit}>
 
                                     <button onClick={cancelEditComment} className={style.buttonError}>Cancelar</button>
                                     {
-                                     disableCommentEdit
-                                     ? 
-                                     <button disabled
-                                     className={style.buttonDisable} >Guardar</button>
-                                     :
-                                     <button onClick={() => handleSubmitEditComment(el.id)}  className={style.button}>Guardar</button>
+                                      disableCommentEdit
+                                        ?
+                                        <button disabled
+                                          className={style.buttonDisable} >Guardar</button>
+                                        :
+                                        <button onClick={() => handleSubmitEditComment(el.id)} className={style.button}>Guardar</button>
 
                                     }
-                                </div>
-                                
-                              </div>
-                            )
+                                  </div>
 
-                            :
-                             ( 
-                            <div className={style.comments}>
-                              <div style={{display: 'flex', alignItems:'center'}}>
-                                <ImageAvatars name={el.User?.name} image={el.User?.profile_picture}/>
-                              <h4>- {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
-                              </div>
-                              <p>{el.thread}</p>
-                              </div>
-                             )
-                             
-                             
-                            } 
-                            {
-                      userId === el.userId &&
-                      
-                      <div className={style.edit}>
-                        <a onClick={() => {deleteComment(el.id)}}>Eliminar comentario<MaterialSymbolsDelete/></a>
-                        <a onClick={() => {handleEditComment(el.id, el.thread)}}>Editar comentario <MaterialSymbolsEdit/></a>
-                      </div>  
-                      }
-                      </div>
+                                </div>
+                              )
+
+                              :
+                              (
+                                <div className={style.comments}>
+                                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <ImageAvatars name={el.User?.name} image={el.User?.profile_picture} />
+                                    <h4>- {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
+                                  </div>
+                                  <p>{el.thread}</p>
+                                </div>
+                              )
+
+
+                          }
+                          {
+                            userId === el.userId &&
+
+                            <div className={style.edit}>
+                              <a onClick={() => { deleteComment(el.id) }}>Eliminar comentario<MaterialSymbolsDelete /></a>
+                              <a onClick={() => { handleEditComment(el.id, el.thread) }}>Editar comentario <MaterialSymbolsEdit /></a>
+                            </div>
+                          }
+                        </div>
                       );
                     })}
 
@@ -492,14 +492,14 @@ const deleteComment = (id) => {
                       Añadir comentario
                       <FlechaParaArriba />
                     </a>
-                    )}
+                  )}
 
                   {view[index] && (
                     <div className={style.comment}>
                       <p>Comentar</p>
                       <div className={style.errores}>
-                {erroresComment && <h4>{erroresComment.thread}</h4>}
-              </div>
+                        {erroresComment && <h4>{erroresComment.thread}</h4>}
+                      </div>
                       <textarea
                         style={{ resize: "none" }}
                         name="thread"
@@ -510,16 +510,16 @@ const deleteComment = (id) => {
                         onChange={(e) => handleChange(e, respuesta.id)}
                       />
                       {
-                        disableComment 
-                        ? 
-                      <button disabled className={style.buttonDisable}>
-                        Añadir comentario
-                      </button>
-                      :
-                      <button onClick={() => handleSubmit(comment, index)} className={style.button}>
-                        Añadir comentario
-                      </button>
-                        
+                        disableComment
+                          ?
+                          <button disabled className={style.buttonDisable}>
+                            Añadir comentario
+                          </button>
+                          :
+                          <button onClick={() => handleSubmit(comment, index)} className={style.button}>
+                            Añadir comentario
+                          </button>
+
                       }
                     </div>
                   )}

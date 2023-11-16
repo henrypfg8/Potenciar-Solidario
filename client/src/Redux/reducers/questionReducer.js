@@ -14,7 +14,7 @@ import {
   SET_SELECTED_FILTER_OPTIONS,
   SET_SELECTED_ORDERING_OPTION,
   SEARCH_QUESTIONS,
-  SET_SEARCH_VALUE
+  SET_SEARCH_VALUE,
 } from "../action types/questionsActionTypes.js";
 
 const initialState = {
@@ -23,7 +23,7 @@ const initialState = {
     category: 0,
     fromDate: "",
     untilDate: "",
-    user: ''
+    user: "",
   },
   selectedFilterOptions: {
     category: { label: "Todas las categorias", value: 0, name: "category" },
@@ -38,7 +38,7 @@ const initialState = {
     value: "date",
     label: "Fecha de creación",
   },
-  searchValue: '',
+  searchValue: "",
   allQuestions: [],
   questionDetail: null,
 };
@@ -138,17 +138,17 @@ const questionReducer = (state = initialState, action) => {
         selectedOrderingOption: action.payload,
       };
 
-    case SEARCH_QUESTIONS: 
+    case SEARCH_QUESTIONS:
       return {
         ...state,
-        questions: action.payload
-      }
+        questions: action.payload,
+      };
 
     case SET_SEARCH_VALUE:
       return {
         ...state,
-        searchValue: action.payload
-      }
+        searchValue: action.payload,
+      };
 
     default:
       return { ...state };

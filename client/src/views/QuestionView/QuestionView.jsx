@@ -18,19 +18,24 @@ import { useNavigate } from "react-router";
 import {
   getQuestionDetail,
 } from "../../Redux/actions/questionsActions";
-import validation from "./validation";
+import validation from "./validationAnswer";
 import CustomizedMenus from "../../assets/MenuDespegable";
 import ImageAvatars from "../../assets/AvatarImage";
 import Notifications from "../../components/Notifications/Notifications";
 import { Oval } from "react-loader-spinner";
 import { MaterialSymbolsEdit } from "../../assets/MaterialSymbolsEdit";
 import { MaterialSymbolsDelete } from "../../assets/MaterialSymbolsDelete";
+import validationAnswer from "./validationAnswer";
+import validationEditAnswer from "./validationEditAnswer";
+import validationComment from "./validationComment";
 
 function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
   const [userId, setUserId] = useState("");
   const { isAuthenticated, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [disable, setDisable] = useState(false);
+  const [disableAnwers, setDisableAnwers] = useState(false);
+  const [disableAnwersEdit, setDisableAnwersEdit] = useState(false);
+  const [disableComment, setDisableComment] = useState(false);
   const [editingAnswerId, setEditingAnswerId] = useState(null);
   const [editingAnswer, setEditingAnswer] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null)
@@ -44,9 +49,16 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     answerId: "",
   });
 
-  const [errores, setErrores] = useState({
+  const [erroresAnswer, setErroresAnswers] = useState({
     answer: "",
   });
+  const [erroresAnswerEdit, setErroresAnswersEdit] = useState({
+    editingAnswer: "",
+    
+  });
+  const [erroresComment, setErroresComment] = useState({
+    thread: ''
+  })
   const handleEditComment = (commentId, commentText) => {
     setEditingCommentId(commentId)
     setEditingComment(commentText)
@@ -55,7 +67,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     setEditingAnswerId(answerId);
     setEditingAnswer(answerText);
   };
-
+  
   const [answer, setAnswer] = useState({
     answer: "",
     userId: "",
@@ -71,11 +83,15 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       answerId: id,
       questionId: question.id,
     });
+    setErroresComment(validationComment({
+      ...erroresComment,
+      thread: event.target.value
+    }))
   };
-
+console.log(erroresComment);
   const answersSubmit = (answer) => {
-    setDisable(true)
-    if (Object.keys(errores).length === 0) {
+    setDisableAnwers(true)
+    if (Object.keys(erroresAnswer).length === 0) {
       dispatch(createAnswer(answer)).then(() => {
         dispatch(getQuestionDetail(question.id));
         setAnswer({
@@ -85,39 +101,49 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
           icon: "success",
           text: "Respuesta creada con exito",
         }).catch(() => {
-          setDisable(false);
+          setDisableAnwers(false);
           swal({
             icon: "error",
             text: `contacte a soporte`,
           });
         });
       }).catch(() => {
-        setDisable(false);
+        setDisableAnwers(false);
       });
     }
     <Notifications />;
   };
-
+  console.log(Object.keys(erroresComment).length);
   const handleSubmit = (message, index) => {
-    dispatch(createAnswerComment(message))
-      .then(() => {
-        setComment({ thread: "" });
-        setView((prevState) => ({
-          ...prevState,
-          [index]: !prevState[index],
-        }));
-        dispatch(getQuestionDetail(question.id));
-        swal({
-          icon: "success",
-          text: "Comentario creado con éxito",
+    if(Object.keys(erroresComment).length === 0){
+
+      dispatch(createAnswerComment(message))
+        .then(() => {
+          setComment({ thread: "" });
+          setView((prevState) => ({
+            ...prevState,
+            [index]: !prevState[index],
+          }));
+          dispatch(getQuestionDetail(question.id));
+          swal({
+            icon: "success",
+            text: "Comentario creado con éxito",
+          });
+        })
+        .catch(() => {
+          swal({
+            icon: "error",
+            text: "Contacte a soporte",
+          });
         });
-      })
-      .catch(() => {
+      }
+      else{
+
         swal({
           icon: "error",
-          text: "contacte a soporte",
-        });
-      });
+          text: "No puedes enviar un comentario vacio",
+        }); 
+      }
   };
   useEffect(() => {
     if (!token || !isAuthenticated) {
@@ -142,46 +168,67 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     }));
   };
   const handleAnswers = (event) => {
-    setErrores(
-      validation({
-        ...answer,
-        answer: event.target.value,
-      })
-    );
     setAnswer({
       ...answer,
       answer: event.target.value,
       userId: userId,
       questionId: question.id,
     });
+    setErroresAnswers(
+      validationAnswer({
+        ...erroresAnswer,  
+        answer: event.target.value,
+      })
+    );
   };
 
   useEffect(() => {
-    if (errores.answer) {
-      setDisable(true);
+    if (erroresAnswer.answer) {
+      setDisableAnwers(true);
     } else {
-      setDisable(false);
+      setDisableAnwers(false);
     }
-  }, [errores.answer]);
-
+    if(erroresAnswerEdit.answer){
+      setDisableAnwersEdit(true)
+    }else{
+      setDisableAnwersEdit(false)
+    }
+    if(erroresComment.thread){
+      setDisableComment(true)
+    }else{
+      setDisableComment(false)
+    }
+  }, [erroresAnswer.answer, erroresAnswerEdit.answer, erroresComment.thread]);
   const handleAnswerEdit = (event) => {
     setEditingAnswer(event.target.value)
+    setErroresAnswersEdit(
+      validationEditAnswer({
+        ...erroresAnswer,  
+        editingAnswer: event.target.value,
+      })
+    );
   }
   const handleCommentEdit = (event) => {
     setEditingComment(event.target.value)
+    setErroresAnswersEdit(
+      validationComment({
+        ...erroresComment,  
+        thread: event.target.value,
+      })
+    );
+    
   }
-  console.log(editingComment);
 
   const handleSubmitEditAnwer = (id) => {
-    setDisable(true)
+    setDisableAnwers(true)
     dispatch(updateAnswer(id, { answer: editingAnswer })).then(() => {
       dispatch(getQuestionDetail(question.id))
       swal("Tu respuesta ha sido editada con exito!", {
         icon: "success",
       });
       setEditingAnswerId(null)
-      setDisable(false)
-
+      setDisableAnwers(false)
+      
     }).catch(() => {
       swal(
         "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
@@ -190,19 +237,17 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
         }
         );
         setEditingAnswerId(null)
-        setDisable(false)    
+        setDisableAnwers(false)
       })
       
 }
   const handleSubmitEditComment = (id) => {
-    setDisable(true)
     dispatch(updateAnswerComment(id, { thread: editingComment})).then(() => {
       dispatch(getQuestionDetail(question.id))
       swal("Tu comentario ha sido editada con exito!", {
         icon: "success",
       });
       setEditingCommentId(null)
-      setDisable(false)
 
     }).catch(() => {
       swal(
@@ -212,7 +257,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
         }
         );
         setEditingCommentId(null)
-        setDisable(false)    
       })
       
 }
@@ -248,10 +292,17 @@ const deleteComment = (id) => {
     handleClose();
     navigate(`/foro/edit/${question.id}`);
   };
+  const cancelEditComment= () =>{
+    setEditingCommentId(null)
+  }
+  const cancelEditAnwer= () =>{
+    setEditingAnswerId(null)
+  }
 
 
   const dateQuestion = new Date(question?.createdAt)
 
+  console.log(disableComment);
   return (
     <div className={style.container}>
       {question ? (
@@ -320,15 +371,23 @@ const deleteComment = (id) => {
                     editingAnswerId === respuesta.id ?
                       (
                         <div className={style.editAnwer}>
+                          
+              <div className={style.errores}>
+                {erroresAnswerEdit && <h3>{erroresAnswerEdit.answer}</h3>}
+              </div>
                           <input type="text" value={editingAnswer} onChange={handleAnswerEdit} />
+                          <div className={style.buttonEdit}>
+
+                            <button onClick={cancelEditAnwer} className={style.buttonError}>Cancelar</button>
                           {
-                            disable
-                              ?
-                              <button disabled
-                                className={style.buttonDisable}>Guardar</button>
-                              :
-                              <button onClick={() => handleSubmitEditAnwer(respuesta.id)}>Guardar</button>
+                            disableAnwersEdit
+                            ?
+                            <button disabled
+                            className={style.buttonDisable}>Guardar</button>
+                            :
+                            <button onClick={() => handleSubmitEditAnwer(respuesta.id)} className={style.button}>Guardar</button>
                           }
+                          </div>
                         </div>
                       )
                       :
@@ -354,7 +413,6 @@ const deleteComment = (id) => {
                   <div>
                     {respuesta?.Comments?.map((el) => {
                       var date = new Date(el.createdAt);
-                      console.log(el.User);
                       return (
                         <div key={el.id} className={style.containComments}>
                         {
@@ -363,7 +421,11 @@ const deleteComment = (id) => {
                               <div className={style.editAnwer}>
                                 <input type="text" value={editingComment} onChange={handleCommentEdit} />
                                 
-                                    <button onClick={() => handleSubmitEditComment(el.id)}>Guardar</button>
+                                <div className={style.buttonEdit}>
+
+                                    <button onClick={cancelEditComment} className={style.buttonError}>Cancelar</button>
+                                    <button onClick={() => handleSubmitEditComment(el.id)}  className={style.button}>Guardar</button>
+                                </div>
                                 
                               </div>
                             )
@@ -409,6 +471,9 @@ const deleteComment = (id) => {
                   {view[index] && (
                     <div className={style.comment}>
                       <p>Comentar</p>
+                      <div className={style.errores}>
+                {erroresComment && <h4>{erroresComment.thread}</h4>}
+              </div>
                       <textarea
                         style={{ resize: "none" }}
                         name="thread"
@@ -418,9 +483,18 @@ const deleteComment = (id) => {
                         value={comment.thread}
                         onChange={(e) => handleChange(e, respuesta.id)}
                       />
-                      <button onClick={() => handleSubmit(comment, index)}>
+                      {
+                        disableComment 
+                        ? 
+                      <button disabled className={style.buttonDisable}>
                         Añadir comentario
                       </button>
+                      :
+                      <button onClick={() => handleSubmit(comment, index)} className={style.button}>
+                        Añadir comentario
+                      </button>
+                        
+                      }
                     </div>
                   )}
                 </div>
@@ -428,7 +502,7 @@ const deleteComment = (id) => {
             })}
             <div className={style.question}>
               <div className={style.errores}>
-                {errores.answer && <p>{errores.answer}</p>}
+                {erroresAnswer.answer && <h3>{erroresAnswer.answer}</h3>}
               </div>
               <label htmlFor="">¿Cuál es tu respuesta? </label>
               <textarea
@@ -440,7 +514,7 @@ const deleteComment = (id) => {
                 onChange={handleAnswers}
               />
 
-              {disable ?
+              {disableAnwers ?
                 <button
                   disabled
                   className={style.buttonDisable}

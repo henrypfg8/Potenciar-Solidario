@@ -15,6 +15,7 @@
    height: 80vh;
    border-radius: 5px;
    margin: 1.5rem;
+   
 }
 .contain{
     padding: 10px 80px;
@@ -44,6 +45,17 @@
     border-radius: 5px;
     cursor: pointer;
 }
+.buttonError{
+    padding: 0.5rem 1rem;
+    background-color: #095084;
+    border: #095084;
+    color: #fff;
+    display: block;
+    margin-left: 170px;
+    transition: 0.2s;
+    border-radius: 5px;
+    cursor: pointer;
+}
 .button:hover{
     background: #095184bb;
     transition: 0.2s;
@@ -53,15 +65,18 @@
     flex-direction: column;
     padding: 0.4rem;
     width: 50vw;
-    border: 1px rgba(0, 0, 0, 0.191) solid;
     box-shadow: -1px 1px 8px rgba(209, 206, 206, 0.363);
     justify-content: center;
     height: fit-content;
+    background-color: rgba(135, 135, 135, 0.1);
+    
+    border: 1px #30306d solid;
+    border-radius:10px;
 }
 .Detail h1{
     font-size: 2rem;
     display: block;
-    border-bottom: 1px rgba(0, 0, 0, 0.291) solid;
+    border-bottom:1px #30306d solid;
     padding: 1rem;
 }
 
@@ -81,11 +96,11 @@
     font-size: 1.1rem;
 }
 .text{
-    position: relative;
+    /* position: relative; */
     padding: 2rem;
     margin: 0.4rem;
-    border-top: 1px rgba(0, 0, 0, 0.291) solid;
-    border-bottom: 1px rgba(0, 0, 0, 0.291) solid;
+    border-top: 1px #30306d solid;
+    border-bottom: 1px #30306d solid;
     box-shadow: -1px 1px 10px rgba(255, 255, 255, 0.575);
 }
 
@@ -124,7 +139,9 @@
 }
 .comment{
     display: flex;
-    margin: 0.6rem;
+    flex-direction: column;
+    align-items: center;
+    margin: 0.9rem;
     padding: 0.6rem;
     border: 1px #30306d solid;
     min-width: 85vw;
@@ -137,6 +154,16 @@
 .comment p{
     margin: 1rem;
     font-size: 1rem;
+}
+.avatar{
+    display: flex;
+    flex-direction: row;
+    justify-items: start;
+    align-items: center;
+    margin: 1rem;
+}
+.avatar h3{
+    margin: 1rem;
 }
 @media (max-width: 768px){
 .contain{

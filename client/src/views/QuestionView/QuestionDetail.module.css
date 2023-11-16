@@ -1,6 +1,7 @@
 @font-face {
   font-family: "FuenteBold";
   src: url("../../fonts/VisbyRoundCF-DemiBold.otf");
+  
 }
 .title {
   display: flex;
@@ -116,21 +117,8 @@
   margin-bottom: 0.4rem;
   width: 20vw;
 }
-.comment button {
-  padding: 0.5rem 1rem;
-  background-color: #095084;
-  border: #095084;
-  color: #fff;
 
-  transition: 0.2s;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.comment button:hover {
-  background: #095184bb;
-  transition: 0.2s;
-}
-.question button:hover {
+.button:hover {
   background: #095184bb;
   transition: 0.2s;
 }
@@ -159,7 +147,10 @@
   display: flex;
   flex-direction: column;
 }
-
+.buttonEdit{
+  display: flex;
+  flex-direction: row;
+}
 .button {
   display: flex;
   margin: 1rem;
@@ -172,6 +163,22 @@
   transition: 0.2s;
   border-radius: 5px;
   cursor: pointer;
+}
+.buttonError {
+  display: flex;
+  margin: 1rem;
+  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem;
+  background-color: rgba(255, 0, 0, 0.856);
+  border: #ff0000;
+  transition: 0.2s;
+  color: #fff;
+  transition: 0.2s;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.buttonError:hover {
+  background: #a51818;
 }
 .question textarea {
   width: 40vw;
@@ -287,23 +294,7 @@
   max-height: fit-content;
   overflow-wrap: break-word;
 }
-.editAnwer button {
-  display: flex;
-  margin: 1rem;
-  padding: 0.5rem 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #095084;
-  border: #095084;
-  transition: 0.2s;
-  color: #fff;
-  transition: 0.2s;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.editAnwer button:hover {
-  background: #095184bb;
-  transition: 0.2s;
-}
+
 @media (max-width: 575.98px) {
   .question textarea {
     width: 70vw;

@@ -173,19 +173,14 @@ const Detail = () => {
             <div className={Styles.container}>
               {postDetail?.PublicationComments?.map((element, index) => {
                 let date = new Date(element.createdAt);
-                return (<div key={index} className={Styles.comment}>
+                return (
+                  <div key={index} className={Styles.comment}>
                   <div className={Styles.avatar}>
                     <ImageAvatars name={element?.User?.name} image={element?.User?.profile_picture} />
-
+                    <h3>ONG: {element?.User?.organization}</h3>
+                  <h3>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h3>
                   </div>
-
-                  <div className={Styles.organization}>
-
-                    <p>{element?.comment}</p>
-
-                    <h4>{date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
-                  </div>
-                  <h3>ONG: {element?.User?.organization}</h3>
+                  <p>{element?.comment}</p>
                 </div>
                 )
               })

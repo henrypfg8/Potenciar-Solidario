@@ -57,6 +57,7 @@ const Post = (props) => {
     }
   }, []);
 
+
   /////////////////////////////////////////////////
 
   return (
@@ -106,6 +107,8 @@ const Post = (props) => {
 
           <div className={Styles.SocialIcons__commentContainer}>
             <Comment className={Styles.commentIcon} />
+
+            <p className={Styles.likeNumber}> {props?.PublicationComments.length} </p>
           </div>
         </div>
 

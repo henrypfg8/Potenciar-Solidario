@@ -1,9 +1,12 @@
 const { Comment } = require("../../db");
 
-const PutComment = async (user, commentData) => {
+const UpdateComment  = async (user, commentData) => {
   try {
+    console.log(user);
+    console.log(commentData)
     if (user) {
-      const findComment = await Comment.findByPk(commentData.id);
+      
+      const findComment = await Comment.findByPk(user);
       if (!findComment) throw new Error("Comentario no encontrado");
 
       findComment.thread = commentData.thread;
@@ -15,4 +18,4 @@ const PutComment = async (user, commentData) => {
     throw new Error("Error actualizar el comment: " + error.message);
   }
 };
-module.exports = { PutComment };
+module.exports = { UpdateComment };

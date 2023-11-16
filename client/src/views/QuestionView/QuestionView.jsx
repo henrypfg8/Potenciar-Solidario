@@ -362,14 +362,9 @@ const deleteComment = (id) => {
                             (
                               <div className={style.editAnwer}>
                                 <input type="text" value={editingComment} onChange={handleCommentEdit} />
-                                {
-                                  disable
-                                    ?
-                                    <button disabled
-                                      className={style.buttonDisable}>Guardar</button>
-                                    :
+                                
                                     <button onClick={() => handleSubmitEditComment(el.id)}>Guardar</button>
-                                }
+                                
                               </div>
                             )
 

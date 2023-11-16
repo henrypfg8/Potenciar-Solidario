@@ -2,10 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 //
 import DatePicker from "react-datepicker";
-import CleanDate_Icon from "../../../../../assets/CleanDate_Icon";
+import CleanDate_Icon from "../../../../../assets/CleanDateIcon";
 //
 import "react-datepicker/dist/react-datepicker.css";
-import Styles from "./posts_DateInput.module.css";
+import Styles from "./postsDateInput.module.css";
 //
 import { useDispatch, useSelector } from "react-redux";
 import {

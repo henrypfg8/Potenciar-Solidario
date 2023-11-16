@@ -4,8 +4,8 @@ import Post from "../Post/Post";
 //
 import { useSelector } from "react-redux";
 //
-import NoPosts_Icon from "../../assets/NoPosts_Icon";
-import Oval_Loader from "../../assets/Oval_Loader";
+import NoPostsIcon from "../../assets/NoPostsIcon";
+import OvalLoader from "../../assets/OvalLoader";
 
 export default function Posts() {
   const loading = useSelector((state) => state.posts.loading);
@@ -73,7 +73,7 @@ export default function Posts() {
 
       {(posts?.length === 0 && !loading) || (!posts && !loading) ? (
         <div className={Styles.Posts__NoPosts}>
-          <NoPosts_Icon className={Styles.NoPosts__icon} />
+          <NoPostsIcon className={Styles.NoPosts__icon} />
           <h3 className={Styles.NoPosts__Text}>
             No se encontraron publicaciones.
           </h3>
@@ -100,7 +100,7 @@ export default function Posts() {
               />
             )})
           ) : (
-            <Oval_Loader/>
+            <OvalLoader/>
           )}
         </div>
       )}

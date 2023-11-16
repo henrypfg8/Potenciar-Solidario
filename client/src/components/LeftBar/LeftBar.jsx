@@ -7,7 +7,7 @@ import PostFilters from "../Filters/PostsFilters/PostsFilters";
 import ForumFilters from "../Filters/ForumFilters/ForumFilters";
 import { Drawer, Button } from "antd";
 import PostsOrderings from "../Orderings/PostsOrderings/PostsOrderings";
-import FiltersAndOrderings_Icon from "../../assets/FiltersAndOrderings_Icon";
+import FiltersAndOrderingsIcon from "../../assets/FiltersAndOrderingsIcon";
 import ForumOrderings from "../Orderings/ForumOrderings/ForumOrderings";
 
 export default function LeftBar({ responsiveMode }) {
@@ -114,7 +114,7 @@ export default function LeftBar({ responsiveMode }) {
           <p className={Styles["Filters-Button__text"]}>
             Filtros y ordenamientos
           </p>
-          <FiltersAndOrderings_Icon
+          <FiltersAndOrderingsIcon
             className={Styles["Filters-Button__Icon"]}
           />
         </Button>

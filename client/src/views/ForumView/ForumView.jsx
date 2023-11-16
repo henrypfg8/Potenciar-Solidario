@@ -4,7 +4,7 @@ import LeftBar from "../../components/LeftBar/LeftBar";
 import style from "./Foro.module.css";
 import { NavLink } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
-import { FluentMdl2QandA } from "../../assets/noQuestion_Icon";
+import { FluentMdl2QandA } from "../../assets/noQuestionIcon";
 import { useSelector } from "react-redux";
 
 function ForumView({ questions, loading }) {

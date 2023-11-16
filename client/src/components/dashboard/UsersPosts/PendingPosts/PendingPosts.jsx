@@ -18,7 +18,7 @@ const PendingPosts = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isSearching, setIsSearching] = useState(false);
 
-    //orden
+    //orden por fecha
     const [sortOrder, setSortOrder] = useState('asc'); 
     const [refreshData, setRefreshData] = useState(false);
     const [errorNoSeleted, setErrorNoSeleted] = useState(false);

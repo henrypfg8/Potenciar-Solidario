@@ -12,7 +12,8 @@ import Select from "react-select";
 import "./auth.css";
 import { validateAge } from "../../helpers/ValidateAge";
 import { getOngs } from "../../Redux/actions/ongsActions";
-import Spinner from "./spinner/Spinner";
+import Oval_Loader from "../../assets/Oval_Loader";
+
 
 const Register = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -110,7 +111,18 @@ const Register = () => {
 
   return (
     <div className='auth__container' >
-      {loading && <Spinner />}
+      {loading &&      <div style={{
+        width: '100%',
+        position: 'fixed',
+        display : 'flex',
+        alignItems : 'center',
+        zIndex : '1000',
+      bottom : '20rem'
+      }}>
+       <Oval_Loader/>
+      </div>}
+      
+ 
     
       {/* {error && errorRegister  && <Success frase='No se pudo crear tu cuenta' color='#DD0C0C' tipo='error' />} */}
       {success && <Swiper frase='Cuenta creada con éxito, Ahora inicia sesión' color='#005692' tipo='success' />}

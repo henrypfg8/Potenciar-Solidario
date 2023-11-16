@@ -206,6 +206,7 @@
     width: 90%;
     margin: 1rem auto 0 auto;
     justify-content: flex-end;
+    gap: 1rem;
 }
 
 .button__selected{

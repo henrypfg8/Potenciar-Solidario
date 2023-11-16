@@ -12,7 +12,7 @@ import { like, disLike } from "../../Redux/actions/postsActions";
 
 import { configureHeaders } from "../../Redux/auth/configureHeaders ";
 import axios from "axios";
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 //////////////////////////////
 
@@ -27,7 +27,7 @@ const Post = (props) => {
 
   const start_date = props?.startDate?.split("-");
 
-  const token = jwtDecode(localStorage.getItem('token'));
+  const token = jwtDecode(localStorage.getItem("token"));
 
   const likeHandler = (e) => {
     e.preventDefault();
@@ -52,11 +52,11 @@ const Post = (props) => {
   };
 
   useEffect(() => {
-    if (props?.Likes?.some(like => like.userId === token.id)) {
+    if (props?.Likes?.some((like) => like.userId === token.id)) {
       setIsLiked(true);
     }
-  }, [])
-  
+  }, []);
+
 
   /////////////////////////////////////////////////
 
@@ -64,11 +64,15 @@ const Post = (props) => {
     <Link to={`/detalle/${props?.id}`} className={Styles.Post}>
       <h1 className={Styles.Post__title}>{props?.title}</h1>
 
-      <p className={Styles.Post__category}>{props?.category}</p>
+      
 
-      <div className={Styles.Post__Organization}>
-        <h2 className={Styles.organization}> Organización: </h2>
-        <h2 className={Styles.organizationName}>{props?.organization}</h2>
+      <div className={Styles.Post__OrganizationAndCategory}>
+        <div className={Styles.OrganizationContainer}>
+          <h2 className={Styles.organization}> Organización: </h2>
+          <h2 className={Styles.organizationName}>{props?.organization}</h2>
+        </div>
+        <p className={Styles.Post__category}>{props?.category}</p>
+        
       </div>
 
       <div className={Styles.Post__description}>
@@ -85,9 +89,7 @@ const Post = (props) => {
       <div className={Styles.Post__BottomBar}>
         <CalendarIcon className={Styles.BottomBar__calendarIcon} />
 
-        <p className={Styles.BottomBar__startDate}>
-          {props?.startDate}
-        </p>
+        <p className={Styles.BottomBar__startDate}>{props?.startDate}</p>
 
         <div className={Styles.BottomBar__SocialIcons}>
           <div
@@ -105,21 +107,22 @@ const Post = (props) => {
 
           <div className={Styles.SocialIcons__commentContainer}>
             <Comment className={Styles.commentIcon} />
+
+            <p className={Styles.likeNumber}> {props?.PublicationComments.length} </p>
           </div>
         </div>
-            
-        {
-          props?.userID === token.id ? (
-            <div
-          className={Styles.BottomBar__OptionsContainer}
-          onClick={postOptionsHandler}
-        >
-          <PostOptions_Icon className={Styles.BottomBar__optionsIcon} />
-          {isOptionsOpen && <Post_Options id={props.id} setRefreshData={setRefreshData}/>}
-        </div>
-          ) : null
-        }
-        
+
+        {props?.userID === token.id ? (
+          <div
+            className={Styles.BottomBar__OptionsContainer}
+            onClick={postOptionsHandler}
+          >
+            <PostOptions_Icon className={Styles.BottomBar__optionsIcon} />
+            {isOptionsOpen && (
+              <Post_Options id={props.id} setRefreshData={setRefreshData} />
+            )}
+          </div>
+        ) : null}
       </div>
     </Link>
   );

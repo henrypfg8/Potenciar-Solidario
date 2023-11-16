@@ -65,9 +65,19 @@ const Users = () => {
             ))
           ) : (
             isSearching &&
-            <div className={Styles.div_NoResults}>
-              <p className={Styles.title_NoResults}>No hay resultados</p>
-            </div>
+            <tbody className={Styles.div_NoResults}>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td className={Styles.title_NoResults}>No hay resultados</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
           )}
         </table>
       </div>

@@ -25,7 +25,6 @@ function QuestionDetail() {
       dangerMode: true,
     })
       .then((willDelete) => {
-        console.log(index);
         if (willDelete) {
           dispatch(deleteAnswer(index))
             .then(() => {

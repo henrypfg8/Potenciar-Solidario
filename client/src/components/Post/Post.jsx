@@ -112,7 +112,7 @@ const Post = (props) => {
           </div>
         </div>
 
-        {props?.userID === token.id ? (
+        {/* {props?.userID === token.id ? (
           <div
             className={Styles.BottomBar__OptionsContainer}
             onClick={postOptionsHandler}
@@ -122,7 +122,7 @@ const Post = (props) => {
               <Post_Options id={props.id} setRefreshData={setRefreshData} />
             )}
           </div>
-        ) : null}
+        ) : null} */}
       </div>
     </Link>
   );

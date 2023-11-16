@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Styles from "./searchBar_Forum.module.css";
+import Styles from "./searchBarForum.module.css";
 //
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -13,7 +13,7 @@ import {
 import axios from "axios";
 import { configureHeaders } from "../../../Redux/auth/configureHeaders ";
 
-export default function SearchBar_Forum() {
+export default function SearchBarForum() {
   const dispatch = useDispatch();
   const config = configureHeaders();
 

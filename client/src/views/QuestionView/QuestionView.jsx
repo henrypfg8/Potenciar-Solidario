@@ -232,7 +232,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     );
 
   }
-  console.log(erroresCommentEdit);
 
   const handleSubmitEditAnwer = (id) => {
     setDisableAnwers(true)

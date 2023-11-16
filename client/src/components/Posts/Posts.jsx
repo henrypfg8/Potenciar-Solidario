@@ -83,7 +83,6 @@ export default function Posts() {
         <div className={Styles.Cards}>
           {!loading && orderedPosts.length > 0 ? (
             orderedPosts.map((post) => { 
-              console.log('antes', post?.startDate, 'despues', transformarFecha(post?.startDate));
               
               return (
               <Post

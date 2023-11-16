@@ -29,7 +29,6 @@ body html {
   flex-direction: column;
   align-items: center;
   margin-left: 6rem;
-  padding: 10px;
   height: 100vh;
   min-height: 100vh;
 }
@@ -58,7 +57,6 @@ body html {
   background: var(--color-cuartiario);
   box-shadow: -1px 1px 8px rgba(55, 172, 255, 0.064);
   width: 50vw;
-  min-width: 50vw;
   max-width: 50vw;
   margin: 0.7rem;
 }
@@ -71,12 +69,15 @@ body html {
   border: 1px solid #00559226;
   justify-content: center;
   align-items: center;
-  width: 50vw;
+  width: 100%;
   padding: 0.6rem;
-  border-radius: 5px 5px 0 0;
   background-color: #0f3054;
   color: #fff;
   overflow: auto;
+  border-bottom: 2px #00559226 solid ;
+}
+.contain p{
+  padding: 0.6rem;
 }
 .contain button {
   display: flex;
@@ -117,28 +118,10 @@ body html {
   flex-direction: column;
   align-items: center;
 }
-.center {
-  display: flex;
-  flex-direction: column;
-}
-.center p {
-  padding: 0.5rem;
-  font-size: 1.3rem;
-}
 
-.centerLoading {
-  width: 70vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-}
 .loading {
   margin: 1.1rem;
-}
-.centerLoading h3 {
-  margin: 1.5rem;
-}
+} 
 
 @media (max-width: 575.98px) {
   .center h1 {
@@ -163,15 +146,23 @@ body html {
     display: flex;
     flex-direction: column;
   }
-  .contain {
-    margin: 20px;
-    max-width: 80vw;
-    min-width: 80vw;
-    /* height: 100vh; */
+  
+  
+}
+
+@media (max-width: 993px) {
+  .containerCenter{
+    display: flex;
+    flex-direction: column; 
   }
-  .center {
-    width: 70vw;
-    max-width: 70vw;
-    min-width: 70vw;
+  .container{
+    margin:0;
+  }
+  .contain h1{
+    font-size: 1.5rem;
+  }
+  .contain{
+    max-width: 100vw;
+    width: 80vw;
   }
 }

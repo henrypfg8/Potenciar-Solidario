@@ -18,7 +18,6 @@ import { useNavigate } from "react-router";
 import {
   getQuestionDetail,
 } from "../../Redux/actions/questionsActions";
-import validation from "./validationAnswer";
 import CustomizedMenus from "../../assets/MenuDespegable";
 import ImageAvatars from "../../assets/AvatarImage";
 import Notifications from "../../components/Notifications/Notifications";
@@ -28,6 +27,7 @@ import { MaterialSymbolsDelete } from "../../assets/MaterialSymbolsDelete";
 import validationAnswer from "./validationAnswer";
 import validationEditAnswer from "./validationEditAnswer";
 import validationComment from "./validationComment";
+import validationEditComment from "./validationEditComment";
 
 function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
   const [userId, setUserId] = useState("");
@@ -36,6 +36,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
   const [disableAnwers, setDisableAnwers] = useState(false);
   const [disableAnwersEdit, setDisableAnwersEdit] = useState(false);
   const [disableComment, setDisableComment] = useState(false);
+  const [disableCommentEdit, setDisableCommentEdit] = useState(false);
   const [editingAnswerId, setEditingAnswerId] = useState(null);
   const [editingAnswer, setEditingAnswer] = useState("");
   const [editingCommentId, setEditingCommentId] = useState(null)
@@ -58,6 +59,9 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
   });
   const [erroresComment, setErroresComment] = useState({
     thread: ''
+  })
+  const [erroresCommentEdit, setErroresCommentEdit] = useState({
+    editingComment: ''
   })
   const handleEditComment = (commentId, commentText) => {
     setEditingCommentId(commentId)
@@ -88,7 +92,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       thread: event.target.value
     }))
   };
-console.log(erroresComment);
   const answersSubmit = (answer) => {
     setDisableAnwers(true)
     if (Object.keys(erroresAnswer).length === 0) {
@@ -113,8 +116,14 @@ console.log(erroresComment);
     }
     <Notifications />;
   };
-  console.log(Object.keys(erroresComment).length);
   const handleSubmit = (message, index) => {
+    if(message.thread === ''){
+      swal({
+        icon: "error",
+        text: "No puedes enviar un comentario vacio",
+      }); 
+      return
+    }
     if(Object.keys(erroresComment).length === 0){
 
       dispatch(createAnswerComment(message))
@@ -198,7 +207,12 @@ console.log(erroresComment);
     }else{
       setDisableComment(false)
     }
-  }, [erroresAnswer.answer, erroresAnswerEdit.answer, erroresComment.thread]);
+    if(erroresCommentEdit.editingComment){
+      setDisableCommentEdit(true)
+    }else{
+      setDisableCommentEdit(false)
+    }
+  }, [erroresAnswer.answer, erroresAnswerEdit.answer, erroresComment.thread, erroresCommentEdit.editingComment]);
   const handleAnswerEdit = (event) => {
     setEditingAnswer(event.target.value)
     setErroresAnswersEdit(
@@ -210,14 +224,15 @@ console.log(erroresComment);
   }
   const handleCommentEdit = (event) => {
     setEditingComment(event.target.value)
-    setErroresAnswersEdit(
-      validationComment({
-        ...erroresComment,  
-        thread: event.target.value,
+    setErroresCommentEdit(
+      validationEditComment({
+        ...erroresCommentEdit,  
+        editingComment: event.target.value,
       })
     );
     
   }
+  console.log(erroresCommentEdit);
 
   const handleSubmitEditAnwer = (id) => {
     setDisableAnwers(true)
@@ -241,6 +256,7 @@ console.log(erroresComment);
       })
       
 }
+console.log(erroresComment);
   const handleSubmitEditComment = (id) => {
     dispatch(updateAnswerComment(id, { thread: editingComment})).then(() => {
       dispatch(getQuestionDetail(question.id))
@@ -302,7 +318,6 @@ const deleteComment = (id) => {
 
   const dateQuestion = new Date(question?.createdAt)
 
-  console.log(disableComment);
   return (
     <div className={style.container}>
       {question ? (
@@ -419,12 +434,23 @@ const deleteComment = (id) => {
                            editingCommentId === el.id ?
                             (
                               <div className={style.editAnwer}>
+                                  <div className={style.errores}>
+                {erroresCommentEdit && <h3>{erroresCommentEdit.editingComment}</h3>}
+              </div>
                                 <input type="text" value={editingComment} onChange={handleCommentEdit} />
                                 
                                 <div className={style.buttonEdit}>
 
                                     <button onClick={cancelEditComment} className={style.buttonError}>Cancelar</button>
-                                    <button onClick={() => handleSubmitEditComment(el.id)}  className={style.button}>Guardar</button>
+                                    {
+                                     disableCommentEdit
+                                     ? 
+                                     <button disabled
+                                     className={style.buttonDisable} >Guardar</button>
+                                     :
+                                     <button onClick={() => handleSubmitEditComment(el.id)}  className={style.button}>Guardar</button>
+
+                                    }
                                 </div>
                                 
                               </div>

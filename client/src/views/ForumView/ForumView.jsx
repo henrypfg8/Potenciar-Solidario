@@ -118,12 +118,10 @@ function ForumView({ questions, loading }) {
                 let date = new Date(question.createdAt);
                 return (
                   <div key={question.id} className={style.contain}>
-                    <div className={style.center}>
                       <NavLink to={`/foro/${question.id}`}>
                         <h1>{question.title}</h1>
                       </NavLink>
                       <p>{question.text}</p>
-                    </div>
 
                     <footer className={style.anwers}>
                       {question.Answers.length === 0 && (

@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { MenuOutlined } from '@ant-design/icons';
 import Styles from './profile.module.css';
 import { getProfile } from '../../Redux/auth/AuthActions';
-import { useNavigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode'
 
 
@@ -23,14 +22,14 @@ const DrawerProfile = () => {
 
         if(token){
             const decoded = jwtDecode(token);
-            console.log(decoded)
+            
             dispatch(getProfile(decoded.id, token))
         }
     }, []);
 
  
 
-    const navigate = useNavigate()
+   
     // Función para abrir el drawer
     const showDrawer = () => {
         setOpen(true);

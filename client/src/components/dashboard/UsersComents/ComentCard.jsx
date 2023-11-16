@@ -32,6 +32,12 @@ const ComentCard = ({ comment, i }) => {
         setIsOpenModal(false)
         return data
     }
+
+    const fecha = new Date(comment.createdAt);
+
+// Obtén la parte de la fecha en formato 'YYYY-MM-DD'
+const fechaFormateada = fecha.toISOString().split('T')[0];
+
     return (
         <div className={Styles.textCard}>
             <div style={{
@@ -40,13 +46,14 @@ const ComentCard = ({ comment, i }) => {
                 <p className={Styles.textIndex}>{i}</p>
                 <div className={Styles.comentFlex}>
                     <span className={Styles.textSpan}>{comment?.comment}</span>
+                    <p style={{color : '#005692'}}>{fechaFormateada}</p>
                     <button className={Styles.coment_btn_delete} onClick={showModal}>
                         <i className={`fa fa-trash ${Styles.coment_trash_icon}`} aria-hidden="true"></i>
                     </button>
                 </div>
             </div>
             <Modal
-            title="Deseas eliminar esta pregunta?"
+            title="Deseas eliminar este comentario?"
             open={isOpenModal}
             onCancel={handleClose}
             cancelText="Cancelar"

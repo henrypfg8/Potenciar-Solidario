@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { getPosts } from "../../../../Redux/actions/postsActions"
 import { useSelector, useDispatch } from "react-redux";
 import CardDashboard from "../CardDashboard";
@@ -23,17 +23,34 @@ const PublishPosts = () => {
 
   const [isModalOpenLeftPublish, setIsModalOpenLeftPublish] = useState(false);
   const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
+  //orden por fecha
+  const [sortOrder, setSortOrder] = useState('asc');
 
 
   const postsApproved = posts.filter(post => post.status === '1' || post.status === true);
   // Filtrar el array basado en el término de búsqueda si isSearching es true
-  const filteredResults = isSearching
-    ? postsApproved.filter((item) =>
-      // Reemplaza 'item.name' con la propiedad o valor que deseas buscar
-      item.title.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    : postsApproved;
+  // Filtrar el array basado en el término de búsqueda si isSearching es true
 
+  const filteredAndSortedResults = useMemo(() => {
+    let results = isSearching
+      ? postsApproved.filter(item =>
+        item.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      : postsApproved;
+
+    // Ordenamiento basado en sortOrder
+    if (sortOrder === 'asc') {
+      results.sort((a, b) => new Date(a.creationDate) - new Date(b.creationDate));
+    } else if (sortOrder === 'desc') {
+      results.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
+    }
+
+    return results;
+  }, [postsApproved, isSearching, searchTerm, sortOrder]);
+  const onChangeFilterDate = (e) => {
+    // Actualiza el estado 'sortOrder' con el valor seleccionado
+    setSortOrder(e.target.value);
+  };
 
   useEffect(() => {
     dispatch(getPosts())
@@ -129,6 +146,15 @@ const PublishPosts = () => {
             <p className={Styles.dashboard__post}>Hay {postsApproved.length} publicaciones</p>
             <div className={Styles.button__flexDiv}>
               <button className={Styles.button__selected} onClick={handleSelectAllPost}>  {selectedPosts.length === postsApproved.length ? 'Deseleccionar Todo' : 'Seleccionar Todo'}</button>
+              <select style={{
+                border: 'solid 1px #ddd',
+                borderRadius: '5px'
+              }} name="date" id="date" onChange={onChangeFilterDate}>
+
+                <option value="">Ordenar por fecha</option>
+                <option value="asc">Más Antiguo</option>
+                <option value="desc">Más Nuevo</option>
+              </select>
             </div>
           </div>
         )}
@@ -145,8 +171,8 @@ const PublishPosts = () => {
 
           <div className={Styles.dashboard__divCards}>
 
-            {filteredResults.length > 0 ? (
-              filteredResults.map(post => (
+            {filteredAndSortedResults.length > 0 ? (
+              filteredAndSortedResults.map(post => (
                 <CardDashboard
                   key={post.id}
                   post={post}

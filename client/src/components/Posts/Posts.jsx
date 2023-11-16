@@ -17,21 +17,23 @@ export default function Posts() {
 
   const orderBy = useSelector((state) => state.posts.orderBy);
 
-  function transformarFecha(inputFecha) {
-    // Parsea la fecha en el formato "yyyy-MM-dd"
-    const fechaParseada = new Date(inputFecha);
-
-    // Obtiene los componentes de la fecha
-    const dia = fechaParseada.getDate() + 1;
-    const mes = fechaParseada.getMonth() + 1; // Los meses son indexados desde 0
-    const año = fechaParseada.getFullYear();
-
-    // Formatea la fecha en el nuevo formato "dd-MM-yyyy"
-    const fechaFormateada = `${dia < 10 ? "0" : ""}${dia}-${
-      mes < 10 ? "0" : ""
-    }${mes}-${año}`;
-
-    return fechaFormateada;
+  //funcion que cambia la fecha de "yyyy-mm-dd" a "dd-mm-yyyy"
+  function transformarFecha (fechaString) {
+    // Crear un objeto Date a partir de la cadena original
+    const fecha = new Date(fechaString);
+  
+    // Sumar un día a la fecha
+    fecha.setDate(fecha.getDate() + 1);
+  
+    // Obtener los componentes de la fecha (día, mes y año)
+    const dia = fecha.getDate().toString().padStart(2, "0");
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, "0"); // El mes comienza desde 0
+    const año = fecha.getFullYear();
+  
+    // Construir la nueva fecha en formato "dd-MM-yyyy"
+    const nuevaFecha = `${dia}-${mes}-${año}`;
+  
+    return nuevaFecha;
   }
 
   let orderedPosts = [...posts];
@@ -55,8 +57,8 @@ export default function Posts() {
   } else if (orderBy.ordering === "date") {
     orderedPosts.sort((a, b) =>
       orderBy.direction === "asc"
-        ? a.startDate - b.startDate
-        : b.startDate - a.startDate
+        ? (a.startDate < b.startDate ? -1 : 1) 
+        : (a.startDate > b.startDate ? -1 : 1)
     );
   } else if (orderBy.ordering === "popularity") {
     orderedPosts.sort((a, b) =>
@@ -80,7 +82,10 @@ export default function Posts() {
       ) : (
         <div className={Styles.Cards}>
           {!loading && orderedPosts.length > 0 ? (
-            orderedPosts.map((post) => (
+            orderedPosts.map((post) => { 
+              console.log('antes', post?.startDate, 'despues', transformarFecha(post?.startDate));
+              
+              return (
               <Post
                 key={post.id}
                 id={post?.id}
@@ -95,7 +100,7 @@ export default function Posts() {
                 Likes={post?.Likes}
                 PublicationComments={post?.PublicationComments}
               />
-            ))
+            )})
           ) : (
             <Oval_Loader/>
           )}

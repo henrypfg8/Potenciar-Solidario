@@ -8,7 +8,7 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 const {authHandler} = require("./handlers/Authentication/authHandler"); //middleware para proteccion de rutas
 require("./db.js");
-const {Comment} = require('./db.js')
+
 const server = express();
 server.name = "API";
 const httpServer = createServer(server);
@@ -16,21 +16,11 @@ const io = new Server(httpServer,{pingInterval: 10000});
 global.io = io;
 
 io.on("connection", (socket) => {
-  console.log('Nuevo usuario conectado por websocket');
-
-  socket.on('newMessage', async (message) => {
-    try {
-      // Then emit a 'message' event to all connected clients
-      io.emit('message', message);
-    } catch (error) {
-      console.error('Error saving the message to the database:', error);
-    }
-  });
-  socket.on('disconnect', () => {
-    console.log('Usuario desconectado de websocket');
-  });
+  console.log('Nuevo usuario conectado por websocket')
 });
-
+io.on("disconnect", () => {
+  console.log('Usuario desconectado de websocket')
+})
 server.use(cors());
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));

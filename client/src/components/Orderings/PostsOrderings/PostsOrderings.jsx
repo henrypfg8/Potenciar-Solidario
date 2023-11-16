@@ -43,10 +43,8 @@ export default function Orderings() {
   const [ selectedOptionLOCAL, setSelectedOptionLOCAL ] = useState({
     ...selectedOptions.ordering
   });
-  console.log(selectedOptionLOCAL)
   
 
-  //console.log('el estado global desde el componente', selectedOptions);
 
   const changeHandler = (e) => {
     const { name, value, label } = e.target ? e.target : e;
@@ -66,14 +64,11 @@ export default function Orderings() {
   }, [orderBy]);
 
   useEffect(() => {
-    console.log('useEffect - el global', selectedOptions);
-    console.log('useEffect - el local', selectedOptions);
+
     setSelectedOptionLOCAL({...selectedOptions.ordering})
   }, [selectedOptions])
 
-  useEffect(() => {
-    console.log('avergaston', selectedOptionLOCAL)
-  }, [selectedOptionLOCAL])
+ 
 
   return (
     <div className={Styles.Orderings}>

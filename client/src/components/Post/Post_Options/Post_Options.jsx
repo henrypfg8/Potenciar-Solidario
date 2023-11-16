@@ -39,11 +39,7 @@ export default function Post_Options({ id, setRefreshData }) {
     }
   }
   
-  useEffect(() => {
-    return () => {
-      console.log(isOpen)
-    }
-  }, [isOpen])
+
  
   ////////////////////////////////////////
 

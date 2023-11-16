@@ -23,12 +23,12 @@ export default function () {
   const options = [
     {
       label: "Fecha de creación",
-      name: "value",
+      name: "ordering",
       value: "date",
     },
     {
       label: "Titulo",
-      name: "value",
+      name: "ordering",
       value: "title",
     },
   ];

@@ -24,8 +24,6 @@ function Forum() {
         setLoading(false)
        }
     }, [dispatch, questions, setLoading])
-
-    console.log(questions);
     return <ForumView questions={questions} loading={loading}/>
 }
 

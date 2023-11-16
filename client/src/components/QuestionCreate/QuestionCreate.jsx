@@ -92,7 +92,6 @@ export function useQuestionCreate() {
             setDisableButton(false)
         }
     },[handleChange])
-    console.log(disableButton);
     const submitQuestion = async (event) => {
         event.preventDefault()
         setDisableButton(true)

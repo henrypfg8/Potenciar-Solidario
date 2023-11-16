@@ -113,7 +113,6 @@ const PendingPosts = () => {
             setSelectedPosts([]);
             setIsModalOpenPublish(false)
             setRefreshData(false);
-            console.log(results);
         } catch (error) {
             console.log(error.response);
             // Manejar el error (por ejemplo, si alguna de las peticiones falla)
@@ -139,7 +138,6 @@ const PendingPosts = () => {
             setIsModalOpenDelete(false)
             setSelectedPosts([]);
             setRefreshData(false);
-            console.log(results);
         }
         catch (error) {
             console.log(error.response)

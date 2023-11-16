@@ -1,8 +1,7 @@
 
 .Post {
     width: 680px;
-    margin: 10px 0;
-    border-radius: 5px;
+    margin: 10px 10px;
     background-color: var(--lightblue);
     color: inherit;
     display: flex;
@@ -26,31 +25,42 @@
         background-color: var(--darkblue);
         color: white;
         padding: 0 4px;
-        padding-bottom: 12px;
-        
+        padding-bottom: 6px;
     }
 
-    .Post__Organization {
+   
+
+    .Post__OrganizationAndCategory {
         display: flex;
+        flex-direction: column;
         align-items: center;
         overflow: hidden;
         text-overflow: ellipsis;
         background-color: var(--blue);
         color: rgb(225, 225, 225);
     }
-   
-    .organizationName {
-        font-weight: 500;
-        margin-left: 5px;
-    }
 
-    .Post__category {
-        position: absolute;
-        font-weight: bolder;
-        right: 1%;
-        top: 28px;
-        color: rgb(225, 225, 225);
-    }
+        .OrganizationContainer {
+            border-bottom: solid white 1px;
+            width: 80%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2px;
+            padding-bottom: 2px; 
+        }
+   
+            .organizationName {
+                font-weight: 500;
+            }
+            
+
+            .Post__category {
+                font-weight: bolder;
+                right: 1%;
+                top: 28px;
+                color: rgb(225, 225, 225);
+                margin-bottom: 3px;
+            }
 
     .Post__description {
         flex: 1;
@@ -64,11 +74,7 @@
         border-top: solid black 1px;
         border-bottom: solid black 1px;
         position: relative;
-        display: -webkit-box; 
-        -webkit-box-orient: vertical; 
-        overflow: hidden; 
-        -webkit-line-clamp: 12; 
-        
+        overflow: hidden;
     }
     .Post__description p {
         margin: 5px;
@@ -78,7 +84,7 @@
 
         max-width: 100%;
         height: auto;
-        margin: 0 auto;
+        margin:  auto;
         box-shadow: 0 0 1200px 0 rgba(0, 0, 0, 0.771);
     }
     .imageBlur {
@@ -181,6 +187,16 @@
 
 @media screen and (max-width: 992px) {
     .Post {
-        width: 97%;
+       width: 97%;
+       margin: 10px 0;
+    }
+}
+@media screen and (max-width: 465px) {
+    .OrganizationContainer {
+        flex-direction: column;
+        line-height: 5px;
+    }
+    .Post__title {
+        line-height: 0.9em;
     }
 }

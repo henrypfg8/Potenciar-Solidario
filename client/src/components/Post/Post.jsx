@@ -1,17 +1,12 @@
 import Styles from "./post.module.css";
 //
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-//
 import CalendarIcon from "../../assets/CalendarIcon";
 import { Like, LikeActive, Comment } from "../../assets/SocialIcons/";
-import { PostOptions_Icon } from "../../assets/PostOptions_Icons";
-import Post_Options from "./Post_Options/Post_Options";
 import { like, disLike } from "../../Redux/actions/postsActions";
-
 import { configureHeaders } from "../../Redux/auth/configureHeaders ";
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
 //////////////////////////////
@@ -46,10 +41,6 @@ const Post = (props) => {
     }
   };
 
-  const postOptionsHandler = (e) => {
-    e.preventDefault();
-    setIsOptionsOpen(!isOptionsOpen);
-  };
 
   useEffect(() => {
     if (props?.Likes?.some((like) => like.userId === token.id)) {
@@ -112,17 +103,7 @@ const Post = (props) => {
           </div>
         </div>
 
-        {/* {props?.userID === token.id ? (
-          <div
-            className={Styles.BottomBar__OptionsContainer}
-            onClick={postOptionsHandler}
-          >
-            <PostOptions_Icon className={Styles.BottomBar__optionsIcon} />
-            {isOptionsOpen && (
-              <Post_Options id={props.id} setRefreshData={setRefreshData} />
-            )}
-          </div>
-        ) : null} */}
+        
       </div>
     </Link>
   );

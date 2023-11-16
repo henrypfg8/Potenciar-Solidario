@@ -302,7 +302,6 @@ const Register = () => {
             control={control}
             rules={{ required: true }} // Reglas de validación con mensaje de error
             render={({ field, fieldState: { error } }) => (
-              //console.log(error),
               <Select
                 className='auth__input'
                 {...field}

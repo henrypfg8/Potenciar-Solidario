@@ -14,7 +14,6 @@ const ProfileView = () => {
     const dispatch = useDispatch();
     const [success, setSuccess] = useState(false)
     const token = localStorage.getItem('token');
-    // console.log(token)
     useEffect(() => {
        
        if(!token || !isAuthenticated){

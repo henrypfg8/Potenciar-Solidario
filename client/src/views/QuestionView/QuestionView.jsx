@@ -170,7 +170,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
   const handleCommentEdit = (event) => {
     setEditingComment(event.target.value)
   }
-  console.log(editingComment);
 
   const handleSubmitEditAnwer = (id) => {
     setDisable(true)
@@ -354,7 +353,6 @@ const deleteComment = (id) => {
                   <div>
                     {respuesta?.Comments?.map((el) => {
                       var date = new Date(el.createdAt);
-                      console.log(el.User);
                       return (
                         <div key={el.id} className={style.containComments}>
                         {

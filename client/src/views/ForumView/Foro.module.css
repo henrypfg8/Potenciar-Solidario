@@ -21,7 +21,10 @@ body html {
   height: 100vh;
   width: 100vw;
 }
+
 .container {
+    height: 80vh;
+    overflow-y: auto;  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -150,6 +153,9 @@ body html {
   .center p {
     margin-left: 0.9rem;
     font-size: 0.8rem;
+  }
+  .anwers p{
+    font-size: 0.6rem;
   }
 }
 @media (max-width: 768px) {

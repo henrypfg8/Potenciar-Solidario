@@ -5,9 +5,11 @@ import style from './Foro.module.css';
 import { NavLink } from "react-router-dom";
 import { Oval } from 'react-loader-spinner';
 import  {FluentMdl2QandA}  from '../../assets/noQuestion_Icon';
-// eslint-disable-next-line react/prop-types
+
 function ForumView({ questions, loading }) {
     let [getQuestion, setGetQuestion] = useState([]);
+    
+  const [responsiveMode, setResponsiveMode] = useState(window.innerWidth < 993);
 
     useEffect(() => {
         if (questions) {
@@ -15,11 +17,24 @@ function ForumView({ questions, loading }) {
         }
     }, [questions])
 
+    useEffect(() => {
+    function handleResize(e) {
+      const responsiveMode = window.innerWidth < 993;
+      if (responsiveMode) {
+        setResponsiveMode(true);
+      } else setResponsiveMode(false);
+    }
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
     return (
         <div style={{ minHeight: '100vh' }}>
-                        <div className={style.containerCenter}>
-            <LeftBar />
+            <div className={style.containerCenter}>
+                <LeftBar responsiveMode={responsiveMode} />
                 {
                     loading
                     ?
@@ -57,8 +72,9 @@ function ForumView({ questions, loading }) {
                                             </NavLink>
                                             <p>{question.text}</p>
                                         </div>
-                                        <br style={{ border: '1px red solid' }} />
+                                        
                                         <footer className={style.anwers}>
+                                            {question.Answers.length === 0 && <p><strong>{question.Answers.length}</strong> respuestas</p>}
                                             {question.Answers.length === 1 && <p><strong>{question.Answers.length}</strong> respuesta</p>}
                                             {question.Answers.length > 1 && <p><strong>{question.Answers.length}</strong> respuestas</p>}
                                             <p>@{question.User.name}</p>
@@ -73,8 +89,6 @@ function ForumView({ questions, loading }) {
             </div>
         </div>
     )
-    
-
 }
 
 export default ForumView;

@@ -1,9 +1,9 @@
-import Styles from "./forum_DateInput.module.css";
+import Styles from "./forumDateInput.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 //
 import { format } from "date-fns";
 import DatePicker from "react-datepicker";
-import CleanDate_Icon from "../../../../../assets/CleanDate_Icon";
+import CleanDate_Icon from "../../../../../assets/CleanDateIcon";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from 'react';
 //

@@ -14,7 +14,7 @@ import {
   setSelectedOptions
 } from "../../../Redux/actions/postsActions";
 //
-import Posts_DateFilters from "./Posts_DateFilters/Posts_DateFilters";
+import PostsDateFilters from "./PostsDateFilters/PostsDateFilters";
 //
 import { format } from "date-fns";
 import { configureHeaders } from "../../../Redux/auth/configureHeaders ";
@@ -188,7 +188,7 @@ export default function PostFilters() {
         value={selectedOptionsLOCAL.user}
       />
 
-      <Posts_DateFilters
+      <PostsDateFilters
         handleFromDate={handleFromDate}
         handleUntilDate={handleUntilDate}
         fromDate={filtersLOCAL.fromDate}

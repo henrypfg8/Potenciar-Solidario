@@ -1,4 +1,4 @@
-export function PostOptions_Icon(props) {
+export function PostOptionsIcon(props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,7 +15,7 @@ export function PostOptions_Icon(props) {
   );
 }
 
-export function ModifyPost_Icon (props) {
+export function ModifyPostIcon (props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

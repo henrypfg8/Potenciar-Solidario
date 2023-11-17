@@ -1,29 +1,26 @@
 import Styles from "./leftBar.module.css";
 //
-import { useLocation, Link } from "react-router-dom";
-import Select from "react-select";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+//
+import PostFilters from "../Filters/PostsFilters/PostsFilters";
+import ForumFilters from "../Filters/ForumFilters/ForumFilters";
+import { Drawer, Button } from "antd";
+import PostsOrderings from "../Orderings/PostsOrderings/PostsOrderings";
+import FiltersAndOrderingsIcon from "../../assets/FiltersAndOrderingsIcon";
+import ForumOrderings from "../Orderings/ForumOrderings/ForumOrderings";
 
-export default function LeftBar() {
+export default function LeftBar({ responsiveMode }) {
   const { pathname } = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const [filtersOrderingsSwitchPOSTS, setFiltersOrderingsSwitchPOSTS] =
+    useState(true);
+  
+  const [filtersOrderingsSwitchQUESTIONS, setFiltersOrderingsSwitchQUESTIONS] =
+    useState(true);
 
-  const categoryOptions = [
-    { label: "Filtrar por categoria", value: "Todas las categorias" },
-    { label: "Donaciones ofrecidas", value: "Donaciones ofrecidas" },
-    { label: "Donaciones pedidas", value: "Donaciones Pedidas" },
-    { label: "Capacitaciones", value: "Capacitaciones" },
-    { label: "Concursos", value: "Concursos" },
-    { label: "Busquedas laborales", value: "Ofrecimientos laborales" },
-    { label: "Ofrecimientos laborales", value: "Ofrecimientos laborales" },
-    { label: "Emprendimientos de la ONG", value: "Emprendimientos de la ONG" },
-    { label: "Eventos de la ONG", value: "Eventos de la ONG" },
-  ];
-  const dateOptions = [
-    { label: "Filtrar por fecha", value: "Todas las fechas" },
-    { label: "Hace menos de 1 año", value: "Hace menos de 1 año" },
-    { label: "Hace menos de 2 años", value: "Hace menos de 2 años" },
-    { label: "Hace menos de 5 años", value: "Hace menos de 5 años" },
-    { label: "Hace 5 años o mas", value: "Hace 5 años o mas" },
-  ];
+  //////////////////////////////////////////////////////
 
   return (
     <div className={Styles.LeftBar}>
@@ -43,7 +40,6 @@ export default function LeftBar() {
           FORO
         </Link>
       </div>
-
       <div className={Styles.LeftBar__Buttons}>
         {pathname === "/foro" ? (
           <Link to="/foro/crear" className={Styles.button}>
@@ -56,20 +52,94 @@ export default function LeftBar() {
         )}
       </div>
 
-      <div className={Styles.LeftBar__Buttons} id={Styles.LeftBar__Filters}>
-        <h3>Filtros de búsqueda</h3>
+      {!responsiveMode ? (
+        <div className={Styles.Filters}>
+          <div className={Styles.Filters__Buttons}>
+            <div
+              className={Styles.Buttons__button}
+              id={
+                pathname === "/"
+                  ? filtersOrderingsSwitchPOSTS
+                    ? Styles.active
+                    : ""
+                  : filtersOrderingsSwitchQUESTIONS
+                  ? Styles.active
+                  : ""
+              }
+              onClick={
+                pathname === "/"
+                  ? () => setFiltersOrderingsSwitchPOSTS(true)
+                  : () => setFiltersOrderingsSwitchQUESTIONS(true)
+              }
+            >
+              Filtros
+            </div>
+            <div
+              className={Styles.Buttons__button}
+              id={
+                pathname === "/"
+                  ? !filtersOrderingsSwitchPOSTS
+                    ? Styles.active
+                    : ""
+                  : !filtersOrderingsSwitchQUESTIONS
+                  ? Styles.active
+                  : ""
+              }
+              onClick={
+                pathname === "/"
+                  ? () => setFiltersOrderingsSwitchPOSTS(false)
+                  : () => setFiltersOrderingsSwitchQUESTIONS(false)
+              }
+            >
+              Ordenamientos
+            </div>
+          </div>
 
-        <Select
-          className={Styles.select}
-          defaultValue={categoryOptions[0]}
-          options={categoryOptions}
-        />
-        <Select
-          className={Styles.select}
-          defaultValue={dateOptions[0]}
-          options={dateOptions}
-        />
-      </div>
+          {pathname === "/" ? (
+            filtersOrderingsSwitchPOSTS ? (
+              <PostFilters />
+            ) : (
+              <PostsOrderings />
+            )
+          ) : filtersOrderingsSwitchQUESTIONS ? (
+            <ForumFilters />
+          ) : (
+            <ForumOrderings />
+          )}
+        </div>
+      ) : (
+        <Button
+          type="primary"
+          onClick={() => setIsOpen(true)}
+          className={Styles["Filters-Button"]}
+        >
+          <p className={Styles["Filters-Button__text"]}>
+            Filtros y ordenamientos
+          </p>
+          <FiltersAndOrderingsIcon
+            className={Styles["Filters-Button__Icon"]}
+          />
+        </Button>
+      )}
+
+      <Drawer
+        title="Filtros y ordenamientos"
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        placement="left"
+      >
+        {pathname === "/" ? (
+          <div>
+            <PostFilters />
+            <PostsOrderings />
+          </div>
+        ) : (
+          <div>
+            <ForumFilters />
+            <ForumOrderings />
+          </div>
+        )}
+      </Drawer>
     </div>
   );
 }

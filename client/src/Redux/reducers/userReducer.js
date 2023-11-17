@@ -5,11 +5,11 @@ GET_USERS,
 GET_USER_DETAIL,
 CLEAR_USER_DETAIL,
 UPDATE_USER
-} from "../action-types";
+} from "../action types/usersActionTypes.js";
 
 const initialState = {
     users: [],
-    allUsers: [],
+    //allUsers: [],
     userDetail: [],
 };
 
@@ -34,7 +34,7 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 users: action.payload,
-                allUsers: action.payload,
+                //allUsers: action.payload,
             };
 
         case GET_USER_DETAIL:
@@ -50,7 +50,7 @@ const userReducer = (state = initialState, action) => {
             };
 
         case UPDATE_USER:
-            const updaetdUser = action.payload;
+            const updatedUser = action.payload;
             const updatedUsers = state.users.map(user =>
                 user.id === updatedUser.id ? updatedUser : user
                 );

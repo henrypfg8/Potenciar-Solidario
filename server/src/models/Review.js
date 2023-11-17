@@ -1,25 +1,28 @@
+//Importamos el DataTypes de sequelize para poder manipular bien los modelos con sus respectivas propiedades.
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
     "Review",
     {
-      rating: {
-        id: DataTypes.STRING,
+      id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+        validate: {
+          isInt: true,
+          min: 1,
+        },
       },
-      ratingText: {
-        id: DataTypes.STRING,
+
+      review: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        allowNull: false,
+        validate: {
+          len: [20, 1000],
+        },
       },
-    },
-    { timestamps: true }
+    }
   );
 };
-
-//Hacer funcion Math para calcular average
-//Hacen falta Post y User models para relacionarlos con la review de cada post
-//ellos deberian tener una PK para relacionarlos con la FK
-//todo tiene id para relacionar el usuario con su posteo

@@ -4,20 +4,25 @@ module.exports = (sequelize) => {
   sequelize.define(
     "Comment",
     {
-      user: {
-        id: DataTypes.STRING,
-        type: DataTypes.STRING,
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+        validate: {
+          isInt: true,
+          min: 1,
+        }
       },
       thread: {
-        id: DataTypes.STRING,
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
         validate: {
           notEmpty: {
             msg: "El texto no puede estar vacío",
           },
           len: {
-            args: [10, 300],
+            args: [5, 1000],
             msg: "Debe tener entre 10 y 300 caracteres",
           },
         },

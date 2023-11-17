@@ -1,35 +1,34 @@
-import Styles from './home.module.css';
+import Styles from "./home.module.css";
 //
-import Posts from '../../components/Posts/Posts';
-import LeftBar from '../../components/LeftBar/LeftBar'
-import SearchBar from '../../components/SearchBar/SearchBar'
-//
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-//
-import { getPosts } from '../../Redux/actions';
+import Posts from "../../components/Posts/Posts";
+import LeftBar from "../../components/LeftBar/LeftBar";
+import { useEffect, useState } from "react";
 
+export default function Home() {
+  const [responsiveMode, setResponsiveMode] = useState(window.innerWidth < 993);
 
+  useEffect(() => {
+    function handleResize(e) {
+      const responsiveMode = window.innerWidth < 993;
+      if (responsiveMode) {
+        setResponsiveMode(true);
+      } else setResponsiveMode(false);
+    }
+    window.addEventListener("resize", handleResize);
 
-export default function Home () {
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
-    const dispatch = useDispatch();
-    
- 
-    
+  return (
+    <div className={Styles.HomeView}>
+      <LeftBar id={Styles.LeftBar} responsiveMode={responsiveMode} />
 
-    return (
-        <div className={Styles.HomeView}>
+      <Posts />
 
-
-
-            <LeftBar />
-
-            <Posts />
-                
-            
-            
-        </div>
-    )
-
+       
+      
+    </div>
+  );
 }

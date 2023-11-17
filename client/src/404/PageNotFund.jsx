@@ -5,14 +5,20 @@ import { useEffect, useState } from 'react';
 import OvalLoader from '../assets/OvalLoader';
 
 const PageNotFund = () => {
-  const { pathname } = useLocation();
+  const { pathname } = useLocation(); 
+
+  //un louder que  empiza en false, para caragar un spiner
   const [isLoading, setIsLoading] = useState(false)
+
+
   useEffect(() => {
     setIsLoading(true)
     setTimeout(() => {
       setIsLoading(false)
     }, 1000)
-  }, [])
+  }, []);
+
+
   return (
     <>
       {isLoading ? <OvalLoader /> : (

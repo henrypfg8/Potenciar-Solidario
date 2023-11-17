@@ -3,7 +3,7 @@ import FormProfile from './FormProfile'
 
 
 const DataProfile = ({ userProfile,success, setSuccess }) => {
-
+  //Por props se recibe, los datos de usuario, success que sirve para verificar si todo salio con exito
 
   return (
     <div>

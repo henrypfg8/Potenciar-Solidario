@@ -11,21 +11,17 @@ const resetPassword = async (req, res) => {
     let token = "";
 
     if(!(newPassword && authorization)){
-        console.log(`el password es ${newPassword} y el token es ${authorization}`)
         return res.status(400).json({message: "Faltan datos"})
     }
-
     //si el encabezado comienza con "Bearer " extraigo el token que esta despues del Bearer.
     if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
         token = authorization.substring(7);
     }
-
     if (!token)
         return res.status(401).json({ error: "token missing or invalid" });
 
         try { //valido token con clave privada almacenada en enviroment
             let decodenToken = await jwt.verify(token, process.env.JWT_PRIVATE_KEY);
-            //console.log(decodenToken.id)
             req.userId = decodenToken.id;
             if (decodenToken) {
                 //busco usuario en BD y actualizo la clave

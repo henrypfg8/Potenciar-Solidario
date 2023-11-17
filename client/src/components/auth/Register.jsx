@@ -16,10 +16,13 @@ import Oval_Loader from "../../assets/OvalLoader";
 
 
 const Register = () => {
+  //Extraer isAuthenticated que contiene un boleano, para verificar si esta auntenticado
   const { isAuthenticated } = useSelector((state) => state.auth);
+  //estados para, mostrar exito o error 
   const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false)
   const [errorRegister, setErrorRegister] = useState(false);
+  //Estados para cargar
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
@@ -50,7 +53,7 @@ const Register = () => {
 
   //ongOptions select
   const ongs = useSelector((state) => state.ongsAndCategories.ongs);
-
+  //crear un set, por medio del array ongs, extraida del store de redux
   const ongOptions = Array.from(new Set(ongs.map((ong) => ong.nombre))).map(
     (nombre) => ({
       label: nombre,
@@ -64,23 +67,25 @@ const Register = () => {
     name: "ong",
   });
 
+  // Función para registrar el usuario
   const onSubmit = async (user) => {
-    // Función para registrar el usuario
+
     setLoading(true)
+    //Crear un un objeto para, que contiene todos los datos de una imagen
     const data = new FormData();
     data.append("file", user.profile_picture[0]);
     data.append("upload_preset", "photo_users");
     const result = await uploadImageCloudinary(data); // Subir la imagen a cloudinary
     user.profile_picture = result;
-
-
+  
     dispatch(registerUser(user)) //Hacer el dispatch de la acción para registrar el usuario
       .then(() => {
+
         setLoading(false)
         setSuccess(true);
 
         setErrorRegister(false);
-
+        // crear una funcion para limpiar todos los estados
         const successTimeout = setTimeout(() => {
           navigate("/login");
           setSuccess(false);
@@ -91,7 +96,7 @@ const Register = () => {
         setLoading(false)
         setErrorRegister(true);
         setSuccess(false);
-
+        // crear una funcion para limpiar todos los estados
         const errorTimeout = setTimeout(() => {
           setErrorRegister(false);
         }, 3000);
@@ -107,23 +112,23 @@ const Register = () => {
     return () => {
       timeouts.forEach(clearTimeout); // Limpia todos los timeouts
     };
-  }, [timeouts]);
+  }, [timeouts]); //Escuchar por el timeout
 
   return (
     <div className='auth__container' >
-      {loading &&      <div style={{
+      {loading && <div style={{
         width: '100%',
         position: 'fixed',
-        display : 'flex',
-        alignItems : 'center',
-        zIndex : '1000',
-      bottom : '20rem'
+        display: 'flex',
+        alignItems: 'center',
+        zIndex: '1000',
+        bottom: '20rem'
       }}>
-       <Oval_Loader/>
+        <Oval_Loader />
       </div>}
-      
- 
-    
+
+
+
       {/* {error && errorRegister  && <Success frase='No se pudo crear tu cuenta' color='#DD0C0C' tipo='error' />} */}
       {success && <Swiper frase='Cuenta creada con éxito, Ahora inicia sesión' color='#005692' tipo='success' />}
       {errorRegister && <Swiper frase='El usuario posiblemente ya existe, No se pudo crear tu cuenta' color='#DD0C0C' tipo='error' />}
@@ -132,7 +137,8 @@ const Register = () => {
         {success && (<p className='auth__sucesss'>Cuenta creada con éxito, Ahora inicia sesión </p>)}
         {/* campo para el nombre */}
         <div>
-          <label className='auth__label' htmlFor="name">nombre <span style={{color: 'red'}}>*</span></label>
+          <label className='auth__label' htmlFor="name">nombre <span style={{ color: 'red' }}>*</span></label>
+          {/* tipos de errores */}
           {errors?.name?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.name?.type === 'minLength' && <p className='auth__error'>Tu nombre debe ser minímo de 2 caracterés</p>}
           {errors?.name?.type === 'maxLength' && <p className='auth__error'>Tu nombre debe ser máximo de 50 caracterés</p>}
@@ -145,7 +151,8 @@ const Register = () => {
 
         {/* campo para el apellido */}
         <div>
-          <label className='auth__label' htmlFor="lastname">apellido <span style={{color: 'red'}}>*</span></label>
+          <label className='auth__label' htmlFor="lastname">apellido <span style={{ color: 'red' }}>*</span></label>
+             {/* tipos de errores */}
           {errors?.lastname?.type === 'required' && <p className='auth__error'> Tu apellido es obligatorio</p>}
           {errors?.lastname?.type === 'maxLength' && <p className='auth__error'>Tu apellido debe ser máximo de 50 caracterés</p>}
           <input className='auth__input'
@@ -157,7 +164,8 @@ const Register = () => {
 
         {/* campo para el correo */}
         <div>
-          <label className='auth__label' htmlFor="email">correo <span style={{color: 'red'}}>*</span></label>
+          <label className='auth__label' htmlFor="email">correo <span style={{ color: 'red' }}>*</span></label>
+             {/* tipos de errores */}
           {errors?.email?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.email?.type === 'minLength' && <p className='auth__error'>Tu correo debe ser minímo de 3 caracterés</p>}
           {errors?.email?.type === 'maxLength' && <p className='auth__error'>Tu correo debe ser máximo de 40 caracterés</p>}
@@ -176,7 +184,8 @@ const Register = () => {
 
         {/* campo para la contraseña */}
         <div>
-          <label className='auth__label' htmlFor="password">Escribe tu contraseña <span style={{color: 'red'}}>*</span></label>
+          <label className='auth__label' htmlFor="password">Escribe tu contraseña <span style={{ color: 'red' }}>*</span></label>
+             {/* tipos de errores */}
           {errors?.password?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.password?.type === 'minLength' && <p className='auth__error'>Tu contraseña debe ser minímo de 6 caracterés</p>}
           {errors?.password?.type === 'maxLength' && <p className='auth__error'>Tu contraseña debe ser máximo de 50 caracterés</p>}
@@ -192,7 +201,8 @@ const Register = () => {
 
         {/* campo para la fecha de nacimiento */}
         <div>
-          <label className='auth__label' htmlFor="birth_date">Fecha de nacimiento <span style={{color: 'red'}}>*</span></label>
+          <label className='auth__label' htmlFor="birth_date">Fecha de nacimiento <span style={{ color: 'red' }}>*</span></label>
+             {/* tipos de errores */}
           {errors?.birth_date?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.birth_date?.type === 'validate' && <p className='auth__error'>Debe tener al menos 18 años</p>}
           <input className='auth__input'
@@ -205,13 +215,15 @@ const Register = () => {
 
         {/* Campo para el telefono */}
         <div>
-          <label className='auth__label' htmlFor="phone">Número de telefono <span style={{color: 'red'}}>*</span></label>
+          <label className='auth__label' htmlFor="phone">Número de telefono <span style={{ color: 'red' }}>*</span></label>
+             {/* tipos de errores */}
           {errors?.phone?.type === 'required' && <p className='auth__error'>El número de telefono es obligatorio</p>}
           {errors?.phone?.type === 'maxLength' && <p className='auth__error'>Tu número de telefono debe ser máximo de 15 digitos</p>}
           <Controller
             name='phone'
             control={control}
-            rules={{ required: true, maxLength: 15 }}
+            //reglas de validacion
+            rules={{ required: true, maxLength: 15 }} 
 
             render={({ field, fieldState: { error } }) => {
               return (
@@ -237,11 +249,12 @@ const Register = () => {
         </div>
         {/*Campo para seleccionar ONG*/}
         <div>
-          <label className="auth__label" htmlFor="profile_picture"> ONG a la que pertenece <span style={{color: 'red'}}>*</span></label>
+          <label className="auth__label" htmlFor="profile_picture"> ONG a la que pertenece <span style={{ color: 'red' }}>*</span></label>
           {errors?.organization?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.organization?.type === 'minLength' && <p className='auth__error'>Tu ONG debe ser minímo de 2 caracterés</p>}
           <Controller
             name='organization'
+             //reglas de validacion
             rules={{ required: true, minLength: 2, }}
             control={control}
             render={({ field, fieldState: { error } }) => {
@@ -264,13 +277,14 @@ const Register = () => {
         </div>
         {/* Campo para el DNI */}
         <div>
-          <label className='auth__label' htmlFor="DNI">DNI <span style={{color: 'red'}}>*</span></label>
+          <label className='auth__label' htmlFor="DNI">DNI <span style={{ color: 'red' }}>*</span></label>
           {errors?.DNI?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           {errors?.DNI?.type === 'minLength' && <p className='auth__error'>Tu DNI debe ser minímo de 5 caracterés</p>}
           {errors?.DNI?.type === 'maxLength' && <p className='auth__error'>Tu DNI debe ser máximo de 8 caracterés</p>}
           {errors?.DNI?.type === 'pattern' && <p className='auth__error'>Debe ser un número  valido de DNI</p>}
           <input className='auth__input'
             type="text" {...register('DNI', {
+               //reglas de validacion
               required: true, minLength: 5, maxLength: 8, pattern: { // Validación de DNI
                 value: /^\d+$/,
                 message: "Debe ser un numero de DNI"
@@ -285,6 +299,7 @@ const Register = () => {
           {errors?.profile_picture?.type === 'pattern' && <p className='auth__error'>Debe ser un archivo de imagen</p>}
           <input className='auth__input'
             type="file" {...register('profile_picture', {
+               //reglas de validacion
               required: false, pattern: { // Validación de foto de perfil
                 value: '([^\\s]+(\\.(?i)(jpe?g|png|gif|bmp))$)',
                 message: "Debe ser un archivo de imagen"
@@ -295,7 +310,7 @@ const Register = () => {
 
         {/* Campo de  lugar de residencia*/}
         <div>
-          <label className='auth__label' htmlFor='habitual_location_of_residence'>Lugar de residencia <span style={{color: 'red'}}>*</span></label>
+          <label className='auth__label' htmlFor='habitual_location_of_residence'>Lugar de residencia <span style={{ color: 'red' }}>*</span></label>
           {errors?.habitual_location_of_residence?.type === 'required' && <p className='auth__error'>Este campo es obligatorio</p>}
           <Controller
             name="habitual_location_of_residence"

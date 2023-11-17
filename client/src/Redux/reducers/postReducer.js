@@ -19,7 +19,7 @@ import {
   SET_LOADING,
   HIDE_LOADING,
   SET_ORDERINGS,
-  SET_SELECTED_OPTIONS
+  SET_SELECTED_OPTIONS,
 } from "../action types/postsActionTypes.js";
 
 const initialState = {
@@ -29,20 +29,23 @@ const initialState = {
     ong: "",
     fromDate: "",
     untilDate: "",
-    user: ""
+    user: "",
   },
   selectedOptions: {
-    category: {label: "Todas las categorias", name: 'category', value: ''},
-    ong: {label: "Todas las organizaciones", name: 'ong', value: ''},
-    user: {label: 'Todos los usuarios', name: "user", value: ''},
-    ordering: {label: "Fecha de subida", name: 'ordering', value: 'creationDate'}
+    category: { label: "Todas las categorias", name: "category", value: "" },
+    ong: { label: "Todas las organizaciones", name: "ong", value: "" },
+    user: { label: "Todos los usuarios", name: "user", value: "" },
+    ordering: {
+      label: "Fecha de subida",
+      name: "ordering",
+      value: "creationDate",
+    },
   },
   orderBy: {
     ordering: "creationDate",
     direction: "asc",
   },
-  
-  
+
   searchValue: "",
   // allPosts: [],
   postDetail: [],
@@ -136,8 +139,6 @@ const postReducer = (state = initialState, action) => {
           if (post.id === action.payload.publicationId) {
             post.likes++;
             post?.Likes?.push(action.payload);
-            console.log("el posteo", post);
-            console.log("los likes", post.Likes);
           }
           return post;
         }),
@@ -156,8 +157,6 @@ const postReducer = (state = initialState, action) => {
               );
               post.likes--;
             }
-
-            console.log(post);
           }
 
           return post;
@@ -204,11 +203,11 @@ const postReducer = (state = initialState, action) => {
         orderBy: action.payload,
       };
 
-    case SET_SELECTED_OPTIONS: 
+    case SET_SELECTED_OPTIONS:
       return {
         ...state,
-        selectedOptions: action.payload
-      }
+        selectedOptions: action.payload,
+      };
 
     default:
       return { ...state };

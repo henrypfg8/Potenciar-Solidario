@@ -195,7 +195,7 @@
 @media screen and (max-width: 465px) {
     .OrganizationContainer {
         flex-direction: column;
-        line-height: 5px;
+        line-height: 18px;
     }
     .Post__title {
         line-height: 0.9em;

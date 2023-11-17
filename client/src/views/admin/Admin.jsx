@@ -8,8 +8,6 @@ const Admin = () => {
     const { isAuthenticated, userProfile, isAdmin} = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
-    
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -20,7 +18,7 @@ const Admin = () => {
         } 
     }, [dispatch, isAuthenticated, navigate]);
 
-
+    //Sirve para escuchar cambios, si esta autenticado
     useEffect(() => {
  
         if (!userProfile.admin || !isAdmin ) {
@@ -38,6 +36,7 @@ const Admin = () => {
     
             <div className='admin__container'>
                 < Sidebar />  
+                {/* Outlet sirve para que todos los componentes hereden a sidebar o lo que hallga  en componete admin*/}
                 <Outlet/> 
             </div>
            

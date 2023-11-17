@@ -75,12 +75,10 @@ const questionReducer = (state = initialState, action) => {
         const nuevasNotificaciones = answersNuevo?.filter(
           (el) => !answersActual?.some((el2) => el2.id == el.id)
         );
-
         nuevasNotificaciones?.forEach((nuevaNotif) =>
           notification.open({
             message: `Nueva respuesta de ${nuevaNotif?.User?.name}`,
             description: nuevaNotif?.answer,
-            onClose: () => console.log("Notification was closed."),
           })
         );
       }

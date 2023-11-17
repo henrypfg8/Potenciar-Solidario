@@ -17,14 +17,11 @@ const authHandler = async (req, res, next) => {
         token = authorization.substring(7);
     }
 
-    //console.log(`este es el token ${token}`);
-
     if (!token)
         return res.status(401).json({ error: "token missing or invalid" });
 
     try { //valido token con clave privada almacenada en enviroment
         let decodenToken = await jwt.verify(token, process.env.JWT_PRIVATE_KEY);
-        //console.log(decodenToken.id)
         req.userId = decodenToken.id; //saco el id de del token y lo guardo en el req para usarlo en el handler que se ejecuta lugo del middelwere
         if (decodenToken) {
             console.log("token valido");

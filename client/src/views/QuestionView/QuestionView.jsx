@@ -30,54 +30,72 @@ import validationComment from "./validationComment";
 import validationEditComment from "./validationEditComment";
 
 function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
+  //estado para guardar el id del usuario logueado
   const [userId, setUserId] = useState("");
+  //selector del estado de autenticacion
   const { isAuthenticated, token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  //estado para deshabilitar el boton de enviar respuesta
   const [disableAnwers, setDisableAnwers] = useState(false);
+  //estado para deshabilitar el boton de editar respuesta
   const [disableAnwersEdit, setDisableAnwersEdit] = useState(false);
+  //estado para deshabilitar el boton de enviar comentario
   const [disableComment, setDisableComment] = useState(false);
+  //estado para deshabilitar el boton de editar comentario
   const [disableCommentEdit, setDisableCommentEdit] = useState(false);
+  //estado para guardar el id de la respuesta que se esta editando
   const [editingAnswerId, setEditingAnswerId] = useState(null);
+  //estado para guardar el texto de la respuesta que se esta editando
   const [editingAnswer, setEditingAnswer] = useState("");
+  //estado para guardar el id del comentario que se esta editando
   const [editingCommentId, setEditingCommentId] = useState(null)
+  //estado para guardar el texto del comentario que se esta editando
   const [editingComment, setEditingComment] = useState('')
+  //estado para guardar el estado de la vista de los comentarios
   const [view, setView] = useState({});
   const navigate = useNavigate();
 
+  //estado para guardar el texto del comentario
   const [comment, setComment] = useState({
     thread: "",
     userId: "",
     answerId: "",
   });
 
+  //estado para guardar los errores de la respuesta
   const [erroresAnswer, setErroresAnswers] = useState({
     answer: "",
   });
+  //estado para guardar los errores de la respuesta editada
   const [erroresAnswerEdit, setErroresAnswersEdit] = useState({
     editingAnswer: "",
 
   });
+  //estado para guardar los errores del comentario
   const [erroresComment, setErroresComment] = useState({
     thread: ''
   })
+  //estado para guardar los errores del comentario editado
   const [erroresCommentEdit, setErroresCommentEdit] = useState({
     editingComment: ''
   })
+  //funcion para eliminar respuestas
   const handleEditComment = (commentId, commentText) => {
     setEditingCommentId(commentId)
     setEditingComment(commentText)
   }
+  //funcion para editar respuestas
   const handleEditClick = (answerId, answerText) => {
     setEditingAnswerId(answerId);
     setEditingAnswer(answerText);
   };
-
+  //estado para deshabilitar el boton de enviar respuesta
   const [answer, setAnswer] = useState({
     answer: "",
     userId: "",
     questionId: "",
   });
-
+  //funcion para eliminar respuestas
   const handleChange = (event, id) => {
     event.preventDefault();
     setComment({
@@ -87,16 +105,19 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       answerId: id,
       questionId: question.id,
     });
+    //seteamos los errores
     setErroresComment(validationComment({
       ...erroresComment,
       thread: event.target.value
     }))
   };
+  //funcion para despachar la accion de crear una answer, mostrar notificacion de antd, y luego despachar la accion de traer el detalle de la pregunta
   const answersSubmit = (answer) => {
     setDisableAnwers(true)
     if (Object.keys(erroresAnswer).length === 0) {
       dispatch(createAnswer(answer)).then(() => {
         dispatch(getQuestionDetail(question.id));
+        //seteamos el estado de la respuesta
         setAnswer({
           answer: "",
         });
@@ -116,6 +137,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     }
     <Notifications />;
   };
+  //funcion para despachar la accion de crear un comentario, mostrar notificacion de sweet alert, y luego despachar la accion de traer el detalle de la pregunta
   const handleSubmit = (message, index) => {
     if (message.thread === '') {
       swal({
@@ -125,7 +147,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       return
     }
     if (Object.keys(erroresComment).length === 0) {
-
       dispatch(createAnswerComment(message))
         .then(() => {
           setComment({ thread: "" });
@@ -147,7 +168,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
         });
     }
     else {
-
       swal({
         icon: "error",
         text: "No puedes enviar un comentario vacio",
@@ -190,7 +210,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       })
     );
   };
-
+  //useEffect para deshabilitar los botones de enviar respuesta, editar respuesta, enviar comentario y editar comentario
   useEffect(() => {
     if (erroresAnswer.answer) {
       setDisableAnwers(true);
@@ -213,6 +233,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       setDisableCommentEdit(false)
     }
   }, [erroresAnswer.answer, erroresAnswerEdit.answer, erroresComment.thread, erroresCommentEdit.editingComment]);
+  //funcion para editar respuestas
   const handleAnswerEdit = (event) => {
     setEditingAnswer(event.target.value)
     setErroresAnswersEdit(
@@ -222,6 +243,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       })
     );
   }
+  //funcion para editar comentarios
   const handleCommentEdit = (event) => {
     setEditingComment(event.target.value)
     setErroresCommentEdit(
@@ -230,10 +252,8 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
         editingComment: event.target.value,
       })
     );
-
   }
-  console.log(erroresCommentEdit);
-
+  //funcion para editar respuestas
   const handleSubmitEditAnwer = (id) => {
     setDisableAnwers(true)
     dispatch(updateAnswer(id, { answer: editingAnswer })).then(() => {
@@ -243,7 +263,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       });
       setEditingAnswerId(null)
       setDisableAnwers(false)
-
     }).catch(() => {
       swal(
         "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
@@ -254,9 +273,8 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       setEditingAnswerId(null)
       setDisableAnwers(false)
     })
-
   }
-  console.log(erroresComment);
+  //funcion para editar comentarios
   const handleSubmitEditComment = (id) => {
     dispatch(updateAnswerComment(id, { thread: editingComment })).then(() => {
       dispatch(getQuestionDetail(question.id))
@@ -264,7 +282,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
         icon: "success",
       });
       setEditingCommentId(null)
-
     }).catch(() => {
       swal(
         "Ha ocurrido un error. Por favor, inténtelo de nuevo o contacte al soporte.",
@@ -274,10 +291,8 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       );
       setEditingCommentId(null)
     })
-
   }
   const deleteComment = (id) => {
-
     swal({
       title: "¿Estás seguro quse sea eliminar está pregunta?",
       text: "Una vez eliminada por puede ser recuperada!",
@@ -304,20 +319,20 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
       }
     });
   }
+  //funcion para eliminar respuestas
   const editQuestion = (handleClose) => {
     handleClose();
     navigate(`/foro/edit/${question.id}`);
   };
+  //funcion para cancelar la edicion de respuestas
   const cancelEditComment = () => {
     setEditingCommentId(null)
   }
+  //funcion para cancelar la edicion de comentarios
   const cancelEditAnwer = () => {
     setEditingAnswerId(null)
   }
-
-
   const dateQuestion = new Date(question?.createdAt)
-
   return (
     <div className={style.container}>
       {question ? (
@@ -337,14 +352,11 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                 image={question?.User?.profile_picture}
                 name={question?.User?.name}
               />
-
-
-
               <a>
                 Fecha de publicacion:{<h4>{dateQuestion.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>}
               </a>
             </div>
-
+            {/* renderizado de answers*/}
             <p>{question?.text}</p>
             {answers?.map((answer) =>
               answer.Comments?.map((comment) => (
@@ -356,7 +368,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
               ))
             )}
           </div>
-
           <div className={style.contain}>
             {question?.Answers?.length > 0 ? (
               <div className={style.title}>
@@ -377,7 +388,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                 <h2>No hay respuestas</h2>
               </div>
             )}
-
+            {/* renderizado de questions*/}
             {question.Answers?.map((respuesta, index) => {
               var date = new Date(respuesta.createdAt);
               return (
@@ -386,7 +397,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                     editingAnswerId === respuesta.id ?
                       (
                         <div className={style.editAnwer}>
-
                           <div className={style.errores}>
                             {erroresAnswerEdit && <h3>{erroresAnswerEdit.answer}</h3>}
                           </div>
@@ -406,17 +416,13 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                         </div>
                       )
                       :
-
                       <div>
                         <p>{respuesta.answer}</p>
-
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'end', marginTop: '2rem', marginBottom: '1rem' }}>
                           <ImageAvatars name={respuesta.User?.name} image={respuesta.User?.profile_picture} />
                           <h4>- {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
                         </div></div>
-
                   }
-
                   {
                     userId === respuesta.userId &&
                     editingAnswerId !== respuesta.id &&
@@ -438,9 +444,7 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                                     {erroresCommentEdit && <h3>{erroresCommentEdit.editingComment}</h3>}
                                   </div>
                                   <input type="text" value={editingComment} onChange={handleCommentEdit} />
-
                                   <div className={style.buttonEdit}>
-
                                     <button onClick={cancelEditComment} className={style.buttonError}>Cancelar</button>
                                     {
                                       disableCommentEdit
@@ -449,13 +453,10 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                                           className={style.buttonDisable} >Guardar</button>
                                         :
                                         <button onClick={() => handleSubmitEditComment(el.id)} className={style.button}>Guardar</button>
-
                                     }
                                   </div>
-
                                 </div>
                               )
-
                               :
                               (
                                 <div className={style.comments}>
@@ -466,12 +467,9 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                                   <p>{el.thread}</p>
                                 </div>
                               )
-
-
                           }
                           {
                             userId === el.userId &&
-
                             <div className={style.edit}>
                               <a onClick={() => { deleteComment(el.id) }}>Eliminar comentario<MaterialSymbolsDelete /></a>
                               <a onClick={() => { handleEditComment(el.id, el.thread) }}>Editar comentario <MaterialSymbolsEdit /></a>
@@ -480,8 +478,8 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                         </div>
                       );
                     })}
-
                   </div>
+                  {/*boton para mostrar el formulario de comentarios*/}
                   {!view[index] ? (
                     <a onClick={() => handleView(index)}>
                       Añadir comentario
@@ -493,7 +491,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                       <FlechaParaArriba />
                     </a>
                   )}
-
                   {view[index] && (
                     <div className={style.comment}>
                       <p>Comentar</p>
@@ -519,13 +516,13 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                           <button onClick={() => handleSubmit(comment, index)} className={style.button}>
                             Añadir comentario
                           </button>
-
                       }
                     </div>
                   )}
                 </div>
               );
             })}
+            {/* renderizado de la respuesta*/}
             <div className={style.question}>
               <div className={style.errores}>
                 {erroresAnswer.answer && <h3>{erroresAnswer.answer}</h3>}
@@ -539,7 +536,6 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                 value={answer.answer}
                 onChange={handleAnswers}
               />
-
               {disableAnwers ?
                 <button
                   disabled
@@ -570,5 +566,4 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
     </div>
   );
 }
-
 export default QuestionView;

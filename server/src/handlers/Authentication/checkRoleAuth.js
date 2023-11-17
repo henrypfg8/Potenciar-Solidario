@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 //Este middlewere valida si el usuario tiene el rol de admin para poder acceder a las rutas que lo requieran
+//no es usada en ninguna ruta ya que se decidio que el rol de admin solo se puede asignar desde la BD
 const checkRoleAuth = async (req, res) => {
 
     const { authorization } = req.headers;
@@ -13,7 +14,7 @@ const checkRoleAuth = async (req, res) => {
         token = authorization.substring(7);
     }
 
-    //console.log(`este es el token ${token}`);
+    
 
     if (!token)
         return res.status(401).json({ error: "token missing or invalid" });
@@ -21,9 +22,7 @@ const checkRoleAuth = async (req, res) => {
 
         try { //valido token con clave privada almacenada en enviroment
             let decodenToken = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
-            console.log(decodenToken.id)
             const user = await User.findOne({ where: { id: decodenToken.id } });
-            console.log(user)
 
             if (!user.admin) {
                 return res.json({ admin: false });

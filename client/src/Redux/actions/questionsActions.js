@@ -18,7 +18,7 @@ import axios from "axios";
 import { configureHeaders } from "../auth/configureHeaders .js";
 import unorm from "unorm";
 
-//funcion que se usa en searchQuestions
+//funcion que se usa en searchQuestions para buscar coincidencias sin distingir entre mayusculas y minusculas e ignorando los tildes
 const searchCoincidences = (string, subString) => {
   const normalizedString = unorm?.nfkd(string).replace(/[\u0300-\u036F]/g, "");
   const normalizedSubString = unorm

@@ -44,11 +44,8 @@ const createPublicationHandler = async (req, res) => {
        
         // Validar campos obligatorios
         if (!title || !description || !category || !contact || !organization)
-            //console.log(`titulo ${title} descripcion ${description} categoria ${category} contacto ${contact} organizacion ${organization}`)
             throw new Error("Faltan campos obligatorios");
-
         const publication = await CreatePublication({
-            
             title,
             description,
             category,

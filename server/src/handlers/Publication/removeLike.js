@@ -24,7 +24,6 @@ const HandlerRemoveLike = async (req, res) => {
             // Enviar una respuesta con el estado 200 (éxito) y los datos relevantes
 
         return res.status(200).json({like, userId});
-      
     } catch (error) {
               // En caso de error, enviar una respuesta de error al cliente con el estado 500 y el mensaje de error
 

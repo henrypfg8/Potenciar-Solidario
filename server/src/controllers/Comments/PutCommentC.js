@@ -2,8 +2,6 @@ const { Comment } = require("../../db");
 
 const UpdateComment  = async (user, commentData) => {
   try {
-    console.log(user);
-    console.log(commentData)
     if (user) {
       
       const findComment = await Comment.findByPk(user);

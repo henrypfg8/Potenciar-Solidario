@@ -4,7 +4,6 @@ const {DeletePubCont }= require("../../controllers/Publication/DeletePublication
 // Controlador para eliminar una publicación
 const deletePublication = async (req, res) => {
   const { id } = req.params;
-  console.log(id)
   try {
       // Llamar al controlador correspondiente para eliminar la publicación
     const deletedRows = await DeletePubCont(id);

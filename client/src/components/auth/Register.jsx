@@ -12,7 +12,7 @@ import Select from "react-select";
 import "./auth.css";
 import { validateAge } from "../../helpers/ValidateAge";
 import { getOngs } from "../../Redux/actions/ongsActions";
-import Oval_Loader from "../../assets/Oval_Loader";
+import Oval_Loader from "../../assets/OvalLoader";
 
 
 const Register = () => {

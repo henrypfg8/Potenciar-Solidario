@@ -17,10 +17,7 @@ const HandlerPostLike = async (req, res) => {
           // Llamar a la función del controlador para crear el "like"
 
       const like = await PostLike({idPublication, userId})
-
-  
       return res.status(200).json(like);
-    
   } catch (error) {
        // En caso de error, imprimir el mensaje de error en la consola
 

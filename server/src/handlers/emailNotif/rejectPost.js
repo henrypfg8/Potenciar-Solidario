@@ -199,7 +199,6 @@ span.MsoHyperlinkFollowed {
         text: "", // plain text body
         html: mensajeHTML, // html body
     }).then(info => {
-        //console.log(info);
     }).catch(error => {
         console.error('Error al enviar el correo electrónico:', error);
     });

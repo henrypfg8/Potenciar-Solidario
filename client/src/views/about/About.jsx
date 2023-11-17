@@ -5,6 +5,7 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Space } from "antd";
 
 const About = () => {
+   
   return (
     <div className={styles.About}>
       <div className={styles.MembersInfo}>
@@ -36,13 +37,13 @@ const About = () => {
                   alt="Git hub"
                 />
               </NavLink>
-              <NavLink className={styles.NavLik} to="">
-                <img
+             
+              <a href="mailto:elianbenjamin30@gmail.com"><img
                   className={styles.img}
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png"
-                  alt="Gmail"
-                ></img>
-              </NavLink>
+                  alt="Gmail icon"
+                ></img></a>
+         
             </div>
           </div>
 
@@ -73,12 +74,13 @@ const About = () => {
                   alt="Git hub"
                 />
               </NavLink>
-              <NavLink className={styles.NavLik} to="">
-                <img
+
+              <a href="mailto:enzosamojedny@gmail.com"><img
                   className={styles.img}
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png"
-                ></img>
-              </NavLink>
+                  alt="Gmail icon"
+                ></img></a>
+         
             </div>
           </div>
 
@@ -110,12 +112,11 @@ const About = () => {
                   alt="Git hub"
                 />
               </NavLink>
-              <NavLink className={styles.NavLik} to="">
-                <img
+              <a href="mailto:apenalver4@gmail.com"><img
                   className={styles.img}
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png"
-                ></img>
-              </NavLink>
+                  alt="Gmail icon"
+                ></img></a>
             </div>
           </div>
 
@@ -147,12 +148,11 @@ const About = () => {
                   alt="Git hub"
                 />
               </NavLink>
-              <NavLink className={styles.NavLik} to="">
-                <img
+              <a href="mailto:marcossenn@gmail.com"><img
                   className={styles.img}
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png"
-                ></img>
-              </NavLink>
+                  alt="Gmail icon"
+                ></img></a>
             </div>
           </div>
         </div>
@@ -186,12 +186,11 @@ const About = () => {
                   alt="Git hub"
                 />
               </NavLink>
-              <NavLink className={styles.NavLik} to="">
-                <img
+              <a href="mailto:marianoaguirre14@gmail.com"><img
                   className={styles.img}
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png"
-                ></img>
-              </NavLink>
+                  alt="Gmail icon"
+                ></img></a>
             </div>
           </div>
 
@@ -223,12 +222,11 @@ const About = () => {
                   alt="Git hub"
                 />
               </NavLink>
-              <NavLink className={styles.NavLik} to="">
-                <img
+              <a href="mailto:marcosdani4125@gmail.com"><img
                   className={styles.img}
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png"
-                ></img>
-              </NavLink>
+                  alt="Gmail icon"
+                ></img></a>
             </div>
           </div>
 
@@ -260,18 +258,17 @@ const About = () => {
                   alt="Git hub"
                 />
               </NavLink>
-              <NavLink className={styles.NavLik} to="">
-                <img
+              <a href="mailto:ramiro.s.pagella@gmail.com"><img
                   className={styles.img}
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png"
-                ></img>
-              </NavLink>
+                  alt="Gmail icon"
+                ></img></a>
             </div>
           </div>
 
           <div className={styles.MemberInfo}>
             <Space wrap size={16}>
-              <Avatar size={64} icon={<UserOutlined />} shape="square" />
+              <Avatar size={64} icon={<UserOutlined />} shape="square" src='../../../public/images/byron.jpeg'/>
             </Space>
             <div className={styles.iconsContainer}>
               <NavLink
@@ -298,12 +295,11 @@ const About = () => {
                 />
               </NavLink>
 
-              <NavLink className={styles.NavLik} to="">
-                <img
+              <a href="mailto:byrontito3@gmail.com"><img
                   className={styles.img}
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/2560px-Gmail_icon_%282020%29.svg.png"
-                ></img>
-              </NavLink>
+                  alt="Gmail icon"
+                ></img></a>
             </div>
           </div>
         </div>

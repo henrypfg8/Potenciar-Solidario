@@ -52,7 +52,7 @@ function App() {
 
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  //Manejo de Header segun el scroll:
+  //estado que determinada si el header debe achicarse debido al scroll
   const [isScrolled, setIsScrolled] = useState(false);
   const root = document.querySelector("#root");
 

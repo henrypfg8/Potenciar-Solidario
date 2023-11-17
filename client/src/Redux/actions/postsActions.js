@@ -28,7 +28,7 @@ import unorm from "unorm";
 
 import { configureHeaders } from "../auth/configureHeaders ";
 
-//funcion que se usa en searchPosts()
+//funcion que se usa en searchPosts() para buscar coincidencias sin distinguir entre mayusculas y minusculas e ignorando los tildes
 const searchCoincidences = (string, subString) => {
   const normalizedString = unorm.nfkd(string).replace(/[\u0300-\u036F]/g, "");
   const normalizedSubString = unorm
@@ -127,6 +127,7 @@ export const searchPosts = (posts, searchValue) => {
         payload: [],
       };
 
+      //si el valor introducido en el input llega como un array, significa que son varias palabras
       if (Array.isArray(searchValue)) {
         if (searchValue.includes(" ")) {
           searchValue = searchValue.filter((e) => e !== " ");
@@ -134,6 +135,7 @@ export const searchPosts = (posts, searchValue) => {
         const searchedPosts = posts.filter(
           ({ title, description, category }) => {
             for (let subString of searchValue) {
+              //por cada una de las palabras del array se busca alguna coincidencia con el titulo, la descripcion y la categoria, ignorando mayusculas y tildes 
               if (
                 searchCoincidences(title, subString) ||
                 searchCoincidences(description, subString) ||
@@ -148,6 +150,7 @@ export const searchPosts = (posts, searchValue) => {
         const searchedPosts = posts.filter(
           ({ title, description, category }) => {
             if (
+              //lo mismo pero con la unica palabra 
               searchCoincidences(title, searchValue) ||
               searchCoincidences(description, searchValue) ||
               searchCoincidences(category, searchValue)

@@ -13,8 +13,10 @@ import ForumOrderings from "../Orderings/ForumOrderings/ForumOrderings";
 export default function LeftBar({ responsiveMode }) {
   const { pathname } = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  
   const [filtersOrderingsSwitchPOSTS, setFiltersOrderingsSwitchPOSTS] =
     useState(true);
+  
   const [filtersOrderingsSwitchQUESTIONS, setFiltersOrderingsSwitchQUESTIONS] =
     useState(true);
 

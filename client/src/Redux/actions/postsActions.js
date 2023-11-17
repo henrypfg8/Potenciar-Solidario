@@ -20,7 +20,7 @@ import {
   SET_LOADING,
   HIDE_LOADING,
   SET_ORDERINGS,
-  SET_SELECTED_OPTIONS
+  SET_SELECTED_OPTIONS,
 } from "../action types/postsActionTypes.js";
 
 import axios from "axios";
@@ -52,7 +52,6 @@ export const createPost = (post) => {
         post,
         config
       );
-      console.log(response + "soy el response");
       dispatch({ type: CREATE_POST, payload: response.data });
     } catch (error) {
       console.log(error, "por favor contactar a soporte por este error");
@@ -135,7 +134,7 @@ export const searchPosts = (posts, searchValue) => {
         const searchedPosts = posts.filter(
           ({ title, description, category }) => {
             for (let subString of searchValue) {
-              //por cada una de las palabras del array se busca alguna coincidencia con el titulo, la descripcion y la categoria, ignorando mayusculas y tildes 
+              //por cada una de las palabras del array se busca alguna coincidencia con el titulo, la descripcion y la categoria, ignorando mayusculas y tildes
               if (
                 searchCoincidences(title, subString) ||
                 searchCoincidences(description, subString) ||
@@ -150,7 +149,7 @@ export const searchPosts = (posts, searchValue) => {
         const searchedPosts = posts.filter(
           ({ title, description, category }) => {
             if (
-              //lo mismo pero con la unica palabra 
+              //lo mismo pero con la unica palabra
               searchCoincidences(title, searchValue) ||
               searchCoincidences(description, searchValue) ||
               searchCoincidences(category, searchValue)
@@ -310,6 +309,6 @@ export const setOrderings = (orderBy) => {
 export const setSelectedOptions = (selectedOptions) => {
   return {
     type: SET_SELECTED_OPTIONS,
-    payload: selectedOptions
-  }
-}
+    payload: selectedOptions,
+  };
+};

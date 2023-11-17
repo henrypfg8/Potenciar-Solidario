@@ -25,17 +25,12 @@ const forgotPassword = async (req, res) => {
             algorithm: "HS256",
             expiresIn: "1h",
         });
-
-        //console.log(token)
         const otpFind = await Otp.findOne({ where: { email: email } });
         if(otpFind){
             await otpFind.destroy()
         }
-
         //one time password crea en la bd un registro con el email y el token generado
         const otp = await Otp.create({email: email, token: token})
-
-
         let verificationLink = `http://localhost:5173/new-password/?token=${token}`; //link al que va a acceder el usuario con el token generado en el mismo para que front extraiga de params
         emailForgotPassword(user,verificationLink) //funcion que recibe usuario y link y que envia la plantilla de rest de clave
 

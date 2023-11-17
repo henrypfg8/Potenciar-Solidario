@@ -18,7 +18,6 @@ const authGoogleHandler = async (req, res) => {
         const userExist = await User.findOne({ where: { email: email } }); //busco usuario en cartelera con email de google
 
         if(!userExist.active){
-            console.log("Tu cuenta se encuentra suspendida")
             return res.status(400).json({ message: "Tu cuenta se encuentra suspendida" });
         }
 

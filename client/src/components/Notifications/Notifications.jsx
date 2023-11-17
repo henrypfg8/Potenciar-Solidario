@@ -7,10 +7,10 @@ import './notification.css';
 const Notifications = () => {
     const navigate = useNavigate();
     const answerComments = useSelector(state => state.answerComments);
-
+    //notificaciones de respuestas con antd y renderizado en el portal
     useEffect(() => {
         const currentAnswerComments = answerComments?.Comments;
-        const newAnswerComments = answerComments?.Comments; //!
+        const newAnswerComments = answerComments?.Comments;
         const newNotifications = newAnswerComments?.filter(
             (element) =>
                 !currentAnswerComments?.some(
@@ -18,32 +18,9 @@ const Notifications = () => {
                 )
         );
         newNotifications?.forEach((newNotification) => {
-            const sound = new Audio('/NotificationSound.mp3');
-            sound.play();
-            // const notificationContent = (
-            //     <div onClick={() => {
-            //         console.log("Notification was clicked.");
-            //         navigate(`/questions/${newNotification?.QuestionId}`);
-            //     }}>
-            //         <p>{`New answer from ${newNotification?.User?.name}`}</p>
-            //         <p>{newNotification?.content}</p>
-            //     </div>
-            // );
-
-            // const notificationContainer = document.createElement('div');
-            // document.body.appendChild(notificationContainer);
-
             notification.open({
                 message: `Nueva respuesta de ${newNotification?.User?.name}`,
                 description: createPortal(newNotification?.answer),
-                onClick: () => {
-                    console.log("Notification was clicked.");
-                    navigate(`/questions/${newNotification?.QuestionId}`);
-                },
-                onClose: () => {
-                    // document.body.removeChild(notificationContainer);
-                    console.log('Notification was closed.');
-                },
                 maxCount: 5,
             });
         });

@@ -14,7 +14,6 @@ const authLoginHandler = async (req, res) => {
 
     try {
         const userExist = await User.findOne({ where: { email: email } }); //busco usuario en BD
-        //console.log(userExist);
         if (!userExist) {
             return res
                 .status(400)
@@ -29,7 +28,6 @@ const authLoginHandler = async (req, res) => {
             password,
             userExist.password
         );
-        //console.log(passwordValid);
         if (!passwordValid)
             return res
                 .status(400)
@@ -39,9 +37,7 @@ const authLoginHandler = async (req, res) => {
             try {
                 //firma de token con el id del usuario para usar en autenticacion de rutas
                 const payload = { id: userExist.id };
-                //console.log(payload);
                 const privateKey = process.env.JWT_PRIVATE_KEY;
-                //console.log("privateKey:", privateKey);
                 const token = jwt.sign(payload, privateKey, {
                     algorithm: "HS256",
                     expiresIn: "10d",
@@ -49,7 +45,6 @@ const authLoginHandler = async (req, res) => {
 
                 return res.send({ jwt: token, id: userExist.id }); //envio token y id de usuario para almacenar en localstorage y usar desde cliente
             } catch (error) {
-                //console.error("error en generación de token:", error);
                 return res
                     .status(500)
                     .json({ message: "Error en la generación del token" });

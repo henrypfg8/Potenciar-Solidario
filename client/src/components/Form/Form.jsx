@@ -53,7 +53,6 @@ const Form = ({ setPost, post }) => {
         else {
             const decoded = jwtDecode(token);
             dispatch(getProfile(decoded.id, token)).then(() => {
-                //console.log(userProfile)
             })
                 .catch(error => {
                     console.log(error.response)
@@ -268,7 +267,6 @@ const Form = ({ setPost, post }) => {
                         control={control}
                         rules={{ required: 'La categoria es obligatoria' }} // Reglas de validación con mensaje de error
                         render={({ field, fieldState: { error } }) => (
-                            //console.log(error),
                             <Select
                                 {...field}
                                 name='category'

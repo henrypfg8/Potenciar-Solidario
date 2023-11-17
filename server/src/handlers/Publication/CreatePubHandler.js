@@ -20,31 +20,18 @@ const createPublicationHandler = async (req, res) => {
     } = req.body;
 
     const userId = req.userId;
-    console.log(`este es el user id ${userId}`); 
-
-
-
     try {
-        //console.log(category)
         const categorySearch = await Category.findOne({ where: { name: category } });
         if(categorySearch === null){
             throw new Error("No se encontro la categoria en la BD")
         }
-        //console.log(categorySearch)
         let categoryId = null;
         if(categorySearch){
             categoryId = categorySearch.id;
-            //console.log(categoryId)
         }
-        
-       
-
         if (!title || !description || !category || !contact || !organization)
-            //console.log(`titulo ${title} descripcion ${description} categoria ${category} contacto ${contact} organizacion ${organization}`)
             throw new Error("Faltan campos obligatorios");
-
         const publication = await CreatePublication({
-            
             title,
             description,
             category,

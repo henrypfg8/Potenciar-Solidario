@@ -11,29 +11,34 @@ import { setQuestionsOrderings, setSelectedOrderingOption } from '../../../Redux
 export default function () {
 
   const dispatch = useDispatch();
+
+  //objeto del estado global que almacena los oredenamientos de las preguntas y su copia local
   const questionsOrderings = useSelector((state) => state.questions.questionsOrderings);
   const [orderByLOCAL, setOrderByLOCAL] = useState({
     value: "title",
     direction: "asc",
   });
+
+  //estado global para almacenar la opcion seleccionada del selector, que lo recibe mediante el atributo value
   const selectedOrderingOption = useSelector(state => state.questions.selectedOrderingOption);
   const [selectedOptionLOCAL, setSelectedOptionLOCAL] = useState({...selectedOrderingOption});
 
-
+  //opciones del selector
   const options = [
     {
       label: "Fecha de creación",
-      name: "value",
+      name: "ordering",
       value: "date",
     },
     {
       label: "Titulo",
-      name: "value",
+      name: "ordering",
       value: "title",
     },
   ];
 
   const changeHandler = (e) => {
+    //si viene e.target significa que viene del input radio, y si no, del react-select
     const { name, value, label } = e.target ? e.target : e;
     dispatch(
       setQuestionsOrderings({

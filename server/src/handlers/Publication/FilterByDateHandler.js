@@ -3,8 +3,6 @@ const { Op } = require("sequelize");
 
 const FilterByDate = async (req, res) => {
     const { initialDate, finalDate } = req.body;
-    //console.log(initialDate, finalDate);
-
     try {
         const data = await Publication.findAll({
             where: {

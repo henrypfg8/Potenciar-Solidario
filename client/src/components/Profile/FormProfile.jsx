@@ -212,7 +212,6 @@ const FormProfile = ({ userProfile, setSuccess, success }) => {
                                 rules={{ required: true }} // Reglas de validación con mensaje de error
                                 // Hacer un register para guardar los datos
                                 render={({ field, fieldState: { error } }) => (
-                                    //console.log(error),
                                     <Select /// Componente de React Select
                                         className='auth__input'
                                         {...field}

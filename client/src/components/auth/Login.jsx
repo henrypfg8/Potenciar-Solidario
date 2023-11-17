@@ -110,7 +110,7 @@ const Login = () => {
                             }}
 
                             onError={(error) => {
-                                return error // retornar error
+                                console.log(error);
                             }}
                             useOneTap
                         />

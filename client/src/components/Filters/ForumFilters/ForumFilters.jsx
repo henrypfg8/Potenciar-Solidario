@@ -3,7 +3,7 @@ import Styles from "./forumFilters.module.css";
 import Select from "react-select";
 //
 import { useSelector, useDispatch } from "react-redux";
-import Forum_DateFilters from "./Forum_DateFilters/Forum_DateFilters";
+import ForumDateFilters from "./ForumDateFilters/ForumDateFilters";
 import { useEffect, useState } from "react";
 //
 import { setQuestionsFilters, getQuestionsFiltered, setSelectedFilterOptions, searchQuestions } from '../../../Redux/actions/questionsActions';
@@ -119,7 +119,7 @@ export default function ForumFilters() {
         value={selectedFilterOptionsLOCAL.user}
       />
 
-      <Forum_DateFilters
+      <ForumDateFilters
         handleFromDate={handleFromDate}
         handleUntilDate={handleUntilDate}
         fromDate={filtersLOCAL.fromDate}

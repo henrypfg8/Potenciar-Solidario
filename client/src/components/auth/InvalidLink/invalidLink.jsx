@@ -1,6 +1,6 @@
 import Styles from './invalidLink.module.css'
 import { useNavigate } from 'react-router-dom';
-import Oval_Loader from '../../../assets/Oval_Loader';
+import OvalLoader from '../../../assets/OvalLoader';
 
 const InvalidLink = () => {
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ const InvalidLink = () => {
             <h1 className={Styles.title}>El link es inválido o ha expirado.</h1>
             <p className={Styles.redirect}>Redireccionando al inicio...</p>
         </div>
-        <Oval_Loader />
+        <OvalLoader />
         </>
     )
 }

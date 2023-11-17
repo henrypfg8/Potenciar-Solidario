@@ -14,7 +14,7 @@ import {
   SET_SELECTED_FILTER_OPTIONS,
   SET_SELECTED_ORDERING_OPTION,
   SEARCH_QUESTIONS,
-  SET_SEARCH_VALUE
+  SET_SEARCH_VALUE,
 } from "../action types/questionsActionTypes.js";
 
 const initialState = {
@@ -23,14 +23,14 @@ const initialState = {
     category: 0,
     fromDate: "",
     untilDate: "",
-    user: ''
+    user: "",
   },
   selectedFilterOptions: {
     category: { label: "Todas las categorias", value: 0, name: "category" },
     user: { label: "Todos los usuarios", value: "", name: "user" },
   },
   questionsOrderings: {
-    value: "date",
+    ordering: "date",
     direction: "asc",
   },
   selectedOrderingOption: {
@@ -38,7 +38,7 @@ const initialState = {
     value: "date",
     label: "Fecha de creación",
   },
-  searchValue: '',
+  searchValue: "",
   allQuestions: [],
   questionDetail: null,
 };
@@ -75,12 +75,10 @@ const questionReducer = (state = initialState, action) => {
         const nuevasNotificaciones = answersNuevo?.filter(
           (el) => !answersActual?.some((el2) => el2.id == el.id)
         );
-
         nuevasNotificaciones?.forEach((nuevaNotif) =>
           notification.open({
             message: `Nueva respuesta de ${nuevaNotif?.User?.name}`,
             description: nuevaNotif?.answer,
-            onClose: () => console.log("Notification was closed."),
           })
         );
       }
@@ -138,17 +136,17 @@ const questionReducer = (state = initialState, action) => {
         selectedOrderingOption: action.payload,
       };
 
-    case SEARCH_QUESTIONS: 
+    case SEARCH_QUESTIONS:
       return {
         ...state,
-        questions: action.payload
-      }
+        questions: action.payload,
+      };
 
     case SET_SEARCH_VALUE:
       return {
         ...state,
-        searchValue: action.payload
-      }
+        searchValue: action.payload,
+      };
 
     default:
       return { ...state };

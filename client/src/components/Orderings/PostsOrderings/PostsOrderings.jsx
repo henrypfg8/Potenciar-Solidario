@@ -13,6 +13,7 @@ import {
 export default function Orderings() {
   const dispatch = useDispatch();
 
+  //opciones para el react-select
   const options = [
     {
       label: "Fecha de inicio",
@@ -31,24 +32,23 @@ export default function Orderings() {
     },
     {
       label: "Popularidad",
-      name: 'ordering',
-      value: "popularity"
-    }
+      name: "ordering",
+      value: "popularity",
+    },
   ];
 
+  //objeto que determina los ordenamientos seleccionados y su copia local
   const orderBy = useSelector((state) => state.posts.orderBy);
-  const [orderByLOCAL, setOrderByLOCAL] = useState({...orderBy});
-  
-  const selectedOptions = useSelector(state => state.posts.selectedOptions);
-  const [ selectedOptionLOCAL, setSelectedOptionLOCAL ] = useState({
-    ...selectedOptions.ordering
-  });
-  console.log(selectedOptionLOCAL)
-  
+  const [orderByLOCAL, setOrderByLOCAL] = useState({ ...orderBy });
 
-  //console.log('el estado global desde el componente', selectedOptions);
+  //estado global para mantener guardada la opcion del react-select que recibe mediante el atributo 'value'
+  const selectedOptions = useSelector((state) => state.posts.selectedOptions);
+  const [selectedOptionLOCAL, setSelectedOptionLOCAL] = useState({
+    ...selectedOptions.ordering,
+  });
 
   const changeHandler = (e) => {
+    //si viene e.target significa que viene de el input de tipo radio, y si no, del selector
     const { name, value, label } = e.target ? e.target : e;
     dispatch(
       setOrderings({
@@ -57,7 +57,12 @@ export default function Orderings() {
       })
     );
     if (!e.target) {
-      dispatch(setSelectedOptions({...selectedOptions, [name]: { label, name, value }}));
+      dispatch(
+        setSelectedOptions({
+          ...selectedOptions,
+          [name]: { label, name, value },
+        })
+      );
     }
   };
 
@@ -66,14 +71,8 @@ export default function Orderings() {
   }, [orderBy]);
 
   useEffect(() => {
-    console.log('useEffect - el global', selectedOptions);
-    console.log('useEffect - el local', selectedOptions);
-    setSelectedOptionLOCAL({...selectedOptions.ordering})
-  }, [selectedOptions])
-
-  useEffect(() => {
-    console.log('avergaston', selectedOptionLOCAL)
-  }, [selectedOptionLOCAL])
+    setSelectedOptionLOCAL({ ...selectedOptions.ordering });
+  }, [selectedOptions]);
 
   return (
     <div className={Styles.Orderings}>

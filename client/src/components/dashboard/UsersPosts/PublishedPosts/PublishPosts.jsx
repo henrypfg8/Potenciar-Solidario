@@ -102,7 +102,6 @@ const PublishPosts = () => {
       // Después de que todas las peticiones se han completado
       setSelectedPosts([]);
       setRefreshData(false);
-      console.log(results);
     } catch (error) {
       console.log(error.response);
       // Manejar el error (por ejemplo, si alguna de las peticiones falla)

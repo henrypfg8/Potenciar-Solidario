@@ -74,7 +74,6 @@ function QuestionEdit (){
             } 
           });
     }
-    console.log(question);
         return(
         <div className={style.contain}>
             <form action="" className={style.form} onChange={handleChange}>

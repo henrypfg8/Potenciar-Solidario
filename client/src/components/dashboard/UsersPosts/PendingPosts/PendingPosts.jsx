@@ -138,7 +138,6 @@ const PendingPosts = () => {
             setIsModalOpenDelete(false)
             setSelectedPosts([]);
             setRefreshData(false);
-            console.log(results);
         }
         catch (error) {
             console.log(error.response)

@@ -1,4 +1,4 @@
-const { Publication, User, Like } = require("../../db");
+const { Publication, User, Like, PublicationComment } = require("../../db");
 
 const applyFilters = async (req, res) => {
   try {
@@ -36,6 +36,7 @@ const applyFilters = async (req, res) => {
     res.status(200).json(allPosts);
 
   } catch (error) {
+    console.log(error)
     res.status(400).send("No se pudieron obtener las publicaciones filtradas");
   }
 };

@@ -50,6 +50,9 @@ export default function Header({ isScrolled }) {
             VOLVER A LA CARTELERA
           </Link>
         )}
+        <Link to='/about' className={Styles.backButton} >
+          About  
+        </Link>
       </div>
     </div>
   );

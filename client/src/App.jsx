@@ -43,6 +43,7 @@ import { getQuestions } from "./Redux/actions/questionsActions";
 import { getProfile } from "./Redux/auth/AuthActions";
 import {jwtDecode} from 'jwt-decode'
 import PageNotFund from "./404/PageNotFund";
+import About from "./views/about/About";
 
 function App() {
   const users = useSelector((state) => state.users);
@@ -108,6 +109,7 @@ function App() {
             <Route path="/foro/crear" element={<QuestionCreateView />} />
             <Route path="/foro/:id" element={<QuestionDetail />} />
             <Route path="/foro/edit/:id" element={<QuestionEdit />} />
+            <Route path="/about" element={<About />} />
           
             {/* Otras rutas autenticadas */}
             <Route path="/profile" element={<ProfileView />} />

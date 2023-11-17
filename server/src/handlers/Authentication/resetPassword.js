@@ -4,6 +4,7 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const {resetSuccess} = require("../emailNotif/resetSuccess");
 
+//esta funcion recibe el token y la nueva contraseña y la actualiza en la BD
 const resetPassword = async (req, res) => {
     const { newPassword } = req.body;
     const { authorization } = req.headers;
@@ -27,13 +28,14 @@ const resetPassword = async (req, res) => {
             //console.log(decodenToken.id)
             req.userId = decodenToken.id;
             if (decodenToken) {
-                console.log("token valido");
+                //busco usuario en BD y actualizo la clave
                 const user = await User.findOne({ where: { id: decodenToken.id } });
-                console.log(user)
+              //haseo clave ingresada por usuario y actualizo en BD
                 const hashPassword = await bcrypt.hash(newPassword, 10);
                 user.password = hashPassword;
                 await user.save()
                 resetSuccess(user.email)
+                //elimino token  OTP de la base de datos para que no pueda ser validado nuevamente
                 const cleanToken = await Otp.destroy({ where: { token: token } });
                 return res.status(200).json({message: "Contraseña actualizada"})
             }

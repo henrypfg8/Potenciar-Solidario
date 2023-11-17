@@ -2,7 +2,7 @@ import Styles from './pageNotFound.module.css'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { useEffect, useState } from 'react';
-import Oval_Loader from '../assets/Oval_Loader';
+import OvalLoader from '../assets/OvalLoader';
 
 const PageNotFund = () => {
   const { pathname } = useLocation();
@@ -15,7 +15,7 @@ const PageNotFund = () => {
   }, [])
   return (
     <>
-      {isLoading ? <Oval_Loader /> : (
+      {isLoading ? <OvalLoader /> : (
         <div className={Styles.container}>
           {pathname === '/admin' ? (
             <div className={Styles.divFlex}>

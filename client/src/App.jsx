@@ -21,7 +21,7 @@ import ContainerForm from "./views/FormContainer/ContainerForm";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import SearchBar from "./components/SearchBar/SearchBar";
-import SearchBar_Forum from "./components/SearchBar/SearchBar_Forum/SearchBar_Forum";
+import SearchBarForum from "./components/SearchBar/SearchBarForum/SearchBarForum";
 import PostDetailView from "./views/PostDetailView/PostDetailView";
 import Admin from "./views/admin/Admin";
 import ProfileView from "./views/ProfileView/ProfileView";
@@ -52,7 +52,7 @@ function App() {
 
   const { pathname } = useLocation();
   const dispatch = useDispatch();
-  //Manejo de Header segun el scroll:
+  //estado que determinada si el header debe achicarse debido al scroll
   const [isScrolled, setIsScrolled] = useState(false);
   const root = document.querySelector("#root");
 
@@ -98,7 +98,7 @@ function App() {
       <PageHeader />
       {authenticated ? (
         <>
-          {pathname === "/" ? <SearchBar/> : pathname === '/foro' ? <SearchBar_Forum /> : null}
+          {pathname === "/" ? <SearchBar/> : pathname === '/foro' ? <SearchBarForum /> : null}
           <Routes>
             {/* Rutas autenticadas */}
             <Route path="/" element={<Home />} />

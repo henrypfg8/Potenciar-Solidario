@@ -1,32 +1,28 @@
 import Styles from "./post.module.css";
 //
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-//
 import CalendarIcon from "../../assets/CalendarIcon";
 import { Like, LikeActive, Comment } from "../../assets/SocialIcons/";
-import { PostOptions_Icon } from "../../assets/PostOptions_Icons";
-import Post_Options from "./Post_Options/Post_Options";
 import { like, disLike } from "../../Redux/actions/postsActions";
-
 import { configureHeaders } from "../../Redux/auth/configureHeaders ";
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
 //////////////////////////////
 
 const Post = (props) => {
   const config = configureHeaders();
-  const [refreshData, setRefreshData] = useState(false);
+
   //
   const dispatch = useDispatch();
+  //si el post ya estaba likeado por el usuario a la hora de renderizar, isLiked se vuelve true
   const [isLiked, setIsLiked] = useState(false);
+  //cantidad de likes
   const [likes, setLikes] = useState(props.likes);
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-
-  const start_date = props?.startDate?.split("-");
-
+  //fecha de inicio para renderizar
+  const startDate = props?.startDate?.split("-");
+  //token del usuario para saber si el post estaba likeado o no
   const token = jwtDecode(localStorage.getItem("token"));
 
   const likeHandler = (e) => {
@@ -41,15 +37,10 @@ const Post = (props) => {
       setIsLiked(false);
       const newLikes = likes - 1;
       setLikes(newLikes);
-
       dispatch(disLike(props.id));
     }
   };
 
-  const postOptionsHandler = (e) => {
-    e.preventDefault();
-    setIsOptionsOpen(!isOptionsOpen);
-  };
 
   useEffect(() => {
     if (props?.Likes?.some((like) => like.userId === token.id)) {
@@ -112,17 +103,7 @@ const Post = (props) => {
           </div>
         </div>
 
-        {/* {props?.userID === token.id ? (
-          <div
-            className={Styles.BottomBar__OptionsContainer}
-            onClick={postOptionsHandler}
-          >
-            <PostOptions_Icon className={Styles.BottomBar__optionsIcon} />
-            {isOptionsOpen && (
-              <Post_Options id={props.id} setRefreshData={setRefreshData} />
-            )}
-          </div>
-        ) : null} */}
+        
       </div>
     </Link>
   );

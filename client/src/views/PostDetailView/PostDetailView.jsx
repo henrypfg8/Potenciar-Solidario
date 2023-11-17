@@ -27,7 +27,6 @@ import swal from "sweetalert";
 
 const Detail = () => {
   const postDetail = useSelector((state) => state.posts.postDetail);
-  console.log('ondaaaaaaa', postDetail)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -52,7 +51,6 @@ const Detail = () => {
     publicationId: "",
   });
 
-  console.log("soy el reviews", reviews);
 
   const [userId, setUserId] = useState("");
 

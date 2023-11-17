@@ -4,8 +4,6 @@ import { useQuestionCreate } from '../../components/QuestionCreate/QuestionCreat
 
 function QuestionCreateView() {
     const { disableButton, question, categoryOptions, errores, handleChange, handleCategoryChange, colourStyles, submitQuestion } = useQuestionCreate();
-// console.log(question);
-console.log(errores);
     return (
         <div className={style.contain}>
             <form action="" onChange={handleChange} className={style.form}>

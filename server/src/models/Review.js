@@ -1,3 +1,4 @@
+//Importamos el DataTypes de sequelize para poder manipular bien los modelos con sus respectivas propiedades.
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {

@@ -4,6 +4,7 @@ import { useLocation, Link } from "react-router-dom";
 export default function Header({ isScrolled }) {
   const { pathname } = useLocation();
 
+  
   return (
     <div className={Styles["HeaderMain"]}>
       <div

@@ -13,15 +13,16 @@ import { jwtDecode } from "jwt-decode";
 
 const Post = (props) => {
   const config = configureHeaders();
-  const [refreshData, setRefreshData] = useState(false);
+
   //
   const dispatch = useDispatch();
+  //si el post ya estaba likeado por el usuario a la hora de renderizar, isLiked se vuelve true
   const [isLiked, setIsLiked] = useState(false);
+  //cantidad de likes
   const [likes, setLikes] = useState(props.likes);
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-
-  const start_date = props?.startDate?.split("-");
-
+  //fecha de inicio para renderizar
+  const startDate = props?.startDate?.split("-");
+  //token del usuario para saber si el post estaba likeado o no
   const token = jwtDecode(localStorage.getItem("token"));
 
   const likeHandler = (e) => {
@@ -36,7 +37,6 @@ const Post = (props) => {
       setIsLiked(false);
       const newLikes = likes - 1;
       setLikes(newLikes);
-
       dispatch(disLike(props.id));
     }
   };

@@ -1,10 +1,11 @@
+// Configuración de la conexión a la base de datos utilizando variables de entorno
 require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const path = require("path");
 const fs = require("fs");
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
 
-// conexion con a tu base de datos
+// Creación de una instancia de Sequelize con la información de la conexión
 const sequelize = new Sequelize({
   host: DB_HOST,
   username: DB_USER,
@@ -12,11 +13,12 @@ const sequelize = new Sequelize({
   port: DB_PORT,
   database: DB_NAME,
   dialect: "mysql", 
-  logging:false
+  logging:false  // Desactiva el registro de consultas SQL en la consola
 });
 
 const basename = path.basename(__filename);
 
+// Lectura y carga dinámica de modelos desde la carpeta 'models'
 const modelDefiners = [];
 
 //usamos filesystem para extraer de la carpeta models el nombre de cada modelo y pushearlo al array modelDefiners
@@ -58,7 +60,7 @@ const {
 } = sequelize.models;
 
 //Relacion de modelos
-
+// Definición de relaciones entre modelos utilizando Sequelize's associations
 User.hasMany(Publication, { foreignKey: "userID" });
 User.hasMany(Question, { foreignKey: "userId" });
 User.hasMany(Answer, { foreignKey: "userId" });
@@ -94,7 +96,7 @@ PublicationComment.belongsTo(User, { foreignKey: 'userId' });
 Publication.hasMany(PublicationComment, { foreignKey: 'publicationId' });
 User.hasMany(PublicationComment, { foreignKey: 'userId' });
 
-
+// Exportación de modelos y la conexión para su uso en otras partes de la aplicación
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { pool } = require('./db.js');

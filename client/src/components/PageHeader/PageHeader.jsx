@@ -1,7 +1,5 @@
 import Styles from './pageHeader.module.css';
 //
-import { useEffect, useRef } from 'react';
-//
 import CarteleraIcon from '../../assets/CarteleraIcon';
 
 

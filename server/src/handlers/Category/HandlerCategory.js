@@ -1,7 +1,12 @@
 const { controllerCategory } = require("../../controllers/Category/ControllerCategory");
+// importar las rutas de la carpeta controllers/category
+
 
 const handlerCategory = async (req, res) => {
+
   try {
+    // llamada al controlador para obtener los registros de la tabla category
+
     const { category } = req.query;
     const categoryFn = await controllerCategory(category);
     if (categoryFn.length === 0)

@@ -1,7 +1,10 @@
 const {CreatePublication} = require("../../controllers/Publication/CreatePublication");
 const {Category} = require('../../db.js');
 
+// Controlador para crear una nueva publicación
 const createPublicationHandler = async (req, res) => {
+    // Extraer datos de la solicitud
+
     const {
         title,
         description,
@@ -18,27 +21,28 @@ const createPublicationHandler = async (req, res) => {
         contact,
          likes 
     } = req.body;
-
+// Obtener el ID del usuario de la solicitud (asumir que está incluido en el token de autenticación)
     const userId = req.userId;
-    console.log(`este es el user id ${userId}`); 
+    
 
 
 
     try {
-        //console.log(category)
+        // Buscar la categoría en la base de datos
         const categorySearch = await Category.findOne({ where: { name: category } });
+        // Lanzar un error si la categoría no se encuentra en la base de datos
         if(categorySearch === null){
             throw new Error("No se encontro la categoria en la BD")
         }
-        //console.log(categorySearch)
+         // Obtener el ID de la categoría
         let categoryId = null;
         if(categorySearch){
             categoryId = categorySearch.id;
-            //console.log(categoryId)
+            
         }
         
        
-
+        // Validar campos obligatorios
         if (!title || !description || !category || !contact || !organization)
             //console.log(`titulo ${title} descripcion ${description} categoria ${category} contacto ${contact} organizacion ${organization}`)
             throw new Error("Faltan campos obligatorios");

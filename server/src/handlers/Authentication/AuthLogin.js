@@ -13,7 +13,7 @@ const authLoginHandler = async (req, res) => {
     }
 
     try {
-        const userExist = await User.findOne({ where: { email: email } });
+        const userExist = await User.findOne({ where: { email: email } }); //busco usuario en BD
         //console.log(userExist);
         if (!userExist) {
             return res
@@ -25,7 +25,7 @@ const authLoginHandler = async (req, res) => {
             return res.status(400).json({ message: "Tu cuenta ha sido suspendida" });
         }
 
-        const passwordValid = await bcrypt.compare(
+        const passwordValid = await bcrypt.compare( //comparo clave ingresada con clave encriptada en BD
             password,
             userExist.password
         );
@@ -37,7 +37,7 @@ const authLoginHandler = async (req, res) => {
 
         if (passwordValid) {
             try {
-                //firma de token para usar en autenticacion de rutas
+                //firma de token con el id del usuario para usar en autenticacion de rutas
                 const payload = { id: userExist.id };
                 //console.log(payload);
                 const privateKey = process.env.JWT_PRIVATE_KEY;
@@ -47,9 +47,9 @@ const authLoginHandler = async (req, res) => {
                     expiresIn: "10d",
                 });
 
-                return res.send({ jwt: token, id: userExist.id }); //envio token y id de usuario para almacenar y usar desde cliente
+                return res.send({ jwt: token, id: userExist.id }); //envio token y id de usuario para almacenar en localstorage y usar desde cliente
             } catch (error) {
-                console.error("error en generación de token:", error);
+                //console.error("error en generación de token:", error);
                 return res
                     .status(500)
                     .json({ message: "Error en la generación del token" });

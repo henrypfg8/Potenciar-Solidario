@@ -1,3 +1,5 @@
+//Estas son los tipos de actions referentes a todo lo referido a las preguntas y filtros del foro.
+
 export const CREATE_QUESTION = "CREATE_QUESTION";
 export const DELETE_QUESTION = "DELETE_QUESTION";
 export const GET_QUESTIONS = "GET_QUESTIONS";

@@ -1,3 +1,5 @@
+//Estas son los tipos de actions referentes a todo lo relacionado con las publicaciones y comentarios de las publicaciones.
+
 export const CREATE_POST = "CREATE_POST";
 export const DELETE_POST = "DELETE_POST";
 export const GET_POSTS = "GET_POSTS";

@@ -1,3 +1,4 @@
+//Estas son los tipos de actions referentes a las respuestas del foro.
 export const GET_ANSWERS = "GET_ANSWERS";
 export const CREATE_ANSWER = "CREATE_ANSWER";
 export const UPDATE_ANSWER = "UPDATE_ANSWER";

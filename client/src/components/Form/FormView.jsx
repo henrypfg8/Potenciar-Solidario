@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 import proptypes from 'prop-types';
 
-const FormView = ({ post, setPost }) => {
-
-
+const FormView = ({ post, setPost }) => { //Recibe por props el post y la funcion setPost
     if (post === undefined) return null; // Si no hay datos retornar null
+    //Funcion para quitar la imagen
     const handleDeleteImage = () => {
         // Eliminar la imagen
         setPost({
@@ -35,6 +34,7 @@ const FormView = ({ post, setPost }) => {
             <p className='publication__contact'>{post.contact && 'Contacto: '}<span>{post.contact}</span></p>
             <p className='publication__p'>{post.organization && 'Nombre de la organización: '}<span>{post.organization}</span></p>
             <p className='publication__p'>{post.registrationLink && 'Enlace para la inscripción: '} <span  className='post__link'>{post.registrationLink}</span> </p>
+            {/* Se mostrará si hay un url */}
             {post.url && (
                 <div className='publication__btn'>
                     <Link to={`${post.url}`}>Más infomación</Link>

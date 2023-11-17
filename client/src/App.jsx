@@ -114,6 +114,7 @@ function App() {
             <Route path="/profile/posts" element={<UserPostsView />} />
             <Route path="/new-password/" element={<ResetPassword />} />
             <Route path="/*" element={<PageNotFund/>}/>
+            {/* Si es admin se mostrará estas rutas */}
             {userProfile.admin ||isAdmin ? (
                    <Route path='/admin' element={<Admin />}>
                       <Route index element={<PendingPosts />} />
@@ -123,7 +124,7 @@ function App() {
                       <Route path="posts" element={<PublishPosts />} />
                   </Route>
             ) : () => {
-              
+              //De lo contrario no se mostrará nada
             }}
           </Routes>
         </>

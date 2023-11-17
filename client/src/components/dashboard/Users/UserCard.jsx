@@ -5,18 +5,17 @@ import { Modal, Avatar } from 'antd'
 import { useEffect, useState } from 'react';
 import { getUsers, deleteUser } from '../../../Redux/actions/usersActions';
 import { UserOutlined, } from '@ant-design/icons';
-import { configureHeaders } from '../../../Redux/auth/configureHeaders ';
+
 import { updateProfile } from '../../../Redux/auth/AuthActions';
-import { useNavigate } from 'react-router-dom';
+
 
 const UserCard = ({ user }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [refreshData, setRefreshData] = useState(false);
-    const config = configureHeaders()
+
     //Modal para cofirmar y blocquer el usuario
     const [isModalBlockOpen, setIsModaBlockOpnen] = useState(false)
-    const navigate = useNavigate()
     const dispatch = useDispatch()
 
 
@@ -73,7 +72,7 @@ const UserCard = ({ user }) => {
     }
     return (
         <>
-            
+            {/* Crear el tbody para la tabla de users */}
             <tbody className={Styles.users__body} >
                 <tr className={Styles.users__tr}>
                     <td className={Styles.users__td} data-label='Foto'>{user.profile_picture ? <Avatar src={user.profile_picture} size={45} /> : <Avatar size={45} icon={<UserOutlined />} />}</td>

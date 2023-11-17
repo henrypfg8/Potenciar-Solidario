@@ -79,6 +79,7 @@ body html {
   background-color: #0f3054;
   color: #fff;
   overflow: auto;
+  border-radius: 5px 5px 0px  0px ;
   border-bottom: 2px #00559226 solid ;
 }
 .contain p{

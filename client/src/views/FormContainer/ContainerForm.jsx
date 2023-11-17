@@ -6,6 +6,7 @@ import './container.css'
 //import { Navigate } from 'react-router-dom';
 
 const ContainerForm = () => {
+    //inicializar el obejeto post como vacio
     const [post, setPost] = useState({
         title: '',
         category: '',
@@ -26,6 +27,7 @@ const ContainerForm = () => {
         <>   
             <div className='container'>
                 <Form
+                // se pasan por props
                     setPost={setPost}
                     post={post} />
                 <FormView

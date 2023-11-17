@@ -12,7 +12,9 @@ const ProfileView = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    //Estados para, mostrar exito
     const [success, setSuccess] = useState(false)
+    //Obtener el token
     const token = localStorage.getItem('token');
     useEffect(() => {
 
@@ -33,7 +35,7 @@ const ProfileView = () => {
 
 
 
-    if (!userProfile) return null;
+    if (!userProfile) return null; // retornar null si no existen los datos del usuario
 
     return (
         <>

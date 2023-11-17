@@ -8,18 +8,20 @@ import { configureHeaders } from '../../../Redux/auth/configureHeaders ';
 import axios from 'axios';
 
 const CardDashboard = ({ post, setRefreshData, isCheked, onCheckboxChange}) => {
-
+  //Inicializar los estados para mostrar modales
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChekedModal, setIsChekedModal] = useState(false);
 
   const dispatch = useDispatch();
-
+  //contiene los datos del header authorizathion
   const config = configureHeaders();
 
+  //Funcion para mostrar le modal de checkbox
   const handleCloseModalCheked = () => {
     setIsChekedModal(false);
   }
 
+  //Funcion para publicar un post
   const handleUpdatePostPublish = async (id) => {
 
     try {
@@ -46,6 +48,7 @@ const CardDashboard = ({ post, setRefreshData, isCheked, onCheckboxChange}) => {
   const handleClose = () => {
     setIsModalOpen(false);
   };
+  //Funcion para borrar un post por id
   const handleDeletePostById = (id) => {
     // hacer el dispatch de la acción para eliminar el post de la base de datos
     setRefreshData(true);
@@ -63,6 +66,7 @@ const CardDashboard = ({ post, setRefreshData, isCheked, onCheckboxChange}) => {
   return (
     <div className={Styles.dashboard__card}>
       <div>
+        {/* Si hay una image se mostrará, de lo contrario se mostrará una por defecto */}
         {post.image ? (<img className={Styles.dashboard__img} src={post.image} alt="imagen" />) : <img className={Styles.dashboard__img} alt='image-none' src='/images/no-image.png' />}
       </div>
       <div className={Styles.dashboard__info}>
@@ -95,6 +99,7 @@ const CardDashboard = ({ post, setRefreshData, isCheked, onCheckboxChange}) => {
             }}
             okButtonProps={{ danger: true }}
         />
+         {/* modal de confirmacion para publicar o dejar de publicar*/}
         <Modal
             title={post.status === '1' ? 'Deseas dejar de publicar este post?' : 'Deseas publicar este post?'}
             open={isChekedModal}

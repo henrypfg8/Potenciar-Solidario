@@ -2,8 +2,8 @@
 
 import proptypes from 'prop-types'
 
-const SearchDashBoard = ({ searchTerm, setSearchTerm, setIsSearching,postsPending }) => {
-
+const SearchDashBoard = ({ searchTerm, setSearchTerm, setIsSearching}) => {
+  //Funcion para buscar lo que hay en el input
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
@@ -25,6 +25,6 @@ SearchDashBoard.propTypes = {
   searchTerm: proptypes.string.isRequired,
   setSearchTerm: proptypes.func.isRequired,
   setIsSearching: proptypes.func.isRequired,
-  postsPending: proptypes.array.isRequired
+  
 }
 export default SearchDashBoard

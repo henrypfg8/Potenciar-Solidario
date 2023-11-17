@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import Styles from './userQuestion.module.css' // Reemplaza con la ubicación real de tus estilos
 import { Modal } from 'antd'
 import { useDispatch } from 'react-redux'
-import {  deleteQuestion } from '../../../Redux/actions/questionsActions';
+import { deleteQuestion } from '../../../Redux/actions/questionsActions';
 import proptypes from 'prop-types'
 
 const UserQuetionCard = ({ question, setRefreshData }) => {
@@ -21,7 +21,6 @@ const UserQuetionCard = ({ question, setRefreshData }) => {
         setModalAsks(false);
       }
     };
-
     // Añadir el listener para el clic
     document.addEventListener("mousedown", handleClickOutside);
 
@@ -94,6 +93,7 @@ const UserQuetionCard = ({ question, setRefreshData }) => {
           Ver respuestas
 
         </button>
+        {/* Mostrar el modal */}
         {modalAsks && (
           <div ref={modalRef} className={Styles.question__asks}>
             {question.Answers && question.Answers.length === 0 && <p className={Styles.answer__no}>Aún no hay respuestas</p>}
@@ -102,9 +102,9 @@ const UserQuetionCard = ({ question, setRefreshData }) => {
               question.Answers.map((answer) => (
                 <div key={answer.id} className={Styles.answer__card}>
                   <div className={Styles.answer__text}>
-                     <p >{answer.answer}</p>
+                    <p >{answer.answer}</p>
                   </div>
-                 
+
                   <p className={Styles.answer__user}>Respondio: <span>{answer.User?.name}</span></p>
                 </div>
               ))}

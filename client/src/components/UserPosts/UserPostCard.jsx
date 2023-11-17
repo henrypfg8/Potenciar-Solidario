@@ -5,26 +5,31 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { Modal } from 'antd'
 import axios from 'axios'
 
-
-
 const UserPostCard = ({ post, setRefreshData }) => {
+  //Estados para el modal
   const [open, setOpen] = useState(false);
+  //Obtener el token por localStoge
   const token = localStorage.getItem('token');
 
   const navigate = useNavigate();
 
-
+  //Funcion para mostrar el modal
   const showModal = () => {
     setOpen(true);
   }
+  ;
+  //Funcion para eliminar el post del usuario, por su id
   const handleDeleteById = async () => {
-    setRefreshData(true)
+    
+    setRefreshData(true) //Para cambiar el estado antes de que haga la peticion
     const { data } = await axios.delete(`http://localhost:19789/posts/${post.id}`, {
       headers: {
+        //Mandar el token por los headers
         'Authorization': `Bearer ${token}`
       }
 
     });
+    //Despues de hacer la peticion, cambiar el estado, para que los cambios de reflejen al momento
     setRefreshData(false)
     return data
 
@@ -36,6 +41,8 @@ const UserPostCard = ({ post, setRefreshData }) => {
     setOpen(false);
 
   }
+
+  //Funcion para cerrar el modal
   const handleCancel = () => {
 
     setOpen(false);
@@ -47,6 +54,7 @@ const UserPostCard = ({ post, setRefreshData }) => {
   }
   return (
     <div className={Styles.user__publication__card}>
+      {/* Modal de confirmacion */}
       <Modal
         title='Estas seguro de eliminar esta publicación?'
         open={open}
@@ -68,6 +76,7 @@ const UserPostCard = ({ post, setRefreshData }) => {
       />
       <h2 className={Styles.user__publication__h2}>{post.title}</h2>
       <div className={Styles.user__image__div}>
+        {/* Si el post no tiene una image, se mostrará una por defecto */}
         {post?.image ? (<img className={Styles.user__image} src={post.image} alt="imagen del post" />) : (
           <img src='/images/no-image.png' className={Styles.user__image} />
         )}
@@ -82,13 +91,13 @@ const UserPostCard = ({ post, setRefreshData }) => {
         </div>
 
       </div>
-
-
+        {/* Div de botones, para eliminar y actualizar */}
       <div className={Styles.user__btns_flex}>
         <button className={Styles.user__btn_edit} onClick={() => handleIUpdatePost(post.id)}>
           <img className={Styles.user_edit_icon} src='/images/icons8.png'/>
         </button>
         <button onClick={showModal} className={Styles.user__btn__delete}>
+          {/* icono de borrar */}
         <i className={`fa fa-trash ${Styles.user__trash_icon}`} aria-hidden="true"></i>
         </button>
       </div>

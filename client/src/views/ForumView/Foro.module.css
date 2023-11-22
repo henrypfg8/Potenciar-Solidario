@@ -154,7 +154,9 @@ body html {
     display: flex;
     flex-direction: column;
   }
-  
+  .centerLoading{
+    width: 100vw;
+  }
   
 }
 
@@ -162,6 +164,9 @@ body html {
   .containerCenter{
     display: flex;
     flex-direction: column; 
+  }
+  .centerLoading{
+    width: 100vw;
   }
   .container{
     margin:0;

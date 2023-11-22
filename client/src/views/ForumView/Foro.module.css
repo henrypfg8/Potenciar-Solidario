@@ -160,14 +160,14 @@ body html {
   
 }
 
-@media (max-width: 993px) {
+@media only screen and (max-width: 993px) {
   .containerCenter{
     display: flex;
     flex-direction: column; 
   }
   .centerLoading{
     width: 100vw;
-  }
+  } 
   .container{
     margin:0;
     width: 100vw;

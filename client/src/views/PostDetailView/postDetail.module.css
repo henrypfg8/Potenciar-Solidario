@@ -158,10 +158,14 @@
     border-radius: 5px;
     box-shadow: 1px 3px rgba(0, 0, 0, 0.3);
     align-items: center;
+    word-wrap: break-word;
+    word-break: break-word;
 }
+
 .comment p{
     margin: 1rem;
     font-size: 1rem;
+    word-wrap: break-word;
 }
 .avatar{
     display: flex;

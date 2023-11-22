@@ -8,15 +8,15 @@
     align-items: center;
     justify-self: center;
     height: 60vh;
-    padding: 2rem;
     margin: 10px;
-    width: 90vw;
+    width: 100%;
 }
 .div{
 
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     margin: 10px;
     width: 30vw;
 }
@@ -31,7 +31,7 @@
     /* margin: 50px; */
     box-shadow: -2px -1px 6px 6px #fff;
     border: 1px solid #cbd5e1;
-    width: 35%;
+    width: 30vw;
 }
 textarea:focus,input:focus {
     outline: none;
@@ -105,19 +105,20 @@ textarea:focus,input:focus {
     max-height: 2.4vh;
     margin: 6px;
 }
-@media (max-width: 575.98px){
-    .form{
-        width: 80vw ;
+@media only screen and (max-width: 768px) {
+    .form {
+        width: 60vw ;
     }
-    .div{
-        width: 75vw;
+    .div {
+        width: 55vw;
     }
 }
-@media (min-width: 575.98px){
-    .form{
-        width: 50vw ;
+
+@media only screen and (max-width: 575px) {
+    .form {
+        width: 90vw ;
     }
-    .div{
-        width: 45vw;
+    .div {
+        width: 90vw;
     }
 }

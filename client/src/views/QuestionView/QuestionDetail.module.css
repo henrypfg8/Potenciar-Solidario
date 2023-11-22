@@ -296,7 +296,18 @@
   max-height: fit-content;
   overflow-wrap: break-word;
 }
-
+.dateA{
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(68, 68, 68, 0.446);
+}
+.userName{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  margin: 1rem;
+}
 @media (max-width: 575.98px) {
   .question textarea {
     width: 70vw;
@@ -327,5 +338,9 @@
   .response {
     font-size: 0.7rem;
     width: 70vw;
+  }
+  .userName{
+    display: flex;
+    flex-direction: column;
   }
 }

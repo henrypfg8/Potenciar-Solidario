@@ -6,8 +6,8 @@ export default function validationAnswer(input){
     if(input.answer.length < 20){
         errores.answer = 'La respuesta debe de tener minimo 20 caracteres'
     }
-    if(input.answer.length > 1000){
-        errores.answer = 'La respuesta no puede tener mas de 1000 caracteres'
+    if(input.answer.length > 700){
+        errores.answer = 'La respuesta no puede tener mas de 700 caracteres'
     }
     return errores;
 }

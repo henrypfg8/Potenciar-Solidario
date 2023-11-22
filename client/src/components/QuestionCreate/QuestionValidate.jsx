@@ -7,6 +7,9 @@ if(!input.title){
 if(input.title.length < 10){
     errores.title = 'El titulo debe de tener al menos 10 caracteres'
 }
+if(input.title.length > 200){
+    errores.title = 'El titulo no debe de tener al menos 200 caracteres'
+}
 if(!input.text){
     errores.text = 'Debe de tener una descripcion'
 }

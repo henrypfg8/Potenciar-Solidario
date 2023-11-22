@@ -1,4 +1,4 @@
-const { Publication , User, Like } = require("../../db");
+const { Publication , User, Like, PublicationComment } = require("../../db");
 const {deleteNoti} = require('../../handlers/emailNotif/deleteNoti')
 const {rejectPost} = require("../../handlers/emailNotif/rejectPost");
 
@@ -13,6 +13,7 @@ const DeletePubCont = async (id) => {
       return { deletedRows: 0, message: "Publication not found" };
     }
     await Like.destroy({ where: { publicationId: id } });
+    await PublicationComment.destroy({ where: { publicationId: id } });
     await Publication.destroy({ where: { id: id } });
 
 

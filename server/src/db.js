@@ -93,7 +93,7 @@ Publication.hasMany(Like, { onDelete: 'CASCADE', foreignKey: "publicationId" });
 // COMENTARIOS DE PUBLICACIONES 
 PublicationComment.belongsTo(Publication, { foreignKey: 'publicationId' });
 PublicationComment.belongsTo(User, { foreignKey: 'userId' });
-Publication.hasMany(PublicationComment, { foreignKey: 'publicationId' });
+Publication.hasMany(PublicationComment, {onDelete: 'CASCADE', foreignKey: 'publicationId' });
 User.hasMany(PublicationComment, { foreignKey: 'userId' });
 
 // Exportación de modelos y la conexión para su uso en otras partes de la aplicación

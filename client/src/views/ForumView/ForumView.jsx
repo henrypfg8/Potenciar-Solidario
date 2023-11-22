@@ -92,6 +92,7 @@ function ForumView({ questions, loading }) {
       <div className={style.containerCenter}>
         <LeftBar responsiveMode={responsiveMode} />
         {loading ? (
+          
           <Oval
             height={80}
             width={80}

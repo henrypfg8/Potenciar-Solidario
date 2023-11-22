@@ -352,10 +352,10 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                 image={question?.User?.profile_picture}
                 name={question?.User?.name}
               />
+            </div>
               <a>
                 Fecha de publicacion:{<h4>{dateQuestion.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>}
               </a>
-            </div>
             {/* renderizado de answers*/}
             <p>{question?.text}</p>
             {answers?.map((answer) =>

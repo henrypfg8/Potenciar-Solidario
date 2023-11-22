@@ -316,6 +316,11 @@
     display: flex;
     flex-direction: column;
   }
+  .date{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
 }
 
 @media (max-width: 768px) {

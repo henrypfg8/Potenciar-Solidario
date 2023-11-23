@@ -35,7 +35,7 @@ server.use(morgan("dev"));
 server.use((_req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
-    "http://localhost:19789",
+    "http://localhost:40781",
     "http://localhost:5173"
   ); // Actualizar para que coincida con el dominio desde el cual se realizará la solicitud
   res.header("Access-Control-Allow-Credentials", "true");

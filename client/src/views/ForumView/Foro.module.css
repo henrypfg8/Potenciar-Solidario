@@ -17,7 +17,7 @@ body html {
 .containerCenter {
   display: flex;
   flex-direction: row;
-  min-height: 100vh;
+  
   height: 100vh;
   width: 100vw;
 }
@@ -25,10 +25,10 @@ body html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  width: 67vw;
+  /* margin: 1rem; */
 }
 .container {
-    height: 80vh;
     overflow-y: auto;  
   display: flex;
   flex-direction: column;
@@ -36,6 +36,7 @@ body html {
   margin-left: 6rem;
   height: 100vh;
   min-height: 100vh;
+  width: 60vw;
 }
 .contain h4 {
   font-family: "MiFuenteBold";
@@ -126,10 +127,11 @@ body html {
 }
 
 .loading {
-  margin: 1.1rem;
+  
+  margin-top: 1rem;
 } 
 
-@media (max-width: 575.98px) {
+@media only screen and (max-width: 575.98px) {
   .center h1 {
     width: 80vw;
     max-width: 88vw;
@@ -147,22 +149,28 @@ body html {
     font-size: 0.6rem;
 ;  }
 }
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   .containerCenter {
     display: flex;
     flex-direction: column;
   }
-  
+  .centerLoading{
+    width: 100vw;
+  }
   
 }
 
-@media (max-width: 993px) {
+@media only screen and (max-width: 993px) {
   .containerCenter{
     display: flex;
     flex-direction: column; 
   }
+  .centerLoading{
+    width: 100vw;
+  } 
   .container{
     margin:0;
+    width: 100vw;
   }
   .contain h1{
     font-size: 1.5rem;

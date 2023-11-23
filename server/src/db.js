@@ -67,7 +67,7 @@ User.hasMany(Answer, { foreignKey: "userId" });
 User.hasMany(Review, { foreignKey: "userId" });
 Publication.belongsTo(User, { foreignKey: "userID" });
 Publication.belongsTo(Category, { foreignKey: "categoryId" });
-Publication.hasMany(Review, { foreignKey: "publicationId" });
+Publication.hasMany(Review, { onDelete: 'CASCADE', foreignKey: "publicationId" });
 Category.hasMany(Publication, { foreignKey: "categoryId" });
 Category.hasMany(Question, { foreignKey: "categoryId" });
 Review.belongsTo(Publication, { foreignKey: "publicationId" });
@@ -88,12 +88,12 @@ ForoCategories.hasMany(Question, { foreignKey: "categoryId" })
 
 Like.belongsTo(Publication, { foreignKey: "publicationId" });
 Like.belongsTo(User, { foreignKey: "userId" });
-Publication.hasMany(Like, { foreignKey: "publicationId" });
+Publication.hasMany(Like, { onDelete: 'CASCADE', foreignKey: "publicationId" });
 
 // COMENTARIOS DE PUBLICACIONES 
 PublicationComment.belongsTo(Publication, { foreignKey: 'publicationId' });
 PublicationComment.belongsTo(User, { foreignKey: 'userId' });
-Publication.hasMany(PublicationComment, { foreignKey: 'publicationId' });
+Publication.hasMany(PublicationComment, {onDelete: 'CASCADE', foreignKey: 'publicationId' });
 User.hasMany(PublicationComment, { foreignKey: 'userId' });
 
 // Exportación de modelos y la conexión para su uso en otras partes de la aplicación

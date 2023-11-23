@@ -352,10 +352,10 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                 image={question?.User?.profile_picture}
                 name={question?.User?.name}
               />
-              <a>
-                Fecha de publicacion:{<h4>{dateQuestion.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>}
-              </a>
             </div>
+              <a className={style.date}>
+                Fecha de creación:{<h4>{dateQuestion.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>}
+              </a>
             {/* renderizado de answers*/}
             <p>{question?.text}</p>
             {answers?.map((answer) =>
@@ -417,11 +417,12 @@ function QuestionView({ question, answers, deleteAnswers, deleteQuestions }) {
                       )
                       :
                       <div>
-                        <p>{respuesta.answer}</p>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'end', marginTop: '2rem', marginBottom: '1rem' }}>
+                        <div className={style.userName}>
                           <ImageAvatars name={respuesta.User?.name} image={respuesta.User?.profile_picture} />
                           <h4>- {date.toLocaleString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })}</h4>
-                        </div></div>
+                        </div>
+                        <p>{respuesta.answer}</p>
+                        </div>
                   }
                   {
                     userId === respuesta.userId &&

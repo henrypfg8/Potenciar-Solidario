@@ -26,9 +26,17 @@
     align-items: center;
 }
 .textareaContainer{
-    height: 15;
-    width: 30vw;
-    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width:50vw; 
+    align-items: center; 
+    justify-content: center;
+    text-align: center;
+}
+
+.p{
+    font-size:2rem;
+    margin: 0.5rem;
 }
 .textarea{
     height: 100px;
@@ -40,10 +48,10 @@
     border: #095084;
     color: #fff;
     display: block;
-    margin-left: 170px;
     transition: 0.2s;
     border-radius: 5px;
     cursor: pointer;
+    margin: 1rem;
 }
 .buttonError{
     padding: 0.5rem 1rem;
@@ -64,7 +72,7 @@
     display: flex;
     flex-direction: column;
     padding: 0.4rem;
-    width: 50vw;
+    width: 85vw;
     box-shadow: -1px 1px 8px rgba(209, 206, 206, 0.363);
     justify-content: center;
     height: fit-content;
@@ -150,10 +158,14 @@
     border-radius: 5px;
     box-shadow: 1px 3px rgba(0, 0, 0, 0.3);
     align-items: center;
+    word-wrap: break-word;
+    word-break: break-word;
 }
+
 .comment p{
     margin: 1rem;
     font-size: 1rem;
+    word-wrap: break-word;
 }
 .avatar{
     display: flex;
@@ -165,17 +177,25 @@
 .avatar h3{
     margin: 1rem;
 }
-@media (max-width: 768px){
+@media only screen and (max-width: 575.98px){
 .contain{
     display: flex;
     flex-direction: column;
     width: fit-content;
+    
+}
+.avatar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 .contain img{
     width: 100%;
 }
 .Detail{
-    width: fit-content;
+    width: 85vw;
 }
 .Detail a{
     font-size: 0.8rem;

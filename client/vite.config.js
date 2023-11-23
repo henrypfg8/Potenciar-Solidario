@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/socket.io": {
-        target: "http://localhost:19789",
+        target: "http://localhost:40781",
         ws: true,
         secure: false,
         changeOrigin: true,

@@ -39,7 +39,7 @@ export default function SearchBarForum() {
       let debounceTimeout = undefined;
       axios
         .get(
-          `http://localhost:19789/questionFilters?category=${category}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
+          `http://localhost:40781/questionFilters?category=${category}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
           config
         )
         .then(({ data }) => {

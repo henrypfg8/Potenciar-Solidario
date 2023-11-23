@@ -75,7 +75,7 @@ const UserCard = ({ user }) => {
             {/* Crear el tbody para la tabla de users */}
             <tbody className={Styles.users__body} >
                 <tr className={Styles.users__tr}>
-                    <td className={Styles.users__td} data-label='Foto'>{user.profile_picture ? <Avatar src={user.profile_picture} size={45} /> : <Avatar size={45} icon={<UserOutlined />} />}</td>
+                    <td className={Styles.users__td} >{user.profile_picture ? <Avatar src={user.profile_picture} size={45} /> : <Avatar size={45} icon={<UserOutlined />} />}</td>
                     <td className={Styles.users__td} data-label='Nombre'>{user.name}</td>
                     <td className={Styles.users__td} data-label="Apellido">{user.lastname}</td>
                     <td className={Styles.users__td} data-label="Correo">{user.email}</td>

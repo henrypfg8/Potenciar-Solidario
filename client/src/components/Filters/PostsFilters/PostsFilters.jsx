@@ -11,7 +11,7 @@ import {
   searchPosts,
   setLoading,
   hideLoading,
-  setSelectedOptions
+  setSelectedOptions,
 } from "../../../Redux/actions/postsActions";
 //
 import PostsDateFilters from "./PostsDateFilters/PostsDateFilters";
@@ -20,24 +20,21 @@ import { format } from "date-fns";
 import { configureHeaders } from "../../../Redux/auth/configureHeaders ";
 import axios from "axios";
 
-
-
 export default function PostFilters() {
   const dispatch = useDispatch();
   const config = configureHeaders();
   //
   const ongs = useSelector((state) => state.ongsAndCategories.ongs);
   const categories = useSelector((state) => state.ongsAndCategories.categories);
-  const users = useSelector(state => state.users.users);
+  const users = useSelector((state) => state.users.users);
   //
   const searchValue = useSelector((state) => state.posts.searchValue);
-  const selectedOptions = useSelector(state => state.posts.selectedOptions)
-  const [selectedOptionsLOCAL, setSelectedOptionsLOCAL ] = useState({
-    category: {label: "Todas las categorias", name: "category", value: ''},
-    ong: {label: "Todas las organizaciones", name: "ong", value: ''},
-    user: {label: "Todos los usuarios", name: 'user', value: ''}
-  })
-  
+  const selectedOptions = useSelector((state) => state.posts.selectedOptions);
+  const [selectedOptionsLOCAL, setSelectedOptionsLOCAL] = useState({
+    category: { label: "Todas las categorias", name: "category", value: "" },
+    ong: { label: "Todas las organizaciones", name: "ong", value: "" },
+    user: { label: "Todos los usuarios", name: "user", value: "" },
+  });
 
   //
   const categoryOptions = categories.map(({ name }) => ({
@@ -65,14 +62,13 @@ export default function PostFilters() {
   const usersOptions = users.map(({ name, lastname, id }) => ({
     label: `${name} ${lastname}`,
     value: id,
-    name: 'user',
-
-  }))
+    name: "user",
+  }));
   usersOptions.unshift({
     label: "Todos los usuarios",
     value: "",
-    name: 'user'
-  })
+    name: "user",
+  });
   //
   const filters = useSelector((state) => state.posts.postsFilters);
   const [filtersLOCAL, setFiltersLOCAL] = useState({
@@ -80,34 +76,41 @@ export default function PostFilters() {
     ong: "",
     fromDate: "",
     untilDate: "",
-    user: ""
+    user: "",
   });
-  
-  
+
   //manejador de filtros de categoria y ong
   const handleFilters = (e) => {
     const { label, name, value } = e;
     setSelectedOptionsLOCAL({
       ...selectedOptionsLOCAL,
-      [name]: {label, name, value}
-    })
-    dispatch(setSelectedOptions({
-      ...selectedOptionsLOCAL,
-      [name]: {label, name, value}
-    }))
+      [name]: { label, name, value },
+    });
+    dispatch(
+      setSelectedOptions({
+        ...selectedOptionsLOCAL,
+        [name]: { label, name, value },
+      })
+    );
     setFiltersLOCAL({ ...filters, [name]: value });
     dispatch(setLoading());
     dispatch(setPostsFilters({ ...filters, [name]: value }));
     if (searchValue !== "") {
-      const { category, ong, fromDate, untilDate, user} = { ...filters, [name]: value };
+      const { category, ong, fromDate, untilDate, user } = {
+        ...filters,
+        [name]: value,
+      };
       axios
         .get(
-          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
+          `http://localhost:40781/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
           config
         )
-        .then(({ data }) => dispatch(searchPosts(data, searchValue))).then(() => dispatch(hideLoading()))
+        .then(({ data }) => dispatch(searchPosts(data, searchValue)))
+        .then(() => dispatch(hideLoading()));
     } else {
-      dispatch(getPostsFiltered({ ...filters, [name]: value })).then(() => dispatch(hideLoading())); 
+      dispatch(getPostsFiltered({ ...filters, [name]: value })).then(() =>
+        dispatch(hideLoading())
+      );
     }
   };
   const handleFromDate = (date) => {
@@ -120,12 +123,15 @@ export default function PostFilters() {
       const { category, ong, untilDate, user } = { ...filters };
       axios
         .get(
-          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
+          `http://localhost:40781/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
           config
         )
-        .then(({ data }) => dispatch(searchPosts(data, searchValue))).then(() => dispatch(hideLoading()));
+        .then(({ data }) => dispatch(searchPosts(data, searchValue)))
+        .then(() => dispatch(hideLoading()));
     } else {
-      dispatch(getPostsFiltered({ ...filters, fromDate: fromDate })).then(() => dispatch(hideLoading()));
+      dispatch(getPostsFiltered({ ...filters, fromDate: fromDate })).then(() =>
+        dispatch(hideLoading())
+      );
     }
   };
   const handleUntilDate = (date) => {
@@ -138,21 +144,23 @@ export default function PostFilters() {
       const { category, ong, fromDate, user } = { ...filters };
       axios
         .get(
-          `http://localhost:19789/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
+          `http://localhost:40781/filters?category=${category}&ong=${ong}&fromDate=${fromDate}&untilDate=${untilDate}&user=${user}`,
           config
         )
-        .then(({ data }) => dispatch(searchPosts(data, searchValue))).then(() => dispatch(hideLoading()));
+        .then(({ data }) => dispatch(searchPosts(data, searchValue)))
+        .then(() => dispatch(hideLoading()));
     } else {
-      dispatch(getPostsFiltered({ ...filters, untilDate: untilDate })).then(() => dispatch(hideLoading()));
+      dispatch(getPostsFiltered({ ...filters, untilDate: untilDate })).then(
+        () => dispatch(hideLoading())
+      );
     }
   };
   //
 
   useEffect(() => {
     setFiltersLOCAL(filters);
-    setSelectedOptionsLOCAL(selectedOptions)
+    setSelectedOptionsLOCAL(selectedOptions);
   }, [filters, selectedOptions]);
- 
 
   ///////////////////////////////////////////////////////////////
 

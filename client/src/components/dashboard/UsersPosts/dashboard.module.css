@@ -86,25 +86,26 @@
   border: 1px solid #ddd;
   padding: 0.5rem;
   align-items: center;
+  width: 90%;
 }
 @media (min-width: 768px) {
     .dashboard__card {
-        justify-content: space-between;
+        
+        
       }
 }
 
-@media (min-width: 768px) {
-  .dashboard__card {
-    gap: 1rem;
-    justify-content: space-between;
-  }
-}
+
 .dashboard__p {
-  display: -webkit-box;
+  /* display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2; */
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+
 
 }
 
@@ -252,4 +253,27 @@
 .dashboard__name{
     color : var(--blue);
     font-weight: 900;
+}
+
+#descriptionDiv{
+
+    max-width: 90% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    display: flex;
+    flex-wrap: wrap;
+    text-overflow: ellipsis;
+    z-index: 0;
+  /* Evita que el texto se divida en varias líneas */
+}
+#description{
+  width: 300px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  display: inline-block;
+  text-overflow: ellipsis;
+
+
 }

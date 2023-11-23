@@ -7,7 +7,7 @@ const registerUser = (user) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:19789/register",
+        "http://localhost:40781/register",
         user
       );
 
@@ -27,7 +27,7 @@ const registerUser = (user) => {
 const getProfile = (id, token) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`http://localhost:19789/users/${id}`, {
+      const { data } = await axios.get(`http://localhost:40781/users/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -45,7 +45,7 @@ const updateProfile = (id, user) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(
-        `http://localhost:19789/users/${id}`,
+        `http://localhost:40781/users/${id}`,
         { ...user },
         config
       );
@@ -64,7 +64,7 @@ const deleteProfile = (id) => {
       const config = configureHeaders();
 
       const { data } = await axios.delete(
-        `http://localhost:19789/users/${id}`,
+        `http://localhost:40781/users/${id}`,
         config
       );
       dispatch({ type: types.DELETE_PROFILE });
@@ -79,7 +79,7 @@ const deleteProfile = (id) => {
 const loginUser = (email, password) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post("http://localhost:19789/login", {
+      const { data } = await axios.post("http://localhost:40781/login", {
         email,
         password,
       });
@@ -99,7 +99,7 @@ const loginUser = (email, password) => {
 const loginWithGoogleAction = (token) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`http://localhost:19789/authGoogle`, {
+      const { data } = await axios.post(`http://localhost:40781/authGoogle`, {
         idToken: token.credential,
       });
       dispatch({ type: types.LOGIN_WITH_GOOGLE, payload: data });

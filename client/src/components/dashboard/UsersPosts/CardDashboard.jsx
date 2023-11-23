@@ -3,7 +3,7 @@ import proptypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { deletePost } from "../../../Redux/actions/postsActions";
 import { Modal } from "antd";
-import Styles from "./dashboard.module.css";
+import { Styles } from "./dashboard.module.css";
 import { configureHeaders } from "../../../Redux/auth/configureHeaders ";
 import axios from "axios";
 import Avatar from "antd/es/avatar/avatar";
@@ -32,7 +32,7 @@ const CardDashboard = ({
     try {
       setRefreshData(true);
       const { data } = await axios.put(
-        `http://localhost:19789/posts/${id}`, //actualizar el post
+        `http://localhost:40781/posts/${id}`, //actualizar el post
         { ...post, status: post.status === true ? false : true },
         config
       ); //cambiar el estado del post
@@ -64,25 +64,24 @@ const CardDashboard = ({
         setRefreshData(false);
       })
       .catch((error) => {
-        return(error.response);
+        return error.response;
       });
   };
 
   return (
     <div>
       <div className={Styles.dashboard__card}>
-        <div  style={{padding : '0.5rem'}}>
+        <div style={{ padding: "0.5rem" }}>
           {/* Si hay una image se mostrará, de lo contrario se mostrará una por defecto */}
           {post.image ? (
             <img
               className={Styles.dashboard__img}
-             
               src={post.image}
               alt="imagen"
             />
           ) : (
             <img
-            style={{padding : '0.5rem'}}
+              style={{ padding: "0.5rem" }}
               className={Styles.dashboard__img}
               alt="image-none"
               src="/images/no-image.png"
@@ -90,30 +89,61 @@ const CardDashboard = ({
           )}
         </div>
         {/* fin del div */}
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          id="divContenedor"
+          style={{ display: "flex", flexDirection: "column", width: "80%" }}
+        >
           {post.User?.profile_picture ? (
             <Avatar src={`${post.User?.profile_picture}`} size={40} />
           ) : (
             <Avatar icon={<UserOutlined />} size={40} />
           )}
           <div style={{ display: "flex" }}>
-            <p className="dashboard__name">nombre: <span>{post.User?.name}</span></p>
-            <p>{post.User?.lastname}</p>
+            <p
+              style={{
+                color: "#06213d",
+                fontWeight: "900",
+                display: "inline-block",
+              }}
+            >
+              nombre:{" "}
+              <span style={{ color: "#06213d", fontWeight: "900" }}>
+                {post.User?.name}
+              </span>
+            </p>
+            <p style={{ color: "#06213d", fontWeight: "900" }}>
+              {post.User?.lastname}
+            </p>
           </div>
           <div
-            style={{ width: "80%", display: "flex", flexDirection: "column" }}
+            style={{
+              width: "40%",
+              overflow: "hidden",
+              display: "flex",
+              flexDirection: "column",
+            }}
           >
             <div className="infomation" style={{ display: "flex" }}>
-              <p>ONG: {post.organization}</p>
-              <p>nombre: {post.User?.name}</p>
-              <p>{post.User?.lastname}</p>
+              <p style={{ color: "#06213d", fontWeight: "900" }}>
+                ONG: {post.organization}
+              </p>
             </div>
-            <p className="dashboard__p">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eum
-              fugit quod, accusantium aut tempore, architecto tenetur nulla
-              commodi quia excepturi alias ipsam recusandae labore cum dolorum
-              consequatur iure, adipisci aperiam?
-            </p>
+            <div
+              id="descriptionDiv"
+              style={{
+                overflow: "hidden",
+                width: "80%",
+              }}
+            >
+              <p
+                id="description"
+                style={{
+                  width: "90%",
+                }}
+              >
+                {post.description}
+              </p>
+            </div>
           </div>
         </div>
         <div className="dashboard__selected">
@@ -122,7 +152,10 @@ const CardDashboard = ({
             checked={isCheked}
             onChange={() => onCheckboxChange(post)}
           />
-          <button onClick={showModal} style={{marginTop : '1rem'}}>
+          <button
+            onClick={showModal}
+            style={{ marginTop: "1rem", border: "none" }}
+          >
             <i
               className={`fa fa-trash ${Styles.dashboard__trash_icon}`}
               aria-hidden="true"

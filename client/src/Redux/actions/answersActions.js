@@ -23,7 +23,7 @@ export const getAnswers = () => {
       // Configuración de encabezados y solicitud GET para obtener respuestas.
       const config = configureHeaders();
       const response = await axios.get(
-        "http://localhost:19789/answers",
+        "http://localhost:40781/answers",
         config
       );
       // Despacho de la acción para almacenar las respuestas en el estado.
@@ -42,7 +42,7 @@ export const createAnswer = (answer) => {
       // Configuración de encabezados y solicitud POST para crear una respuesta.
       const config = configureHeaders();
       const response = await axios.post(
-        "http://localhost:19789/answers",
+        "http://localhost:40781/answers",
         answer,
         config
       );
@@ -64,17 +64,17 @@ export const updateAnswer = (id, answer) => {
       // Configuración de encabezados y solicitud PUT para actualizar una respuesta.
       const config = configureHeaders();
       const response = await axios.put(
-        `http://localhost:19789/answers/${id}`,
+        `http://localhost:40781/answers/${id}`,
         answer,
         config
       );
       // Despacho de la acción para actualizar la respuesta en el estado.
       dispatch({ type: UPDATE_ANSWER, payload: response.data });
-      return Promise.resolve(response)
+      return Promise.resolve(response);
     } catch (error) {
       // Manejo de errores y registro en la consola.
       console.log(error, "por favor contactar a soporte por este error");
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
   };
 };
@@ -86,17 +86,17 @@ export const deleteAnswer = (id) => {
       // Configuración de encabezados y solicitud DELETE para eliminar una respuesta.
       const config = configureHeaders();
       const response = await axios.delete(
-        `http://localhost:19789/answers/${id}`,
+        `http://localhost:40781/answers/${id}`,
         config
-        );
+      );
 
-        // Despacho de la acción para eliminar la respuesta del estado.
-        dispatch({ type: DELETE_ANSWER, payload: response.data });
-        return Promise.resolve(response)
-      } catch (error) {
-        // Manejo de errores y registro en la consola.
+      // Despacho de la acción para eliminar la respuesta del estado.
+      dispatch({ type: DELETE_ANSWER, payload: response.data });
+      return Promise.resolve(response);
+    } catch (error) {
+      // Manejo de errores y registro en la consola.
       console.log(error, "por favor contactar a soporte por este error");
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
   };
 };
@@ -109,7 +109,7 @@ export const createAnswerComment = (comment) => {
       console.log(comment);
       const config = configureHeaders();
       const response = await axios.post(
-        "http://localhost:19789/answers/comments",
+        "http://localhost:40781/answers/comments",
         comment,
         config
       );
@@ -130,17 +130,17 @@ export const deleteAnswerComment = (id) => {
       // Configuración de encabezados y solicitud DELETE para eliminar un comentario en una respuesta.
       const config = configureHeaders();
       const response = await axios.delete(
-        `http://localhost:19789/answers/comments/${id}`,
+        `http://localhost:40781/answers/comments/${id}`,
         config
       );
 
       // Despacho de la acción para eliminar el comentario del estado.
       dispatch({ type: DELETE_ANSWER_COMMENT, payload: response.data });
-      return Promise.resolve(response)
+      return Promise.resolve(response);
     } catch (error) {
       // Manejo de errores y registro en la consola.
       console.log(error, "por favor contactar a soporte por este error");
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
   };
 };
@@ -152,17 +152,17 @@ export const updateAnswerComment = (id, thread) => {
       // Configuración de encabezados y solicitud PUT para actualizar un comentario en una respuesta.
       const config = configureHeaders();
       const response = await axios.put(
-        `http://localhost:19789/answers/comments/${id}`,
+        `http://localhost:40781/answers/comments/${id}`,
         thread,
         config
       );
       // Despacho de la acción para actualizar el comentario en el estado.
       dispatch({ type: UPDATE_ANSWER_COMMENT, payload: response.data });
-      return Promise.resolve(response)
+      return Promise.resolve(response);
     } catch (error) {
       // Manejo de errores y registro en la consola.
       console.log(error, "por favor contactar a soporte por este error");
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
   };
 };
@@ -174,7 +174,7 @@ export const getAnswerComment = () => {
       // Configuración de encabezados y solicitud GET para obtener comentarios en respuestas.
       const config = configureHeaders();
       const response = await axios.get(
-        "http://localhost:19789/answers/comments",
+        "http://localhost:40781/answers/comments",
         config
       );
       // Despacho de la acción para almacenar los comentarios en el estado.

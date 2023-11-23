@@ -3,7 +3,7 @@ import proptypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { deletePost } from "../../../Redux/actions/postsActions";
 import { Modal } from "antd";
-import { Styles } from "./dashboard.module.css";
+import Styles from "./dashboard.module.css";
 import { configureHeaders } from "../../../Redux/auth/configureHeaders ";
 import axios from "axios";
 import Avatar from "antd/es/avatar/avatar";

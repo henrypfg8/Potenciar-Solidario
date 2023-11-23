@@ -126,6 +126,7 @@ const PublishPosts = () => {
   const handleDeletePosts = async () => {
     try {
       const config = configureHeaders(); //configurar los headers
+      setRefreshData(true)
       const deletePromises = selectedPosts.map((post) =>
         axios.delete(`http://localhost:40781/posts/${post.id}`, config)
       );

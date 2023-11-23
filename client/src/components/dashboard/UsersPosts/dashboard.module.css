@@ -82,33 +82,56 @@
 
 .dashboard__card {
   display: flex;
-  margin-top: 1rem;
+  margin: 1rem auto;
   border: 1px solid #ddd;
   padding: 0.5rem;
   align-items: center;
-  width: 90%;
+  width: 100%;
+  
+ 
 }
 @media (min-width: 768px) {
     .dashboard__card {
-        
+      width: 90%;
         
       }
 }
 
 
+
 .dashboard__p {
-  /* display: -webkit-box;
+  display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 2; */
-  width: 80%;
-  display: flex;
-  flex-wrap: wrap;
+  -webkit-line-clamp: 3;
+  max-width:90px;
+ 
 
 
 }
-
+@media(min-width: 340px){
+  .dashboard__p {
+    max-width:150px;
+  
+  }
+}
+@media(min-width: 390px){
+  .dashboard__p {
+    max-width:200px;
+  
+  }
+}
+@media(min-width: 433px){
+  .dashboard__p{
+    max-width: 90%;
+  }
+}
+@media(min-width: 768px){
+  .dashboard__p{
+    max-width: 90%;
+  }
+}
 .dashboard__img {
   width: 100px;
 }
@@ -186,6 +209,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    padding: 0.4rem;
 
 }
 .dashboard__publish:hover {
@@ -253,27 +277,45 @@
 .dashboard__name{
     color : var(--blue);
     font-weight: 900;
+    width: 90px;
+}
+.dashboard__name span {
+  margin-left: 0.2rem;
+}
+.dashboard__flex{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.dashboard__data{
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+.dashboard__ong{
+  width: 90px;
+  color : var(--blue);
 }
 
-#descriptionDiv{
-
-    max-width: 90% !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-    display: flex;
-    flex-wrap: wrap;
-    text-overflow: ellipsis;
-    z-index: 0;
-  /* Evita que el texto se divida en varias líneas */
+.dashboard__ong span{
+  color : var(--dark_blue_color);
+  font-weight: 900;
+  width: max-content;
+  display: contents;
 }
-#description{
-  width: 300px !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-  display: inline-block;
-  text-overflow: ellipsis;
 
+@media(min-width: 340px){
+  .dashboard__ong, .dashboard__name{
+    width: min-content;
+    padding: 0;
+    margin: 0.1rem 0;
+  }
+}
 
+@media(min-width: 420px){
+  .dashboard__ong, .dashboard__name{
+    width: 100%;
+   
+  }
 }

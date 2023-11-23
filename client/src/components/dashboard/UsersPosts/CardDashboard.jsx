@@ -41,7 +41,7 @@ const CardDashboard = ({
       setRefreshData(false);
       return data;
     } catch (error) {
-      console.log(error.response);
+      return(error.response);
     }
   };
 
@@ -69,9 +69,11 @@ const CardDashboard = ({
   };
 
   return (
-    <div>
+    <>
       <div className={Styles.dashboard__card}>
-        <div style={{ padding: "0.5rem" }}>
+
+        {/* div de la imagenes */}
+        <div >
           {/* Si hay una image se mostrará, de lo contrario se mostrará una por defecto */}
           {post.image ? (
             <img
@@ -88,129 +90,110 @@ const CardDashboard = ({
             />
           )}
         </div>
-        {/* fin del div */}
-        <div
-          id="divContenedor"
-          style={{ display: "flex", flexDirection: "column", width: "80%" }}
-        >
-          {post.User?.profile_picture ? (
-            <Avatar src={`${post.User?.profile_picture}`} size={40} />
-          ) : (
-            <Avatar icon={<UserOutlined />} size={40} />
-          )}
-          <div style={{ display: "flex" }}>
-            <p
-              style={{
-                color: "#06213d",
-                fontWeight: "900",
-                display: "inline-block",
-              }}
-            >
-              nombre:{" "}
-              <span style={{ color: "#06213d", fontWeight: "900" }}>
-                {post.User?.name}
-              </span>
-            </p>
-            <p style={{ color: "#06213d", fontWeight: "900" }}>
-              {post.User?.lastname}
-            </p>
-          </div>
-          <div
-            style={{
-              width: "40%",
-              overflow: "hidden",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <div className="infomation" style={{ display: "flex" }}>
-              <p style={{ color: "#06213d", fontWeight: "900" }}>
-                ONG: {post.organization}
+        {/* fin de la imagenes */}
+
+            {/* holis */}
+        <div className={Styles.dashboard__flex}>
+          {/* Div de la info*/}
+          <div className={Styles.dashboard__data}>
+            {post.User?.profile_picture ? (
+              <Avatar src={`${post.User?.profile_picture}`} size={40} />
+            ) : (
+              <Avatar icon={<UserOutlined />} size={40} />
+            )}
+            <div >
+              <p className={Styles.dashboard__name}>
+                Ususario:
+                <span >
+                  { post.User?.name}
+                </span>
               </p>
+          
             </div>
-            <div
-              id="descriptionDiv"
-              style={{
-                overflow: "hidden",
-                width: "80%",
-              }}
-            >
-              <p
-                id="description"
-                style={{
-                  width: "90%",
-                }}
-              >
-                {post.description}
-              </p>
+            <div >
+              <div >
+                <p className={Styles.dashboard__ong} >
+                  ONG:<span>{post.organization}</span>
+                </p>
+              </div>
+              <div>
+                <p className={Styles.dashboard__p}>
+                  {post.description}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="dashboard__selected">
-          <input
-            type="checkbox"
-            checked={isCheked}
-            onChange={() => onCheckboxChange(post)}
-          />
-          <button
-            onClick={showModal}
-            style={{ marginTop: "1rem", border: "none" }}
-          >
-            <i
-              className={`fa fa-trash ${Styles.dashboard__trash_icon}`}
-              aria-hidden="true"
-            ></i>
-          </button>
-        </div>
+          {/* Fin de la info */}
 
-        {/* Modales */}
-        <div>
-          <Modal
-            title="Deseas eliminar este post?"
-            open={isModalOpen}
-            onCancel={handleClose}
-            cancelText="Cancelar"
-            okText="Sí,Eliminar"
-            onOk={() => handleDeletePostById(post.id)}
-            cancelButtonProps={{
-              style: {
-                backgroundColor: "#fff",
-                color: "#005692",
-                border: "1px solid #005692",
-              },
-            }}
-            okButtonProps={{ danger: true }}
-          />
-
-          {/* modal de confirmacion para publicar o dejar de publicar*/}
-          <Modal
-            title={
-              post.status === "1"
-                ? "Deseas dejar de publicar este post?"
-                : "Deseas publicar este post?"
-            }
-            open={isChekedModal}
-            onCancel={handleCloseModalCheked}
-            cancelText="Cancelar"
-            okText={
-              post.status === "1" ? "Sí, dejar de publicar" : "Sí, publicar"
-            }
-            onOk={() => handleUpdatePostPublish(post.id)}
-            cancelButtonProps={{
-              style: {
-                backgroundColor: "#fff",
-                color: "#005692",
-                border: "1px solid #005692",
-              },
-            }}
-            okButtonProps={{
-              style: { backgroundColor: "#005692", color: "#fff" },
-            }}
-          />
+          {/* div de los selects */}
+          <div className={Styles.dashboard__selected}>
+            <input
+              type="checkbox"
+              checked={isCheked}
+              onChange={() => onCheckboxChange(post)}
+            />
+            <button
+              onClick={showModal}
+              style={{ marginTop: "1rem", border: "none" }}
+            >
+              <i
+                className={`fa fa-trash ${Styles.dashboard__trash_icon}`}
+                aria-hidden="true"
+              ></i>
+            </button>
+          </div>
+          {/* fin de los selects */}
         </div>
       </div>
+      {/* Fin del card */}
+
+      {/* Modales */}
+      <div>
+        <Modal
+          title="Deseas eliminar este post?"
+          open={isModalOpen}
+          onCancel={handleClose}
+          cancelText="Cancelar"
+          okText="Sí,Eliminar"
+          onOk={() => handleDeletePostById(post.id)}
+          cancelButtonProps={{
+            style: {
+              backgroundColor: "#fff",
+              color: "#005692",
+              border: "1px solid #005692",
+            },
+          }}
+          okButtonProps={{ danger: true }}
+        />
+
+        {/* modal de confirmacion para publicar o dejar de publicar*/}
+        <Modal
+          title={
+            post.status === "1"
+              ? "Deseas dejar de publicar este post?"
+              : "Deseas publicar este post?"
+          }
+          open={isChekedModal}
+          onCancel={handleCloseModalCheked}
+          cancelText="Cancelar"
+          okText={
+            post.status === "1" ? "Sí, dejar de publicar" : "Sí, publicar"
+          }
+          onOk={() => handleUpdatePostPublish(post.id)}
+          cancelButtonProps={{
+            style: {
+              backgroundColor: "#fff",
+              color: "#005692",
+              border: "1px solid #005692",
+            },
+          }}
+          okButtonProps={{
+            style: { backgroundColor: "#005692", color: "#fff" },
+          }}
+        />
+      </div>
       {/*Fin del div  */}
-    </div>
+    </>
   );
 };
 

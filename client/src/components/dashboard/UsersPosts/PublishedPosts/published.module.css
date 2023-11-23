@@ -205,8 +205,15 @@
     display: flex;
     width: 90%;
     margin: 1rem auto 0 auto;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 1rem;
+}
+@media(min-width: 768px){
+    .button__flexDiv{
+
+        justify-content: flex-end;
+
+    }
 }
 
 .button__selected{

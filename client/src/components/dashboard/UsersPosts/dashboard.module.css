@@ -5,14 +5,7 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   margin-bottom: 10rem;
-  padding-bottom:2rem ;
-}
-@media(min-width: 768px){
-    .dashboard {
-
-        margin-bottom: 1rem;
-        padding-bottom:2rem ;
-      }
+  padding-bottom: 2rem;
 }
 .dashboard__btn:hover {
   background: #06213d;
@@ -36,7 +29,6 @@
   justify-content: center;
   width: 100%;
   position: fixed;
-
   gap: 1rem;
   bottom: 1rem;
 }
@@ -61,7 +53,107 @@
   text-align: center;
   width: 90%;
 }
+.dashboard__card {
+  display: flex;
+  margin: 1rem auto;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.dashboard__p {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 400px;
+}
+.dashboard__selected {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0.4rem;
+  margin-right: 20px;
+}
+@media (max-width: 950px) {
+  .dashboard__p {
+    max-width: 300px;
+  }
+}
 @media (min-width: 768px) {
+  .dashboard {
+    margin-bottom: 1rem;
+    padding-bottom: 2rem;
+  }
+  .dashboard__info h1 {
+    font-size: 0.8rem;
+  }
+  .dashboard__info p {
+    font-size: 0.7rem;
+  }
+  .dashboard__info h1 {
+    font-size: 1.2rem;
+  }
+  .dashboard__info p {
+    font-size: 0.9rem;
+  }
+  .dashboard__infoP {
+    display: flex;
+    flex-direction: column;
+  }
+  .dashboard__trash {
+    width: 30px;
+  }
+  .dashboard__check {
+    width: 15px;
+    height: 15px;
+  }
+
+  .dashboard__trash_icon {
+    color: black;
+    transition: color 0.3s;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+  }
+  .dashboard__trash_icon:hover {
+    color: red;
+  }
+  .dashboard__btn__delete {
+    color: #ff0000;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background: #fff;
+    display: block;
+  }
+  .dashboard__btn__delete:hover {
+    cursor: pointer;
+  }
+
+  .dashboard__publish {
+    background: var(--blue_color);
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+
+  .dashboard__publish:hover {
+    background: #06213d;
+    cursor: pointer;
+  }
+  .button__flexDiv {
+    justify-content: flex-end;
+  }
+  .dashboard__publish,
+  .dashboard__btn__delete {
+    width: 100px;
+  }
   .dashboard__btn {
     width: 30%;
     right: inherit;
@@ -79,164 +171,10 @@
     justify-content: center;
   }
 }
-
-.dashboard__card {
-  display: flex;
-  margin: 1rem auto;
-  border: 1px solid #ddd;
-  padding: 0.5rem;
-  align-items: center;
-  width: 100%;
-  
- 
-}
-@media (min-width: 768px) {
-    .dashboard__card {
-      width: 90%;
-        
-      }
-}
-
-
-
-.dashboard__p {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 3;
-  max-width:90px;
- 
-
-
-}
-@media(min-width: 340px){
-  .dashboard__p {
-    max-width:150px;
-  
-  }
-}
-@media(min-width: 390px){
-  .dashboard__p {
-    max-width:200px;
-  
-  }
-}
-@media(min-width: 433px){
-  .dashboard__p{
-    max-width: 90%;
-  }
-}
-@media(min-width: 768px){
-  .dashboard__p{
-    max-width: 90%;
-  }
-}
 .dashboard__img {
   width: 100px;
 }
-@media (min-width: 768px) {
-  .dashboard__img {
-    width: 100px;
-  }
-}
 
-@media (min-width: 768px) {
-}
-
-.dashboard__info h1 {
-  font-size: 0.8rem;
-}
-.dashboard__info p {
-  font-size: 0.7rem;
-}
-@media (min-width: 768px) {
-  .dashboard__info h1 {
-    font-size: 1.2rem;
-  }
-  .dashboard__info p {
-    font-size: 0.9rem;
-  }
-  .dashboard__infoP {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-.dashboard__trash {
-  width: 30px;
-}
-.dashboard__check {
-  width: 15px;
-  height: 15px;
-}
-
-.dashboard__trash_icon {
-  color: black;
-  transition: color 0.3s;
-  background: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-  height: 100%;
-
-  justify-content: center;
-}
-.dashboard__trash_icon:hover {
-  color: red;
-}
-.dashboard__btn__delete {
-  color: #ff0000;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 4px;
-  background: #fff;
-
-  display: block;
-}
-.dashboard__btn__delete:hover {
-  cursor: pointer;
-}
-
-.dashboard__publish {
-  background: var(--blue_color);
-  color: #fff;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 4px;
-}
-.dashboard__selected{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 0.4rem;
-
-}
-.dashboard__publish:hover {
-  background: #06213d;
-  cursor: pointer;
-}
-@media (min-width: 768px) {
-  .dashboard__publish,
-  .dashboard__btn__delete {
-    width: 100px;
-  }
-}
-
-.button__flexDiv {
-  display: flex;
-  width: 90%;
-  margin: 1rem auto 0 auto;
-  justify-content: center;
-  gap: 1rem;
-
-}
-@media(min-width: 768px){
-  .button__flexDiv {
-    justify-content: flex-end;
-
-  }
-}
 .button__selected {
   border: solid 1px #ddd;
   padding: 0.5rem;
@@ -281,48 +219,58 @@
   color: var(--blue);
   font-weight: 900;
 }
-.dashboard__name{
-    color : var(--blue);
-    font-weight: 900;
-    width: 90px;
+.dashboard__name {
+  color: var(--blue);
+  font-weight: 900;
+  width: 90px;
 }
 .dashboard__name span {
   margin-left: 0.2rem;
 }
-.dashboard__flex{
+.dashboard__flex {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-.dashboard__data{
+.dashboard__data {
   display: flex;
   flex-direction: column;
   overflow: hidden;
   flex-wrap: wrap;
 }
-.dashboard__ong{
+.dashboard__ong {
   width: 90px;
-  color : var(--blue);
+  color: var(--blue);
 }
 
-.dashboard__ong span{
-  color : var(--dark_blue_color);
+.dashboard__ong span {
+  color: var(--dark_blue_color);
   font-weight: 900;
   width: max-content;
   display: contents;
 }
-
-@media(min-width: 340px){
-  .dashboard__ong, .dashboard__name{
-    width: min-content;
-    padding: 0;
-    margin: 0.1rem 0;
+@media (max-width: 500px) {
+  .dashboard__p {
+    max-width: 200px;
+  }
+}
+@media (max-width: 420px) {
+  .dashboard__ong,
+  .dashboard__name {
+    width: 100%;
   }
 }
 
-@media(min-width: 420px){
-  .dashboard__ong, .dashboard__name{
-    width: 100%;
-   
+@media (max-width: 400px) {
+  .dashboard__p {
+    max-width: 50px;
+  }
+}
+@media (min-width: 340px) {
+  .dashboard__ong,
+  .dashboard__name {
+    width: max-content;
+    padding: 0;
+    margin: 0.1rem 0;
   }
 }

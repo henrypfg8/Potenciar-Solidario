@@ -41,7 +41,7 @@ const CardDashboard = ({
       setRefreshData(false);
       return data;
     } catch (error) {
-      return(error.response);
+      return error.response;
     }
   };
 
@@ -71,9 +71,8 @@ const CardDashboard = ({
   return (
     <>
       <div className={Styles.dashboard__card}>
-
         {/* div de la imagenes */}
-        <div >
+        <div className={Styles.dashboard__pfp}>
           {/* Si hay una image se mostrará, de lo contrario se mostrará una por defecto */}
           {post.image ? (
             <img
@@ -90,42 +89,32 @@ const CardDashboard = ({
             />
           )}
         </div>
-        {/* fin de la imagenes */}
 
-            {/* holis */}
-        <div className={Styles.dashboard__flex}>
-          {/* Div de la info*/}
+        <div className={Styles.dashboard__flex} style={{ marginLeft: "30px" }}>
           <div className={Styles.dashboard__data}>
             {post.User?.profile_picture ? (
               <Avatar src={`${post.User?.profile_picture}`} size={40} />
             ) : (
               <Avatar icon={<UserOutlined />} size={40} />
             )}
-            <div >
+            <div>
               <p className={Styles.dashboard__name}>
-                Ususario:
-                <span >
-                  { post.User?.name}
-                </span>
+                Usuario:
+                <span>{post.User?.name}</span>
               </p>
-          
             </div>
-            <div >
-              <div >
-                <p className={Styles.dashboard__ong} >
+            <div>
+              <div>
+                <p className={Styles.dashboard__ong}>
                   ONG:<span>{post.organization}</span>
                 </p>
               </div>
               <div>
-                <p className={Styles.dashboard__p}>
-                  {post.description}
-                </p>
+                <p className={Styles.dashboard__p}>{post.description}</p>
               </div>
             </div>
           </div>
-          {/* Fin de la info */}
 
-          {/* div de los selects */}
           <div className={Styles.dashboard__selected}>
             <input
               type="checkbox"
@@ -142,12 +131,9 @@ const CardDashboard = ({
               ></i>
             </button>
           </div>
-          {/* fin de los selects */}
         </div>
       </div>
-      {/* Fin del card */}
 
-      {/* Modales */}
       <div>
         <Modal
           title="Deseas eliminar este post?"
